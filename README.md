@@ -45,6 +45,10 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ```
 .
+├── docs/
+│   ├── fase-1-analisi-dominio.md         # Fase 1: dominio, personas, stakeholder, tracciabilità
+│   └── fase-2-specifiche-requisiti.md    # Fase 2: requisiti (MoSCoW), RNF, casi d'uso
+├── documentazione/                       # libretti delle attività di ciascun membro
 ├── presentazioni/
 │   ├── DISCOVER_TRIDENTUM_VF.pptx        # presentazione, prima versione
 │   ├── DISCOVER_TRIDENTUM_v2.pptx        # presentazione, nuovo design
@@ -55,6 +59,11 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 ## Stato del progetto
 
 🚧 Fase di analisi e progettazione.
+
+| Fase | Documento | Stato |
+|---|---|---|
+| 1 — Analisi del dominio, Personas, Stakeholder Matrix, Tracciabilità | [docs/fase-1-analisi-dominio.md](docs/fase-1-analisi-dominio.md) | Bozza |
+| 2 — Specifiche dei requisiti (SRS Light): RF con MoSCoW, RNF, casi d'uso | [docs/fase-2-specifiche-requisiti.md](docs/fase-2-specifiche-requisiti.md) | Bozza |
 
 ## Team
 
