@@ -49,6 +49,7 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 │   ├── fase-0-proposta-progetto.pdf      # Fase 0: proposta iniziale del progetto
 │   ├── fase-1-analisi-dominio.md         # Fase 1: dominio, personas, stakeholder, tracciabilità
 │   ├── fase-2-specifiche-requisiti.md    # Fase 2: requisiti (MoSCoW), RNF, casi d'uso
+│   ├── fase-3-architettura-user-flow.md  # Fase 3: casi d'uso, user flow, architettura
 │   └── libretti/                         # libretti delle attività, uno per membro del team
 ├── presentazioni/
 │   ├── presentazione-v1.pptx             # prima versione
@@ -65,7 +66,8 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 |---|---|---|---|
 | 0 — Proposta di progetto | [docs/fase-0-proposta-progetto.pdf](docs/fase-0-proposta-progetto.pdf) | — | Consegnato |
 | 1 — Analisi del dominio, Personas, Stakeholder Matrix, Tracciabilità | [docs/fase-1-analisi-dominio.md](docs/fase-1-analisi-dominio.md) | 0.2 | Bozza |
-| 2 — Specifiche dei requisiti (SRS Light): RF con MoSCoW, RNF, casi d'uso, tracciabilità | [docs/fase-2-specifiche-requisiti.md](docs/fase-2-specifiche-requisiti.md) | 0.2 | Bozza |
+| 2 — Specifiche dei requisiti (SRS Light): RF con MoSCoW, RNF, casi d'uso, tracciabilità | [docs/fase-2-specifiche-requisiti.md](docs/fase-2-specifiche-requisiti.md) | 0.3 | Bozza |
+| 3 — Architettura del sistema e user flow: casi d'uso (Mermaid), flusso delle schermate, architettura ad alto livello | [docs/fase-3-architettura-user-flow.md](docs/fase-3-architettura-user-flow.md) | 0.1 | Bozza |
 
 ## Team
 

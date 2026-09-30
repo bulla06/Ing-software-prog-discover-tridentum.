@@ -3,8 +3,9 @@
 **Progetto:** Discover Tridentum — Trento Nascosta
 **Corso:** Ingegneria del Software · Prof. Paolo Giorgini · A.A. 2026-2027
 **Team:** Manuel Bulla · Marco Buffa · Pietro Crea
-**Versione:** 0.2 · **Stato:** Bozza
+**Versione:** 0.3 · **Stato:** Bozza
 **Documento precedente:** [Fase 1 — Analisi del dominio](fase-1-analisi-dominio.md)
+**Documento successivo:** [Fase 3 — Architettura e user flow](fase-3-architettura-user-flow.md)
 
 ### Storico delle revisioni
 
@@ -12,6 +13,7 @@
 |---|---|---|---|
 | 0.1 | 30/09/2026 | Manuel Bulla | Prima stesura: RF con MoSCoW, RNF con metriche, 7 casi d'uso |
 | 0.2 | 30/09/2026 | Manuel Bulla | Aggiunta la matrice di tracciabilità (§5); corretti i requisiti di UC-07; riordinati i flussi alternativi |
+| 0.3 | 30/09/2026 | Manuel Bulla | Aggiunti UC-08, UC-09, UC-10: ora tutti i requisiti *Must* e *Should* hanno un caso d'uso |
 
 ---
 
@@ -53,6 +55,7 @@ Sono **fuori ambito** in questa versione: app native per iOS/Android, prenotazio
 | **Moderatore** | Utente registrato con il ruolo di approvare o rifiutare i contenuti della community |
 | **Amministratore** | Gestisce POI, itinerari, utenti e ruoli |
 | **Servizio mappe** *(sistema esterno)* | Fornisce le mappe di base e la geolocalizzazione (es. OpenStreetMap) |
+| **Servizio e-mail** *(sistema esterno)* | Invia le e-mail di conferma, reimpostazione password e notifica |
 
 ### 1.4 Priorità MoSCoW
 
@@ -219,24 +222,31 @@ flowchart LR
         UC5(["UC-05 Moderare un contenuto"])
         UC6(["UC-06 Giocare a Dov'era?"])
         UC7(["UC-07 Gestire i POI"])
+        UC8(["UC-08 Gestire il proprio account"])
+        UC9(["UC-09 Gestire i ruoli"])
+        UC10(["UC-10 Consultare tradizioni<br/>e mappa del gusto"])
     end
 
     V --- UC1
     V --- UC2
     V --- UC3
     V --- UC6
+    V --- UC10
     U --- UC4
+    U --- UC8
     M --- UC5
     A --- UC7
+    A --- UC9
     UC1 --- MAP
     UC2 --- MAP
+    UC10 --- MAP
 
     U -.->|è un| V
     M -.->|è un| U
     A -.->|è un| U
 ```
 
-*Le frecce tratteggiate indicano la generalizzazione tra attori: un Moderatore è anche un Utente registrato, che a sua volta può fare tutto ciò che fa un Visitatore.*
+*Le frecce tratteggiate indicano la generalizzazione tra attori: un Moderatore è anche un Utente registrato, che a sua volta può fare tutto ciò che fa un Visitatore. Il diagramma completo, con le relazioni «include» ed «extend», è in [Fase 3 §2](fase-3-architettura-user-flow.md#2-diagramma-dei-casi-duso).*
 
 ---
 
@@ -310,6 +320,7 @@ flowchart LR
 | | |
 |---|---|
 | **Attore primario** | Visitatore |
+| **Attori secondari** | Servizio e-mail |
 | **Descrizione** | Il visitatore crea un account per poter caricare contenuti, oppure accede a un account esistente |
 | **Pre-condizioni** | Il visitatore non ha effettuato l'accesso |
 | **Post-condizioni** | Il visitatore è autenticato come utente registrato |
@@ -453,6 +464,90 @@ flowchart LR
 
 ---
 
+### UC-08 — Gestire il proprio account
+
+| | |
+|---|---|
+| **Attore primario** | Utente registrato |
+| **Attori secondari** | Servizio e-mail |
+| **Descrizione** | L'utente consulta il proprio profilo e lo stato dei contributi, oppure elimina l'account |
+| **Pre-condizioni** | L'utente ha effettuato l'accesso |
+| **Post-condizioni** | L'utente ha visto il proprio profilo, oppure l'account è disattivato e i dati personali saranno cancellati entro 30 giorni |
+| **Requisiti** | RF-09, RF-12, RF-13 · RNF-S04 |
+
+**Flusso principale**
+1. L'utente apre "Profilo".
+2. Il sistema mostra nome visualizzato, preferiti e contributi inviati con il loro stato (in attesa, approvato, rifiutato).
+3. L'utente sceglie "Elimina account".
+4. Il sistema spiega le conseguenze e chiede se i contributi già pubblicati vanno rimossi o lasciati in forma anonima.
+5. L'utente sceglie e conferma inserendo la password.
+6. Il sistema disattiva subito l'account, chiude la sessione e pianifica la cancellazione dei dati personali.
+7. Il sistema invia un'e-mail di conferma.
+
+**Flussi alternativi**
+- **3a.** L'utente apre un contributo rifiutato → il sistema mostra la motivazione del moderatore (RF-17).
+- **5a.** L'utente annulla → il sistema torna al profilo senza modifiche.
+
+**Eccezioni**
+- **E1.** Password errata → il sistema non procede e permette di riprovare.
+- **E2.** L'utente è l'unico amministratore → il sistema blocca l'eliminazione finché non viene nominato un altro amministratore.
+
+---
+
+### UC-09 — Gestire i ruoli
+
+| | |
+|---|---|
+| **Attore primario** | Amministratore |
+| **Descrizione** | L'amministratore assegna o revoca il ruolo di moderatore a un utente registrato |
+| **Pre-condizioni** | L'amministratore ha effettuato l'accesso con il ruolo di amministratore |
+| **Post-condizioni** | Il ruolo dell'utente è aggiornato e vale dalla richiesta successiva dell'utente |
+| **Requisiti** | RF-25 · RNF-S03 |
+
+**Flusso principale**
+1. L'amministratore apre il pannello di gestione e sceglie "Utenti".
+2. L'amministratore cerca un utente per nome visualizzato o e-mail.
+3. Il sistema mostra l'utente con il suo ruolo attuale.
+4. L'amministratore assegna il ruolo di moderatore.
+5. Il sistema salva il nuovo ruolo e avvisa l'utente.
+
+**Flussi alternativi**
+- **4a.** L'amministratore revoca il ruolo → i contenuti che quel moderatore stava verificando tornano in coda.
+
+**Eccezioni**
+- **E1.** Nessun utente corrisponde alla ricerca → il sistema lo segnala.
+- **E2.** L'utente è stato eliminato nel frattempo → il sistema annulla l'operazione e aggiorna l'elenco.
+
+---
+
+### UC-10 — Consultare tradizioni e mappa del gusto
+
+| | |
+|---|---|
+| **Attore primario** | Visitatore |
+| **Attori secondari** | Servizio mappe |
+| **Descrizione** | Il visitatore scopre feste e tradizioni trentine oppure i locali con piatti tipici |
+| **Pre-condizioni** | Esiste almeno una voce pubblicata nella sezione scelta |
+| **Post-condizioni** | Il visitatore ha visto la voce scelta e i luoghi collegati |
+| **Requisiti** | RF-19, RF-20 |
+
+**Flusso principale**
+1. Il visitatore apre "Scopri".
+2. Il sistema mostra le due sezioni: "Tradizioni" e "Mappa del gusto".
+3. Il visitatore sceglie "Tradizioni".
+4. Il sistema mostra le voci ordinate per periodo dell'anno, mettendo in evidenza quelle in corso o vicine.
+5. Il visitatore apre una voce.
+6. Il sistema mostra descrizione, periodo e luoghi collegati sulla mappa; dai luoghi si apre la scheda del POI (UC-01, passi 7–8).
+
+**Flussi alternativi**
+- **3a.** Il visitatore sceglie "Mappa del gusto" → il sistema mostra sulla mappa i locali con il piatto consigliato; toccando un locale si apre la sua scheda (UC-01, passi 6–8).
+
+**Eccezioni**
+- **E1.** Nessuna tradizione nel periodo corrente → il sistema mostra tutte le voci dell'anno.
+- **E2.** Il servizio mappe non risponde → come UC-01 E1.
+
+---
+
 ## 5. Tracciabilità
 
 ### 5.1 Corrispondenza con la Fase 1
@@ -516,25 +611,18 @@ Ogni bisogno della Fase 1 è coperto da almeno un requisito.
 | UC-05 Moderare un contenuto | RF-12, RF-16, RF-17, RF-18 |
 | UC-06 Giocare a "Dov'era?" | RF-21, RF-22, RF-23 |
 | UC-07 Gestire i POI | RF-24 |
+| UC-08 Gestire il proprio account | RF-09, RF-12, RF-13 |
+| UC-09 Gestire i ruoli | RF-25 |
+| UC-10 Consultare tradizioni e mappa del gusto | RF-19, RF-20 |
 
-**Requisiti *Must*/*Should* non ancora descritti da un caso d'uso** (da completare nella prossima revisione):
-
-| Requisito | Priorità | Proposta |
-|---|---|---|
-| RF-13 Eliminare il proprio account | **M** | Nuovo UC "Gestire il proprio account" (profilo, contributi, eliminazione) |
-| RF-25 Assegnare e revocare il ruolo di moderatore | **M** | Nuovo UC "Gestire i ruoli" oppure flusso alternativo di UC-07 |
-| RF-19 Tradizioni | **S** | Consultazione simile a UC-01: flusso alternativo |
-| RF-20 Mappa del gusto | **S** | Consultazione simile a UC-01: flusso alternativo |
-
-RF-06 (*Could*) e RF-26 … RF-29 (*Won't*) non richiedono un caso d'uso in questa versione.
+Tutti i requisiti *Must* e *Should* sono descritti da almeno un caso d'uso. RF-06 (*Could*) compare come estensione di UC-01 nel diagramma completo della [Fase 3](fase-3-architettura-user-flow.md#2-diagramma-dei-casi-duso); RF-26 … RF-29 (*Won't*) non richiedono un caso d'uso in questa versione.
 
 ---
 
 ## 6. Punti aperti
 
-- **Casi d'uso mancanti:** RF-13 e RF-25 sono *Must* ma non hanno ancora un caso d'uso (§5.3).
-- **RF-06 (fotocamera):** resta *Could*; va valutato dopo aver scelto le tecnologie.
+- **RF-06 (fotocamera):** resta *Could*; l'architettura lo affida all'AI Service ([Fase 3 §5.4](fase-3-architettura-user-flow.md#54-ai-service)).
 - **Moderatori:** chi sono, in pratica? Team, volontari, un'associazione o un museo partner.
 - **Licenze dei contenuti:** quali proporre agli utenti (es. Creative Commons BY, BY-NC, "tutti i diritti riservati").
-- **Servizio mappe:** OpenStreetMap o altro; da decidere insieme all'architettura (Fase 3).
+- **Servizio mappe:** proposta OpenStreetMap con Leaflet ([Fase 3 §6](fase-3-architettura-user-flow.md#6-decisioni-architetturali)); da confermare dal team.
 - **Immagini dei beni culturali (RNF-V02):** verificare con la Soprintendenza cosa si può pubblicare.

@@ -40,8 +40,10 @@ Gli ID non si riusano e non si rinumerano: se un elemento viene eliminato, il su
 | Requisito funzionale | `RF-nn` | RF-14 | Fase 2 §2 |
 | Requisito non funzionale | `RNF-<area>nn` (U usabilità, P prestazioni, S sicurezza, PO portabilità, V vincoli) | RNF-S02 | Fase 2 §3 |
 | Caso d'uso | `UC-nn` | UC-04 | Fase 2 §4 |
+| Schermata | `S-nn` | S-03 | Fase 3 §3.2 |
+| Decisione architetturale | `D-nn` | D-05 | Fase 3 §6 |
 
-Ogni requisito rimanda ai bisogni che soddisfa; la matrice di tracciabilità (Fase 2 §5) va aggiornata ogni volta che si aggiunge o si modifica un requisito o un caso d'uso.
+Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fase 2 §5, Fase 3 §9) vanno aggiornate ogni volta che si aggiunge o si modifica un requisito o un caso d'uso.
 
 ## Git
 
