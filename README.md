@@ -45,14 +45,15 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ```
 .
-├── docs/
+├── docs/                                 # documentazione di progetto (un file per fase)
+│   ├── fase-0-proposta-progetto.pdf      # Fase 0: proposta iniziale del progetto
 │   ├── fase-1-analisi-dominio.md         # Fase 1: dominio, personas, stakeholder, tracciabilità
-│   └── fase-2-specifiche-requisiti.md    # Fase 2: requisiti (MoSCoW), RNF, casi d'uso
-├── documentazione/                       # libretti delle attività di ciascun membro
+│   ├── fase-2-specifiche-requisiti.md    # Fase 2: requisiti (MoSCoW), RNF, casi d'uso
+│   └── libretti/                         # libretti delle attività, uno per membro del team
 ├── presentazioni/
-│   ├── DISCOVER_TRIDENTUM_VF.pptx        # presentazione, prima versione
-│   ├── DISCOVER_TRIDENTUM_v2.pptx        # presentazione, nuovo design
-│   └── Progetto "Trento nascosta".pdf    # documento di progetto
+│   ├── presentazione-v1.pptx             # prima versione
+│   └── presentazione-v2.pptx             # versione attuale, nuovo design
+├── CONTRIBUTING.md                       # convenzioni del team (nomi, commit, documenti)
 └── README.md
 ```
 
@@ -60,10 +61,11 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 🚧 Fase di analisi e progettazione.
 
-| Fase | Documento | Stato |
-|---|---|---|
-| 1 — Analisi del dominio, Personas, Stakeholder Matrix, Tracciabilità | [docs/fase-1-analisi-dominio.md](docs/fase-1-analisi-dominio.md) | Bozza |
-| 2 — Specifiche dei requisiti (SRS Light): RF con MoSCoW, RNF, casi d'uso | [docs/fase-2-specifiche-requisiti.md](docs/fase-2-specifiche-requisiti.md) | Bozza |
+| Fase | Documento | Versione | Stato |
+|---|---|---|---|
+| 0 — Proposta di progetto | [docs/fase-0-proposta-progetto.pdf](docs/fase-0-proposta-progetto.pdf) | — | Consegnato |
+| 1 — Analisi del dominio, Personas, Stakeholder Matrix, Tracciabilità | [docs/fase-1-analisi-dominio.md](docs/fase-1-analisi-dominio.md) | 0.2 | Bozza |
+| 2 — Specifiche dei requisiti (SRS Light): RF con MoSCoW, RNF, casi d'uso, tracciabilità | [docs/fase-2-specifiche-requisiti.md](docs/fase-2-specifiche-requisiti.md) | 0.2 | Bozza |
 
 ## Team
 

@@ -3,8 +3,15 @@
 **Progetto:** Discover Tridentum — Trento Nascosta
 **Corso:** Ingegneria del Software · Prof. Paolo Giorgini · A.A. 2026-2027
 **Team:** Manuel Bulla · Marco Buffa · Pietro Crea
-**Versione:** 0.1 (bozza)
+**Versione:** 0.2 · **Stato:** Bozza
 **Documento precedente:** [Fase 1 — Analisi del dominio](fase-1-analisi-dominio.md)
+
+### Storico delle revisioni
+
+| Versione | Data | Autore | Modifiche |
+|---|---|---|---|
+| 0.1 | 30/09/2026 | Manuel Bulla | Prima stesura: RF con MoSCoW, RNF con metriche, 7 casi d'uso |
+| 0.2 | 30/09/2026 | Manuel Bulla | Aggiunta la matrice di tracciabilità (§5); corretti i requisiti di UC-07; riordinati i flussi alternativi |
 
 ---
 
@@ -14,7 +21,8 @@
 2. [Requisiti funzionali](#2-requisiti-funzionali)
 3. [Requisiti non funzionali](#3-requisiti-non-funzionali)
 4. [Casi d'uso principali](#4-casi-duso-principali)
-5. [Punti aperti](#5-punti-aperti)
+5. [Tracciabilità](#5-tracciabilità)
+6. [Punti aperti](#6-punti-aperti)
 
 ---
 
@@ -349,8 +357,8 @@ flowchart LR
 7. Il sistema conferma l'invio e spiega che il contenuto sarà visibile dopo la verifica.
 
 **Flussi alternativi**
-- **3a.** L'utente carica solo il testo, senza foto → si prosegue dal passo 4 (il testo è obbligatorio se manca la foto).
 - **1a.** L'utente non ha effettuato l'accesso → il sistema lo porta a UC-03 e poi torna al passo 2.
+- **3a.** L'utente carica solo il testo, senza foto → si prosegue dal passo 4 (il testo è obbligatorio se manca la foto).
 
 **Eccezioni**
 - **E1.** Il file non è un'immagine valida o supera 10 MB → il sistema rifiuta il file e spiega perché.
@@ -380,8 +388,8 @@ flowchart LR
 7. Il sistema pubblica il contenuto nella scheda del POI e aggiorna lo stato nel profilo dell'autore.
 
 **Flussi alternativi**
-- **6a.** Il moderatore rifiuta → il sistema chiede una motivazione, la salva e la mostra all'autore.
 - **1a.** Il moderatore apre la coda delle segnalazioni (RF-18) → verifica il contenuto segnalato e decide se lasciarlo pubblicato o rimuoverlo.
+- **6a.** Il moderatore rifiuta → il sistema chiede una motivazione, la salva e la mostra all'autore.
 
 **Eccezioni**
 - **E1.** Due moderatori aprono lo stesso contenuto → vale la prima decisione salvata; il secondo riceve un avviso.
@@ -425,7 +433,7 @@ flowchart LR
 | **Descrizione** | L'amministratore crea, modifica o elimina un POI (anche un affresco) |
 | **Pre-condizioni** | L'amministratore ha effettuato l'accesso con il ruolo di amministratore |
 | **Post-condizioni** | Il POI è salvato, aggiornato o rimosso ed è subito visibile (o non più visibile) sulla mappa |
-| **Requisiti** | RF-24, RF-25 · RNF-S03, RNF-V01 |
+| **Requisiti** | RF-24 · RNF-S03, RNF-V01 |
 
 **Flusso principale**
 1. L'amministratore apre il pannello di gestione e sceglie "Nuovo POI".
@@ -445,8 +453,86 @@ flowchart LR
 
 ---
 
-## 5. Punti aperti
+## 5. Tracciabilità
 
+### 5.1 Corrispondenza con la Fase 1
+
+I requisiti preliminari della Fase 1 (§4.2) sono stati rinumerati e, in alcuni casi, divisi.
+
+| Fase 1 | Fase 2 | Note |
+|---|---|---|
+| RF01 | RF-01 | |
+| RF02 | RF-02 | |
+| RF03 | RF-03 | |
+| RF04 | RF-06 | |
+| RF05 | RF-04 | |
+| RF06 | RF-07, RF-08 | Diviso: itinerari tematici (S) e itinerari sul tempo disponibile (C) |
+| RF07 | RF-10, RF-11 | Diviso: registrazione e accesso |
+| RF08 | RF-14 | |
+| RF09 | RF-16, RF-17 | Diviso: coda di moderazione e decisione del moderatore |
+| RF10 | RF-15 | |
+| RF11 | RF-19 | |
+| RF12 | RF-20 | |
+| RF13 | RF-21 | |
+| RF14 | RF-23 | |
+| RF15 | RF-24 | |
+| — | RF-05, RF-09, RF-12, RF-13, RF-18, RF-22, RF-25 | Nuovi in Fase 2 |
+| — | RF-26 … RF-29 | Nuovi in Fase 2 (*Won't*) |
+| RNF01 | RNF-U01 | |
+| RNF02 | RNF-U02 | |
+| RNF03 | RNF-S04 | |
+| RNF04 | RNF-V02 | |
+| RNF05 | RNF-U04 | |
+| RNF06 | RNF-U05 | |
+| RNF07 | RNF-P01 | |
+
+### 5.2 Copertura dei bisogni
+
+Ogni bisogno della Fase 1 è coperto da almeno un requisito.
+
+| Bisogno | Requisiti funzionali | Requisiti non funzionali |
+|---|---|---|
+| **B1** Luoghi oltre le attrazioni principali | RF-01, RF-04, RF-19 | — |
+| **B2** Storia sul posto | RF-02, RF-04, RF-05, RF-06, RF-19 | RNF-U01, RNF-P01, RNF-P02 |
+| **B3** Affreschi | RF-03, RF-06 | — |
+| **B4** Organizzare il tempo | RF-07, RF-08, RF-09 | — |
+| **B5** Condividere foto e ricordi | RF-10, RF-11, RF-14, RF-23 | — |
+| **B6** Riconoscimento e tutela | RF-10, RF-12, RF-13, RF-15, RF-16 | RNF-S04, RNF-S05, RNF-V02 |
+| **B7** Piatti tipici | RF-20 | — |
+| **B8** Affidabilità delle informazioni | RF-02, RF-16, RF-17, RF-18, RF-24, RF-25 | RNF-V01, RNF-V02 |
+| **B9** Facilità d'uso | RF-05 | RNF-U01, RNF-U02, RNF-U03, RNF-U04 |
+| **B10** Scoperta coinvolgente | RF-21, RF-22, RF-23 | — |
+| **B11** Distribuire i flussi | RF-01, RF-07, RF-24 | — |
+| **B12** Altre lingue | — | RNF-U05 |
+
+### 5.3 Requisiti ↔ casi d'uso
+
+| Caso d'uso | Requisiti funzionali |
+|---|---|
+| UC-01 Esplorare la mappa e consultare un POI | RF-01, RF-02, RF-03, RF-04, RF-05 |
+| UC-02 Seguire un itinerario | RF-07, RF-08, RF-09 |
+| UC-03 Registrarsi e accedere | RF-10, RF-11 |
+| UC-04 Caricare un ricordo | RF-14, RF-15, RF-16 |
+| UC-05 Moderare un contenuto | RF-12, RF-16, RF-17, RF-18 |
+| UC-06 Giocare a "Dov'era?" | RF-21, RF-22, RF-23 |
+| UC-07 Gestire i POI | RF-24 |
+
+**Requisiti *Must*/*Should* non ancora descritti da un caso d'uso** (da completare nella prossima revisione):
+
+| Requisito | Priorità | Proposta |
+|---|---|---|
+| RF-13 Eliminare il proprio account | **M** | Nuovo UC "Gestire il proprio account" (profilo, contributi, eliminazione) |
+| RF-25 Assegnare e revocare il ruolo di moderatore | **M** | Nuovo UC "Gestire i ruoli" oppure flusso alternativo di UC-07 |
+| RF-19 Tradizioni | **S** | Consultazione simile a UC-01: flusso alternativo |
+| RF-20 Mappa del gusto | **S** | Consultazione simile a UC-01: flusso alternativo |
+
+RF-06 (*Could*) e RF-26 … RF-29 (*Won't*) non richiedono un caso d'uso in questa versione.
+
+---
+
+## 6. Punti aperti
+
+- **Casi d'uso mancanti:** RF-13 e RF-25 sono *Must* ma non hanno ancora un caso d'uso (§5.3).
 - **RF-06 (fotocamera):** resta *Could*; va valutato dopo aver scelto le tecnologie.
 - **Moderatori:** chi sono, in pratica? Team, volontari, un'associazione o un museo partner.
 - **Licenze dei contenuti:** quali proporre agli utenti (es. Creative Commons BY, BY-NC, "tutti i diritti riservati").

@@ -3,7 +3,16 @@
 **Progetto:** Discover Tridentum — Trento Nascosta
 **Corso:** Ingegneria del Software · Prof. Paolo Giorgini · A.A. 2026-2027
 **Team:** Manuel Bulla · Marco Buffa · Pietro Crea
-**Versione:** 0.1 (bozza)
+**Versione:** 0.2 · **Stato:** Bozza
+**Documento precedente:** [Fase 0 — Proposta di progetto](fase-0-proposta-progetto.pdf)
+**Documento successivo:** [Fase 2 — Specifiche dei requisiti](fase-2-specifiche-requisiti.md)
+
+### Storico delle revisioni
+
+| Versione | Data | Autore | Modifiche |
+|---|---|---|---|
+| 0.1 | 30/09/2026 | Manuel Bulla | Prima stesura: dominio, personas, stakeholder, tracciabilità |
+| 0.2 | 30/09/2026 | Manuel Bulla | Nota sugli ID dei requisiti superati dalla Fase 2; corretta la legenda degli stakeholder |
 
 ---
 
@@ -172,13 +181,15 @@ quadrantChart
 | **Musei e archivi** (es. Castello del Buonconsiglio, Fondazione Museo storico del Trentino, Biblioteca comunale) | Medio | Medio | Visibilità, uso corretto dei propri materiali | Fonti storiche e foto d'archivio | Tenere informati, possibili partner |
 | **Esercenti** (ristoratori, botteghe tipiche) | Medio | Basso | Visibilità nella mappa gastronomica | Contenuti per la mappa del gusto | Tenere informati |
 
-*Gli stakeholder in grassetto nella prima colonna sono quelli richiesti dalla traccia; musei, archivi ed esercenti sono stakeholder secondari aggiunti dal team.*
+*Comune, APT, Soprintendenza, turisti e residenti sono gli stakeholder richiesti dalla traccia; musei, archivi ed esercenti sono stakeholder secondari aggiunti dal team.*
 
 ---
 
 ## 4. Matrice di tracciabilità dei bisogni
 
 La matrice collega ogni **problema** (§1.2) ai **bisogni** degli stakeholder e ai **requisiti** che li soddisfano. Priorità secondo **MoSCoW**: **M** = Must, **S** = Should, **C** = Could.
+
+> **Nota:** i requisiti di §4.2 e §4.3 (RF01–RF15, RNF01–RNF07) sono un elenco **preliminare**, superato dalla [Fase 2](fase-2-specifiche-requisiti.md). La corrispondenza tra vecchi e nuovi ID è in [Fase 2 §5.1](fase-2-specifiche-requisiti.md#51-corrispondenza-con-la-fase-1). I bisogni B1–B12 restano validi e sono il riferimento per la tracciabilità.
 
 ### 4.1 Dal problema al bisogno
 

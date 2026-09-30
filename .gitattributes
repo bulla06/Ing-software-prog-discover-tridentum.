@@ -1,0 +1,10 @@
+# Fine riga uniforme per i file di testo
+* text=auto
+*.md text eol=lf
+
+# File binari: nessuna conversione né diff testuale
+*.docx binary
+*.pptx binary
+*.pdf  binary
+*.png  binary
+*.jpg  binary

@@ -1,0 +1,13 @@
+# File temporanei di Office (aperti in Word/PowerPoint)
+~$*
+*.tmp
+
+# File di sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
