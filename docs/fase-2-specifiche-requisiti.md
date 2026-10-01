@@ -3,7 +3,7 @@
 **Progetto:** Discover Tridentum — Trento Nascosta
 **Corso:** Ingegneria del Software · Prof. Paolo Giorgini · A.A. 2026-2027
 **Team:** Manuel Bulla · Marco Buffa · Pietro Crea
-**Versione:** 0.3 · **Stato:** Bozza
+**Versione:** 0.4 · **Stato:** Bozza
 **Documento precedente:** [Fase 1 — Analisi del dominio](fase-1-analisi-dominio.md)
 **Documento successivo:** [Fase 3 — Architettura e user flow](fase-3-architettura-user-flow.md)
 
@@ -14,6 +14,7 @@
 | 0.1 | 30/09/2026 | Manuel Bulla | Prima stesura: RF con MoSCoW, RNF con metriche, 7 casi d'uso |
 | 0.2 | 30/09/2026 | Manuel Bulla | Aggiunta la matrice di tracciabilità (§5); corretti i requisiti di UC-07; riordinati i flussi alternativi |
 | 0.3 | 30/09/2026 | Manuel Bulla | Aggiunti UC-08, UC-09, UC-10: ora tutti i requisiti *Must* e *Should* hanno un caso d'uso |
+| 0.4 | 01/10/2026 | Manuel Bulla | Priorità riviste: più peso ai luoghi (RF-04, RF-05, RF-07 da *Should* a *Must*), gioco in secondo piano (RF-21 da *Should* a *Could*) |
 
 ---
 
@@ -81,15 +82,15 @@ Ogni requisito si legge come *"Il sistema deve permettere a …"*. La colonna **
 | **RF-01** | Mostrare una mappa interattiva dei POI, centrata sulla posizione dell'utente se concessa, altrimenti sul centro di Trento | Visitatore | **M** | B1, B11 |
 | **RF-02** | Mostrare per ogni POI una scheda con nome, descrizione storica, immagini, indirizzo e fonti | Visitatore | **M** | B2, B8 |
 | **RF-03** | Catalogare gli affreschi del centro storico come POI geolocalizzati, con autore, epoca e descrizione (se noti) | Visitatore | **M** | B3 |
-| **RF-04** | Filtrare i POI per categoria (storia, arte, tradizioni, gastronomia) e per tema (es. Tridentum romana, guerra e ricostruzione, Adige) | Visitatore | **S** | B1, B2 |
-| **RF-05** | Cercare un POI per nome o parola chiave | Visitatore | **S** | B2, B9 |
+| **RF-04** | Filtrare i POI per categoria (storia, arte, tradizioni, gastronomia) e per tema (es. Tridentum romana, guerra e ricostruzione, Adige) | Visitatore | **M** | B1, B2 |
+| **RF-05** | Cercare un POI per nome o parola chiave | Visitatore | **M** | B2, B9 |
 | **RF-06** | Inquadrare un monumento o un affresco con la fotocamera per aprirne la scheda | Visitatore | **C** | B2, B3 |
 
 ### 2.2 Itinerari
 
 | ID | Requisito | Attori | Priorità | Bisogni |
 |---|---|---|---|---|
-| **RF-07** | Proporre itinerari tematici predefiniti, come sequenza ordinata di POI mostrata sulla mappa | Visitatore | **S** | B4, B11 |
+| **RF-07** | Proporre itinerari tematici predefiniti, come sequenza ordinata di POI mostrata sulla mappa | Visitatore | **M** | B4, B11 |
 | **RF-08** | Generare un itinerario in base al tempo disponibile (es. 2 ore, mezza giornata) e alla posizione di partenza | Visitatore | **C** | B4 |
 | **RF-09** | Salvare POI e itinerari tra i preferiti | Utente registrato | **C** | B4 |
 
@@ -118,7 +119,7 @@ Ogni requisito si legge come *"Il sistema deve permettere a …"*. La colonna **
 |---|---|---|---|---|
 | **RF-19** | Mostrare una sezione su feste, usanze e tradizioni trentine, collegate a luoghi e periodi dell'anno | Visitatore | **S** | B1, B2 |
 | **RF-20** | Mostrare una mappa dei locali con piatti tipici, con il piatto consigliato per ciascuno | Visitatore | **S** | B7 |
-| **RF-21** | Giocare a "Dov'era?": vedere una foto storica, indicare il punto sulla mappa e ricevere un punteggio in base alla distanza | Visitatore | **S** | B10 |
+| **RF-21** | Giocare a "Dov'era?": vedere una foto storica, indicare il punto sulla mappa e ricevere un punteggio in base alla distanza | Visitatore | **C** | B10 |
 | **RF-22** | Salvare i punteggi e mostrare una classifica | Utente registrato | **C** | B10 |
 | **RF-23** | Usare le foto della community approvate come livelli del gioco, con il consenso dell'autore | Moderatore | **C** | B5, B10 |
 
@@ -142,9 +143,9 @@ Ogni requisito si legge come *"Il sistema deve permettere a …"*. La colonna **
 
 | Priorità | Quanti | Requisiti |
 |---|---|---|
-| **Must** | 11 | RF-01, 02, 03, 10, 11, 13, 14, 16, 17, 24, 25 |
-| **Should** | 9 | RF-04, 05, 07, 12, 15, 18, 19, 20, 21 |
-| **Could** | 5 | RF-06, 08, 09, 22, 23 |
+| **Must** | 14 | RF-01, 02, 03, 04, 05, 07, 10, 11, 13, 14, 16, 17, 24, 25 |
+| **Should** | 5 | RF-12, 15, 18, 19, 20 |
+| **Could** | 6 | RF-06, 08, 09, 21, 22, 23 |
 | **Won't** | 4 | RF-26, 27, 28, 29 |
 
 ---
