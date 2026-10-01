@@ -5,6 +5,7 @@
 **Team:** Manuel Bulla · Marco Buffa · Pietro Crea
 **Versione:** 0.1 · **Stato:** Bozza
 **Documento precedente:** [Fase 2 — Specifiche dei requisiti](fase-2-specifiche-requisiti.md)
+**Documento successivo:** [Fase 4 — Pianificazione dello sviluppo](fase-4-pianificazione.md)
 
 ### Storico delle revisioni
 

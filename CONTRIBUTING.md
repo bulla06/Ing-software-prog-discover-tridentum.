@@ -42,6 +42,9 @@ Gli ID non si riusano e non si rinumerano: se un elemento viene eliminato, il su
 | Caso d'uso | `UC-nn` | UC-04 | Fase 2 §4 |
 | Schermata | `S-nn` | S-03 | Fase 3 §3.2 |
 | Decisione architetturale | `D-nn` | D-05 | Fase 3 §6 |
+| Pacchetto e task della WBS | `n` e `n.n` | 4.2 | Fase 4 §3 |
+| Milestone | `M-n` | M-2 | Fase 4 §4.1 |
+| Rischio | `R-nn` | R-08 | Fase 4 §6 |
 
 Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fase 2 §5, Fase 3 §9) vanno aggiornate ogni volta che si aggiunge o si modifica un requisito o un caso d'uso.
 
@@ -49,6 +52,7 @@ Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fa
 
 - Prima di lavorare: `git pull --rebase`.
 - Commit piccoli e con un solo scopo.
+- Una issue per ogni task della WBS, con il codice nel titolo (es. `[4.2] Mappa`), e una pull request per issue, approvata da un altro membro (Fase 4 §5).
 - Messaggi di commit in italiano, all'imperativo o descrittivi, con la fase se pertinente:
   `Fase 2: aggiungi caso d'uso UC-08`, `Riorganizza la cartella docs`.
 - Chi usa strumenti di AI lo indica nel proprio libretto delle attività.
