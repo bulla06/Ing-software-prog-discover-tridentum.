@@ -1,0 +1,50 @@
+[
+  {
+    "id": "feste-vigiliane",
+    "nome": "Feste Vigiliane",
+    "periodo": "Giugno",
+    "mesi": [6],
+    "descrizione": "Le feste del patrono San Vigilio (26 giugno): sfilate in costume, la Tonca dei Ciusi e dei Gobj con la polenta in Piazza Fiera e il Palio dell'Oca, una gara di zattere sull'Adige.",
+    "luoghi": ["duomo", "piazza-fiera", "adige"]
+  },
+  {
+    "id": "trento-film-festival",
+    "nome": "Trento Film Festival",
+    "periodo": "Aprile – maggio",
+    "mesi": [4, 5],
+    "descrizione": "Dal 1952 il festival di cinema dedicato alla montagna, all'esplorazione e all'avventura: il più antico del suo genere.",
+    "luoghi": ["piazza-fiera"]
+  },
+  {
+    "id": "festival-economia",
+    "nome": "Festival dell'Economia",
+    "periodo": "Fine maggio – inizio giugno",
+    "mesi": [5, 6],
+    "descrizione": "Dal 2006 economisti, giornalisti e premi Nobel discutono in piazze, palazzi e teatri del centro.",
+    "luoghi": ["palazzo-geremia", "buonconsiglio"]
+  },
+  {
+    "id": "mercatini-natale",
+    "nome": "Mercatini di Natale",
+    "periodo": "Fine novembre – inizio gennaio",
+    "mesi": [11, 12, 1],
+    "descrizione": "Casette di legno con artigianato, vin brulé e dolci tipici in Piazza Fiera e Piazza Cesare Battisti.",
+    "luoghi": ["piazza-fiera", "sass"]
+  },
+  {
+    "id": "santa-lucia",
+    "nome": "Santa Lucia",
+    "periodo": "13 dicembre",
+    "mesi": [12],
+    "descrizione": "In Trentino i bambini ricevono i doni da Santa Lucia, che arriva di notte con il suo asinello: la sera prima si lasciano fieno e una carota.",
+    "luoghi": []
+  },
+  {
+    "id": "carnevale",
+    "nome": "Carnevale e grostoli",
+    "periodo": "Febbraio",
+    "mesi": [2],
+    "descrizione": "Feste in maschera nei quartieri e nei paesi intorno alla città; in ogni pasticceria compaiono i grostoli, sfoglie fritte e zuccherate.",
+    "luoghi": []
+  }
+]

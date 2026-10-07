@@ -1,0 +1,42 @@
+[
+  {
+    "id": "affreschi-all-aperto",
+    "titolo": "Affreschi all'aperto",
+    "tema": "arte",
+    "durata_minuti": 90,
+    "descrizione": "Le facciate dipinte del centro e i cicli del Buonconsiglio: basta alzare gli occhi.",
+    "tappe": ["case-cazuffi-rella", "nettuno", "palazzo-geremia", "loggia-romanino", "torre-aquila"]
+  },
+  {
+    "id": "tridentum-e-concilio",
+    "titolo": "Da Tridentum al Concilio",
+    "tema": "tridentum",
+    "durata_minuti": 60,
+    "descrizione": "Dalla strada romana sotto Piazza Battisti alle chiese che ospitarono il Concilio.",
+    "tappe": ["sass", "duomo", "palazzo-pretorio", "santa-maria-maggiore"]
+  },
+  {
+    "id": "vecchio-adige",
+    "titolo": "Dove passava l'Adige",
+    "tema": "adige",
+    "durata_minuti": 75,
+    "descrizione": "Seguire il vecchio corso del fiume, dalla torre del ponte alla collina sulla riva destra.",
+    "tappe": ["torre-vanga", "adige", "gallerie-piedicastello", "doss-trento"]
+  },
+  {
+    "id": "guerra-e-ricostruzione",
+    "titolo": "Guerra e ricostruzione",
+    "tema": "guerra",
+    "durata_minuti": 120,
+    "descrizione": "Il Novecento di Trento: irredentismo, Grande Guerra, bombardamenti e dopoguerra.",
+    "tappe": ["piazza-dante", "bombardamenti", "buonconsiglio", "gallerie-piedicastello", "doss-trento"]
+  },
+  {
+    "id": "mezza-giornata",
+    "titolo": "Mezza giornata nel cuore di Trento",
+    "tema": "principi-vescovi",
+    "durata_minuti": 240,
+    "descrizione": "Il giro completo per chi ha un pomeriggio: piazze, palazzi, castello e mura.",
+    "tappe": ["duomo", "nettuno", "case-cazuffi-rella", "palazzo-pretorio", "sass", "palazzo-thun", "palazzo-geremia", "buonconsiglio", "torre-aquila", "piazza-fiera"]
+  }
+]

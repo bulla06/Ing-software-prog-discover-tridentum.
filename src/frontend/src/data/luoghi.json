@@ -1,0 +1,358 @@
+[
+  {
+    "id": "duomo",
+    "nome": "Cattedrale di San Vigilio",
+    "categoria": "storia",
+    "temi": ["principi-vescovi", "concilio"],
+    "posizione": [46.0667, 11.1214],
+    "indirizzo": "Piazza Duomo",
+    "epoca": "Dal XIII secolo",
+    "sintesi": "Il Duomo romanico dove nel 1545 si aprì il Concilio di Trento.",
+    "descrizione": [
+      "La cattedrale romanica fu costruita a partire dal 1212 per volere del principe vescovo Federico Vanga, sul luogo di una basilica paleocristiana dedicata a San Vigilio, patrono della città.",
+      "Il 13 dicembre 1545 qui si aprì il Concilio di Trento, che per diciotto anni portò in città cardinali, vescovi e teologi da tutta Europa.",
+      "Sotto la chiesa si visitano i resti della basilica più antica: un primo strato della storia cittadina che pochi turisti scendono a vedere."
+    ],
+    "parole_chiave": ["duomo", "cattedrale", "san vigilio", "concilio", "romanico", "basilica paleocristiana"],
+    "fonti": [
+      { "titolo": "Arcidiocesi di Trento", "url": "https://www.diocesitn.it" },
+      { "titolo": "Cultura Trentino — Provincia autonoma di Trento", "url": "https://www.cultura.trentino.it" }
+    ]
+  },
+  {
+    "id": "nettuno",
+    "nome": "Fontana del Nettuno",
+    "categoria": "arte",
+    "temi": ["principi-vescovi"],
+    "posizione": [46.0672, 11.1212],
+    "indirizzo": "Piazza Duomo",
+    "epoca": "1767–1769",
+    "sintesi": "La fontana barocca al centro di Piazza Duomo, punto d'incontro dei trentini.",
+    "descrizione": [
+      "La fontana fu realizzata tra il 1767 e il 1769 su progetto di Francesco Antonio Giongo, per portare in piazza l'acqua di un nuovo acquedotto.",
+      "Nettuno con il tridente richiama il nome latino della città, Tridentum: un gioco di parole che i trentini raccontano volentieri.",
+      "Ancora oggi è il punto d'incontro più usato del centro: «ci vediamo al Nettuno»."
+    ],
+    "parole_chiave": ["nettuno", "fontana", "tridente", "barocco", "piazza duomo"],
+    "fonti": [
+      { "titolo": "Comune di Trento", "url": "https://www.comune.trento.it" }
+    ]
+  },
+  {
+    "id": "case-cazuffi-rella",
+    "nome": "Case Cazuffi-Rella",
+    "categoria": "arte",
+    "temi": ["principi-vescovi"],
+    "posizione": [46.0673, 11.1220],
+    "indirizzo": "Piazza Duomo, lato nord",
+    "epoca": "XVI secolo",
+    "affresco": { "autore": "Attribuiti a Marcello Fogolino", "epoca": "Prima metà del XVI secolo" },
+    "sintesi": "Due facciate interamente dipinte che si guardano dalla piazza senza che quasi nessuno alzi gli occhi.",
+    "descrizione": [
+      "Le due case rinascimentali sul lato nord di Piazza Duomo hanno le facciate coperte di affreschi con figure allegoriche, virtù e scene morali.",
+      "Gli affreschi sono attribuiti al pittore Marcello Fogolino, attivo a Trento negli anni del principe vescovo Bernardo Clesio.",
+      "Il modo migliore per vederle è dal bordo della Fontana del Nettuno, con il sole del pomeriggio."
+    ],
+    "parole_chiave": ["affreschi", "facciate dipinte", "fogolino", "rinascimento", "allegorie"],
+    "fonti": [
+      { "titolo": "Cultura Trentino — Provincia autonoma di Trento", "url": "https://www.cultura.trentino.it" }
+    ]
+  },
+  {
+    "id": "palazzo-pretorio",
+    "nome": "Palazzo Pretorio e Torre Civica",
+    "categoria": "storia",
+    "temi": ["principi-vescovi", "concilio"],
+    "posizione": [46.0668, 11.1222],
+    "indirizzo": "Piazza Duomo",
+    "epoca": "XI–XIII secolo",
+    "sintesi": "L'antica residenza dei vescovi e la torre con la campana «Renga».",
+    "descrizione": [
+      "Prima del Castello del Buonconsiglio i vescovi di Trento vivevano qui, accanto alla cattedrale. Oggi il palazzo ospita il Museo Diocesano Tridentino.",
+      "La Torre Civica conserva la campana chiamata «Renga», che un tempo suonava per radunare i cittadini e per annunciare le esecuzioni.",
+      "Il museo conserva arazzi e opere legate al Concilio di Trento."
+    ],
+    "parole_chiave": ["torre civica", "renga", "museo diocesano", "vescovi", "campana"],
+    "fonti": [
+      { "titolo": "Museo Diocesano Tridentino", "url": "https://www.museodiocesanotridentino.it" }
+    ]
+  },
+  {
+    "id": "sass",
+    "nome": "S.A.S.S. — Tridentum sotterranea",
+    "categoria": "storia",
+    "temi": ["tridentum"],
+    "posizione": [46.0685, 11.1230],
+    "indirizzo": "Piazza Cesare Battisti",
+    "epoca": "I secolo a.C. – V secolo d.C.",
+    "sintesi": "Sotto la piazza, una strada lastricata della città romana di Tridentum.",
+    "descrizione": [
+      "Lo Spazio Archeologico Sotterraneo del Sas conserva, alcuni metri sotto Piazza Cesare Battisti, un tratto della città romana: una strada lastricata con i solchi dei carri, le mura, una torre e i resti di case con pavimenti a mosaico.",
+      "È la parte di storia che la città non mostra in superficie: camminando per il centro si passa sopra Tridentum senza saperlo."
+    ],
+    "parole_chiave": ["tridentum", "romani", "archeologia", "strada romana", "sotterraneo", "mosaici"],
+    "fonti": [
+      { "titolo": "Cultura Trentino — Beni archeologici", "url": "https://www.cultura.trentino.it" }
+    ]
+  },
+  {
+    "id": "palazzo-geremia",
+    "nome": "Palazzo Geremia",
+    "categoria": "arte",
+    "temi": ["principi-vescovi"],
+    "posizione": [46.0688, 11.1203],
+    "indirizzo": "Via Rodolfo Belenzani",
+    "epoca": "Fine XV – inizio XVI secolo",
+    "affresco": { "autore": "Autore da verificare", "epoca": "Inizio XVI secolo" },
+    "sintesi": "Una facciata dipinta che racconta la Trento rinascimentale lungo la via dei palazzi.",
+    "descrizione": [
+      "Via Belenzani è la strada rinascimentale dei palazzi nobili. Palazzo Geremia è il più fotografato per la sua facciata affrescata.",
+      "Gli affreschi esterni, dei primi anni del Cinquecento, mostrano scene di corte e figure legate al mondo dell'imperatore Massimiliano I.",
+      "La lettura delle scene e l'attribuzione sono da verificare con la Soprintendenza (Fase 4, WBS 3)."
+    ],
+    "parole_chiave": ["affreschi", "via belenzani", "rinascimento", "massimiliano", "facciata"],
+    "fonti": [
+      { "titolo": "Comune di Trento", "url": "https://www.comune.trento.it" }
+    ]
+  },
+  {
+    "id": "palazzo-thun",
+    "nome": "Palazzo Thun",
+    "categoria": "storia",
+    "temi": ["principi-vescovi"],
+    "posizione": [46.0684, 11.1209],
+    "indirizzo": "Via Rodolfo Belenzani",
+    "epoca": "XVI secolo",
+    "sintesi": "Il palazzo di una delle grandi famiglie trentine, oggi sede del Comune.",
+    "descrizione": [
+      "I Thun sono una delle famiglie nobili più antiche del Trentino: il loro palazzo in città è oggi la sede del Municipio.",
+      "Le storie delle famiglie che hanno costruito via Belenzani sono uno dei temi su cui la community può aggiungere ricordi e aneddoti."
+    ],
+    "parole_chiave": ["thun", "municipio", "comune", "famiglie", "nobiltà"],
+    "fonti": [
+      { "titolo": "Comune di Trento", "url": "https://www.comune.trento.it" }
+    ]
+  },
+  {
+    "id": "santa-maria-maggiore",
+    "nome": "Chiesa di Santa Maria Maggiore",
+    "categoria": "storia",
+    "temi": ["concilio"],
+    "posizione": [46.0692, 11.1192],
+    "indirizzo": "Piazza Santa Maria Maggiore",
+    "epoca": "1520–1524",
+    "sintesi": "La chiesa rinascimentale voluta da Bernardo Clesio, sede di riunioni del Concilio.",
+    "descrizione": [
+      "Il principe vescovo Bernardo Clesio fece ricostruire la chiesa negli anni Venti del Cinquecento, affidandola all'architetto Antonio Medaglia.",
+      "Durante il Concilio ospitò molte riunioni dei padri conciliari, quando il Duomo non bastava.",
+      "Sotto la chiesa sono emersi resti di epoca romana e paleocristiana."
+    ],
+    "parole_chiave": ["concilio", "clesio", "rinascimento", "chiesa", "medaglia"],
+    "fonti": [
+      { "titolo": "Arcidiocesi di Trento", "url": "https://www.diocesitn.it" }
+    ]
+  },
+  {
+    "id": "buonconsiglio",
+    "nome": "Castello del Buonconsiglio",
+    "categoria": "storia",
+    "temi": ["principi-vescovi", "trento-austriaca", "guerra"],
+    "posizione": [46.0708, 11.1272],
+    "indirizzo": "Via Bernardo Clesio",
+    "epoca": "XIII–XVIII secolo",
+    "sintesi": "La residenza dei principi vescovi e, nel 1916, il luogo del processo a Cesare Battisti.",
+    "descrizione": [
+      "Dal Duecento alla fine del Settecento il castello fu la residenza dei principi vescovi di Trento. Il nucleo più antico è il Castelvecchio; il Magno Palazzo fu fatto costruire da Bernardo Clesio nel Cinquecento.",
+      "Nel 1916 nella Fossa dei Martiri furono giustiziati dagli austriaci Cesare Battisti, Damiano Chiesa e Fabio Filzi, irredentisti trentini arruolati nell'esercito italiano.",
+      "Oggi è il museo più grande della città."
+    ],
+    "parole_chiave": ["castello", "principi vescovi", "clesio", "battisti", "fossa dei martiri", "museo"],
+    "fonti": [
+      { "titolo": "Castello del Buonconsiglio", "url": "https://www.buonconsiglio.it" }
+    ]
+  },
+  {
+    "id": "torre-aquila",
+    "nome": "Torre Aquila — Ciclo dei Mesi",
+    "categoria": "arte",
+    "temi": ["principi-vescovi"],
+    "posizione": [46.0716, 11.1287],
+    "indirizzo": "Castello del Buonconsiglio",
+    "epoca": "Intorno al 1400",
+    "affresco": { "autore": "Maestro Venceslao (attribuzione)", "epoca": "Intorno al 1400" },
+    "sintesi": "Uno dei cicli profani gotici più belli d'Europa: la vita di un anno a Trento.",
+    "descrizione": [
+      "Il principe vescovo Giorgio di Liechtenstein fece affrescare una sala della torre con i mesi dell'anno: nobili che giocano a palle di neve, contadini che arano, vendemmiano e fanno il formaggio.",
+      "Gli affreschi sono attribuiti a un pittore di origine boema, noto come Maestro Venceslao. Dei dodici mesi ne restano undici: marzo è andato perduto.",
+      "La torre si visita con il percorso del Castello del Buonconsiglio."
+    ],
+    "parole_chiave": ["ciclo dei mesi", "affreschi", "gotico", "venceslao", "liechtenstein", "torre"],
+    "fonti": [
+      { "titolo": "Castello del Buonconsiglio", "url": "https://www.buonconsiglio.it" }
+    ]
+  },
+  {
+    "id": "loggia-romanino",
+    "nome": "Loggia del Romanino",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "concilio"],
+    "posizione": [46.0705, 11.1265],
+    "indirizzo": "Castello del Buonconsiglio, Magno Palazzo",
+    "epoca": "1531–1532",
+    "affresco": { "autore": "Girolamo Romanino", "epoca": "1531–1532" },
+    "sintesi": "La loggia dipinta del palazzo di Bernardo Clesio, tra miti e figure grottesche.",
+    "descrizione": [
+      "Per il suo nuovo Magno Palazzo, Bernardo Clesio chiamò alcuni dei migliori pittori del tempo. Girolamo Romanino affrescò la loggia con scene mitologiche e figure piene di vita.",
+      "È il cuore rinascimentale del castello e il simbolo della Trento che si preparava ad accogliere il Concilio."
+    ],
+    "parole_chiave": ["romanino", "affreschi", "clesio", "magno palazzo", "rinascimento", "loggia"],
+    "fonti": [
+      { "titolo": "Castello del Buonconsiglio", "url": "https://www.buonconsiglio.it" }
+    ]
+  },
+  {
+    "id": "piazza-fiera",
+    "nome": "Piazza Fiera e le mura",
+    "categoria": "tradizioni",
+    "temi": ["principi-vescovi"],
+    "posizione": [46.0659, 11.1233],
+    "indirizzo": "Piazza Fiera",
+    "epoca": "Mura del XIII secolo",
+    "sintesi": "L'ultimo tratto delle mura medievali e la piazza dei mercatini di Natale.",
+    "descrizione": [
+      "Su un lato della piazza resta uno dei tratti meglio conservati delle mura che chiudevano la città medievale.",
+      "La piazza è da secoli luogo di fiere e mercati: oggi ospita i Mercatini di Natale e alcuni appuntamenti delle Feste Vigiliane."
+    ],
+    "parole_chiave": ["mura", "medioevo", "mercatini", "natale", "feste vigiliane", "fiera"],
+    "fonti": [
+      { "titolo": "Comune di Trento", "url": "https://www.comune.trento.it" }
+    ]
+  },
+  {
+    "id": "torre-vanga",
+    "nome": "Torre Vanga",
+    "categoria": "storia",
+    "temi": ["adige", "principi-vescovi"],
+    "posizione": [46.0708, 11.1186],
+    "indirizzo": "Piazza della Portela",
+    "epoca": "Inizio XIII secolo",
+    "sintesi": "Una torre costruita a guardia del ponte sull'Adige, oggi lontana dal fiume.",
+    "descrizione": [
+      "Il principe vescovo Federico Vanga la fece costruire all'inizio del Duecento per controllare il ponte di San Lorenzo, unico passaggio sull'Adige.",
+      "Allora il fiume scorreva qui, sotto le mura. Dopo la rettifica dell'Adige a metà Ottocento la torre è rimasta in mezzo alla città: è il segno più evidente di dove passava il vecchio corso."
+    ],
+    "parole_chiave": ["torre", "adige", "ponte", "vanga", "fiume", "portela"],
+    "fonti": [
+      { "titolo": "Cultura Trentino — Provincia autonoma di Trento", "url": "https://www.cultura.trentino.it" }
+    ]
+  },
+  {
+    "id": "adige",
+    "nome": "La rettifica dell'Adige",
+    "categoria": "storia",
+    "temi": ["adige", "trento-austriaca"],
+    "posizione": [46.0717, 11.1152],
+    "indirizzo": "Lungadige, Ponte San Lorenzo",
+    "epoca": "Metà del XIX secolo",
+    "sintesi": "Il fiume è stato spostato: la città moderna è cresciuta sul vecchio letto.",
+    "descrizione": [
+      "Fino all'Ottocento l'Adige descriveva un'ansa che lambiva la città e la allagava spesso. Sotto il governo austriaco, a metà Ottocento, il corso fu rettificato e spostato più a ovest.",
+      "Il vecchio letto fu interrato e sopra sono nati strade, case e la zona della stazione. Torre Vanga e Piedicastello raccontano ancora com'era la città prima."
+    ],
+    "parole_chiave": ["adige", "fiume", "rettifica", "argini", "alluvioni", "ottocento", "austria"],
+    "fonti": [
+      { "titolo": "Fondazione Museo storico del Trentino", "url": "https://www.museostorico.it" }
+    ]
+  },
+  {
+    "id": "piazza-dante",
+    "nome": "Monumento a Dante",
+    "categoria": "storia",
+    "temi": ["trento-austriaca"],
+    "posizione": [46.0718, 11.1215],
+    "indirizzo": "Piazza Dante",
+    "epoca": "1896",
+    "sintesi": "Una statua inaugurata quando Trento era austriaca, per dire che la città si sentiva italiana.",
+    "descrizione": [
+      "Il monumento, opera dello scultore fiorentino Cesare Zocchi, fu inaugurato nel 1896, quando Trento faceva parte dell'Impero austro-ungarico.",
+      "Scegliere Dante, padre della lingua italiana, era una presa di posizione: la statua divenne il simbolo dell'irredentismo trentino."
+    ],
+    "parole_chiave": ["dante", "monumento", "irredentismo", "austria", "zocchi", "statua"],
+    "fonti": [
+      { "titolo": "Fondazione Museo storico del Trentino", "url": "https://www.museostorico.it" }
+    ]
+  },
+  {
+    "id": "bombardamenti",
+    "nome": "La stazione e i bombardamenti del 1943",
+    "categoria": "storia",
+    "temi": ["guerra"],
+    "posizione": [46.0725, 11.1192],
+    "indirizzo": "Piazza Dante, stazione ferroviaria",
+    "epoca": "1943–1945",
+    "sintesi": "Dal settembre 1943 la città fu bombardata per colpire la ferrovia del Brennero.",
+    "descrizione": [
+      "Il 2 settembre 1943 Trento subì il primo bombardamento aereo alleato, che causò centinaia di vittime. Fino al 1945 seguirono molte altre incursioni contro la ferrovia del Brennero e i ponti sull'Adige.",
+      "Interi isolati attorno alla stazione e verso l'Adige furono distrutti e poi ricostruiti nel dopoguerra: molti edifici «nuovi» del centro nascono da qui.",
+      "Le date e i numeri vanno verificati con le fonti d'archivio prima della pubblicazione."
+    ],
+    "parole_chiave": ["bombardamenti", "guerra", "1943", "ricostruzione", "stazione", "brennero"],
+    "fonti": [
+      { "titolo": "Fondazione Museo storico del Trentino", "url": "https://www.museostorico.it" }
+    ]
+  },
+  {
+    "id": "gallerie-piedicastello",
+    "nome": "Le Gallerie di Piedicastello",
+    "categoria": "storia",
+    "temi": ["guerra", "adige"],
+    "posizione": [46.0698, 11.1116],
+    "indirizzo": "Piazza di Piedicastello",
+    "epoca": "Tunnel stradali del XX secolo",
+    "sintesi": "Due vecchi tunnel della tangenziale trasformati in spazio di mostre sulla storia trentina.",
+    "descrizione": [
+      "Quando la strada fu spostata, le due gallerie sotto il Doss Trento sono state chiuse al traffico e trasformate in uno spazio espositivo della Fondazione Museo storico del Trentino.",
+      "Ospitano mostre sulla storia del Novecento, dalla Grande Guerra alla ricostruzione."
+    ],
+    "parole_chiave": ["gallerie", "piedicastello", "mostre", "museo storico", "novecento"],
+    "fonti": [
+      { "titolo": "Fondazione Museo storico del Trentino", "url": "https://www.museostorico.it" }
+    ]
+  },
+  {
+    "id": "doss-trento",
+    "nome": "Doss Trento e il Mausoleo di Battisti",
+    "categoria": "storia",
+    "temi": ["guerra", "trento-austriaca"],
+    "posizione": [46.0735, 11.1101],
+    "indirizzo": "Doss Trento",
+    "epoca": "1935",
+    "sintesi": "La collina sopra l'Adige con il mausoleo di Cesare Battisti e la vista sulla città.",
+    "descrizione": [
+      "Il Doss Trento è la collina rocciosa sulla riva destra dell'Adige. In cima si trova il mausoleo dedicato a Cesare Battisti, inaugurato nel 1935.",
+      "Dalla collina si capisce bene la forma della città e il percorso del fiume dopo la rettifica."
+    ],
+    "parole_chiave": ["doss trento", "battisti", "mausoleo", "panorama", "collina"],
+    "fonti": [
+      { "titolo": "Comune di Trento", "url": "https://www.comune.trento.it" }
+    ]
+  },
+  {
+    "id": "palazzo-albere",
+    "nome": "Palazzo delle Albere",
+    "categoria": "storia",
+    "temi": ["principi-vescovi", "concilio"],
+    "posizione": [46.0617, 11.1149],
+    "indirizzo": "Via Roberto da Sanseverino",
+    "epoca": "XVI secolo",
+    "sintesi": "La villa fortificata dei Madruzzo, signori della Trento del Concilio.",
+    "descrizione": [
+      "I Madruzzo, famiglia di principi vescovi negli anni del Concilio, costruirono questa villa con torri angolari e fossato, un tempo circondata da un viale di alberi: da qui il nome.",
+      "Oggi si trova accanto al quartiere Le Albere e al MUSE, tra antico e contemporaneo."
+    ],
+    "parole_chiave": ["madruzzo", "villa", "albere", "concilio", "muse"],
+    "fonti": [
+      { "titolo": "Cultura Trentino — Provincia autonoma di Trento", "url": "https://www.cultura.trentino.it" }
+    ]
+  }
+]

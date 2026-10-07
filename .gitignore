@@ -11,3 +11,8 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Dipendenze e build del codice
+node_modules/
+dist/
+coverage/
