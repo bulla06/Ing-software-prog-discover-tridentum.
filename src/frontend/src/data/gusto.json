@@ -1,0 +1,12 @@
+[
+  { "id": "strangolapreti", "nome": "Strangolapreti", "tipo": "Primo", "descrizione": "Gnocchi di pane raffermo e spinaci o erbette, conditi con burro fuso e formaggio grattugiato. Il nome scherza sui preti del Concilio, che ne avrebbero mangiati troppi." },
+  { "id": "canederli", "nome": "Canederli", "tipo": "Primo", "descrizione": "Grandi gnocchi di pane, latte, uova e speck o formaggio, serviti in brodo oppure asciutti con burro." },
+  { "id": "carne-salada", "nome": "Carne salada", "tipo": "Secondo", "descrizione": "Carne di manzo lasciata riposare in salamoia con spezie, servita cruda a fettine sottili o scottata con i fagioli." },
+  { "id": "tortel-patate", "nome": "Tortel di patate", "tipo": "Secondo", "descrizione": "Frittella croccante di patate grattugiate, da accompagnare con salumi e formaggi di malga." },
+  { "id": "polenta", "nome": "Polenta", "tipo": "Contorno", "descrizione": "Di mais o di patate, con funghi, formaggio fuso o spezzatino: il piatto della Tonca dei Ciusi e dei Gobj." },
+  { "id": "puzzone", "nome": "Puzzone di Moena", "tipo": "Formaggio", "descrizione": "Formaggio DOP della Val di Fassa dal profumo intenso, dovuto alla crosta lavata durante la stagionatura." },
+  { "id": "strudel", "nome": "Strudel di mele", "tipo": "Dolce", "descrizione": "Pasta sottile arrotolata con mele, uvetta, pinoli e cannella: un'eredità della cucina austriaca." },
+  { "id": "zelten", "nome": "Zelten", "tipo": "Dolce", "descrizione": "Pane dolce natalizio ricco di frutta secca e candita, diverso in ogni famiglia." },
+  { "id": "trentodoc", "nome": "Trentodoc", "tipo": "Vino", "descrizione": "Spumante di montagna prodotto con il metodo classico, da uve coltivate sulle colline trentine." },
+  { "id": "mela-val-di-non", "nome": "Mela Val di Non", "tipo": "Frutta", "descrizione": "Mela DOP coltivata nella valle a nord di Trento, protagonista di strudel e succhi." }
+]

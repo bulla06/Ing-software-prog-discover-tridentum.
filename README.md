@@ -41,6 +41,41 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 - **Residenti**: riscoprono la città e ne diventano narratori.
 - **Comune**: valorizza il patrimonio "minore" e distribuisce meglio i flussi nel centro.
 
+## Il sito
+
+Il primo prototipo della web app si trova in [`src/frontend/`](src/frontend). È il **Frontend Web** della [Fase 3](docs/fase-3-architettura-user-flow.md#51-frontend-web) (React + Vite, mappa Leaflet su OpenStreetMap), per ora **senza backend né database**: i dati dei luoghi sono file JSON in [`src/frontend/src/data/`](src/frontend/src/data).
+
+### Avvio
+
+Serve [Node.js](https://nodejs.org) 22 o superiore.
+
+```bash
+cd src/frontend
+npm install        # solo la prima volta
+npm run dev        # sito su http://localhost:5173
+npm test           # test in tests/frontend
+npm run build      # versione da pubblicare, nella cartella dist/
+```
+
+### Cosa c'è
+
+| Schermata (Fase 3 §3.2) | Stato |
+|---|---|
+| S-00 Benvenuto, scelta della lingua (italiano/inglese) | ✅ |
+| S-01 Mappa con posizione, S-01L Elenco, S-02 Anteprima | ✅ |
+| S-04 Ricerca e filtri per categoria e tema | ✅ |
+| S-03 Scheda del luogo, con fonti, luoghi vicini e "Come arrivare" | ✅ |
+| S-05 Itinerari con filtro "quanto tempo hai", S-06 Itinerario tappa per tappa | ✅ |
+| S-11 Scopri: tradizioni e piatti tipici | ✅ (locali della Mappa del gusto da selezionare) |
+| S-10 Dov'era? con indizi testuali | ✅ (foto storiche e classifica con il backend) |
+| S-09 Profilo: lingua, luoghi salvati sul dispositivo, export GeoJSON | ✅ |
+| S-07 Accesso, S-08 Ricordi, S-13 Moderazione, S-14 Amministrazione | ⏳ servono backend e database |
+
+**Da sapere**
+- I testi dei luoghi sono **dimostrativi**: date, attribuzioni e fonti vanno verificate dal team (WBS 3) prima della pubblicazione.
+- [`src/frontend/src/data/api.js`](src/frontend/src/data/api.js) ha una funzione per ogni endpoint dell'API Gateway (Fase 3 §5.2): quando ci sarà il backend basterà sostituire il loro contenuto con le chiamate HTTP, senza toccare le pagine.
+- I test in [`tests/frontend/`](tests/frontend) controllano anche la coerenza dei dati (ID unici, almeno una fonte per luogo, tappe esistenti), cioè i vincoli che imporrà il database.
+
 ## Struttura del repository
 
 ```
@@ -55,13 +90,23 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 ├── presentazioni/
 │   ├── presentazione-v1.pptx             # prima versione
 │   └── presentazione-v2.pptx             # versione attuale, nuovo design
+├── src/
+│   └── frontend/                         # il sito: React + Vite + Leaflet
+│       └── src/
+│           ├── data/                     # dati dei luoghi (JSON) e accesso ai dati
+│           ├── pages/                    # una pagina per schermata
+│           ├── components/               # mappa, barra di navigazione, icone…
+│           ├── i18n/                     # testi in italiano e inglese
+│           └── lib/                      # distanze, ricerca, posizione, preferenze
+├── tests/
+│   └── frontend/                         # test automatici (Vitest)
 ├── CONTRIBUTING.md                       # convenzioni del team (nomi, commit, documenti)
 └── README.md
 ```
 
 ## Stato del progetto
 
-🚧 Fase di analisi e progettazione.
+🚧 Progettazione completata; primo prototipo del sito senza backend e database.
 
 | Fase | Documento | Versione | Stato |
 |---|---|---|---|
