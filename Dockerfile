@@ -8,6 +8,8 @@ WORKDIR /app
 # Prima solo i package.json: le dipendenze si reinstallano solo quando cambiano
 COPY package.json package-lock.json ./
 COPY src/frontend/package.json src/frontend/
+# Anche la v2 è un workspace del lockfile: senza il suo package.json npm ci si fermerebbe
+COPY src/frontend-v2/package.json src/frontend-v2/
 COPY src/backend/package.json src/backend/
 RUN npm ci
 

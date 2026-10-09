@@ -5,6 +5,7 @@
   "type": "module",
   "workspaces": [
     "src/frontend",
+    "src/frontend-v2",
     "src/backend"
   ],
   "engines": {
@@ -12,9 +13,10 @@
   },
   "scripts": {
     "dev": "concurrently --kill-others-on-fail -n backend,frontend -c red,blue \"npm run dev -w src/backend\" \"npm run dev -w src/frontend\"",
+    "dev:v2": "concurrently --kill-others-on-fail -n backend,frontend-v2 -c red,magenta \"npm run dev -w src/backend\" \"npm run dev -w src/frontend-v2\"",
     "build": "npm run build -w src/frontend",
     "start": "npm run build && npm start -w src/backend",
-    "test": "npm test -w src/frontend && npm test -w src/backend",
+    "test": "npm test -w src/frontend && npm test -w src/frontend-v2 && npm test -w src/backend",
     "crea-amministratore": "npm run crea-amministratore -w src/backend --"
   },
   "devDependencies": {
