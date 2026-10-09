@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Avviso from '../components/Avviso.jsx'
 import Copertina from '../components/Copertina.jsx'
+import CreditiFoto from '../components/CreditiFoto.jsx'
+import Finestra from '../components/Finestra.jsx'
 import Icona from '../components/Icona.jsx'
 import ModuloSegnalazione from '../components/ModuloSegnalazione.jsx'
 import { getPoiById } from '../data/api.js'
@@ -24,6 +26,7 @@ export default function Scheda() {
   const [poi, setPoi] = useState(undefined)
   const [avviso, setAvviso] = useState(null)
   const [segnalazione, setSegnalazione] = useState(null)
+  const [fotoAperta, setFotoAperta] = useState(null)
   const chiudiAvviso = useCallback(() => setAvviso(null), [])
 
   useEffect(() => {
@@ -59,6 +62,7 @@ export default function Scheda() {
   const comeArrivare = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking`
   const distanza = distanzaMetri(origine, poi.posizione)
   const eSalvato = salvato('poi', poi.id)
+  const copertinaUfficiale = poi.foto.find((f) => f.id === poi.copertina)
 
   const salva = async () => {
     if (!utente) return vaiAdAccesso()
@@ -76,6 +80,7 @@ export default function Scheda() {
           <Icona nome="indietro" />
         </button>
         <Copertina poi={poi} />
+        {copertinaUfficiale && <CreditiFoto foto={copertinaUfficiale} className="crediti-foto--copertina" />}
       </div>
 
       <div className="pagina scheda__corpo">
@@ -119,6 +124,23 @@ export default function Scheda() {
           <section className="riquadro riquadro--gusto">
             <h2>{t('scheda.piatto')}</h2>
             <p className="riquadro__evidenza">{poi.piatto_consigliato}</p>
+          </section>
+        )}
+
+        {poi.foto.length > 0 && (
+          <section>
+            <h2>{t('scheda.foto')}</h2>
+            <ul className="galleria">
+              {poi.foto.map((f) => (
+                <li key={f.id}>
+                  <button type="button" className="galleria__voce" onClick={() => setFotoAperta(f)} aria-label={t('scheda.ingrandisci')}>
+                    <img src={urlFoto(f.id, 'mini')} alt={f.didascalia || poi.nome} width={f.larghezza} height={f.altezza} loading="lazy" />
+                  </button>
+                  {f.didascalia && <p className="galleria__didascalia">{f.didascalia}</p>}
+                  <CreditiFoto foto={f} />
+                </li>
+              ))}
+            </ul>
           </section>
         )}
 
@@ -262,6 +284,16 @@ export default function Scheda() {
         </section>
       </div>
 
+      <Finestra titolo={fotoAperta?.didascalia || poi.nome} aperta={Boolean(fotoAperta)} onChiudi={() => setFotoAperta(null)}>
+        {fotoAperta && (
+          <figure className="foto-grande">
+            <img src={urlFoto(fotoAperta.id)} alt={fotoAperta.didascalia || poi.nome} width={fotoAperta.larghezza} height={fotoAperta.altezza} />
+            <figcaption>
+              <CreditiFoto foto={fotoAperta} />
+            </figcaption>
+          </figure>
+        )}
+      </Finestra>
       <ModuloSegnalazione
         bersaglio={segnalazione}
         onChiudi={() => setSegnalazione(null)}

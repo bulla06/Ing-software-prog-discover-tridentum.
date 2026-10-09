@@ -1,5 +1,7 @@
 // UC-01, UC-02, UC-10 (consultazione) · UC-07 Gestire i POI
+import sharp from 'sharp'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { popola } from '../../src/backend/src/db/popola.js'
 import { ACCOUNT, accedi, creaAmbiente } from './ambiente.js'
 
 let amb
@@ -157,5 +159,70 @@ describe('gestione dei POI (UC-07)', () => {
     expect(t.status).toBe(201)
     const lista = (await amb.api().get('/api/tradizioni')).body
     expect(lista.find((x) => x.id === t.body.id).luoghi).toEqual([{ id: 'duomo', nome: 'Cattedrale di San Vigilio' }])
+  })
+})
+
+describe('foto ufficiali dei luoghi', () => {
+  const immagine = () =>
+    sharp({ create: { width: 1200, height: 900, channels: 3, background: { r: 168, g: 57, b: 31 } } }).jpeg().toBuffer()
+
+  const carica = async (auth, campi) => {
+    let r = amb.api().post('/api/admin/poi/duomo/foto').set(auth)
+    for (const [k, v] of Object.entries(campi)) r = r.field(k, v)
+    return r.attach('foto', await immagine(), { filename: 'duomo.jpg', contentType: 'image/jpeg' })
+  }
+
+  it('richiedono autore e licenza', async () => {
+    const r = await carica(admin, { autore: '', licenza: '' })
+    expect(r.status).toBe(400)
+    expect(Object.keys(r.body.campi)).toEqual(expect.arrayContaining(['autore', 'licenza']))
+  })
+
+  it('sono riservate agli amministratori (RNF-S03)', async () => {
+    const mod = await accedi(amb.app, ACCOUNT.moderatore)
+    expect((await carica(mod, { autore: 'X', licenza: 'CC BY 4.0' })).status).toBe(403)
+  })
+
+  it('compaiono nella scheda con i crediti e fanno da copertina', async () => {
+    const r = await carica(admin, {
+      autore: 'Mario Rossi',
+      licenza: 'CC BY-SA 4.0',
+      url_licenza: 'https://creativecommons.org/licenses/by-sa/4.0/',
+      fonte: 'https://commons.wikimedia.org/wiki/File:Esempio.jpg',
+      didascalia: 'La facciata del Duomo',
+    })
+    expect(r.status).toBe(201)
+
+    const scheda = (await amb.api().get('/api/poi/duomo')).body
+    expect(scheda.foto).toEqual([
+      expect.objectContaining({ id: r.body.id, autore: 'Mario Rossi', licenza: 'CC BY-SA 4.0', didascalia: 'La facciata del Duomo', larghezza: 1200 }),
+    ])
+    expect(scheda.copertina).toBe(r.body.id)
+    expect((await amb.api().get(`/api/foto/${r.body.id}`)).status).toBe(200)
+    expect((await amb.api().get('/api/admin/poi').set(admin)).body.find((p) => p.id === 'duomo').foto).toBe(1)
+  })
+
+  it('si eliminano insieme al file', async () => {
+    const [{ id }] = (await amb.api().get('/api/poi/duomo')).body.foto
+    expect((await amb.api().delete(`/api/admin/poi/duomo/foto/${id}`).set(admin)).status).toBe(204)
+    expect((await amb.api().get('/api/poi/duomo')).body.foto).toEqual([])
+    await expect(amb.archivio.leggi('pubblica', id, 'mini')).rejects.toThrow()
+  })
+})
+
+describe('pacchetti di dati', () => {
+  it('ogni pacchetto si carica una volta sola', async () => {
+    const prima = (await amb.db.query('SELECT count(*)::int AS n FROM poi'))[0].n
+    await popola(amb.db, { datiDimostrativi: false, archivio: amb.archivio })
+    expect((await amb.db.query('SELECT count(*)::int AS n FROM poi'))[0].n).toBe(prima)
+  })
+
+  it('un database creato prima dei pacchetti non ricarica i luoghi iniziali', async () => {
+    await amb.db.query('DELETE FROM pacchetti_dati')
+    await popola(amb.db, { datiDimostrativi: false, archivio: amb.archivio })
+    const nomi = (await amb.db.query('SELECT nome FROM pacchetti_dati ORDER BY nome')).map((r) => r.nome)
+    expect(nomi[0]).toBe('001-luoghi-iniziali')
+    // Il POI eliminato nei test precedenti non è tornato
+    expect((await amb.api().get('/api/poi/nettuno')).status).toBe(404)
   })
 })

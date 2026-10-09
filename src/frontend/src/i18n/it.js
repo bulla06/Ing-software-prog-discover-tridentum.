@@ -262,4 +262,8 @@ export default {
   'scopri.locali': "Dove assaggiarli",
   'scopri.piatti': "I piatti tipici",
   'scopri.consigliato': "Da provare: {piatto}",
+  'scheda.foto': 'Foto',
+  'scheda.fotoDi': 'Foto: {autore}',
+  'scheda.fonte': 'Fonte',
+  'scheda.ingrandisci': 'Ingrandisci la foto',
 }

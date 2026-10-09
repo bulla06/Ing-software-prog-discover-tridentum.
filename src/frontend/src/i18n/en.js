@@ -262,4 +262,8 @@ export default {
   'scopri.locali': "Where to taste them",
   'scopri.piatti': "Typical dishes",
   'scopri.consigliato': "Try: {piatto}",
+  'scheda.foto': 'Photos',
+  'scheda.fotoDi': 'Photo: {autore}',
+  'scheda.fonte': 'Source',
+  'scheda.ingrandisci': 'Enlarge photo',
 }

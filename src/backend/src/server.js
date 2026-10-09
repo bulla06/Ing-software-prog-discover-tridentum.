@@ -13,10 +13,10 @@ const config = leggiConfigurazione()
 
 console.log(`Avvio di Discover Tridentum (${config.sviluppo ? 'sviluppo' : 'produzione'})…`)
 const db = await apriDatabase(config)
-await migra(db)
-await popola(db, config)
-
 const archivio = await creaArchivioFoto(path.join(config.cartellaDati, 'foto'))
+await migra(db)
+await popola(db, { ...config, archivio })
+
 const posta = creaPosta(config)
 const app = creaApp({ db, config, posta, archivio })
 

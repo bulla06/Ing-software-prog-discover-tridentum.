@@ -2300,3 +2300,135 @@ dd {
   overflow: hidden;
   border: 1px solid var(--bordo);
 }
+
+/* ---------- Foto ufficiali dei luoghi ---------- */
+
+.crediti-foto {
+  margin: 4px 0 0;
+  font-size: 0.75rem;
+  color: var(--tenue);
+}
+
+.crediti-foto a {
+  color: inherit;
+}
+
+.crediti-foto--copertina {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top));
+  right: 12px;
+  max-width: min(60%, 420px);
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgb(0 0 0 / 0.5);
+  color: #fff;
+  text-align: right;
+}
+
+.galleria {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(200px, 70%);
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+}
+
+.galleria li {
+  scroll-snap-align: start;
+}
+
+.galleria__voce {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--superficie-2);
+  cursor: zoom-in;
+}
+
+.galleria__voce img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.galleria__didascalia {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+}
+
+.foto-grande {
+  margin: 8px 0 0;
+}
+
+.foto-grande img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 70dvh;
+  object-fit: contain;
+  border-radius: 10px;
+  background: var(--superficie-2);
+}
+
+@media (min-width: 768px) {
+  .galleria {
+    grid-auto-columns: minmax(220px, 32%);
+  }
+
+  .finestra:has(.foto-grande) {
+    width: min(960px, calc(100% - 32px));
+  }
+}
+
+.etichetta-tabella {
+  margin: 0 0 0 8px;
+}
+
+.foto-luogo {
+  padding: 16px;
+  border: 1px dashed var(--bordo-forte);
+  border-radius: var(--raggio);
+}
+
+.foto-luogo__elenco {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.foto-luogo__elenco li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.foto-luogo__elenco img {
+  width: 72px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.foto-luogo__elenco span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.foto-luogo__elenco small {
+  color: var(--tenue);
+}
+
+.foto-luogo__nuova {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

@@ -3,9 +3,10 @@ import { Link, useSearchParams } from 'react-router-dom'
 import Avviso from '../components/Avviso.jsx'
 import Icona from '../components/Icona.jsx'
 import MappaLeaflet from '../components/MappaLeaflet.jsx'
-import { admin, getItinerari, getTradizioni } from '../data/api.js'
+import { admin, getItinerari, getPoiById, getTradizioni } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { CENTRO_TRENTO } from '../lib/geo.js'
+import { urlFoto } from '../lib/http.js'
 import { eAmministratore, useSessione } from '../lib/sessione.jsx'
 
 // S-14 Amministrazione (UC-07, UC-09, RF-24, RF-25). Area interna del team: solo in italiano.
@@ -206,7 +207,10 @@ function GestioneLuoghi({ avvisa }) {
           <tbody>
             {visibili.map((l) => (
               <tr key={l.id}>
-                <td><Link to={`/poi/${l.id}`}>{l.nome}</Link></td>
+                <td>
+                  <Link to={`/poi/${l.id}`}>{l.nome}</Link>
+                  {l.categoria === 'arte' && l.foto === 0 && <span className="stato stato--rifiutato etichetta-tabella">senza foto</span>}
+                </td>
                 <td>{CATEGORIE[l.categoria]}</td>
                 <td>{l.tappe || '—'}</td>
                 <td className="tabella__azioni">
@@ -341,6 +345,12 @@ function ModuloPoi({ iniziale, tutti, onAnnulla, onSalvato }) {
         {erroreCampo(errori, 'fonti') && <span className="campo__errore">{erroreCampo(errori, 'fonti')}</span>}
       </fieldset>
 
+      {iniziale.id ? (
+        <FotoDelLuogo id={iniziale.id} obbligatoria={d.categoria === 'arte'} />
+      ) : (
+        <p className="nota"><Icona nome="info" size={16} />Le foto si aggiungono dopo aver salvato il luogo{d.categoria === 'arte' ? ': per gli affreschi almeno una è obbligatoria' : ''}.</p>
+      )}
+
       {errori._ && <p className="messaggio messaggio--errore" role="alert">{errori._}</p>}
       {Object.keys(errori).length > 0 && !errori._ && <p className="messaggio messaggio--errore" role="alert">Controlla i campi evidenziati.</p>}
       <div className="modulo__azioni">
@@ -348,6 +358,83 @@ function ModuloPoi({ iniziale, tutti, onAnnulla, onSalvato }) {
         <button type="submit" className="pulsante pulsante--primario" disabled={occupato}>Salva</button>
       </div>
     </form>
+  )
+}
+
+/** Foto ufficiali del luogo, con autore e licenza obbligatori */
+function FotoDelLuogo({ id, obbligatoria }) {
+  const [foto, setFoto] = useState([])
+  const [file, setFile] = useState(null)
+  const [crediti, setCrediti] = useState({ autore: '', licenza: '', url_licenza: '', fonte: '', didascalia: '' })
+  const [errori, setErrori] = useState({})
+  const [occupato, setOccupato] = useState(false)
+
+  const carica = useCallback(() => getPoiById(id).then((p) => setFoto(p.foto)), [id])
+  useEffect(() => {
+    carica()
+  }, [carica])
+
+  const imposta = (campo) => (valore) => setCrediti((c) => ({ ...c, [campo]: valore }))
+
+  // Questo non è un <form>: sta dentro il modulo del luogo, che ha già il suo invio
+  const invia = async () => {
+    setErrori({})
+    if (!file) return setErrori({ foto: 'Scegli una foto' })
+    const dati = new FormData()
+    dati.append('foto', file)
+    for (const [k, v] of Object.entries(crediti)) dati.append(k, v)
+    setOccupato(true)
+    try {
+      await admin.caricaFotoPoi(id, dati)
+      setFile(null)
+      setCrediti((c) => ({ ...c, didascalia: '' }))
+      carica()
+    } catch (err) {
+      setErrori(err.campi && Object.keys(err.campi).length ? err.campi : { _: err.message })
+    } finally {
+      setOccupato(false)
+    }
+  }
+
+  const elimina = async (f) => {
+    if (!window.confirm('Eliminare questa foto?')) return
+    await admin.eliminaFotoPoi(id, f.id)
+    carica()
+  }
+
+  return (
+    <fieldset className="campo foto-luogo">
+      <legend className="campo__etichetta">Foto del luogo{obbligatoria ? ' * (obbligatoria per gli affreschi)' : ''}</legend>
+      {foto.length === 0 && <p className={obbligatoria ? 'messaggio messaggio--errore' : 'nota'}>Nessuna foto ancora.</p>}
+      <ul className="foto-luogo__elenco">
+        {foto.map((f) => (
+          <li key={f.id}>
+            <img src={urlFoto(f.id, 'mini')} alt={f.didascalia} />
+            <span>
+              {f.didascalia && <strong>{f.didascalia}</strong>}
+              <small>{f.autore} · {f.licenza}</small>
+            </span>
+            <button type="button" className="pulsante-mini pulsante-mini--pericolo" onClick={() => elimina(f)}>Elimina</button>
+          </li>
+        ))}
+      </ul>
+      <div className="foto-luogo__nuova">
+        <label className={`campo ${errori.foto ? 'campo--errore' : ''}`}>
+          <span className="campo__etichetta">Nuova foto (JPEG, PNG o WebP, fino a 10 MB)</span>
+          <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+          {errori.foto && <span className="campo__errore">{errori.foto}</span>}
+        </label>
+        <div className="griglia-campi">
+          <CampoTesto etichetta="Autore *" valore={crediti.autore} onCambia={imposta('autore')} errore={errori.autore} />
+          <CampoTesto etichetta="Licenza * (es. CC BY-SA 4.0)" valore={crediti.licenza} onCambia={imposta('licenza')} errore={errori.licenza} />
+          <CampoTesto etichetta="Link alla licenza" valore={crediti.url_licenza} onCambia={imposta('url_licenza')} errore={errori.url_licenza} />
+          <CampoTesto etichetta="Fonte (pagina della foto)" valore={crediti.fonte} onCambia={imposta('fonte')} errore={errori.fonte} />
+        </div>
+        <CampoTesto etichetta="Didascalia" valore={crediti.didascalia} onCambia={imposta('didascalia')} maxLength={300} />
+        {errori._ && <p className="messaggio messaggio--errore" role="alert">{errori._}</p>}
+        <button type="button" className="pulsante" onClick={invia} disabled={occupato}>Carica la foto</button>
+      </div>
+    </fieldset>
   )
 }
 

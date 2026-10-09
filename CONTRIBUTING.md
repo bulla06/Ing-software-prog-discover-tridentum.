@@ -54,7 +54,7 @@ Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fa
 - Avvio in sviluppo dalla cartella principale: `npm install`, poi `npm run dev` (istruzioni complete nel README).
 - Nomi di file, variabili, funzioni e commenti in italiano, come nel resto del codice.
 - **Schema del database:** ogni modifica è un nuovo file numerato in `src/backend/src/db/migrazioni/` (es. `002_aggiungi_orari.sql`). I file già presenti non si modificano: sono già stati applicati ai database degli altri.
-- **Dati iniziali:** i luoghi curati dal team stanno in `src/backend/src/db/dati/*.json` e vengono caricati solo in un database vuoto; ogni luogo ha almeno una fonte (RNF-V01). Per correggere un database già creato si usa il pannello di amministrazione.
+- **Dati iniziali:** i luoghi curati dal team stanno in pacchetti numerati, `src/backend/src/db/dati/NNN-nome/` (`luoghi.json`, `itinerari.json`, `tradizioni.json`, `piatti.json`, `gioco.json`, `foto.json` con i file in `foto/`). Ogni pacchetto si carica una sola volta, anche nei database già esistenti; per aggiungere dati si crea un pacchetto nuovo, quelli già caricati non si modificano. Ogni luogo ha almeno una fonte (RNF-V01) e ogni foto indica autore, licenza e fonte. Per correggere un database già creato si usa il pannello di amministrazione.
 - Ogni endpoint nuovo ha almeno un test in `tests/backend/`; prima di aprire una pull request `npm test` deve passare.
 - Mai segreti nel repository: si usano le variabili d'ambiente (vedi `.env.esempio`).
 

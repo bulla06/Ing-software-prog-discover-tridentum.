@@ -2,9 +2,11 @@
 // RF-01…RF-05, RF-07, RF-19, RF-20, RF-24 · RNF-V01, RNF-PO04.
 
 import { Router } from 'express'
+import multer from 'multer'
 import { z } from 'zod'
 import { richiediRuolo } from '../../gateway/autenticazione.js'
 import { ErroreHttp, nonTrovato, valida } from '../../gateway/errori.js'
+import { preparaFoto } from '../../servizi/immagini.js'
 
 const CATEGORIE = ['storia', 'arte', 'tradizioni', 'gastronomia']
 const NUMERO_VICINI = 3
@@ -14,9 +16,23 @@ const RAGGIO_DUPLICATI_M = 20
 const COLONNE_POI = `p.id, p.nome, p.categoria, p.temi, p.indirizzo, p.epoca, p.sintesi, p.piatto_consigliato,
   ST_Y(p.posizione::geometry) AS lat, ST_X(p.posizione::geometry) AS lng`
 
-// Prima foto pubblicata dalla community, usata come copertina
-const COPERTINA = `(SELECT c.foto FROM contenuti c WHERE c.poi = p.id AND c.stato = 'approvato' AND c.foto IS NOT NULL
-  ORDER BY c.moderato_il LIMIT 1) AS copertina`
+// Copertina: la prima foto del luogo curata dal team, altrimenti la prima pubblicata dalla community
+const COPERTINA = `coalesce(
+  (SELECT fp.foto FROM foto_poi fp WHERE fp.poi = p.id ORDER BY fp.ordine, fp.foto LIMIT 1),
+  (SELECT c.foto FROM contenuti c WHERE c.poi = p.id AND c.stato = 'approvato' AND c.foto IS NOT NULL
+    ORDER BY c.moderato_il LIMIT 1)
+) AS copertina`
+
+// Foto dei luoghi caricate dagli amministratori: stessi limiti dei ricordi (RNF-S05)
+const caricamento = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024, files: 1, fields: 10 } })
+
+const schemaCreditiFoto = z.object({
+  autore: z.string().trim().min(1, 'Indica l\'autore della foto').max(200),
+  licenza: z.string().trim().min(1, 'Indica la licenza della foto').max(100),
+  url_licenza: z.union([z.literal(''), z.url({ protocol: /^https?$/ })]).default('').transform((v) => v || null),
+  fonte: z.union([z.literal(''), z.url({ protocol: /^https?$/, error: 'Indirizzo della fonte non valido' })]).default('').transform((v) => v || null),
+  didascalia: z.string().trim().max(300).default(''),
+})
 
 // Ricerca senza distinguere maiuscole e lettere accentate ("Città" = "citta")
 const normalizzaSql = (espressione) => `translate(lower(${espressione}), 'àáâäèéêëìíîïòóôöùúûü', 'aaaaeeeeiiiioooouuuu')`
@@ -159,7 +175,13 @@ export function rotteLuoghi({ db, archivio }) {
     )
     if (!riga) throw nonTrovato('Luogo')
 
-    const [ricordi, itinerari, tradizioni, vicini] = await Promise.all([
+    const [foto, ricordi, itinerari, tradizioni, vicini] = await Promise.all([
+      db.query(
+        `SELECT fp.foto AS id, f.larghezza, f.altezza, fp.didascalia, fp.autore, fp.licenza, fp.url_licenza, fp.fonte
+           FROM foto_poi fp JOIN foto f ON f.id = fp.foto
+          WHERE fp.poi = $1 ORDER BY fp.ordine, fp.foto`,
+        [riga.id],
+      ),
       db.query(
         `SELECT c.id, c.testo, c.anno, c.licenza, c.foto, f.larghezza, f.altezza, c.moderato_il AS pubblicato_il,
                 u.nome_visualizzato AS autore
@@ -195,6 +217,7 @@ export function rotteLuoghi({ db, archivio }) {
     res.json({
       ...poi,
       affresco: affresco_autore || affresco_epoca ? { autore: affresco_autore, epoca: affresco_epoca } : null,
+      foto,
       ricordi,
       itinerari,
       tradizioni,
@@ -261,7 +284,8 @@ export function rotteLuoghi({ db, archivio }) {
   router.get('/admin/poi', soloAmministratori, async (req, res) => {
     const righe = await db.query(
       `SELECT ${COLONNE_POI}, p.descrizione, p.affresco_autore, p.affresco_epoca, p.parole_chiave, p.fonti, p.aggiornato_il,
-              (SELECT count(*)::int FROM tappe t WHERE t.poi = p.id) AS tappe
+              (SELECT count(*)::int FROM tappe t WHERE t.poi = p.id) AS tappe,
+              (SELECT count(*)::int FROM foto_poi fp WHERE fp.poi = p.id) AS foto
          FROM poi p ORDER BY p.nome`,
     )
     res.json(righe.map(rigaPoi))
@@ -337,7 +361,9 @@ export function rotteLuoghi({ db, archivio }) {
     }
     const foto = await db.transazione(async (tx) => {
       const elenco = await tx.query(
-        `SELECT f.id, f.area FROM foto f JOIN contenuti c ON c.foto = f.id WHERE c.poi = $1`,
+        `SELECT f.id, f.area FROM foto f JOIN contenuti c ON c.foto = f.id WHERE c.poi = $1
+         UNION ALL
+         SELECT f.id, f.area FROM foto f JOIN foto_poi fp ON fp.foto = f.id WHERE fp.poi = $1`,
         [req.params.id],
       )
       await tx.query('DELETE FROM poi WHERE id = $1', [req.params.id])
@@ -346,6 +372,43 @@ export function rotteLuoghi({ db, archivio }) {
       return elenco
     })
     for (const f of foto) await archivio.elimina(f.area, f.id)
+    res.status(204).end()
+  })
+
+  // Foto ufficiali di un luogo, con i crediti (autore e licenza sono obbligatori)
+  router.post('/admin/poi/:id/foto', soloAmministratori, caricamento.single('foto'), async (req, res) => {
+    const crediti = valida(schemaCreditiFoto, req.body)
+    if (!req.file) {
+      throw new ErroreHttp(400, 'dati_non_validi', 'Scegli una foto', { campi: { foto: 'Scegli una foto' } })
+    }
+    const [poi] = await db.query('SELECT id FROM poi WHERE id = $1', [req.params.id])
+    if (!poi) throw nonTrovato('Luogo')
+
+    const immagine = await preparaFoto(req.file.buffer)
+    const id = await db.transazione(async (tx) => {
+      const [riga] = await tx.query(
+        'INSERT INTO foto (area, larghezza, altezza) VALUES (\'pubblica\', $1, $2) RETURNING id',
+        [immagine.larghezza, immagine.altezza],
+      )
+      await tx.query(
+        `INSERT INTO foto_poi (foto, poi, ordine, didascalia, autore, licenza, url_licenza, fonte)
+         VALUES ($1, $2, (SELECT coalesce(max(ordine), -1) + 1 FROM foto_poi WHERE poi = $2), $3, $4, $5, $6, $7)`,
+        [riga.id, poi.id, crediti.didascalia, crediti.autore, crediti.licenza, crediti.url_licenza, crediti.fonte],
+      )
+      return riga.id
+    })
+    await archivio.salva('pubblica', id, immagine)
+    res.status(201).json({ id })
+  })
+
+  router.delete('/admin/poi/:id/foto/:foto', soloAmministratori, async (req, res) => {
+    const idFoto = valida(z.uuid('Foto non valida'), req.params.foto)
+    const [eliminata] = await db.query(
+      `DELETE FROM foto WHERE id = $1 AND id IN (SELECT foto FROM foto_poi WHERE poi = $2) RETURNING area`,
+      [idFoto, req.params.id],
+    )
+    if (!eliminata) throw nonTrovato('Foto')
+    await archivio.elimina(eliminata.area, idFoto)
     res.status(204).end()
   })
 

@@ -44,11 +44,10 @@ export async function creaAmbiente() {
     cartellaFrontend: '/inesistente',
   }
   const db = await apriDatabase(config)
-  await migra(db)
-  await popola(db, { datiDimostrativi: true })
-
   const cartellaFoto = await mkdtemp(path.join(tmpdir(), 'tridentum-foto-'))
   const archivio = await creaArchivioFoto(cartellaFoto)
+  await migra(db)
+  await popola(db, { datiDimostrativi: true, archivio })
   const posta = creaPosta({ sviluppo: true })
   const app = creaApp({ db, config, posta, archivio, registro: false })
 

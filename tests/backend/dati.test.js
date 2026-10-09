@@ -1,12 +1,20 @@
-// Controlli di coerenza sui dati iniziali dei luoghi (src/backend/src/db/dati),
+// Controlli di coerenza sui pacchetti di dati iniziali (src/backend/src/db/dati/NNN-nome),
 // prima che vengano caricati nel database.
+import { existsSync } from 'node:fs'
+import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import luoghi from '../../src/backend/src/db/dati/luoghi.json'
-import itinerari from '../../src/backend/src/db/dati/itinerari.json'
-import tradizioni from '../../src/backend/src/db/dati/tradizioni.json'
-import gioco from '../../src/backend/src/db/dati/gioco.json'
+import { CARTELLA_DATI, elencaPacchetti, leggiPacchetto } from '../../src/backend/src/db/popola.js'
 import testiIt from '../../src/frontend/src/i18n/it.js'
 import testiEn from '../../src/frontend/src/i18n/en.js'
+
+// Tutti i pacchetti insieme, come risultano nel database alla fine del caricamento
+const pacchetti = await Promise.all((await elencaPacchetti()).map(async (nome) => ({ nome, ...(await leggiPacchetto(nome)) })))
+const tutti = (chiave) => pacchetti.flatMap((p) => p[chiave].map((voce) => ({ ...voce, pacchetto: p.nome })))
+const luoghi = tutti('luoghi')
+const itinerari = tutti('itinerari')
+const tradizioni = tutti('tradizioni')
+const gioco = tutti('gioco')
+const foto = tutti('foto')
 
 const idLuoghi = new Set(luoghi.map((p) => p.id))
 const CATEGORIE = ['storia', 'arte', 'tradizioni', 'gastronomia']
@@ -63,6 +71,18 @@ describe('riferimenti ai luoghi', () => {
     expect(gioco.length).toBeGreaterThanOrEqual(5)
     expect(new Set(gioco.map((g) => g.id)).size).toBe(gioco.length)
     for (const g of gioco) expect(idLuoghi.has(g.poi), `${g.id} → ${g.poi}`).toBe(true)
+  })
+})
+
+describe('foto dei luoghi', () => {
+  it('ogni foto esiste e indica luogo, autore, licenza e fonte', () => {
+    for (const f of foto) {
+      expect(existsSync(path.join(CARTELLA_DATI, f.pacchetto, 'foto', f.file)), f.file).toBe(true)
+      expect(idLuoghi.has(f.poi), `${f.file} → ${f.poi}`).toBe(true)
+      expect(f.autore, f.file).toBeTruthy()
+      expect(f.licenza, f.file).toBeTruthy()
+      expect(f.fonte, f.file).toMatch(/^https:\/\//)
+    }
   })
 })
 

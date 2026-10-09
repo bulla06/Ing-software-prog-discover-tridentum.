@@ -58,7 +58,7 @@ npm install        # solo la prima volta (installa frontend e backend)
 npm run dev        # avvia backend e frontend insieme
 ```
 
-Poi apri **http://localhost:5173**. Il primo avvio crea il database in `src/backend/.dati/` e lo riempie con i luoghi di [`src/backend/src/db/dati/`](src/backend/src/db/dati): ci vuole una ventina di secondi.
+Poi apri **http://localhost:5173**. Il primo avvio crea il database in `src/backend/.dati/` e lo riempie con i pacchetti di dati di [`src/backend/src/db/dati/`](src/backend/src/db/dati): ci vuole una ventina di secondi. I pacchetti aggiunti in seguito si caricano da soli al successivo avvio, anche in un database già esistente.
 
 **Account di prova** (solo in sviluppo):
 
@@ -109,13 +109,13 @@ Per le e-mail vere serve un server SMTP (`SMTP_URL` nel file `.env`). In produzi
 | S-10 Dov'era?: indizi e foto della community, punteggio verificato dal server, classifica | UC-06 |
 | S-11 Scopri: tradizioni per periodo dell'anno, mappa del gusto con locali e piatti | UC-10 |
 | S-13 Moderazione: coda dei ricordi e delle segnalazioni | UC-05 |
-| S-14 Amministrazione: luoghi (posizione sulla mappa), itinerari, tradizioni, ruoli | UC-07, UC-09 |
+| S-14 Amministrazione: luoghi (posizione sulla mappa, foto con i crediti), itinerari, tradizioni, ruoli | UC-07, UC-09 |
 
 Non ci sono ancora il riconoscimento dei luoghi con la fotocamera (RF-06, *Could*) e l'AI Service, rinviati come previsto dalla [Fase 4](docs/fase-4-pianificazione.md#22-cosa-entra).
 
 **Da sapere**
 - I contenuti iniziali (36 luoghi, 9 itinerari, tradizioni, piatti, 14 livelli del gioco) sono una **prima selezione da verificare**: date, attribuzioni, fonti e soprattutto i locali della mappa del gusto vanno controllati dal team (WBS 3) prima della pubblicazione. Si correggono dal pannello di amministrazione oppure nei file di [`src/backend/src/db/dati/`](src/backend/src/db/dati), che vengono caricati quando il database è vuoto.
-- Le foto dei luoghi arrivano dalla community: la prima foto approvata diventa la copertina della scheda.
+- Le foto dei luoghi sono di due tipi: quelle **ufficiali**, caricate dagli amministratori o dai pacchetti di dati con autore, licenza e fonte (obbligatori, perché le licenze libere li richiedono), e i **ricordi** della community, che passano dalla moderazione. La copertina è la prima foto ufficiale, altrimenti il primo ricordo con foto.
 
 ## Struttura del repository
 
@@ -143,7 +143,7 @@ Non ci sono ancora il riconoscimento dei luoghi con la fotocamera (RF-06, *Could
 │       └── src/
 │           ├── gateway/                  # token, ruoli, limiti, errori
 │           ├── moduli/                   # utenti, luoghi, contenuti, gioco
-│           ├── db/                       # connessione, migrazioni, dati iniziali
+│           ├── db/                       # connessione, migrazioni, pacchetti di dati iniziali
 │           ├── servizi/                  # e-mail, archivio e preparazione delle foto
 │           └── server.js                 # avvio
 ├── tests/
