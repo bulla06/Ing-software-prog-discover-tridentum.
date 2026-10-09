@@ -1,10 +1,10 @@
-// Controlli di coerenza sui dati dei luoghi: finché non c'è il database,
-// sono questi test a garantire i vincoli che il database imporrebbe.
+// Controlli di coerenza sui dati iniziali dei luoghi (src/backend/src/db/dati),
+// prima che vengano caricati nel database.
 import { describe, expect, it } from 'vitest'
-import luoghi from '../../src/frontend/src/data/luoghi.json'
-import itinerari from '../../src/frontend/src/data/itinerari.json'
-import tradizioni from '../../src/frontend/src/data/tradizioni.json'
-import gioco from '../../src/frontend/src/data/gioco.json'
+import luoghi from '../../src/backend/src/db/dati/luoghi.json'
+import itinerari from '../../src/backend/src/db/dati/itinerari.json'
+import tradizioni from '../../src/backend/src/db/dati/tradizioni.json'
+import gioco from '../../src/backend/src/db/dati/gioco.json'
 import testiIt from '../../src/frontend/src/i18n/it.js'
 import testiEn from '../../src/frontend/src/i18n/en.js'
 
@@ -25,6 +25,10 @@ describe('luoghi', () => {
     for (const f of p.fonti) expect(f.url).toMatch(/^https:\/\//)
   })
 
+  it('i locali della mappa del gusto hanno un piatto consigliato (RF-20)', () => {
+    for (const p of luoghi.filter((l) => l.categoria === 'gastronomia')) expect(p.piatto_consigliato, p.id).toBeTruthy()
+  })
+
   it.each(luoghi)('$id si trova nel comune di Trento', ({ posizione: [lat, lng] }) => {
     expect(lat).toBeGreaterThan(46.0)
     expect(lat).toBeLessThan(46.15)
@@ -43,8 +47,9 @@ describe('luoghi', () => {
 })
 
 describe('riferimenti ai luoghi', () => {
-  it('le tappe degli itinerari esistono', () => {
+  it('le tappe degli itinerari esistono e i temi hanno un\'etichetta', () => {
     for (const itin of itinerari) {
+      expect(testiIt[`tema.${itin.tema}`], itin.tema).toBeTruthy()
       expect(itin.tappe.length).toBeGreaterThan(1)
       for (const t of itin.tappe) expect(idLuoghi.has(t), `${itin.id} → ${t}`).toBe(true)
     }
@@ -54,7 +59,9 @@ describe('riferimenti ai luoghi', () => {
     for (const t of tradizioni) for (const l of t.luoghi) expect(idLuoghi.has(l), `${t.id} → ${l}`).toBe(true)
   })
 
-  it('i livelli del gioco puntano a luoghi esistenti', () => {
+  it('i livelli del gioco puntano a luoghi esistenti e sono almeno 5 (UC-06 E1)', () => {
+    expect(gioco.length).toBeGreaterThanOrEqual(5)
+    expect(new Set(gioco.map((g) => g.id)).size).toBe(gioco.length)
     for (const g of gioco) expect(idLuoghi.has(g.poi), `${g.id} → ${g.poi}`).toBe(true)
   })
 })

@@ -3,7 +3,7 @@
 **Progetto:** Discover Tridentum — Trento Nascosta
 **Corso:** Ingegneria del Software · Prof. Paolo Giorgini · A.A. 2026-2027
 **Team:** Manuel Bulla · Marco Buffa · Pietro Crea
-**Versione:** 0.1 · **Stato:** Bozza
+**Versione:** 0.2 · **Stato:** Bozza
 **Documento precedente:** [Fase 2 — Specifiche dei requisiti](fase-2-specifiche-requisiti.md)
 **Documento successivo:** [Fase 4 — Pianificazione dello sviluppo](fase-4-pianificazione.md)
 
@@ -12,6 +12,7 @@
 | Versione | Data | Autore | Modifiche |
 |---|---|---|---|
 | 0.1 | 30/09/2026 | Manuel Bulla | Prima stesura: casi d'uso, user flow, architettura ad alto livello |
+| 0.2 | 09/10/2026 | Manuel Bulla | Decisioni prese realizzando l'MVP (D-10…D-14) e stack adottato; vista di deployment dell'MVP |
 
 ---
 
@@ -575,18 +576,29 @@ erDiagram
 | **D-08** | Token JWT di breve durata + token di rinnovo | Sessioni sul server | Il gateway verifica l'identità senza interrogare il database; il backend resta senza stato e scalabile |
 | **D-09** | Lavori dell'AI in una coda asincrona | Chiamate sincrone | Il caricamento di un ricordo non aspetta l'AI (RNF-U02); se l'AI è lenta o ferma i lavori restano in coda |
 
-**Stack proposto (da confermare dal team)**
+**Decisioni prese realizzando l'MVP**
 
-| Componente | Tecnologia |
-|---|---|
-| Frontend Web | React + Vite, Leaflet, i18next |
-| API Gateway | Node.js + Express (proxy, JWT, rate limiting) |
-| Backend | Node.js + TypeScript (Express o NestJS) |
-| AI Service | Python + FastAPI, modelli open source (es. CLIP) |
-| Coda dei lavori | Redis (oppure una tabella nel database) |
-| Database | PostgreSQL + PostGIS |
-| Storage foto | MinIO (sviluppo) · servizio S3-compatibile (produzione) |
-| Avvio e distribuzione | Docker Compose · GitHub Actions per i test automatici |
+| ID | Decisione | Alternative considerate | Motivazione |
+|---|---|---|---|
+| **D-10** | In sviluppo il database è PGlite (PostgreSQL + PostGIS compilato in WebAssembly, dentro Node); con `DATABASE_URL` si usa un server PostgreSQL vero | Installare PostgreSQL su ogni computer; solo Docker | Ognuno avvia il progetto con `npm install` e `npm run dev`, senza installare un database. Stesso SQL e stessa PostGIS: i test girano su entrambi |
+| **D-11** | Nell'MVP il gateway è un livello del server Express (sicurezza, token, ruoli, limiti, registro) davanti ai moduli, nello stesso processo | Gateway in un processo separato | Un processo in meno da avviare e distribuire per un team di tre; i compiti restano quelli di §5.2 e il gateway si può separare in seguito senza cambiare l'API |
+| **D-12** | Archivio delle foto su una cartella del server, con le due aree privata e pubblica | MinIO / S3 già nell'MVP | Stesse regole di §5.6 con un servizio in meno; il modulo `archivio-foto` ha quattro funzioni (salva, leggi, sposta, elimina) da riscrivere per passare a S3 |
+| **D-13** | Backend in JavaScript (moduli ES), come il frontend | TypeScript | Un solo linguaggio e nessun passaggio di compilazione; i dati in ingresso sono comunque validati con schemi (zod) |
+| **D-14** | Il gioco consegna un token firmato con i livelli della partita; il server verifica ogni risposta e ricalcola il punteggio prima di salvarlo | Calcolo del punteggio nel browser | La posizione esatta non arriva al browser prima della risposta e la classifica non si può falsare inviando un punteggio inventato |
+
+**Stack**
+
+| Componente | Proposta iniziale | Adottato nell'MVP |
+|---|---|---|
+| Frontend Web | React + Vite, Leaflet, i18next | React + Vite, Leaflet; traduzioni con un modulo interno (`src/frontend/src/i18n`) |
+| API Gateway | Node.js + Express (proxy, JWT, rate limiting) | Livello del server Express: helmet, JWT (jose), express-rate-limit (D-11) |
+| Backend | Node.js + TypeScript (Express o NestJS) | Node.js + Express in JavaScript, validazione con zod (D-13) |
+| AI Service | Python + FastAPI, modelli open source (es. CLIP) | Rinviato ([Fase 4 §2.2](fase-4-pianificazione.md#22-cosa-entra)) |
+| Coda dei lavori | Redis (oppure una tabella nel database) | Rinviata con l'AI Service |
+| Database | PostgreSQL + PostGIS | PostgreSQL 16 + PostGIS; PGlite in sviluppo (D-10) |
+| Storage foto | MinIO (sviluppo) · servizio S3-compatibile (produzione) | Cartella del server con area privata e pubblica; foto ridotte in WebP con sharp (D-12) |
+| E-mail | SMTP transazionale | nodemailer con `SMTP_URL`; in sviluppo "posta di prova" consultabile dal sito |
+| Avvio e distribuzione | Docker Compose · GitHub Actions per i test automatici | `npm run dev` in sviluppo; Docker Compose (`db` + `app`); test con Vitest e Supertest |
 
 ---
 
@@ -714,6 +726,8 @@ In sviluppo tutto il sistema si avvia con un solo comando, `docker compose up` (
 
 In produzione si mantiene la stessa divisione; il fornitore di hosting è ancora da scegliere (§10).
 
+**Deployment dell'MVP.** Con le decisioni D-10…D-12 il `docker-compose.yml` dell'MVP ha due soli container: `db` (PostgreSQL + PostGIS, non esposto) e `app` (frontend compilato, gateway e backend in un processo Node, con un volume per le foto). In sviluppo non serve Docker: `npm run dev` avvia backend (con PGlite) e frontend. Il proxy HTTPS davanti ad `app` resta da configurare con l'hosting (RNF-S01).
+
 ---
 
 ## 9. Tracciabilità
@@ -754,7 +768,7 @@ In produzione si mantiene la stessa divisione; il fornitore di hosting è ancora
 
 ## 10. Punti aperti
 
-- **Stack tecnologico:** le tecnologie in §6 sono una proposta; vanno confermate in base alle competenze del team.
+- **Stack tecnologico:** l'MVP usa le tecnologie della colonna "Adottato" in §6 (decisioni D-10…D-14), da confermare dal team.
 - **AI Service:** modelli open source ospitati da noi o API di un fornitore esterno? Nel secondo caso servono un accordo conforme al GDPR e una stima dei costi. La fattibilità di RF-06 va verificata con un prototipo su 10–20 POI.
 - **Hosting di produzione:** fornitore, dominio e certificato HTTPS.
 - **Tile della mappa in produzione:** scegliere un fornitore basato su OpenStreetMap con un piano adatto al carico previsto.

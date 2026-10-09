@@ -9,8 +9,9 @@ Regole condivise per mantenere il repository ordinato e i documenti coerenti tra
 | `docs/` | Documenti di progetto, uno per fase: `fase-N-argomento.md` |
 | `docs/libretti/` | Libretto delle attività di ciascun membro: `nome-cognome.docx` |
 | `presentazioni/` | Presentazioni: `presentazione-vN.pptx` |
-
-Quando inizierà lo sviluppo, il codice andrà in `src/` e i test in `tests/`.
+| `src/frontend/` | Il sito (React + Vite) |
+| `src/backend/` | L'API REST e il database (Node.js + Express, PostgreSQL + PostGIS) |
+| `tests/frontend/`, `tests/backend/` | I test automatici, separati dal codice |
 
 ## Nomi dei file
 
@@ -47,6 +48,15 @@ Gli ID non si riusano e non si rinumerano: se un elemento viene eliminato, il su
 | Rischio | `R-nn` | R-08 | Fase 4 §6 |
 
 Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fase 2 §5, Fase 3 §9) vanno aggiornate ogni volta che si aggiunge o si modifica un requisito o un caso d'uso.
+
+## Codice
+
+- Avvio in sviluppo dalla cartella principale: `npm install`, poi `npm run dev` (istruzioni complete nel README).
+- Nomi di file, variabili, funzioni e commenti in italiano, come nel resto del codice.
+- **Schema del database:** ogni modifica è un nuovo file numerato in `src/backend/src/db/migrazioni/` (es. `002_aggiungi_orari.sql`). I file già presenti non si modificano: sono già stati applicati ai database degli altri.
+- **Dati iniziali:** i luoghi curati dal team stanno in `src/backend/src/db/dati/*.json` e vengono caricati solo in un database vuoto; ogni luogo ha almeno una fonte (RNF-V01). Per correggere un database già creato si usa il pannello di amministrazione.
+- Ogni endpoint nuovo ha almeno un test in `tests/backend/`; prima di aprire una pull request `npm test` deve passare.
+- Mai segreti nel repository: si usano le variabili d'ambiente (vedi `.env.esempio`).
 
 ## Git
 

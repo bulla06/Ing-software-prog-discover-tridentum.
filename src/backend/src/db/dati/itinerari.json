@@ -1,0 +1,130 @@
+[
+  {
+    "id": "affreschi-all-aperto",
+    "titolo": "Affreschi all'aperto",
+    "tema": "arte",
+    "durata_minuti": 90,
+    "descrizione": "Le facciate dipinte del centro e i cicli del Buonconsiglio: basta alzare gli occhi.",
+    "tappe": [
+      "case-cazuffi-rella",
+      "nettuno",
+      "palazzo-geremia",
+      "loggia-romanino",
+      "torre-aquila"
+    ]
+  },
+  {
+    "id": "tridentum-e-concilio",
+    "titolo": "Da Tridentum al Concilio",
+    "tema": "tridentum",
+    "durata_minuti": 60,
+    "descrizione": "Dalla strada romana sotto Piazza Battisti alle chiese che ospitarono il Concilio.",
+    "tappe": [
+      "sass",
+      "duomo",
+      "palazzo-pretorio",
+      "santa-maria-maggiore"
+    ]
+  },
+  {
+    "id": "vecchio-adige",
+    "titolo": "Dove passava l'Adige",
+    "tema": "adige",
+    "durata_minuti": 75,
+    "descrizione": "Seguire il vecchio corso del fiume, dalla torre del ponte alla collina sulla riva destra.",
+    "tappe": [
+      "torre-vanga",
+      "adige",
+      "gallerie-piedicastello",
+      "doss-trento"
+    ]
+  },
+  {
+    "id": "guerra-e-ricostruzione",
+    "titolo": "Guerra e ricostruzione",
+    "tema": "guerra",
+    "durata_minuti": 120,
+    "descrizione": "Il Novecento di Trento: irredentismo, Grande Guerra, bombardamenti e dopoguerra.",
+    "tappe": [
+      "piazza-dante",
+      "bombardamenti",
+      "buonconsiglio",
+      "gallerie-piedicastello",
+      "doss-trento"
+    ]
+  },
+  {
+    "id": "mezza-giornata",
+    "titolo": "Mezza giornata nel cuore di Trento",
+    "tema": "principi-vescovi",
+    "durata_minuti": 240,
+    "descrizione": "Il giro completo per chi ha un pomeriggio: piazze, palazzi, castello e mura.",
+    "tappe": [
+      "duomo",
+      "nettuno",
+      "case-cazuffi-rella",
+      "palazzo-pretorio",
+      "sass",
+      "palazzo-thun",
+      "palazzo-geremia",
+      "buonconsiglio",
+      "torre-aquila",
+      "piazza-fiera"
+    ]
+  },
+  {
+    "id": "storie-nascoste",
+    "titolo": "Storie nascoste del centro",
+    "tema": "principi-vescovi",
+    "durata_minuti": 120,
+    "descrizione": "Le pagine che le guide classiche saltano: una falsa accusa, una torre dal tetto verde, il teatro sopra la città romana.",
+    "tappe": [
+      "san-lorenzo",
+      "santa-maria-maggiore",
+      "simonino",
+      "teatro-sociale",
+      "torre-verde"
+    ]
+  },
+  {
+    "id": "trento-dall-alto",
+    "titolo": "Trento dall'alto",
+    "tema": "adige",
+    "durata_minuti": 150,
+    "descrizione": "Oltre il fiume: Piedicastello, il Doss Trento e la funivia per vedere tutta la città dal belvedere di Sardagna.",
+    "tappe": [
+      "torre-vanga",
+      "adige",
+      "sant-apollinare",
+      "gallerie-piedicastello",
+      "doss-trento",
+      "funivia-sardagna"
+    ]
+  },
+  {
+    "id": "citta-che-cambia",
+    "titolo": "La città che cambia",
+    "tema": "trento-contemporanea",
+    "durata_minuti": 90,
+    "descrizione": "Dalla villa dei Madruzzo al quartiere nato al posto della Michelin, passando per l'università del Sessantotto.",
+    "tappe": [
+      "piazza-fiera",
+      "sociologia",
+      "palazzo-albere",
+      "muse"
+    ]
+  },
+  {
+    "id": "sapori-del-centro",
+    "titolo": "Sapori del centro",
+    "tema": "gusto",
+    "durata_minuti": 90,
+    "descrizione": "Un giro tra vini, birre e piatti della tradizione, da gustare con calma.",
+    "tappe": [
+      "palazzo-roccabruna",
+      "birreria-pedavena",
+      "scrigno-del-duomo",
+      "le-due-spade"
+    ]
+  }
+]

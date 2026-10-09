@@ -1,12 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-  CENTRO_TRENTO,
-  PUNTEGGIO_MAX,
-  distanzaMetri,
-  formattaDistanza,
-  lunghezzaPercorso,
-  punteggio,
-} from '../../src/frontend/src/lib/geo.js'
+import { CENTRO_TRENTO, distanzaMetri, formattaDistanza, lunghezzaPercorso } from '../../src/frontend/src/lib/geo.js'
 
 describe('distanzaMetri', () => {
   it('è zero tra un punto e se stesso', () => {
@@ -46,21 +39,5 @@ describe('formattaDistanza', () => {
   it('usa i chilometri con un decimale', () => {
     expect(formattaDistanza(1234, 'it')).toBe('1,2 km')
     expect(formattaDistanza(1234, 'en')).toBe('1.2 km')
-  })
-})
-
-describe('punteggio di "Dov\'era?"', () => {
-  it('dà il massimo se si centra il luogo', () => {
-    expect(punteggio(0)).toBe(PUNTEGGIO_MAX)
-  })
-
-  it('si dimezza circa ogni 200 m', () => {
-    expect(punteggio(200)).toBeGreaterThan(480)
-    expect(punteggio(200)).toBeLessThan(520)
-  })
-
-  it('cala sempre con la distanza e vale zero oltre i 2 km', () => {
-    expect(punteggio(100)).toBeGreaterThan(punteggio(300))
-    expect(punteggio(2001)).toBe(0)
   })
 })

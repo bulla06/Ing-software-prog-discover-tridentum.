@@ -3,12 +3,10 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import MappaLeaflet from '../components/MappaLeaflet.jsx'
 import Copertina from '../components/Copertina.jsx'
 import Icona from '../components/Icona.jsx'
-import { getFacette, getPoi } from '../data/api.js'
+import { getPoi } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { CENTRO_TRENTO, distanzaMetri, formattaDistanza } from '../lib/geo.js'
 import { usePosizione } from '../lib/posizione.jsx'
-
-const { categorie, temi } = getFacette()
 
 // S-01 Mappa · S-01L Elenco · S-02 Anteprima · S-04 Ricerca e filtri (UC-01).
 // Ricerca, filtri, vista e luogo selezionato stanno nell'URL: tornando indietro
@@ -26,6 +24,9 @@ export default function Mappa() {
   const selezionatoId = params.get('poi')
 
   const [luoghi, setLuoghi] = useState([])
+  const [tutti, setTutti] = useState([])
+  const [errore, setErrore] = useState(false)
+  const [tentativo, setTentativo] = useState(0)
   const [vista, setVista] = useState({ centro: CENTRO_TRENTO, zoom: 16 })
   const [mappaRotta, setMappaRotta] = useState(false)
   const [avvisoChiuso, setAvvisoChiuso] = useState(false)
@@ -39,9 +40,34 @@ export default function Mappa() {
     setParams(nuovi, { replace: true })
   }
 
+  // Tutti i luoghi, per costruire i filtri con le categorie e i temi presenti
   useEffect(() => {
-    getPoi({ q, categoria, tema }).then(setLuoghi)
-  }, [q, categoria, tema])
+    getPoi().then(setTutti, () => setErrore(true))
+  }, [tentativo])
+
+  // Risultati filtrati dal server; la ricerca parte quando si smette di scrivere
+  useEffect(() => {
+    let attivo = true
+    const timer = setTimeout(
+      () =>
+        getPoi({ q, categoria, tema }).then(
+          (risultati) => {
+            if (!attivo) return
+            setLuoghi(risultati)
+            setErrore(false)
+          },
+          () => attivo && setErrore(true),
+        ),
+      q ? 250 : 0,
+    )
+    return () => {
+      attivo = false
+      clearTimeout(timer)
+    }
+  }, [q, categoria, tema, tentativo])
+
+  const categorie = useMemo(() => [...new Set(tutti.map((p) => p.categoria))], [tutti])
+  const temi = useMemo(() => [...new Set(tutti.flatMap((p) => p.temi))].sort(), [tutti])
 
   // La posizione si chiede la prima volta che si apre la mappa (dopo il benvenuto)
   useEffect(() => {
@@ -84,8 +110,9 @@ export default function Mappa() {
   const distanzaTesto = (metri) =>
     t(stato === 'ok' ? 'mappa.daTe' : 'mappa.daDuomo', { d: formattaDistanza(metri, lingua) })
 
-  const messaggio =
-    mappaRotta && !elenco
+  const messaggio = errore
+    ? t('mappa.erroreCaricamento')
+    : mappaRotta && !elenco
       ? t('mappa.nonDisponibile')
       : stato === 'negata'
         ? t('mappa.posizioneNegata')
@@ -140,11 +167,15 @@ export default function Mappa() {
           </label>
         </div>
 
-        {messaggio && !avvisoChiuso && (
+        {messaggio && (!avvisoChiuso || errore) && (
           <div className="banner" role="status">
             <Icona nome="info" size={18} />
             <span>{messaggio}</span>
-            {mappaRotta && !elenco ? (
+            {errore ? (
+              <button type="button" className="banner__azione" onClick={() => setTentativo((n) => n + 1)}>
+                {t('comune.riprova')}
+              </button>
+            ) : mappaRotta && !elenco ? (
               <button type="button" className="banner__azione" onClick={() => aggiorna({ vista: 'elenco' })}>
                 {t('mappa.vistaElenco')}
               </button>

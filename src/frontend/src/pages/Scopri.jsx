@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import Icona from '../components/Icona.jsx'
+import MappaLeaflet from '../components/MappaLeaflet.jsx'
 import { getGusto, getTradizioni } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -12,12 +13,21 @@ export default function Scopri() {
   const [params, setParams] = useSearchParams()
   const scheda = SCHEDE.includes(params.get('scheda')) ? params.get('scheda') : 'tradizioni'
   const [tradizioni, setTradizioni] = useState([])
-  const [gusto, setGusto] = useState([])
+  const [gusto, setGusto] = useState({ piatti: [], locali: [] })
+  const navigate = useNavigate()
 
   useEffect(() => {
-    getTradizioni().then(setTradizioni)
-    getGusto().then(setGusto)
+    getTradizioni().then(setTradizioni, () => {})
+    getGusto().then(setGusto, () => {})
   }, [])
+
+  // UC-10 3a: i locali sulla mappa, toccandone uno si apre la scheda
+  const segnaposti = useMemo(
+    () => gusto.locali.map((l) => ({ id: l.id, posizione: l.posizione, titolo: `${l.nome} — ${l.piatto_consigliato}`, colore: 'var(--c-gastronomia)' })),
+    [gusto],
+  )
+  const inquadra = useMemo(() => (gusto.locali.length ? gusto.locali.map((l) => l.posizione) : null), [gusto])
+  const vistaGusto = useMemo(() => ({ centro: [46.0675, 11.1215], zoom: 15 }), [])
 
   const meseAttuale = new Date().getMonth() + 1
   const adesso = tradizioni.filter((tr) => tr.mesi.includes(meseAttuale))
@@ -79,8 +89,38 @@ export default function Scopri() {
             <Icona nome="info" size={16} />
             {t('scopri.gustoNota')}
           </p>
+          {gusto.locali.length > 0 && (
+            <>
+              <div className="mappa-gusto">
+                <MappaLeaflet
+                  etichetta={t('scopri.gusto')}
+                  vista={vistaGusto}
+                  segnaposti={segnaposti}
+                  inquadra={inquadra}
+                  onClickSegnaposto={(id) => navigate(`/poi/${id}`)}
+                />
+              </div>
+              <h2 className="etichetta-sezione">{t('scopri.locali')}</h2>
+              <ul className="elenco-semplice">
+                {gusto.locali.map((l) => (
+                  <li key={l.id}>
+                    <Link to={`/poi/${l.id}`} className="riga-link">
+                      <span className="riga-poi__punto riga-poi__punto--gastronomia" aria-hidden="true" />
+                      <span>
+                        <strong>{l.nome}</strong>
+                        <br />
+                        <small>{t('scopri.consigliato', { piatto: l.piatto_consigliato })}</small>
+                      </span>
+                      <Icona nome="avanti" size={16} />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+          <h2 className="etichetta-sezione">{t('scopri.piatti')}</h2>
           <ul className="griglia-piatti">
-            {gusto.map((piatto) => (
+            {gusto.piatti.map((piatto) => (
               <li key={piatto.id} className="piatto">
                 <small>{piatto.tipo}</small>
                 <h2>{piatto.nome}</h2>

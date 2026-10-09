@@ -16,3 +16,9 @@ desktop.ini
 node_modules/
 dist/
 coverage/
+
+# Dati locali del backend (database PGlite, foto caricate)
+.dati/
+
+# Segreti locali (vedi .env.esempio)
+.env

@@ -1,20 +1,37 @@
-import { useCallback, useState } from 'react'
-import { leggi, scrivi } from './memoria.js'
+import { useCallback, useEffect, useState } from 'react'
+import { getProfilo, salvaPreferito, togliPreferito } from '../data/api.js'
+import { useSessione } from './sessione.jsx'
 
-/**
- * Luoghi salvati (RF-09). Senza account restano solo su questo dispositivo;
- * con il backend passeranno su GET/POST /api/me/preferiti.
- */
+/** Luoghi e itinerari salvati dall'utente (RF-09), letti e scritti sul server */
 export function usePreferiti() {
-  const [preferiti, setPreferiti] = useState(() => leggi('preferiti', []))
+  const { utente } = useSessione()
+  const [preferiti, setPreferiti] = useState([])
 
-  const alterna = useCallback((id) => {
-    setPreferiti((attuali) => {
-      const nuovi = attuali.includes(id) ? attuali.filter((p) => p !== id) : [...attuali, id]
-      scrivi('preferiti', nuovi)
-      return nuovi
-    })
-  }, [])
+  useEffect(() => {
+    if (!utente) {
+      setPreferiti([])
+      return
+    }
+    getProfilo().then((p) => setPreferiti(p.preferiti), () => {})
+  }, [utente])
 
-  return { preferiti, alterna, salvato: (id) => preferiti.includes(id) }
+  const salvato = useCallback(
+    (tipo, riferimento) => preferiti.some((p) => p.tipo === tipo && p.riferimento === riferimento),
+    [preferiti],
+  )
+
+  const alterna = useCallback(
+    async (tipo, riferimento) => {
+      if (salvato(tipo, riferimento)) {
+        await togliPreferito(tipo, riferimento)
+        setPreferiti((ps) => ps.filter((p) => !(p.tipo === tipo && p.riferimento === riferimento)))
+      } else {
+        await salvaPreferito(tipo, riferimento)
+        setPreferiti((ps) => [...ps, { tipo, riferimento }])
+      }
+    },
+    [salvato],
+  )
+
+  return { salvato, alterna }
 }
