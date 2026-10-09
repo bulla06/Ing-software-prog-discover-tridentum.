@@ -23,7 +23,7 @@ export default function Scopri() {
 
   // UC-10 3a: i locali sulla mappa, toccandone uno si apre la scheda
   const segnaposti = useMemo(
-    () => gusto.locali.map((l) => ({ id: l.id, posizione: l.posizione, titolo: `${l.nome} — ${l.piatto_consigliato}`, colore: 'var(--c-gastronomia)' })),
+    () => gusto.locali.map((l) => ({ id: l.id, posizione: l.posizione, titolo: `${l.nome} · ${l.piatto_consigliato}`, colore: 'var(--c-gastronomia)' })),
     [gusto],
   )
   const inquadra = useMemo(() => (gusto.locali.length ? gusto.locali.map((l) => l.posizione) : null), [gusto])

@@ -1,6 +1,7 @@
-// Controlli di coerenza sui pacchetti di dati iniziali (versione-corrente/backend/src/db/dati/NNN-nome),
-// prima che vengano caricati nel database.
+// Controlli di coerenza sui dati iniziali (versione-corrente/backend/src/db/dati): i pacchetti
+// NNN-nome e i livelli del gioco, prima che vengano caricati nel database.
 import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { CARTELLA_DATI, elencaPacchetti, leggiPacchetto } from '../../versione-corrente/backend/src/db/popola.js'
@@ -13,8 +14,9 @@ const tutti = (chiave) => pacchetti.flatMap((p) => p[chiave].map((voce) => ({ ..
 const luoghi = tutti('luoghi')
 const itinerari = tutti('itinerari')
 const tradizioni = tutti('tradizioni')
-const gioco = tutti('gioco')
 const foto = tutti('foto')
+// I livelli del gioco stanno fuori dai pacchetti: dati/gioco.json, con le foto in dati/foto-gioco/
+const gioco = JSON.parse(await readFile(path.join(CARTELLA_DATI, 'gioco.json'), 'utf8'))
 
 const idLuoghi = new Set(luoghi.map((p) => p.id))
 const CATEGORIE = ['storia', 'arte', 'tradizioni', 'gastronomia']
@@ -71,6 +73,15 @@ describe('riferimenti ai luoghi', () => {
     expect(gioco.length).toBeGreaterThanOrEqual(5)
     expect(new Set(gioco.map((g) => g.id)).size).toBe(gioco.length)
     for (const g of gioco) expect(idLuoghi.has(g.poi), `${g.id} → ${g.poi}`).toBe(true)
+  })
+
+  it('ogni livello del gioco ha la sua foto storica, con autore, licenza e fonte', () => {
+    for (const g of gioco) {
+      expect(g.foto, g.id).toBe(`${g.id}.webp`)
+      expect(existsSync(path.join(CARTELLA_DATI, 'foto-gioco', g.foto)), g.foto).toBe(true)
+      expect(g.autore && g.licenza, g.id).toBeTruthy()
+      expect(g.fonte, g.id).toMatch(/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/)
+    }
   })
 })
 

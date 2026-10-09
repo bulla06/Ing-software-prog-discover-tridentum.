@@ -1,4 +1,4 @@
-# Versione 1 — Primo prototipo
+# Primo prototipo
 
 **Discover Tridentum — Trento Nascosta** · versione del 7 ottobre 2026 (commit `bbb70ab`, pull request #2)
 
@@ -27,13 +27,13 @@ Contenuti: 19 luoghi, 5 itinerari, 6 tradizioni, 10 piatti, 8 livelli del gioco.
 Questa versione è indipendente dal resto del repository. Serve [Node.js](https://nodejs.org) 22 o superiore.
 
 ```bash
-cd versioni-precedenti/v1-prototipo
+cd versioni-precedenti/prototipo
 npm install
-npm run dev        # sito su http://localhost:5173
+npm run dev        # sito su http://localhost:5175
 npm test           # test in tests/
 ```
 
-Non avviarla insieme alla versione corrente: usano la stessa porta 5173.
+Usa la porta 5175, quindi si può aprire accanto alla versione corrente (5173) per confrontarle.
 
 ## Cosa è cambiato dopo
 

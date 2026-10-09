@@ -7,6 +7,7 @@ export default defineConfig({
   base: './',
   server: {
     // In sviluppo le richieste all'API vanno al backend (npm run dev dalla cartella principale)
+    port: 5173,
     proxy: { '/api': 'http://localhost:3000' },
   },
   test: {

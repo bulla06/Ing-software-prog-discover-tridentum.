@@ -143,7 +143,7 @@ export default function Accesso() {
         )}
 
         <Campo etichetta={t('accesso.email')} errore={errori.email}>
-          {(p) => <input {...p} type="email" autoComplete="email" value={campi.email} onChange={cambia('email')} />}
+          {(p) => <input {...p} type="email" name="email" autoComplete="email" spellCheck={false} value={campi.email} onChange={cambia('email')} />}
         </Campo>
 
         {scheda !== 'dimenticata' && (

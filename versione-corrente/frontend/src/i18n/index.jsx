@@ -11,7 +11,9 @@ const LinguaContext = createContext(null)
 function linguaIniziale() {
   const salvata = leggi('lingua', null)
   if (salvata in TESTI) return salvata
-  return navigator.language?.startsWith('it') ? 'it' : 'en'
+  // Prima lingua preferita tra quelle disponibili, nell'ordine scelto dall'utente nel browser
+  const preferita = (navigator.languages ?? [navigator.language]).map((l) => l?.slice(0, 2)).find((l) => l in TESTI)
+  return preferita ?? 'en'
 }
 
 export function LinguaProvider({ children }) {

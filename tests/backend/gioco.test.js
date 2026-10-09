@@ -45,6 +45,26 @@ describe('partita', () => {
     expect(r.body.poi.nome).toBeTruthy()
   })
 
+  it('ogni livello è una foto storica servita dal backend, senza indizi testuali', async () => {
+    const { livelli } = (await amb.api().get('/api/gioco/partita')).body
+    for (const l of livelli) {
+      expect(l.foto_url).toMatch(/^\/api\/(gioco\/foto\/f\d{2}\.webp|foto\/[0-9a-f-]{36})$/)
+      expect(l.indizio).toBe('')
+    }
+    const foto = await amb.api().get(livelli[0].foto_url)
+    expect(foto.status).toBe(200)
+    expect(foto.headers['content-type']).toMatch(/image\/webp/)
+    expect((await amb.api().get('/api/gioco/foto/..%2F..%2Fpopola.js')).status).toBe(404)
+  })
+
+  it('rivela autore, licenza e fonte della foto solo dopo la risposta', async () => {
+    const { partita, livelli } = (await amb.api().get('/api/gioco/partita')).body
+    expect(JSON.stringify(livelli)).not.toMatch(/commons|autore|licenza/)
+    const r = await amb.api().post('/api/gioco/verifica').send({ partita, indice: 0, posizione: [46.0667, 11.1214] })
+    expect(r.body.credito.licenza).toBeTruthy()
+    expect(r.body.credito.autore).toBeTruthy()
+  })
+
   it('rifiuta un token di partita manomesso', async () => {
     const r = await amb.api().post('/api/gioco/verifica').send({ partita: 'xxxxxxxxxxxx', indice: 0, posizione: [46, 11] })
     expect(r.status).toBe(400)

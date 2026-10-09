@@ -5,8 +5,11 @@
 // all'avvio si caricano in ordine quelli non ancora caricati. Così un pacchetto nuovo arriva anche
 // nei database già esistenti, senza toccare quello che gli amministratori hanno modificato.
 //
-// Ogni pacchetto può contenere luoghi.json, itinerari.json, tradizioni.json, piatti.json, gioco.json
+// Ogni pacchetto può contenere luoghi.json, itinerari.json, tradizioni.json, piatti.json
 // e foto.json (foto dei luoghi con autore e licenza; i file stanno nella sottocartella foto/).
+//
+// I livelli di "Dov'era?" invece stanno fuori dai pacchetti, in dati/gioco.json con le foto in
+// dati/foto-gioco/: il file è la fonte e a ogni avvio il database viene allineato.
 
 import { existsSync } from 'node:fs'
 import { readFile, readdir } from 'node:fs/promises'
@@ -37,10 +40,10 @@ export async function leggiPacchetto(nome) {
     const percorso = path.join(CARTELLA_DATI, nome, file)
     return existsSync(percorso) ? JSON.parse(await readFile(percorso, 'utf8')) : []
   }
-  const [luoghi, itinerari, tradizioni, piatti, gioco, foto] = await Promise.all(
-    ['luoghi.json', 'itinerari.json', 'tradizioni.json', 'piatti.json', 'gioco.json', 'foto.json'].map(leggi),
+  const [luoghi, itinerari, tradizioni, piatti, foto] = await Promise.all(
+    ['luoghi.json', 'itinerari.json', 'tradizioni.json', 'piatti.json', 'foto.json'].map(leggi),
   )
-  return { luoghi, itinerari, tradizioni, piatti, gioco, foto }
+  return { luoghi, itinerari, tradizioni, piatti, foto }
 }
 
 export async function popola(db, { datiDimostrativi, archivio }) {
@@ -58,6 +61,7 @@ export async function popola(db, { datiDimostrativi, archivio }) {
   for (const nome of await elencaPacchetti()) {
     if (!caricati.has(nome)) await caricaPacchetto(db, archivio, nome)
   }
+  await sincronizzaLivelliGioco(db)
 
   if (datiDimostrativi) {
     const [{ u }] = await db.query('SELECT count(*)::int AS u FROM utenti')
@@ -66,7 +70,7 @@ export async function popola(db, { datiDimostrativi, archivio }) {
 }
 
 async function caricaPacchetto(db, archivio, nome) {
-  const { luoghi, itinerari, tradizioni, piatti, gioco, foto } = await leggiPacchetto(nome)
+  const { luoghi, itinerari, tradizioni, piatti, foto } = await leggiPacchetto(nome)
 
   // Le foto si preparano prima della transazione (riduzione e rimozione dei metadati)
   const fotoPronte = []
@@ -124,14 +128,6 @@ async function caricaPacchetto(db, archivio, nome) {
         [piatto.id, piatto.nome, piatto.tipo, piatto.descrizione, ultimo + 1 + i],
       )
     }
-    for (const l of gioco) {
-      if (!(await esiste(l.poi))) continue
-      await tx.query(
-        'INSERT INTO livelli_gioco (id, poi, indizio, anno) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO NOTHING',
-        [l.id, l.poi, l.indizio, l.anno],
-      )
-    }
-
     const salvate = []
     for (const [i, f] of fotoPronte.entries()) {
       if (!(await esiste(f.poi))) continue
@@ -152,6 +148,28 @@ async function caricaPacchetto(db, archivio, nome) {
   })
 
   for (const f of fotoSalvate) await archivio.salva('pubblica', f.id, f.immagine)
+}
+
+/**
+ * Livelli fotografici di "Dov'era?" (db/dati/gioco.json). Non si modificano dal pannello di
+ * amministrazione: il file è la fonte, quindi a ogni avvio il database viene allineato
+ * (anche un database creato prima che il gioco diventasse fotografico).
+ * Si saltano i livelli di luoghi che l'amministratore ha eliminato.
+ */
+async function sincronizzaLivelliGioco(db) {
+  const gioco = JSON.parse(await readFile(path.join(CARTELLA_DATI, 'gioco.json'), 'utf8'))
+  await db.transazione(async (tx) => {
+    await tx.query('DELETE FROM livelli_gioco WHERE NOT (id = ANY($1))', [gioco.map((l) => l.id)])
+    for (const l of gioco) {
+      await tx.query(
+        `INSERT INTO livelli_gioco (id, poi, anno, foto_file, foto_autore, foto_licenza, foto_fonte)
+         SELECT $1, $2, $3, $4, $5, $6, $7 WHERE EXISTS (SELECT 1 FROM poi WHERE id = $2)
+         ON CONFLICT (id) DO UPDATE SET poi = $2, anno = $3, foto_file = $4, foto_autore = $5,
+                                        foto_licenza = $6, foto_fonte = $7, indizio = ''`,
+        [l.id, l.poi, l.anno, l.foto, l.autore, l.licenza, l.fonte],
+      )
+    }
+  })
 }
 
 async function inserisciDimostrativi(db) {

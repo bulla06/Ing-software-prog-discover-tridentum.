@@ -1,7 +1,7 @@
 import { Suspense, lazy, useState } from 'react'
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import BarraNavigazione from './components/BarraNavigazione.jsx'
-import { LinguaProvider } from './i18n/index.jsx'
+import { LinguaProvider, useT } from './i18n/index.jsx'
 import { leggi, scrivi } from './lib/memoria.js'
 import { PosizioneProvider } from './lib/posizione.jsx'
 import { SessioneProvider } from './lib/sessione.jsx'
@@ -44,27 +44,10 @@ export default function App() {
           <HashRouter>
             {benvenutoVisto ? (
               <div className="app">
-                <main className="app__contenuto">
-                  <Suspense fallback={<div className="pagina" aria-busy="true" />}>
-                    <Routes>
-                      <Route path="/" element={<Mappa />} />
-                      <Route path="/poi/:id" element={<Scheda />} />
-                      <Route path="/poi/:id/ricordo" element={<AggiungiRicordo />} />
-                      <Route path="/itinerari" element={<Itinerari />} />
-                      <Route path="/itinerari/:id" element={<Itinerario />} />
-                      <Route path="/scopri" element={<Scopri />} />
-                      <Route path="/gioco" element={<Gioco />} />
-                      <Route path="/profilo" element={<Profilo onRivediBenvenuto={() => setBenvenutoVisto(false)} />} />
-                      <Route path="/accesso" element={<Accesso />} />
-                      <Route path="/conferma" element={<Conferma />} />
-                      <Route path="/reimposta" element={<Reimposta />} />
-                      <Route path="/moderazione" element={<Moderazione />} />
-                      <Route path="/amministrazione" element={<Amministrazione />} />
-                      <Route path="/dev/posta" element={<PostaDiProva />} />
-                      <Route path="*" element={<Navigate to="/" replace />} />
-                    </Routes>
-                  </Suspense>
-                </main>
+                <SaltaAlContenuto />
+                <Contenuto onRivediBenvenuto={() => setBenvenutoVisto(false)} />
+                {/* Dopo il contenuto nel codice: chi usa la tastiera o uno screen reader
+                    arriva subito alla pagina. Su desktop il CSS la mette a sinistra. */}
                 <BarraNavigazione />
               </div>
             ) : (
@@ -74,5 +57,48 @@ export default function App() {
         </PosizioneProvider>
       </SessioneProvider>
     </LinguaProvider>
+  )
+}
+
+function SaltaAlContenuto() {
+  const { t } = useT()
+  return (
+    <a className="salta" href="#contenuto" onClick={(e) => {
+      // Con il routing a hash un normale link ad ancora cambierebbe pagina: si sposta solo il focus
+      e.preventDefault()
+      document.getElementById('contenuto')?.focus()
+    }}>
+      {t('nav.salta')}
+    </a>
+  )
+}
+
+// La chiave sul percorso fa ripartire la breve dissolvenza d'ingresso a ogni cambio di
+// pagina: comunica che la schermata è cambiata. Ricerche e filtri (che cambiano solo i
+// parametri) non la fanno ripartire.
+function Contenuto({ onRivediBenvenuto }) {
+  const { pathname } = useLocation()
+  return (
+    <main className="app__contenuto" id="contenuto" tabIndex={-1} key={pathname}>
+      <Suspense fallback={<div className="pagina" aria-busy="true" />}>
+        <Routes>
+          <Route path="/" element={<Mappa />} />
+          <Route path="/poi/:id" element={<Scheda />} />
+          <Route path="/poi/:id/ricordo" element={<AggiungiRicordo />} />
+          <Route path="/itinerari" element={<Itinerari />} />
+          <Route path="/itinerari/:id" element={<Itinerario />} />
+          <Route path="/scopri" element={<Scopri />} />
+          <Route path="/gioco" element={<Gioco />} />
+          <Route path="/profilo" element={<Profilo onRivediBenvenuto={onRivediBenvenuto} />} />
+          <Route path="/accesso" element={<Accesso />} />
+          <Route path="/conferma" element={<Conferma />} />
+          <Route path="/reimposta" element={<Reimposta />} />
+          <Route path="/moderazione" element={<Moderazione />} />
+          <Route path="/amministrazione" element={<Amministrazione />} />
+          <Route path="/dev/posta" element={<PostaDiProva />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
+    </main>
   )
 }

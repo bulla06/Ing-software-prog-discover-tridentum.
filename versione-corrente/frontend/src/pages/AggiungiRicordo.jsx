@@ -149,11 +149,11 @@ export default function AggiungiRicordo() {
         </div>
 
         <Campo etichetta={t('ricordo.testo')} aiuto={t('ricordo.testoAiuto')} errore={errori.testo}>
-          {(props) => <textarea {...props} rows={5} maxLength={2000} value={testo} onChange={(e) => setTesto(e.target.value)} />}
+          {(props) => <textarea {...props} name="testo" rows={5} maxLength={2000} value={testo} onChange={(e) => setTesto(e.target.value)} />}
         </Campo>
 
         <Campo etichetta={t('ricordo.anno')} aiuto={t('ricordo.annoEsempio')} errore={errori.anno}>
-          {(props) => <input {...props} type="text" maxLength={30} value={anno} onChange={(e) => setAnno(e.target.value)} />}
+          {(props) => <input {...props} type="text" name="anno" autoComplete="off" maxLength={30} value={anno} onChange={(e) => setAnno(e.target.value)} />}
         </Campo>
 
         <fieldset className="scelte">

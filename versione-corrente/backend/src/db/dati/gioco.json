@@ -1,0 +1,74 @@
+[
+  {
+    "id": "f01",
+    "poi": "duomo",
+    "anno": "1944-1946",
+    "foto": "f01.webp",
+    "autore": "Autore sconosciuto",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Duomo_di_Trento_post_bombardamento_01.jpg"
+  },
+  {
+    "id": "f02",
+    "poi": "nettuno",
+    "anno": "Fine Ottocento",
+    "foto": "f02.webp",
+    "autore": "Fotocromia, Library of Congress",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Trento._Piazza_Grande_Fontana_di_Nettuno._LOC_ppmsca.52678.jpg"
+  },
+  {
+    "id": "f03",
+    "poi": "piazza-dante",
+    "anno": "1916",
+    "foto": "f03.webp",
+    "autore": "K.u.k. Kriegspressequartier, Vienna",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Dante_Denkmal_mit_italienischen_Waffen_in_Trient._(BildID_15534322).jpg"
+  },
+  {
+    "id": "f04",
+    "poi": "buonconsiglio",
+    "anno": "1918",
+    "foto": "f04.webp",
+    "autore": "K.u.k. Kriegspressequartier, Vienna",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Trient,_Kastel._(BildID_15508808).jpg"
+  },
+  {
+    "id": "f05",
+    "poi": "torre-vanga",
+    "anno": "1943 circa",
+    "foto": "f05.webp",
+    "autore": "Autore sconosciuto",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Trento_-_Torre_Vanga_1943.jpg"
+  },
+  {
+    "id": "f06",
+    "poi": "sant-apollinare",
+    "anno": "1943 circa",
+    "foto": "f06.webp",
+    "autore": "Autore sconosciuto",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Trento_-_Adige_1943.1.jpg"
+  },
+  {
+    "id": "f07",
+    "poi": "doss-trento",
+    "anno": "1916",
+    "foto": "f07.webp",
+    "autore": "K.u.k. Kriegspressequartier, Vienna",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Blick_nach_Paganella_und_Doss_Trento_und_Etschufer,_Aufgenomen_am_19._Juni_1916._(BildID_15534560).jpg"
+  },
+  {
+    "id": "f08",
+    "poi": "bombardamenti",
+    "anno": "1917",
+    "foto": "f08.webp",
+    "autore": "K.u.k. Kriegspressequartier, Vienna",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Ankunft_Sr._Majest%C3%A4t_Kaiser_Karl_I._am_Bahnhofe_Trient_(BildID_15628613).jpg"
+  }
+]
