@@ -80,6 +80,9 @@ export default {
   'scheda.nonTrovato': 'Questo luogo non esiste o è stato rimosso.',
   'scheda.tornaMappa': 'Torna alla mappa',
   'scheda.bozza': 'Contenuti dimostrativi: testi e fonti sono da verificare dal team prima della pubblicazione.',
+  'scheda.condividi': 'Condividi',
+  'scheda.linkCopiato': 'Link copiato: incollalo dove vuoi.',
+  'scheda.ricordoBreve': 'Ricordo',
   'scheda.temi': 'Temi',
   'scheda.informazioni': 'Informazioni sul luogo',
 

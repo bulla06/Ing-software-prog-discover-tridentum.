@@ -6,6 +6,7 @@ import { getItinerario } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { formattaDistanza, lunghezzaPercorso } from '../lib/geo.js'
 import { usePreferiti } from '../lib/preferiti.js'
+import { useSchermoLargo } from '../lib/schermo.js'
 import { useSessione } from '../lib/sessione.jsx'
 
 // S-06 Itinerario (RF-07): percorso sulla mappa, tappe numerate e "Prossima tappa".
@@ -17,11 +18,15 @@ export default function Itinerario() {
   const navigate = useNavigate()
   const [itinerario, setItinerario] = useState(undefined)
   const [params, setParams] = useSearchParams()
+  // Su telefono i comandi delle tappe stanno in una barra fissa sopra la navigazione:
+  // chi cammina passa alla tappa successiva senza dover scorrere la pagina
+  const largo = useSchermoLargo()
   const [vista, setVista] = useState(null)
   const { utente } = useSessione()
   const { salvato, alterna } = usePreferiti()
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     getItinerario(id).then(
       (it) => {
         setItinerario(it)
@@ -69,6 +74,30 @@ export default function Itinerario() {
     setVista({ centro: itinerario.tappe[i].posizione, zoom: 17 })
   }
 
+
+  const comandi = (
+    <>
+      <button
+        type="button"
+        className="pulsante pulsante--icona"
+        aria-label={t('itinerario.precedente')}
+        title={t('itinerario.precedente')}
+        disabled={attuale === 0}
+        onClick={() => vaiA(attuale - 1)}
+      >
+        <Icona nome="precedente" size={20} />
+      </button>
+      <button
+        type="button"
+        className="pulsante pulsante--primario"
+        disabled={attuale === totale - 1}
+        onClick={() => vaiA(attuale + 1)}
+      >
+        {attuale === totale - 1 ? t('itinerario.fine') : t('itinerario.prossima')}
+        {attuale < totale - 1 && <Icona nome="avanti" size={18} />}
+      </button>
+    </>
+  )
   return (
     <div className="pagina-itinerario">
       <div className="pagina-itinerario__mappa">
@@ -115,27 +144,7 @@ export default function Itinerario() {
             {t('itinerario.apri')}
             <Icona nome="avanti" size={16} />
           </Link>
-          <div className="tappa-attuale__comandi">
-            <button
-              type="button"
-              className="pulsante pulsante--icona"
-              aria-label={t('itinerario.precedente')}
-              title={t('itinerario.precedente')}
-              disabled={attuale === 0}
-              onClick={() => vaiA(attuale - 1)}
-            >
-              <Icona nome="precedente" size={20} />
-            </button>
-            <button
-              type="button"
-              className="pulsante pulsante--primario"
-              disabled={attuale === totale - 1}
-              onClick={() => vaiA(attuale + 1)}
-            >
-              {attuale === totale - 1 ? t('itinerario.fine') : t('itinerario.prossima')}
-              {attuale < totale - 1 && <Icona nome="avanti" size={18} />}
-            </button>
-          </div>
+          {largo && <div className="tappa-attuale__comandi">{comandi}</div>}
         </section>
 
         <h2 className="etichetta-sezione">{t('itinerario.percorso')}</h2>
@@ -144,7 +153,7 @@ export default function Itinerario() {
             <li key={p.id + i}>
               <button type="button" className="tappe__voce" aria-current={i === attuale ? 'step' : undefined} onClick={() => vaiA(i)}>
                 <span className="tappe__numero">{i + 1}</span>
-                <span>
+                <span className="tappe__testo">
                   <strong>{p.nome}</strong>
                   <small>{t(`categoria.${p.categoria}`)}</small>
                 </span>
@@ -153,6 +162,16 @@ export default function Itinerario() {
           ))}
         </ol>
       </div>
+
+      {/* Fuori dal riquadro della tappa: la sua animazione d'ingresso renderebbe "fixed" relativo al riquadro */}
+      {!largo && (
+        <div className="barra-tappe">
+          <span className="barra-tappe__stato numero" aria-hidden="true">
+            {attuale + 1}/{totale}
+          </span>
+          {comandi}
+        </div>
+      )}
     </div>
   )
 }

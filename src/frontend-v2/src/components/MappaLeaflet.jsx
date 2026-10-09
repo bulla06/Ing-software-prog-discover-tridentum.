@@ -78,6 +78,8 @@ function iconaGruppo(gruppo) {
  * - `inquadra`: punti da far entrare nella vista; la mappa li inquadra quando l'elenco cambia
  * - `pulsantiZoom`: mostra i pulsanti + e - (su smartphone basta il pizzico)
  * - `statica`: mappa non interattiva, usata come immagine
+ * - `mostra`: { punto, margineAlto, margineBasso }; la mappa si sposta perché il punto sia visibile
+ *   fuori dai margini (pannelli sopra la mappa)
  * - `onPronta(mappa)`: riceve l'oggetto Leaflet, per esempio per leggerne il centro
  */
 export default function MappaLeaflet({
@@ -87,6 +89,7 @@ export default function MappaLeaflet({
   percorso = null,
   posizioneUtente = null,
   inquadra = null,
+  mostra = null,
   pulsantiZoom = true,
   statica = false,
   onClickSegnaposto,
@@ -218,6 +221,28 @@ export default function MappaLeaflet({
       }).addTo(gruppo)
     }
   }, [segnaposti, percorso, posizioneUtente, statica])
+
+  // Luogo selezionato: se non si vede (o finisce sotto i pannelli in alto e in basso, come
+  // l'anteprima su telefono) la mappa si sposta quanto basta per mostrarlo
+  const chiaveMostra = mostra ? mostra.punto.join(',') : null
+  useEffect(() => {
+    const m = mappa.current
+    if (!m || !mostra) return
+    const alto = mostra.margineAlto ?? 24
+    const basso = mostra.margineBasso ?? 24
+    // Un attimo dopo gli altri aggiornamenti della mappa (segnaposti, gruppi), che altrimenti
+    // interromperebbero lo spostamento
+    const timer = setTimeout(() => {
+      const { x, y } = m.getSize()
+      const p = m.latLngToContainerPoint(mostra.punto)
+      if (p.x >= 24 && p.x <= x - 24 && p.y >= alto && p.y <= y - basso) return
+      // Il punto va al centro dello spazio libero tra i pannelli
+      const centroLibero = L.point(x / 2, alto + (y - alto - basso) / 2)
+      const nuovoCentro = m.containerPointToLatLng(m.getSize().divideBy(2).add(p.subtract(centroLibero)))
+      m.panTo(nuovoCentro, { animate: !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches })
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [chiaveMostra])
 
   // Inquadratura di un gruppo di punti (risultati di una ricerca, tappe di un itinerario...)
   useEffect(() => {

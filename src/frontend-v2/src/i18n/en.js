@@ -80,6 +80,9 @@ export default {
   'scheda.nonTrovato': 'This place doesn’t exist or was removed.',
   'scheda.tornaMappa': 'Back to the map',
   'scheda.bozza': 'Sample content: texts and sources are still to be checked by the team.',
+  'scheda.condividi': 'Share',
+  'scheda.linkCopiato': 'Link copied: paste it wherever you like.',
+  'scheda.ricordoBreve': 'Memory',
   'scheda.temi': 'Themes',
   'scheda.informazioni': 'About this place',
 

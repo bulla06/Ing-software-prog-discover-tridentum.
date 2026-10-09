@@ -3358,3 +3358,224 @@ body {
     height: 180px;
   }
 }
+
+/* ==========================================================================
+   Telefono: ergonomia, gesti e comandi a portata di pollice
+   ========================================================================== */
+
+/* Barra in alto della scheda: compare quando la copertina esce dallo schermo */
+.scheda__barra {
+  position: fixed;
+  z-index: var(--z-nav);
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+  background: color-mix(in srgb, var(--superficie) 94%, transparent);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--bordo);
+  transform: translateY(-100%);
+  visibility: hidden;
+  transition: transform 0.25s var(--curva), visibility 0.25s;
+}
+
+.scheda__barra[data-visibile='true'] {
+  transform: none;
+  visibility: visible;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .scheda__barra {
+    background: var(--superficie);
+    backdrop-filter: none;
+  }
+}
+
+.scheda__barra-titolo {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.pulsante-tondo--piccolo {
+  width: 44px;
+  height: 44px;
+  box-shadow: none;
+}
+
+.pulsante-tondo--su-copertina.pulsante-tondo--destra {
+  left: auto;
+  right: 12px;
+}
+
+.scheda__info {
+  display: grid;
+  gap: 12px;
+}
+
+/* Barra delle tappe (itinerario su telefono) */
+.barra-tappe {
+  position: fixed;
+  z-index: var(--z-nav);
+  left: 12px;
+  right: 12px;
+  bottom: calc(var(--barra-nav) + env(safe-area-inset-bottom) + 10px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--pillola);
+  border: 1px solid var(--bordo);
+  background: var(--superficie);
+  box-shadow: var(--ombra-2);
+}
+
+.barra-tappe .pulsante--primario {
+  flex: 1;
+}
+
+.barra-tappe__stato {
+  padding: 0 4px 0 10px;
+  font-weight: 600;
+  color: var(--tenue);
+}
+
+.anteprima__maniglia {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  /* Sezione attiva: una pillola dietro l'icona, riconoscibile anche senza leggere */
+  .barra-nav__voce .icona {
+    box-sizing: content-box;
+    padding: 3px 18px;
+    border-radius: var(--pillola);
+    transition: background 0.2s;
+  }
+
+  .barra-nav__voce.active .icona {
+    background: var(--accento-tenue);
+  }
+
+  /* Sotto i 16 px Safari su iPhone ingrandisce la pagina quando si tocca il campo */
+  .chip--select select,
+  .ricerca input {
+    font-size: 16px;
+  }
+
+  /* Spazio sotto l'ultima tappa: la barra fissa delle tappe non la deve coprire */
+  .pagina-itinerario__corpo {
+    padding-bottom: 104px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Anteprima di un luogo: pannello dal basso, si chiude anche trascinandolo giù */
+  .anteprima {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    grid-template-columns: 96px 1fr;
+    padding-top: 14px;
+    border-radius: var(--raggio) var(--raggio) 0 0;
+    border-bottom: 0;
+    touch-action: none;
+    animation-fill-mode: backwards;
+  }
+
+  .anteprima .copertina {
+    min-height: 132px;
+    margin-left: 12px;
+    border-radius: var(--raggio-piccolo);
+  }
+
+  .anteprima__maniglia {
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 36px;
+    height: 4px;
+    margin-left: -18px;
+    border-radius: var(--pillola);
+    background: var(--bordo-forte);
+  }
+
+  .anteprima__chiudi {
+    top: 14px;
+  }
+
+  /* Avvisi sopra la mappa più compatti: lo spazio sullo schermo è poco */
+  .strumenti .banner {
+    padding: 8px 8px 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Schermi touch: aree di tocco di almeno 44 px */
+@media (pointer: coarse) {
+  .chip {
+    min-height: 44px;
+  }
+
+  .chip--piccolo {
+    min-height: 40px;
+  }
+
+  .chip--select select {
+    min-height: 42px;
+  }
+
+  .banner__chiudi,
+  .ricerca__svuota,
+  .anteprima__chiudi {
+    width: 44px;
+    height: 44px;
+  }
+
+  .fonti a,
+  .collegamento {
+    min-height: 44px;
+  }
+
+  .segmentato__voce,
+  .schede-tab__voce {
+    min-height: 44px;
+  }
+}
+
+/* Senza mouse l'effetto hover resterebbe "appiccicato" dopo il tocco */
+@media (hover: none) {
+  .riga-poi:hover:not(.riga-poi--attiva),
+  .tappe__voce:hover:not([aria-current='step']),
+  .riga-link:hover {
+    background: transparent;
+  }
+
+  .scheda-mini:hover,
+  .scheda-itinerario:hover,
+  .azione:hover,
+  .chip:hover,
+  .pulsante:hover:not(:disabled) {
+    border-color: var(--bordo);
+  }
+
+  .scheda-mini:hover,
+  .gruppo:hover {
+    transform: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .scheda__barra {
+    left: var(--colonna-nav);
+  }
+}

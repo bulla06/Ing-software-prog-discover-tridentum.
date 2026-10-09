@@ -25,6 +25,7 @@ import {
   PaintBrush,
   Path,
   PersonSimpleWalk,
+  ShareNetwork,
   Target,
   Translate,
   Trophy,
@@ -62,6 +63,7 @@ export const ICONE = {
   foto: Image,
   ingrandisci: ArrowsOut,
   fatto: Check,
+  condividi: ShareNetwork,
   // Categorie dei luoghi
   storia: Bank,
   arte: PaintBrush,

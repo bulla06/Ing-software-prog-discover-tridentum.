@@ -7,6 +7,12 @@ import { getPoi } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { CENTRO_TRENTO, distanzaMetri, formattaDistanza } from '../lib/geo.js'
 import { usePosizione } from '../lib/posizione.jsx'
+import { useSchermoLargo } from '../lib/schermo.js'
+import { useTrascinaPerChiudere } from '../lib/trascina.js'
+
+// Gli avvisi informativi sulla posizione spariscono da soli: su telefono lo spazio sopra la mappa
+// è poco. Gli errori (dati non caricati, mappa non disponibile) restano finché non si risolvono.
+const DURATA_AVVISO_MS = 6000
 
 // S-01 Mappa · S-01L Elenco · S-02 Anteprima · S-04 Ricerca e filtri (UC-01).
 // Ricerca, filtri, vista e luogo selezionato stanno nell'URL: tornando indietro
@@ -32,6 +38,8 @@ export default function Mappa() {
   const [mappaRotta, setMappaRotta] = useState(false)
   const [avvisoChiuso, setAvvisoChiuso] = useState(false)
   const [evidenziato, setEvidenziato] = useState(null)
+  const trascina = useTrascinaPerChiudere(() => aggiorna({ poi: null }))
+  const largo = useSchermoLargo()
 
   const aggiorna = (modifiche) => {
     const nuovi = new URLSearchParams(params)
@@ -91,6 +99,13 @@ export default function Mappa() {
 
   const selezionato = conDistanza.find((r) => r.poi.id === selezionatoId)
 
+  // Il luogo selezionato deve restare visibile: su telefono sopra il pannello dell'anteprima
+  // e sotto ricerca e filtri
+  const mostra = useMemo(
+    () => (selezionato ? { punto: selezionato.poi.posizione, margineAlto: largo ? 24 : 150, margineBasso: largo ? 24 : 270 } : null),
+    [selezionato, largo],
+  )
+
   const segnaposti = useMemo(
     () =>
       (luoghi ?? []).map((poi) => ({
@@ -123,6 +138,13 @@ export default function Mappa() {
         : stato === 'lontano'
           ? t('mappa.lontano')
           : null
+
+  const avvisoInformativo = Boolean(messaggio) && !errore && !(mappaRotta && !elenco)
+  useEffect(() => {
+    if (!avvisoInformativo || avvisoChiuso) return
+    const timer = setTimeout(() => setAvvisoChiuso(true), DURATA_AVVISO_MS)
+    return () => clearTimeout(timer)
+  }, [avvisoInformativo, avvisoChiuso])
 
   return (
     <div className={`pagina-mappa ${elenco ? 'pagina-mappa--elenco' : ''}`}>
@@ -268,6 +290,7 @@ export default function Mappa() {
           segnaposti={segnaposti}
           raggruppa
           inquadra={inquadra}
+          mostra={mostra}
           pulsantiZoom={false}
           posizioneUtente={stato === 'ok' ? coordinate : null}
           onClickSegnaposto={(id) => aggiorna({ poi: id })}
@@ -293,7 +316,8 @@ export default function Mappa() {
         </div>
 
         {selezionato && (
-          <article className="anteprima" aria-labelledby="anteprima-titolo">
+          <article className="anteprima" aria-labelledby="anteprima-titolo" {...trascina}>
+            <span className="anteprima__maniglia" aria-hidden="true" />
             <Copertina poi={selezionato.poi} compatta />
             <div className="anteprima__corpo">
               <p className="etichetta-categoria" style={{ '--tinta': `var(--c-${selezionato.poi.categoria})` }}>

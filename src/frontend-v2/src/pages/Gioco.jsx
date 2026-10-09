@@ -265,7 +265,12 @@ function Livello({ stato, totale, errore, occupato, onIpotesi, onConferma, onAva
             percorso={risultato?.poi ? [ipotesi, risultato.poi.posizione] : null}
             inquadra={inquadra}
             onPronta={(m) => (mappa.current = m)}
-            onClickMappa={(punto) => !confermato && onIpotesi(punto)}
+            onClickMappa={(punto) => {
+              if (confermato) return
+              onIpotesi(punto)
+              // Riscontro tattile sui telefoni che lo supportano
+              navigator.vibrate?.(10)
+            }}
           />
           {!confermato && <span className="dovera__mirino" aria-hidden="true" />}
         </div>
