@@ -1,7 +1,7 @@
 // UC-01, UC-02, UC-10 (consultazione) · UC-07 Gestire i POI
 import sharp from 'sharp'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { popola } from '../../src/backend/src/db/popola.js'
+import { popola } from '../../versione-corrente/backend/src/db/popola.js'
 import { ACCOUNT, accedi, creaAmbiente } from './ambiente.js'
 
 let amb

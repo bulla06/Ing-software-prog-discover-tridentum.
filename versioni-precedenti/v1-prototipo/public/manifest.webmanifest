@@ -1,0 +1,13 @@
+{
+  "name": "Discover Tridentum — Trento Nascosta",
+  "short_name": "Tridentum",
+  "description": "La guida che racconta la Trento che non trovi su Google.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f1e8",
+  "theme_color": "#8c2f1b",
+  "lang": "it",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

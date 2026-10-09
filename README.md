@@ -43,10 +43,12 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ## Il sito
 
+La **versione corrente** è in [`versione-corrente/`](versione-corrente); le versioni passate, come il primo prototipo con solo il frontend, sono in [`versioni-precedenti/`](versioni-precedenti).
+
 La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
-- **Frontend** in [`src/frontend/`](src/frontend): React + Vite, mappa Leaflet su OpenStreetMap, italiano e inglese;
-- **Backend** in [`src/backend/`](src/backend): Node.js + Express, API REST con il gateway (token JWT, ruoli, limiti alle richieste) davanti ai quattro moduli *Utenti e accessi*, *POI, itinerari e tradizioni*, *Contenuti e moderazione*, *Gioco*;
+- **Frontend** in [`versione-corrente/frontend/`](versione-corrente/frontend): React + Vite, mappa Leaflet su OpenStreetMap, italiano e inglese;
+- **Backend** in [`versione-corrente/backend/`](versione-corrente/backend): Node.js + Express, API REST con il gateway (token JWT, ruoli, limiti alle richieste) davanti ai quattro moduli *Utenti e accessi*, *POI, itinerari e tradizioni*, *Contenuti e moderazione*, *Gioco*;
 - **Database PostgreSQL + PostGIS**: in sviluppo con [PGlite](https://pglite.dev), lo stesso PostgreSQL eseguito dentro Node, quindi **non serve installare niente**; con Docker Compose un server PostgreSQL vero.
 
 ### Avvio in sviluppo
@@ -58,7 +60,7 @@ npm install        # solo la prima volta (installa frontend e backend)
 npm run dev        # avvia backend e frontend insieme
 ```
 
-Poi apri **http://localhost:5173**. Il primo avvio crea il database in `src/backend/.dati/` e lo riempie con i pacchetti di dati di [`src/backend/src/db/dati/`](src/backend/src/db/dati): ci vuole una ventina di secondi. I pacchetti aggiunti in seguito si caricano da soli al successivo avvio, anche in un database già esistente.
+Poi apri **http://localhost:5173**. Il primo avvio crea il database in `versione-corrente/backend/.dati/` e lo riempie con i pacchetti di dati di [`versione-corrente/backend/src/db/dati/`](versione-corrente/backend/src/db/dati): ci vuole una ventina di secondi. I pacchetti aggiunti in seguito si caricano da soli al successivo avvio, anche in un database già esistente.
 
 **Account di prova** (solo in sviluppo):
 
@@ -70,7 +72,7 @@ Poi apri **http://localhost:5173**. Il primo avvio crea il database in `src/back
 
 In sviluppo le e-mail (conferma della registrazione, password dimenticata, esito della moderazione) non vengono spedite: si leggono nella **posta di prova**, dal Profilo o su http://localhost:5173/#/dev/posta.
 
-Per ripartire da un database pulito basta fermare il server e cancellare la cartella `src/backend/.dati/`.
+Per ripartire da un database pulito basta fermare il server e cancellare la cartella `versione-corrente/backend/.dati/`.
 
 ### Test
 
@@ -114,7 +116,7 @@ Per le e-mail vere serve un server SMTP (`SMTP_URL` nel file `.env`). In produzi
 Non ci sono ancora il riconoscimento dei luoghi con la fotocamera (RF-06, *Could*) e l'AI Service, rinviati come previsto dalla [Fase 4](docs/fase-4-pianificazione.md#22-cosa-entra).
 
 **Da sapere**
-- I contenuti iniziali (36 luoghi, 9 itinerari, tradizioni, piatti, 14 livelli del gioco) sono una **prima selezione da verificare**: date, attribuzioni, fonti e soprattutto i locali della mappa del gusto vanno controllati dal team (WBS 3) prima della pubblicazione. Si correggono dal pannello di amministrazione oppure nei file di [`src/backend/src/db/dati/`](src/backend/src/db/dati), che vengono caricati quando il database è vuoto.
+- I contenuti iniziali (36 luoghi, 9 itinerari, tradizioni, piatti, 14 livelli del gioco) sono una **prima selezione da verificare**: date, attribuzioni, fonti e soprattutto i locali della mappa del gusto vanno controllati dal team (WBS 3) prima della pubblicazione. Si correggono dal pannello di amministrazione oppure nei file di [`versione-corrente/backend/src/db/dati/`](versione-corrente/backend/src/db/dati), che vengono caricati quando il database è vuoto.
 - Le foto dei luoghi sono di due tipi: quelle **ufficiali**, caricate dagli amministratori o dai pacchetti di dati con autore, licenza e fonte (obbligatori, perché le licenze libere li richiedono), e i **ricordi** della community, che passano dalla moderazione. La copertina è la prima foto ufficiale, altrimenti il primo ricordo con foto.
 
 ## Struttura del repository
@@ -131,8 +133,8 @@ Non ci sono ancora il riconoscimento dei luoghi con la fotocamera (RF-06, *Could
 ├── presentazioni/
 │   ├── presentazione-v1.pptx             # prima versione
 │   └── presentazione-v2.pptx             # versione attuale, nuovo design
-├── src/
-│   ├── frontend/                         # il sito: React + Vite + Leaflet
+├── versione-corrente/                    # il sito attuale (si avvia dalla cartella principale)
+│   ├── frontend/                         # React + Vite + Leaflet
 │   │   └── src/
 │   │       ├── pages/                    # una pagina per schermata
 │   │       ├── components/               # mappa, moduli, finestre, icone…
@@ -146,6 +148,8 @@ Non ci sono ancora il riconoscimento dei luoghi con la fotocamera (RF-06, *Could
 │           ├── db/                       # connessione, migrazioni, pacchetti di dati iniziali
 │           ├── servizi/                  # e-mail, archivio e preparazione delle foto
 │           └── server.js                 # avvio
+├── versioni-precedenti/                  # versioni passate del sito, conservate come riferimento
+│   └── v1-prototipo/                     # primo prototipo: solo frontend, dati in JSON
 ├── tests/
 │   ├── frontend/                         # test del frontend (Vitest)
 │   └── backend/                          # test delle API e dei dati (Vitest + Supertest)

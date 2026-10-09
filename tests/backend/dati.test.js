@@ -1,11 +1,11 @@
-// Controlli di coerenza sui pacchetti di dati iniziali (src/backend/src/db/dati/NNN-nome),
+// Controlli di coerenza sui pacchetti di dati iniziali (versione-corrente/backend/src/db/dati/NNN-nome),
 // prima che vengano caricati nel database.
 import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { CARTELLA_DATI, elencaPacchetti, leggiPacchetto } from '../../src/backend/src/db/popola.js'
-import testiIt from '../../src/frontend/src/i18n/it.js'
-import testiEn from '../../src/frontend/src/i18n/en.js'
+import { CARTELLA_DATI, elencaPacchetti, leggiPacchetto } from '../../versione-corrente/backend/src/db/popola.js'
+import testiIt from '../../versione-corrente/frontend/src/i18n/it.js'
+import testiEn from '../../versione-corrente/frontend/src/i18n/en.js'
 
 // Tutti i pacchetti insieme, come risultano nel database alla fine del caricamento
 const pacchetti = await Promise.all((await elencaPacchetti()).map(async (nome) => ({ nome, ...(await leggiPacchetto(nome)) })))

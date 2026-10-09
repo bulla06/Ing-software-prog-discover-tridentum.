@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CENTRO_TRENTO, distanzaMetri, formattaDistanza, lunghezzaPercorso } from '../../src/frontend/src/lib/geo.js'
+import { CENTRO_TRENTO, distanzaMetri, formattaDistanza, lunghezzaPercorso } from '../../versione-corrente/frontend/src/lib/geo.js'
 
 describe('distanzaMetri', () => {
   it('è zero tra un punto e se stesso', () => {
