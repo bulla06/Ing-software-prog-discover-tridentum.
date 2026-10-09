@@ -6,7 +6,6 @@ import { getClassifica, nuovaPartita, salvaPunteggio, verificaRisposta } from '.
 import { useT } from '../i18n/index.jsx'
 import { messaggioErrore } from '../lib/errori.js'
 import { CENTRO_TRENTO, PUNTEGGIO_MAX, formattaDistanza } from '../lib/geo.js'
-import { urlFoto } from '../lib/http.js'
 import { leggi, scrivi } from '../lib/memoria.js'
 import { useSessione } from '../lib/sessione.jsx'
 
@@ -201,9 +200,9 @@ export default function Gioco() {
           {t('gioco.round', { i: indice + 1, n: livelli.length })}
           {livello.anno && ` · ${livello.anno}`}
         </p>
-        {livello.foto ? (
+        {livello.foto_url ? (
           <figure className="indizio__foto">
-            <img src={urlFoto(livello.foto, 'mini')} alt={t('gioco.fotoStorica')} />
+            <img src={livello.foto_url} alt={t('gioco.fotoStorica')} />
             <figcaption>{t('gioco.fotoStorica')}</figcaption>
           </figure>
         ) : (

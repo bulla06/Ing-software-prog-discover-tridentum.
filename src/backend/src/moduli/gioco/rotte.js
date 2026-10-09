@@ -5,6 +5,8 @@
 // verifica ogni risposta e ricalcola il punteggio finale prima di salvarlo.
 
 import { randomUUID } from 'node:crypto'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { Router } from 'express'
 import { SignJWT, jwtVerify } from 'jose'
 import { z } from 'zod'
@@ -15,6 +17,7 @@ export const LIVELLI_PER_PARTITA = 5
 export const PUNTEGGIO_MAX = 1000
 const DURATA_PARTITA = '3h'
 const POSIZIONI_IN_CLASSIFICA = 10
+const CARTELLA_FOTO = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../db/dati/foto-gioco')
 
 /** 1000 punti se si centra il luogo; si dimezzano circa ogni 200 m; 0 oltre i 2 km. */
 export function punteggio(metri) {
@@ -24,14 +27,21 @@ export function punteggio(metri) {
 
 const posizione = z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)])
 
-// Livelli curati dal team e foto della community approvate con il consenso dell'autore (RF-23)
+// Ogni livello è una foto storica: quelle curate dal team (db/dati/gioco.json) e quelle della
+// community approvate con il consenso dell'autore (RF-23). I nomi dei file sono neutri (f01.webp)
+// e i crediti, che contengono il nome del luogo, si mandano solo dopo la risposta.
 const LIVELLI = `
-  SELECT 'l-' || l.id AS id, l.indizio, l.anno, NULL::uuid AS foto, l.poi
+  SELECT 'l-' || l.id AS id, l.indizio, l.anno, NULL::uuid AS foto, l.foto_file, l.poi,
+         l.foto_autore AS autore, l.foto_licenza AS licenza, l.foto_fonte AS fonte
     FROM livelli_gioco l
+   WHERE l.foto_file IS NOT NULL
   UNION ALL
-  SELECT 'c-' || c.id, '', c.anno, c.foto, c.poi
-    FROM contenuti c
+  SELECT 'c-' || c.id, '', c.anno, c.foto, NULL, c.poi, u.nome_visualizzato, c.licenza, ''
+    FROM contenuti c JOIN utenti u ON u.id = c.autore
    WHERE c.stato = 'approvato' AND c.consenso_gioco AND c.foto IS NOT NULL`
+
+/** Indirizzo della foto di un livello, per il tag <img> */
+const urlFotoLivello = (l) => (l.foto_file ? `/api/gioco/foto/${l.foto_file}` : `/api/foto/${l.foto}`)
 
 export function rotteGioco({ db, config }) {
   const router = Router()
@@ -49,23 +59,25 @@ export function rotteGioco({ db, config }) {
   async function valuta(idLivello, [lat, lng]) {
     const [riga] = await db.query(
       `SELECT p.id, p.nome, ST_Y(p.posizione::geometry) AS lat, ST_X(p.posizione::geometry) AS lng,
-              ST_Distance(p.posizione, ST_SetSRID(ST_MakePoint($2, $3), 4326)::geography) AS metri
+              ST_Distance(p.posizione, ST_SetSRID(ST_MakePoint($2, $3), 4326)::geography) AS metri,
+              l.autore, l.licenza, l.fonte
          FROM (${LIVELLI}) l JOIN poi p ON p.id = l.poi
         WHERE l.id = $1`,
       [idLivello, lng, lat],
     )
     // Il livello può essere sparito durante la partita (POI eliminato): vale zero
-    if (!riga) return { metri: null, punti: 0, poi: null }
+    if (!riga) return { metri: null, punti: 0, poi: null, credito: null }
     return {
       metri: Math.round(riga.metri),
       punti: punteggio(riga.metri),
       poi: { id: riga.id, nome: riga.nome, posizione: [riga.lat, riga.lng] },
+      credito: { autore: riga.autore, licenza: riga.licenza, fonte: riga.fonte || null },
     }
   }
 
   /** GET /api/gioco/partita — 5 livelli a caso, senza le soluzioni */
   router.get('/gioco/partita', async (req, res) => {
-    const livelli = await db.query(`SELECT id, indizio, anno, foto FROM (${LIVELLI}) l ORDER BY random() LIMIT $1`, [
+    const livelli = await db.query(`SELECT id, indizio, anno, foto, foto_file FROM (${LIVELLI}) l ORDER BY random() LIMIT $1`, [
       LIVELLI_PER_PARTITA,
     ])
     // E1: servono almeno 5 livelli
@@ -79,7 +91,18 @@ export function rotteGioco({ db, config }) {
       .setExpirationTime(DURATA_PARTITA)
       .sign(config.jwtSegreto)
 
-    res.json({ partita, livelli: livelli.map(({ id, ...l }, indice) => ({ indice, ...l })) })
+    res.json({
+      partita,
+      livelli: livelli.map((l, indice) => ({ indice, anno: l.anno, indizio: l.indizio, foto: l.foto, foto_url: urlFotoLivello(l) })),
+    })
+  })
+
+  /** GET /api/gioco/foto/:file — foto storiche dei livelli curati dal team */
+  router.get('/gioco/foto/:file', (req, res, next) => {
+    if (!/^f\d{2}\.webp$/.test(req.params.file)) return next(new ErroreHttp(404, 'non_trovato', 'Foto inesistente'))
+    res.sendFile(req.params.file, { root: CARTELLA_FOTO, maxAge: '7d' }, (err) => {
+      if (err) next(new ErroreHttp(404, 'non_trovato', 'Foto inesistente'))
+    })
   })
 
   /** POST /api/gioco/verifica — esito di una risposta: posizione reale, distanza e punti */

@@ -21,6 +21,7 @@ export const ACCOUNT_DIMOSTRATIVI = [
 export async function popola(db, { datiDimostrativi }) {
   const [{ n }] = await db.query('SELECT count(*)::int AS n FROM poi')
   if (n === 0) await inserisciLuoghi(db)
+  await sincronizzaLivelliGioco(db)
 
   if (datiDimostrativi) {
     const [{ u }] = await db.query('SELECT count(*)::int AS u FROM utenti')
@@ -29,8 +30,8 @@ export async function popola(db, { datiDimostrativi }) {
 }
 
 async function inserisciLuoghi(db) {
-  const [luoghi, itinerari, tradizioni, piatti, gioco] = await Promise.all(
-    ['luoghi.json', 'itinerari.json', 'tradizioni.json', 'piatti.json', 'gioco.json'].map(leggiJson),
+  const [luoghi, itinerari, tradizioni, piatti] = await Promise.all(
+    ['luoghi.json', 'itinerari.json', 'tradizioni.json', 'piatti.json'].map(leggiJson),
   )
 
   await db.transazione(async (tx) => {
@@ -71,8 +72,27 @@ async function inserisciLuoghi(db) {
         [piatto.id, piatto.nome, piatto.tipo, piatto.descrizione, i],
       )
     }
+  })
+}
+
+/**
+ * Livelli fotografici di "Dov'era?" (db/dati/gioco.json). Non si modificano dal pannello di
+ * amministrazione: il file è la fonte, quindi a ogni avvio il database viene allineato
+ * (anche un database creato prima che il gioco diventasse fotografico).
+ * Si saltano i livelli di luoghi che l'amministratore ha eliminato.
+ */
+async function sincronizzaLivelliGioco(db) {
+  const gioco = await leggiJson('gioco.json')
+  await db.transazione(async (tx) => {
+    await tx.query('DELETE FROM livelli_gioco WHERE NOT (id = ANY($1))', [gioco.map((l) => l.id)])
     for (const l of gioco) {
-      await tx.query('INSERT INTO livelli_gioco (id, poi, indizio, anno) VALUES ($1, $2, $3, $4)', [l.id, l.poi, l.indizio, l.anno])
+      await tx.query(
+        `INSERT INTO livelli_gioco (id, poi, anno, foto_file, foto_autore, foto_licenza, foto_fonte)
+         SELECT $1, $2, $3, $4, $5, $6, $7 WHERE EXISTS (SELECT 1 FROM poi WHERE id = $2)
+         ON CONFLICT (id) DO UPDATE SET poi = $2, anno = $3, foto_file = $4, foto_autore = $5,
+                                        foto_licenza = $6, foto_fonte = $7, indizio = ''`,
+        [l.id, l.poi, l.anno, l.foto, l.autore, l.licenza, l.fonte],
+      )
     }
   })
 }

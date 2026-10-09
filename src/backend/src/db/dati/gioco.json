@@ -1,86 +1,74 @@
 [
   {
-    "id": "g1",
+    "id": "f01",
     "poi": "duomo",
-    "anno": "1545",
-    "indizio": "Qui, il 13 dicembre 1545, si aprì un incontro di vescovi destinato a durare diciotto anni."
+    "anno": "1944-1946",
+    "foto": "f01.webp",
+    "autore": "Autore sconosciuto",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Duomo_di_Trento_post_bombardamento_01.jpg"
   },
   {
-    "id": "g2",
-    "poi": "torre-vanga",
-    "anno": "XIII secolo",
-    "indizio": "Una torre costruita per sorvegliare un ponte. Oggi il fiume che attraversava è lontano."
-  },
-  {
-    "id": "g3",
-    "poi": "sass",
-    "anno": "I secolo",
-    "indizio": "Alcuni metri sotto una piazza, si vedono ancora i solchi lasciati dai carri romani."
-  },
-  {
-    "id": "g4",
-    "poi": "piazza-dante",
-    "anno": "1896",
-    "indizio": "Una statua di un poeta inaugurata quando la città era ancora austriaca."
-  },
-  {
-    "id": "g5",
-    "poi": "torre-aquila",
-    "anno": "1400 circa",
-    "indizio": "In questa torre un pittore dipinse i mesi dell'anno: nobili che giocano a palle di neve, contadini al lavoro."
-  },
-  {
-    "id": "g6",
+    "id": "f02",
     "poi": "nettuno",
-    "anno": "1769",
-    "indizio": "Un dio del mare con il tridente, in una città lontana dal mare. Il punto d'incontro di tutti."
+    "anno": "Fine Ottocento",
+    "foto": "f02.webp",
+    "autore": "Fotocromia, Library of Congress",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Trento._Piazza_Grande_Fontana_di_Nettuno._LOC_ppmsca.52678.jpg"
   },
   {
-    "id": "g7",
-    "poi": "doss-trento",
-    "anno": "1935",
-    "indizio": "Una collina sulla riva destra del fiume, con un mausoleo bianco in cima."
-  },
-  {
-    "id": "g8",
-    "poi": "piazza-fiera",
-    "anno": "XIII secolo",
-    "indizio": "L'ultimo tratto delle mura medievali guarda le casette dei mercatini di Natale."
-  },
-  {
-    "id": "g9",
-    "poi": "santa-maria-maggiore",
-    "anno": "1520 circa",
-    "indizio": "Una chiesa fatta ricostruire da Bernardo Clesio, dove si riunivano i padri del Concilio."
-  },
-  {
-    "id": "g10",
-    "poi": "buonconsiglio",
+    "id": "f03",
+    "poi": "piazza-dante",
     "anno": "1916",
-    "indizio": "Qui furono giustiziati tre irredentisti trentini, in una fossa ai piedi delle mura."
+    "foto": "f03.webp",
+    "autore": "K.u.k. Kriegspressequartier, Vienna",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Dante_Denkmal_mit_italienischen_Waffen_in_Trient._(BildID_15534322).jpg"
   },
   {
-    "id": "g11",
-    "poi": "muse",
-    "anno": "2013",
-    "indizio": "Un museo progettato da Renzo Piano, nato dove prima c'era una fabbrica di pneumatici."
+    "id": "f04",
+    "poi": "buonconsiglio",
+    "anno": "1918",
+    "foto": "f04.webp",
+    "autore": "K.u.k. Kriegspressequartier, Vienna",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Trient,_Kastel._(BildID_15508808).jpg"
   },
   {
-    "id": "g12",
-    "poi": "funivia-sardagna",
-    "anno": "XX secolo",
-    "indizio": "Da qui in pochi minuti si sale dal fiume a un paese sulla montagna."
+    "id": "f05",
+    "poi": "torre-vanga",
+    "anno": "1943 circa",
+    "foto": "f05.webp",
+    "autore": "Autore sconosciuto",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Trento_-_Torre_Vanga_1943.jpg"
   },
   {
-    "id": "g13",
-    "poi": "torre-verde",
-    "anno": "XIII secolo",
-    "indizio": "Una torre delle mura medievali che prende il nome dal colore del suo tetto."
-  },
-  {
-    "id": "g14",
+    "id": "f06",
     "poi": "sant-apollinare",
-    "anno": "XIV secolo",
-    "indizio": "La chiesa di un quartiere che un tempo il fiume separava dalla città."
+    "anno": "1943 circa",
+    "foto": "f06.webp",
+    "autore": "Autore sconosciuto",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Trento_-_Adige_1943.1.jpg"
+  },
+  {
+    "id": "f07",
+    "poi": "doss-trento",
+    "anno": "1916",
+    "foto": "f07.webp",
+    "autore": "K.u.k. Kriegspressequartier, Vienna",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Blick_nach_Paganella_und_Doss_Trento_und_Etschufer,_Aufgenomen_am_19._Juni_1916._(BildID_15534560).jpg"
+  },
+  {
+    "id": "f08",
+    "poi": "bombardamenti",
+    "anno": "1917",
+    "foto": "f08.webp",
+    "autore": "K.u.k. Kriegspressequartier, Vienna",
+    "licenza": "Pubblico dominio",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Ankunft_Sr._Majest%C3%A4t_Kaiser_Karl_I._am_Bahnhofe_Trient_(BildID_15628613).jpg"
   }
 ]

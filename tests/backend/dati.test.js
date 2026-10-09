@@ -1,5 +1,6 @@
 // Controlli di coerenza sui dati iniziali dei luoghi (src/backend/src/db/dati),
 // prima che vengano caricati nel database.
+import { existsSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import luoghi from '../../src/backend/src/db/dati/luoghi.json'
 import itinerari from '../../src/backend/src/db/dati/itinerari.json'
@@ -63,6 +64,15 @@ describe('riferimenti ai luoghi', () => {
     expect(gioco.length).toBeGreaterThanOrEqual(5)
     expect(new Set(gioco.map((g) => g.id)).size).toBe(gioco.length)
     for (const g of gioco) expect(idLuoghi.has(g.poi), `${g.id} → ${g.poi}`).toBe(true)
+  })
+
+  it('ogni livello del gioco ha la sua foto storica, con autore, licenza e fonte', () => {
+    for (const g of gioco) {
+      expect(g.foto, g.id).toBe(`${g.id}.webp`)
+      expect(existsSync(new URL(`../../src/backend/src/db/dati/foto-gioco/${g.foto}`, import.meta.url)), g.foto).toBe(true)
+      expect(g.autore && g.licenza, g.id).toBeTruthy()
+      expect(g.fonte, g.id).toMatch(/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/)
+    }
   })
 })
 
