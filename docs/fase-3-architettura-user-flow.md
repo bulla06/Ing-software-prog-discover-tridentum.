@@ -590,7 +590,7 @@ erDiagram
 
 | Componente | Proposta iniziale | Adottato nell'MVP |
 |---|---|---|
-| Frontend Web | React + Vite, Leaflet, i18next | React + Vite, Leaflet; traduzioni con un modulo interno (`src/frontend/src/i18n`) |
+| Frontend Web | React + Vite, Leaflet, i18next | React + Vite, Leaflet; traduzioni con un modulo interno (`versione-corrente/frontend/src/i18n`) |
 | API Gateway | Node.js + Express (proxy, JWT, rate limiting) | Livello del server Express: helmet, JWT (jose), express-rate-limit (D-11) |
 | Backend | Node.js + TypeScript (Express o NestJS) | Node.js + Express in JavaScript, validazione con zod (D-13) |
 | AI Service | Python + FastAPI, modelli open source (es. CLIP) | Rinviato ([Fase 4 §2.2](fase-4-pianificazione.md#22-cosa-entra)) |

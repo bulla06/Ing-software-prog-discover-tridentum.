@@ -1,6 +1,6 @@
 // UC-06 Giocare a "Dov'era?" · RF-21, RF-22
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { punteggio } from '../../src/backend/src/moduli/gioco/rotte.js'
+import { punteggio } from '../../versione-corrente/backend/src/moduli/gioco/rotte.js'
 import { ACCOUNT, accedi, creaAmbiente } from './ambiente.js'
 
 let amb

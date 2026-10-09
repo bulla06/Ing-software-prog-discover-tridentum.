@@ -10,13 +10,13 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 import pg from 'pg'
 import request from 'supertest'
-import { creaApp } from '../../src/backend/src/app.js'
-import { leggiConfigurazione } from '../../src/backend/src/config.js'
-import { apriDatabase } from '../../src/backend/src/db/connessione.js'
-import { migra } from '../../src/backend/src/db/migra.js'
-import { ACCOUNT_DIMOSTRATIVI, popola } from '../../src/backend/src/db/popola.js'
-import { creaArchivioFoto } from '../../src/backend/src/servizi/archivio-foto.js'
-import { creaPosta } from '../../src/backend/src/servizi/posta.js'
+import { creaApp } from '../../versione-corrente/backend/src/app.js'
+import { leggiConfigurazione } from '../../versione-corrente/backend/src/config.js'
+import { apriDatabase } from '../../versione-corrente/backend/src/db/connessione.js'
+import { migra } from '../../versione-corrente/backend/src/db/migra.js'
+import { ACCOUNT_DIMOSTRATIVI, popola } from '../../versione-corrente/backend/src/db/popola.js'
+import { creaArchivioFoto } from '../../versione-corrente/backend/src/servizi/archivio-foto.js'
+import { creaPosta } from '../../versione-corrente/backend/src/servizi/posta.js'
 
 export const ACCOUNT = Object.fromEntries(ACCOUNT_DIMOSTRATIVI.map((a) => [a.ruolo, a]))
 
@@ -44,11 +44,10 @@ export async function creaAmbiente() {
     cartellaFrontend: '/inesistente',
   }
   const db = await apriDatabase(config)
-  await migra(db)
-  await popola(db, { datiDimostrativi: true })
-
   const cartellaFoto = await mkdtemp(path.join(tmpdir(), 'tridentum-foto-'))
   const archivio = await creaArchivioFoto(cartellaFoto)
+  await migra(db)
+  await popola(db, { datiDimostrativi: true, archivio })
   const posta = creaPosta({ sviluppo: true })
   const app = creaApp({ db, config, posta, archivio, registro: false })
 

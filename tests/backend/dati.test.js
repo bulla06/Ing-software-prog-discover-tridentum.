@@ -1,13 +1,22 @@
-// Controlli di coerenza sui dati iniziali dei luoghi (src/backend/src/db/dati),
-// prima che vengano caricati nel database.
+// Controlli di coerenza sui dati iniziali (versione-corrente/backend/src/db/dati): i pacchetti
+// NNN-nome e i livelli del gioco, prima che vengano caricati nel database.
 import { existsSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import luoghi from '../../src/backend/src/db/dati/luoghi.json'
-import itinerari from '../../src/backend/src/db/dati/itinerari.json'
-import tradizioni from '../../src/backend/src/db/dati/tradizioni.json'
-import gioco from '../../src/backend/src/db/dati/gioco.json'
-import testiIt from '../../src/frontend/src/i18n/it.js'
-import testiEn from '../../src/frontend/src/i18n/en.js'
+import { CARTELLA_DATI, elencaPacchetti, leggiPacchetto } from '../../versione-corrente/backend/src/db/popola.js'
+import testiIt from '../../versione-corrente/frontend/src/i18n/it.js'
+import testiEn from '../../versione-corrente/frontend/src/i18n/en.js'
+
+// Tutti i pacchetti insieme, come risultano nel database alla fine del caricamento
+const pacchetti = await Promise.all((await elencaPacchetti()).map(async (nome) => ({ nome, ...(await leggiPacchetto(nome)) })))
+const tutti = (chiave) => pacchetti.flatMap((p) => p[chiave].map((voce) => ({ ...voce, pacchetto: p.nome })))
+const luoghi = tutti('luoghi')
+const itinerari = tutti('itinerari')
+const tradizioni = tutti('tradizioni')
+const foto = tutti('foto')
+// I livelli del gioco stanno fuori dai pacchetti: dati/gioco.json, con le foto in dati/foto-gioco/
+const gioco = JSON.parse(await readFile(path.join(CARTELLA_DATI, 'gioco.json'), 'utf8'))
 
 const idLuoghi = new Set(luoghi.map((p) => p.id))
 const CATEGORIE = ['storia', 'arte', 'tradizioni', 'gastronomia']
@@ -69,9 +78,21 @@ describe('riferimenti ai luoghi', () => {
   it('ogni livello del gioco ha la sua foto storica, con autore, licenza e fonte', () => {
     for (const g of gioco) {
       expect(g.foto, g.id).toBe(`${g.id}.webp`)
-      expect(existsSync(new URL(`../../src/backend/src/db/dati/foto-gioco/${g.foto}`, import.meta.url)), g.foto).toBe(true)
+      expect(existsSync(path.join(CARTELLA_DATI, 'foto-gioco', g.foto)), g.foto).toBe(true)
       expect(g.autore && g.licenza, g.id).toBeTruthy()
       expect(g.fonte, g.id).toMatch(/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/)
+    }
+  })
+})
+
+describe('foto dei luoghi', () => {
+  it('ogni foto esiste e indica luogo, autore, licenza e fonte', () => {
+    for (const f of foto) {
+      expect(existsSync(path.join(CARTELLA_DATI, f.pacchetto, 'foto', f.file)), f.file).toBe(true)
+      expect(idLuoghi.has(f.poi), `${f.file} → ${f.poi}`).toBe(true)
+      expect(f.autore, f.file).toBeTruthy()
+      expect(f.licenza, f.file).toBeTruthy()
+      expect(f.fonte, f.file).toMatch(/^https:\/\//)
     }
   })
 })

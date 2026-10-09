@@ -3,6 +3,7 @@
 **/dist
 **/.dati
 docs
+versioni-precedenti
 presentazioni
 tests
 .env

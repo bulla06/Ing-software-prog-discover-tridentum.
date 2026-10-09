@@ -9,8 +9,9 @@ Regole condivise per mantenere il repository ordinato e i documenti coerenti tra
 | `docs/` | Documenti di progetto, uno per fase: `fase-N-argomento.md` |
 | `docs/libretti/` | Libretto delle attività di ciascun membro: `nome-cognome.docx` |
 | `presentazioni/` | Presentazioni: `presentazione-vN.pptx` |
-| `src/frontend/` | Il sito (React + Vite) |
-| `src/backend/` | L'API REST e il database (Node.js + Express, PostgreSQL + PostGIS) |
+| `versione-corrente/frontend/` | Il sito (React + Vite) |
+| `versione-corrente/backend/` | L'API REST e il database (Node.js + Express, PostgreSQL + PostGIS) |
+| `versioni-precedenti/` | Copie delle versioni passate del sito (prototipo, frontend v1), da non modificare |
 | `tests/frontend/`, `tests/backend/` | I test automatici, separati dal codice |
 
 ## Nomi dei file
@@ -53,8 +54,8 @@ Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fa
 
 - Avvio in sviluppo dalla cartella principale: `npm install`, poi `npm run dev` (istruzioni complete nel README).
 - Nomi di file, variabili, funzioni e commenti in italiano, come nel resto del codice.
-- **Schema del database:** ogni modifica è un nuovo file numerato in `src/backend/src/db/migrazioni/` (es. `002_aggiungi_orari.sql`). I file già presenti non si modificano: sono già stati applicati ai database degli altri.
-- **Dati iniziali:** i luoghi curati dal team stanno in `src/backend/src/db/dati/*.json` e vengono caricati solo in un database vuoto; ogni luogo ha almeno una fonte (RNF-V01). Per correggere un database già creato si usa il pannello di amministrazione.
+- **Schema del database:** ogni modifica è un nuovo file numerato in `versione-corrente/backend/src/db/migrazioni/` (es. `002_aggiungi_orari.sql`). I file già presenti non si modificano: sono già stati applicati ai database degli altri.
+- **Dati iniziali:** i luoghi curati dal team stanno in pacchetti numerati, `versione-corrente/backend/src/db/dati/NNN-nome/` (`luoghi.json`, `itinerari.json`, `tradizioni.json`, `piatti.json`, `gioco.json`, `foto.json` con i file in `foto/`). Ogni pacchetto si carica una sola volta, anche nei database già esistenti; per aggiungere dati si crea un pacchetto nuovo, quelli già caricati non si modificano. Ogni luogo ha almeno una fonte (RNF-V01) e ogni foto indica autore, licenza e fonte. Per correggere un database già creato si usa il pannello di amministrazione.
 - Ogni endpoint nuovo ha almeno un test in `tests/backend/`; prima di aprire una pull request `npm test` deve passare.
 - Mai segreti nel repository: si usano le variabili d'ambiente (vedi `.env.esempio`).
 

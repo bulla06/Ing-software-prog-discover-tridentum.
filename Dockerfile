@@ -7,14 +7,12 @@ WORKDIR /app
 
 # Prima solo i package.json: le dipendenze si reinstallano solo quando cambiano
 COPY package.json package-lock.json ./
-COPY src/frontend/package.json src/frontend/
-# Anche la v2 è un workspace del lockfile: senza il suo package.json npm ci si fermerebbe
-COPY src/frontend-v2/package.json src/frontend-v2/
-COPY src/backend/package.json src/backend/
+COPY versione-corrente/frontend/package.json versione-corrente/frontend/
+COPY versione-corrente/backend/package.json versione-corrente/backend/
 RUN npm ci
 
-COPY src/frontend src/frontend
-COPY src/backend src/backend
+COPY versione-corrente/frontend versione-corrente/frontend
+COPY versione-corrente/backend versione-corrente/backend
 RUN npm run build && npm prune --omit=dev
 
 ENV NODE_ENV=production \
@@ -25,4 +23,4 @@ ENV NODE_ENV=production \
 VOLUME /dati
 EXPOSE 3000
 
-CMD ["node", "src/backend/src/server.js"]
+CMD ["node", "versione-corrente/backend/src/server.js"]

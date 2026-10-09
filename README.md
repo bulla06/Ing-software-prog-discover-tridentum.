@@ -43,11 +43,12 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ## Il sito
 
+La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v2, con il nuovo design. Le versioni passate (il primo prototipo con solo il frontend e il frontend v1) sono in [`versioni-precedenti/`](versioni-precedenti).
+
 La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
-- **Frontend** in [`src/frontend/`](src/frontend): React + Vite, mappa Leaflet su OpenStreetMap, italiano e inglese;
-- **Frontend v2** in [`src/frontend-v2/`](src/frontend-v2): stesso sito con un nuovo design (vedi [Frontend v2](#frontend-v2));
-- **Backend** in [`src/backend/`](src/backend): Node.js + Express, API REST con il gateway (token JWT, ruoli, limiti alle richieste) davanti ai quattro moduli *Utenti e accessi*, *POI, itinerari e tradizioni*, *Contenuti e moderazione*, *Gioco*;
+- **Frontend** in [`versione-corrente/frontend/`](versione-corrente/frontend): React + Vite, mappa Leaflet su OpenStreetMap con i luoghi raggruppati, italiano e inglese, tema chiaro e scuro;
+- **Backend** in [`versione-corrente/backend/`](versione-corrente/backend): Node.js + Express, API REST con il gateway (token JWT, ruoli, limiti alle richieste) davanti ai quattro moduli *Utenti e accessi*, *POI, itinerari e tradizioni*, *Contenuti e moderazione*, *Gioco*;
 - **Database PostgreSQL + PostGIS**: in sviluppo con [PGlite](https://pglite.dev), lo stesso PostgreSQL eseguito dentro Node, quindi **non serve installare niente**; con Docker Compose un server PostgreSQL vero.
 
 ### Avvio in sviluppo
@@ -59,7 +60,7 @@ npm install        # solo la prima volta (installa frontend e backend)
 npm run dev        # avvia backend e frontend insieme
 ```
 
-Poi apri **http://localhost:5173**. Il primo avvio crea il database in `src/backend/.dati/` e lo riempie con i luoghi di [`src/backend/src/db/dati/`](src/backend/src/db/dati): ci vuole una ventina di secondi.
+Poi apri **http://localhost:5173**. Il primo avvio crea il database in `versione-corrente/backend/.dati/` e lo riempie con i pacchetti di dati di [`versione-corrente/backend/src/db/dati/`](versione-corrente/backend/src/db/dati): ci vuole una ventina di secondi. I pacchetti aggiunti in seguito si caricano da soli al successivo avvio, anche in un database già esistente.
 
 **Account di prova** (solo in sviluppo):
 
@@ -71,7 +72,7 @@ Poi apri **http://localhost:5173**. Il primo avvio crea il database in `src/back
 
 In sviluppo le e-mail (conferma della registrazione, password dimenticata, esito della moderazione) non vengono spedite: si leggono nella **posta di prova**, dal Profilo o su http://localhost:5173/#/dev/posta.
 
-Per ripartire da un database pulito basta fermare il server e cancellare la cartella `src/backend/.dati/`.
+Per ripartire da un database pulito basta fermare il server e cancellare la cartella `versione-corrente/backend/.dati/`.
 
 ### Test
 
@@ -110,32 +111,33 @@ Per le e-mail vere serve un server SMTP (`SMTP_URL` nel file `.env`). In produzi
 | S-10 Dov'era?: foto storiche (archivi di pubblico dominio e community), punteggio verificato dal server, classifica | UC-06 |
 | S-11 Scopri: tradizioni per periodo dell'anno, mappa del gusto con locali e piatti | UC-10 |
 | S-13 Moderazione: coda dei ricordi e delle segnalazioni | UC-05 |
-| S-14 Amministrazione: luoghi (posizione sulla mappa), itinerari, tradizioni, ruoli | UC-07, UC-09 |
+| S-14 Amministrazione: luoghi (posizione sulla mappa, foto con i crediti), itinerari, tradizioni, ruoli | UC-07, UC-09 |
 
 Non ci sono ancora il riconoscimento dei luoghi con la fotocamera (RF-06, *Could*) e l'AI Service, rinviati come previsto dalla [Fase 4](docs/fase-4-pianificazione.md#22-cosa-entra).
 
 **Da sapere**
-- I contenuti iniziali (36 luoghi, 9 itinerari, tradizioni, piatti, 8 livelli fotografici del gioco) sono una **prima selezione da verificare**: date, attribuzioni, fonti e soprattutto i locali della mappa del gusto vanno controllati dal team (WBS 3) prima della pubblicazione. Si correggono dal pannello di amministrazione oppure nei file di [`src/backend/src/db/dati/`](src/backend/src/db/dati), che vengono caricati quando il database è vuoto.
-- Le foto dei luoghi arrivano dalla community: la prima foto approvata diventa la copertina della scheda.
-- Le 8 foto storiche del gioco sono in [`src/backend/src/db/dati/foto-gioco/`](src/backend/src/db/dati/foto-gioco): vengono da Wikimedia Commons, sono di **pubblico dominio** e autore, licenza e fonte sono in [`gioco.json`](src/backend/src/db/dati/gioco.json). Il gioco le mostra dopo ogni risposta.
+- I contenuti iniziali (36 luoghi, 9 itinerari, tradizioni, piatti, 8 livelli fotografici del gioco) sono una **prima selezione da verificare**: date, attribuzioni, fonti e soprattutto i locali della mappa del gusto vanno controllati dal team (WBS 3) prima della pubblicazione. Si correggono dal pannello di amministrazione oppure nei pacchetti di dati di [`versione-corrente/backend/src/db/dati/`](versione-corrente/backend/src/db/dati).
+- Le foto dei luoghi sono di due tipi: quelle **ufficiali**, caricate dagli amministratori o dai pacchetti di dati con autore, licenza e fonte (obbligatori, perché le licenze libere li richiedono), e i **ricordi** della community, che passano dalla moderazione. La copertina è la prima foto ufficiale, altrimenti il primo ricordo con foto, altrimenti il ritaglio della mappa centrato sul luogo.
+- Le 8 foto storiche del gioco sono in [`versione-corrente/backend/src/db/dati/foto-gioco/`](versione-corrente/backend/src/db/dati/foto-gioco): vengono da Wikimedia Commons, sono di **pubblico dominio** e autore, licenza e fonte sono in [`gioco.json`](versione-corrente/backend/src/db/dati/gioco.json), che viene riallineato nel database a ogni avvio. Il gioco le mostra dopo ogni risposta.
 
-### Frontend v2
+### Il design della versione corrente
 
-Una seconda versione del sito, con lo stesso backend e le stesse pagine, per confrontare il nuovo design con la v1:
-
-```bash
-npm run dev:v2     # backend + frontend v2 su http://localhost:5174
-```
-
-Cosa cambia rispetto alla v1:
+La versione corrente usa il frontend v2. Rispetto alla [v1](versioni-precedenti/frontend-v1), conservata tra le versioni precedenti, cambia:
 
 - **Mappa dei luoghi**: i luoghi vicini si raggruppano in un cerchio con il numero e un anello diviso tra i colori delle categorie; ogni segnaposto ha l'icona della sua categoria; ingrandendo compaiono i nomi; lo sfondo della mappa è attenuato (e invertito nel tema scuro) perché i segnaposti si leggano meglio.
 - **Desktop**: navigazione in una colonna a sinistra; mappa ed elenco affiancati, e passando su un luogo dell'elenco il suo segnaposto si evidenzia; scheda del luogo su due colonne; itinerario con la mappa fissa.
-- **Copertine**: se un luogo non ha ancora foto della community, la copertina è il ritaglio della mappa centrato sul luogo.
+- **Copertine**: se un luogo non ha foto, la copertina è il ritaglio della mappa centrato sul luogo.
 - **Telefono**: anteprima di un luogo come pannello dal basso che si chiude trascinandolo giù, con la mappa che si sposta per mostrare il luogo sopra il pannello; scheda nell'ordine utile a chi è sul posto (informazioni pratiche prima della storia, luoghi vicini prima delle fonti), con una barra in alto per tornare indietro e condividere; comandi delle tappe dell'itinerario sempre a portata di pollice; aree di tocco di almeno 44 px e campi a 16 px (niente zoom automatico su iPhone).
 - **Dov'era?** in stile GeoGuessr: una foto storica, l'anno come unico indizio, il segnaposto sulla mappa (anche da tastiera, con "Segna il centro della mappa"), poi distanza, punti e crediti della foto.
 - **Stile**: font Geist ospitati con il sito, icone Phosphor, palette "pietra e affresco" con un solo colore d'accento, tema chiaro e scuro.
 - **Accessibilità e dettagli**: controllata con le [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) (link "Salta al contenuto", titoli di pagina, tipografia con apostrofi e virgolette tipografiche, stati vuoti e di caricamento, tappa dell'itinerario nell'URL).
+
+Per confrontarla con la v1, che usa lo stesso backend:
+
+```bash
+npm --prefix versioni-precedenti/frontend-v1 install   # solo la prima volta
+npm run dev:v1     # backend + frontend v1 su http://localhost:5174
+```
 
 ## Struttura del repository
 
@@ -151,9 +153,8 @@ Cosa cambia rispetto alla v1:
 ├── presentazioni/
 │   ├── presentazione-v1.pptx             # prima versione
 │   └── presentazione-v2.pptx             # versione attuale, nuovo design
-├── src/
-│   ├── frontend/                         # il sito: React + Vite + Leaflet
-│   ├── frontend-v2/                      # il sito con il nuovo design (npm run dev:v2)
+├── versione-corrente/                    # il sito attuale (si avvia dalla cartella principale)
+│   ├── frontend/                         # frontend v2: React + Vite + Leaflet
 │   │   └── src/
 │   │       ├── pages/                    # una pagina per schermata
 │   │       ├── components/               # mappa, moduli, finestre, icone…
@@ -164,12 +165,14 @@ Cosa cambia rispetto alla v1:
 │       └── src/
 │           ├── gateway/                  # token, ruoli, limiti, errori
 │           ├── moduli/                   # utenti, luoghi, contenuti, gioco
-│           ├── db/                       # connessione, migrazioni, dati iniziali
+│           ├── db/                       # connessione, migrazioni, pacchetti di dati iniziali
 │           ├── servizi/                  # e-mail, archivio e preparazione delle foto
 │           └── server.js                 # avvio
+├── versioni-precedenti/                  # versioni passate del sito, conservate come riferimento
+│   ├── prototipo/                        # primo prototipo: solo frontend, dati in JSON
+│   └── frontend-v1/                      # frontend v1, primo design (usa il backend corrente)
 ├── tests/
 │   ├── frontend/                         # test del frontend (Vitest)
-│   ├── frontend-v2/                      # test del frontend v2
 │   └── backend/                          # test delle API e dei dati (Vitest + Supertest)
 ├── docker-compose.yml                    # avvio completo con PostgreSQL + PostGIS
 ├── Dockerfile
