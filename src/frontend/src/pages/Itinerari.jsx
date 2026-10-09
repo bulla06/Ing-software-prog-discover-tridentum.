@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import Icona from '../components/Icona.jsx'
-import { getItinerari, getItinerario } from '../data/api.js'
+import { getItinerari } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { formattaDistanza, lunghezzaPercorso } from '../lib/geo.js'
 
@@ -21,9 +21,7 @@ export default function Itinerari() {
   const [itinerari, setItinerari] = useState([])
 
   useEffect(() => {
-    getItinerari({ durataMax })
-      .then((elenco) => Promise.all(elenco.map((it) => getItinerario(it.id))))
-      .then(setItinerari)
+    getItinerari({ durataMax }).then(setItinerari, () => setItinerari([]))
   }, [durataMax])
 
   return (

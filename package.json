@@ -1,0 +1,23 @@
+{
+  "name": "discover-tridentum",
+  "private": true,
+  "description": "Discover Tridentum — la guida che racconta la Trento che non trovi su Google",
+  "type": "module",
+  "workspaces": [
+    "src/frontend",
+    "src/backend"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail -n backend,frontend -c red,blue \"npm run dev -w src/backend\" \"npm run dev -w src/frontend\"",
+    "build": "npm run build -w src/frontend",
+    "start": "npm run build && npm start -w src/backend",
+    "test": "npm test -w src/frontend && npm test -w src/backend",
+    "crea-amministratore": "npm run crea-amministratore -w src/backend --"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}

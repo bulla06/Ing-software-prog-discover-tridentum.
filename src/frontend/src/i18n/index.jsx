@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import it from './it.js'
 import en from './en.js'
 import { leggi, scrivi } from '../lib/memoria.js'
@@ -30,9 +30,13 @@ export function LinguaProvider({ children }) {
 /** Restituisce `t(chiave, valori)` per tradurre, la lingua attuale e il modo di cambiarla. */
 export function useT() {
   const { lingua, setLingua } = useContext(LinguaContext)
-  const t = (chiave, valori = {}) => {
-    const testo = TESTI[lingua][chiave] ?? TESTI.it[chiave] ?? chiave
-    return testo.replace(/\{(\w+)\}/g, (_, k) => valori[k] ?? '')
-  }
+  // Stessa funzione finché non cambia la lingua: si può usare tra le dipendenze degli effetti
+  const t = useCallback(
+    (chiave, valori = {}) => {
+      const testo = TESTI[lingua][chiave] ?? TESTI.it[chiave] ?? chiave
+      return testo.replace(/\{(\w+)\}/g, (_, k) => valori[k] ?? '')
+    },
+    [lingua],
+  )
   return { t, lingua, setLingua }
 }

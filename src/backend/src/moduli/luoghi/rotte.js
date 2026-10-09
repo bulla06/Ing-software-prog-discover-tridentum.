@@ -1,0 +1,437 @@
+// Modulo "POI, itinerari e tradizioni" (Fase 3 §5.3): UC-01, UC-02, UC-07, UC-10 ·
+// RF-01…RF-05, RF-07, RF-19, RF-20, RF-24 · RNF-V01, RNF-PO04.
+
+import { Router } from 'express'
+import { z } from 'zod'
+import { richiediRuolo } from '../../gateway/autenticazione.js'
+import { ErroreHttp, nonTrovato, valida } from '../../gateway/errori.js'
+
+const CATEGORIE = ['storia', 'arte', 'tradizioni', 'gastronomia']
+const NUMERO_VICINI = 3
+const RAGGIO_DUPLICATI_M = 20
+
+// Colonne comuni dei POI, con la posizione come latitudine e longitudine
+const COLONNE_POI = `p.id, p.nome, p.categoria, p.temi, p.indirizzo, p.epoca, p.sintesi, p.piatto_consigliato,
+  ST_Y(p.posizione::geometry) AS lat, ST_X(p.posizione::geometry) AS lng`
+
+// Prima foto pubblicata dalla community, usata come copertina
+const COPERTINA = `(SELECT c.foto FROM contenuti c WHERE c.poi = p.id AND c.stato = 'approvato' AND c.foto IS NOT NULL
+  ORDER BY c.moderato_il LIMIT 1) AS copertina`
+
+// Ricerca senza distinguere maiuscole e lettere accentate ("Città" = "citta")
+const normalizzaSql = (espressione) => `translate(lower(${espressione}), 'àáâäèéêëìíîïòóôöùúûü', 'aaaaeeeeiiiioooouuuu')`
+
+export const normalizza = (testo) =>
+  testo.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim()
+
+function rigaPoi(r) {
+  const { lat, lng, ...resto } = r
+  return { ...resto, posizione: [lat, lng] }
+}
+
+const slug = (testo) =>
+  normalizza(testo)
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 60) || 'voce'
+
+// ---------- Schemi per l'amministrazione ----------
+
+const testoBreve = (massimo) => z.string().trim().max(massimo, `Massimo ${massimo} caratteri`)
+const idSlug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Identificatore non valido')
+
+const schemaPoi = z.object({
+  nome: z.string().trim().min(2, 'Il nome è obbligatorio').max(120),
+  categoria: z.enum(CATEGORIE, { error: 'Scegli una categoria' }),
+  temi: z.array(idSlug).max(10).default([]),
+  posizione: z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)], {
+    error: 'Fissa la posizione sulla mappa',
+  }),
+  indirizzo: testoBreve(200).default(''),
+  epoca: testoBreve(100).default(''),
+  sintesi: z.string().trim().min(1, 'La sintesi è obbligatoria').max(300),
+  descrizione: z.array(z.string().trim().min(1).max(3000)).max(20).default([]),
+  affresco_autore: testoBreve(200).nullish().transform((v) => v || null),
+  affresco_epoca: testoBreve(100).nullish().transform((v) => v || null),
+  piatto_consigliato: testoBreve(200).nullish().transform((v) => v || null),
+  parole_chiave: z.array(z.string().trim().min(1).max(60)).max(30).default([]),
+  fonti: z
+    .array(z.object({ titolo: z.string().trim().min(1, 'Titolo della fonte obbligatorio').max(200), url: z.url({ protocol: /^https?$/, error: 'Indirizzo della fonte non valido' }) }))
+    .min(1, 'Serve almeno una fonte'),
+})
+
+const schemaItinerario = z.object({
+  titolo: z.string().trim().min(2, 'Il titolo è obbligatorio').max(120),
+  tema: idSlug,
+  durata_minuti: z.coerce.number().int().min(10, 'Durata minima 10 minuti').max(24 * 60),
+  descrizione: testoBreve(1000).default(''),
+  tappe: z.array(idSlug).min(2, 'Servono almeno due tappe').max(30),
+})
+
+const schemaTradizione = z.object({
+  nome: z.string().trim().min(2, 'Il nome è obbligatorio').max(120),
+  periodo: z.string().trim().min(1, 'Indica il periodo').max(100),
+  mesi: z.array(z.number().int().min(1).max(12)).max(12).default([]),
+  descrizione: testoBreve(2000).default(''),
+  luoghi: z.array(idSlug).max(20).default([]),
+})
+
+export function rotteLuoghi({ db, archivio }) {
+  const router = Router()
+  const soloAmministratori = richiediRuolo(db, 'amministratore')
+
+  // ---------- Consultazione pubblica ----------
+
+  /** GET /api/poi?categoria=…&tema=…&q=…&bbox=minLng,minLat,maxLng,maxLat */
+  router.get('/poi', async (req, res) => {
+    const filtri = valida(
+      z.object({
+        categoria: z.enum(CATEGORIE).optional(),
+        tema: idSlug.optional(),
+        q: z.string().max(100).optional(),
+        bbox: z
+          .string()
+          .regex(/^-?[\d.]+(,-?[\d.]+){3}$/, 'bbox non valido')
+          .transform((s) => s.split(',').map(Number))
+          .optional(),
+      }),
+      req.query,
+    )
+
+    const condizioni = []
+    const parametri = []
+    const aggiungi = (sql, valore) => {
+      parametri.push(valore)
+      condizioni.push(sql.replace('?', `$${parametri.length}`))
+    }
+    if (filtri.categoria) aggiungi('p.categoria = ?', filtri.categoria)
+    if (filtri.tema) aggiungi('? = ANY(p.temi)', filtri.tema)
+    if (filtri.bbox) {
+      parametri.push(...filtri.bbox)
+      const n = parametri.length
+      condizioni.push(`ST_Intersects(p.posizione, ST_MakeEnvelope($${n - 3}, $${n - 2}, $${n - 1}, $${n}, 4326)::geography)`)
+    }
+
+    // Ricerca: ogni parola deve comparire nel testo; prima chi le ha nel nome (RF-05)
+    const parole = normalizza(filtri.q ?? '').split(/\s+/).filter(Boolean).slice(0, 8)
+    const testo = normalizzaSql(
+      `p.nome || ' ' || p.sintesi || ' ' || p.indirizzo || ' ' || array_to_string(p.parole_chiave, ' ') || ' ' || array_to_string(p.descrizione, ' ')`,
+    )
+    let ordine = 'p.nome'
+    if (parole.length) {
+      parametri.push(parole)
+      const n = parametri.length
+      condizioni.push(`(SELECT bool_and(${testo} LIKE '%' || parola || '%') FROM unnest($${n}::text[]) AS parola)`)
+      ordine = `(SELECT count(*) FROM unnest($${n}::text[]) AS parola WHERE ${normalizzaSql('p.nome')} LIKE '%' || parola || '%') DESC, p.nome`
+    }
+
+    const righe = await db.query(
+      `SELECT ${COLONNE_POI}, ${COPERTINA}
+         FROM poi p
+        ${condizioni.length ? `WHERE ${condizioni.join(' AND ')}` : ''}
+        ORDER BY ${ordine}`,
+      parametri,
+    )
+    res.json(righe.map(rigaPoi))
+  })
+
+  /** Esportazione aperta di tutti i POI (RNF-PO04) */
+  router.get('/esporta/poi.geojson', async (req, res) => {
+    const righe = await db.query(
+      `SELECT ${COLONNE_POI}, p.descrizione, p.affresco_autore, p.affresco_epoca, p.fonti FROM poi p ORDER BY p.id`,
+    )
+    res.type('application/geo+json').json({
+      type: 'FeatureCollection',
+      features: righe.map(({ lat, lng, ...proprieta }) => ({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: [lng, lat] },
+        properties: proprieta,
+      })),
+    })
+  })
+
+  /** GET /api/poi/:id — scheda completa con ricordi approvati, itinerari, tradizioni e luoghi vicini */
+  router.get('/poi/:id', async (req, res) => {
+    const [riga] = await db.query(
+      `SELECT ${COLONNE_POI}, ${COPERTINA}, p.descrizione, p.affresco_autore, p.affresco_epoca, p.parole_chiave, p.fonti
+         FROM poi p WHERE p.id = $1`,
+      [req.params.id],
+    )
+    if (!riga) throw nonTrovato('Luogo')
+
+    const [ricordi, itinerari, tradizioni, vicini] = await Promise.all([
+      db.query(
+        `SELECT c.id, c.testo, c.anno, c.licenza, c.foto, f.larghezza, f.altezza, c.moderato_il AS pubblicato_il,
+                u.nome_visualizzato AS autore
+           FROM contenuti c
+           LEFT JOIN utenti u ON u.id = c.autore
+           LEFT JOIN foto f ON f.id = c.foto
+          WHERE c.poi = $1 AND c.stato = 'approvato'
+          ORDER BY c.moderato_il DESC`,
+        [riga.id],
+      ),
+      db.query(
+        `SELECT DISTINCT i.id, i.titolo, i.durata_minuti
+           FROM itinerari i JOIN tappe t ON t.itinerario = i.id
+          WHERE t.poi = $1 ORDER BY i.durata_minuti`,
+        [riga.id],
+      ),
+      db.query(
+        `SELECT t.id, t.nome, t.periodo FROM tradizioni t JOIN tradizioni_poi tp ON tp.tradizione = t.id
+          WHERE tp.poi = $1 ORDER BY t.nome`,
+        [riga.id],
+      ),
+      db.query(
+        `SELECT ${COLONNE_POI}, ${COPERTINA},
+                ST_Distance(p.posizione, (SELECT posizione FROM poi WHERE id = $1)) AS distanza
+           FROM poi p WHERE p.id <> $1
+          ORDER BY p.posizione <-> (SELECT posizione FROM poi WHERE id = $1)
+          LIMIT ${NUMERO_VICINI}`,
+        [riga.id],
+      ),
+    ])
+
+    const { affresco_autore, affresco_epoca, ...poi } = rigaPoi(riga)
+    res.json({
+      ...poi,
+      affresco: affresco_autore || affresco_epoca ? { autore: affresco_autore, epoca: affresco_epoca } : null,
+      ricordi,
+      itinerari,
+      tradizioni,
+      vicini: vicini.map(rigaPoi),
+    })
+  })
+
+  async function leggiItinerari(condizione = '', parametri = []) {
+    const righe = await db.query(
+      `SELECT i.id, i.titolo, i.tema, i.durata_minuti, i.descrizione,
+              coalesce(json_agg(json_build_object(
+                'id', p.id, 'nome', p.nome, 'categoria', p.categoria, 'sintesi', p.sintesi,
+                'posizione', json_build_array(ST_Y(p.posizione::geometry), ST_X(p.posizione::geometry))
+              ) ORDER BY t.ordine) FILTER (WHERE p.id IS NOT NULL), '[]') AS tappe
+         FROM itinerari i
+         LEFT JOIN tappe t ON t.itinerario = i.id
+         LEFT JOIN poi p ON p.id = t.poi
+        ${condizione}
+        GROUP BY i.id
+        ORDER BY i.durata_minuti, i.titolo`,
+      parametri,
+    )
+    return righe
+  }
+
+  /** GET /api/itinerari?durata_max=… (RF-07, filtro "ho … ore" della S-05) */
+  router.get('/itinerari', async (req, res) => {
+    const { durata_max } = valida(z.object({ durata_max: z.coerce.number().int().positive().optional() }), req.query)
+    res.json(durata_max ? await leggiItinerari('WHERE i.durata_minuti <= $1', [durata_max]) : await leggiItinerari())
+  })
+
+  router.get('/itinerari/:id', async (req, res) => {
+    const [itinerario] = await leggiItinerari('WHERE i.id = $1', [req.params.id])
+    if (!itinerario) throw nonTrovato('Itinerario')
+    res.json(itinerario)
+  })
+
+  /** GET /api/tradizioni (RF-19) */
+  router.get('/tradizioni', async (req, res) => {
+    const righe = await db.query(
+      `SELECT t.id, t.nome, t.periodo, t.mesi, t.descrizione,
+              coalesce(json_agg(json_build_object('id', p.id, 'nome', p.nome) ORDER BY p.nome)
+                FILTER (WHERE p.id IS NOT NULL), '[]') AS luoghi
+         FROM tradizioni t
+         LEFT JOIN tradizioni_poi tp ON tp.tradizione = t.id
+         LEFT JOIN poi p ON p.id = tp.poi
+        GROUP BY t.id
+        ORDER BY (SELECT min(m) FROM unnest(t.mesi) AS m), t.nome`,
+    )
+    res.json(righe)
+  })
+
+  /** GET /api/gusto (RF-20): piatti tipici e locali con il piatto consigliato */
+  router.get('/gusto', async (req, res) => {
+    const [piatti, locali] = await Promise.all([
+      db.query('SELECT id, nome, tipo, descrizione FROM piatti ORDER BY ordine, nome'),
+      db.query(`SELECT ${COLONNE_POI}, ${COPERTINA} FROM poi p WHERE p.categoria = 'gastronomia' ORDER BY p.nome`),
+    ])
+    res.json({ piatti, locali: locali.map(rigaPoi) })
+  })
+
+  // ---------- Amministrazione (UC-07, RF-24) ----------
+
+  router.get('/admin/poi', soloAmministratori, async (req, res) => {
+    const righe = await db.query(
+      `SELECT ${COLONNE_POI}, p.descrizione, p.affresco_autore, p.affresco_epoca, p.parole_chiave, p.fonti, p.aggiornato_il,
+              (SELECT count(*)::int FROM tappe t WHERE t.poi = p.id) AS tappe
+         FROM poi p ORDER BY p.nome`,
+    )
+    res.json(righe.map(rigaPoi))
+  })
+
+  /** E2: esiste un POI con lo stesso nome a meno di 20 m? */
+  async function cercaDuplicato(dati, escludiId = null) {
+    const [duplicato] = await db.query(
+      `SELECT id, nome FROM poi
+        WHERE ${normalizzaSql('nome')} = ${normalizzaSql('$1')}
+          AND ST_DWithin(posizione, ST_SetSRID(ST_MakePoint($2, $3), 4326)::geography, ${RAGGIO_DUPLICATI_M})
+          AND id IS DISTINCT FROM $4`,
+      [dati.nome, dati.posizione[1], dati.posizione[0], escludiId],
+    )
+    return duplicato
+  }
+
+  async function idLibero(tabella, base) {
+    let id = slug(base)
+    for (let n = 2; (await db.query(`SELECT 1 FROM ${tabella} WHERE id = $1`, [id])).length; n++) id = `${slug(base)}-${n}`
+    return id
+  }
+
+  const valoriPoi = (d) => [
+    d.nome, d.categoria, d.temi, d.posizione[1], d.posizione[0], d.indirizzo, d.epoca, d.sintesi, d.descrizione,
+    d.affresco_autore, d.affresco_epoca, d.categoria === 'gastronomia' ? d.piatto_consigliato : null, d.parole_chiave,
+    JSON.stringify(d.fonti),
+  ]
+
+  router.post('/admin/poi', soloAmministratori, async (req, res) => {
+    const dati = valida(schemaPoi, req.body)
+    const duplicato = await cercaDuplicato(dati)
+    if (duplicato && req.query.conferma !== '1') {
+      throw new ErroreHttp(409, 'possibile_duplicato', `Esiste già "${duplicato.nome}" a meno di ${RAGGIO_DUPLICATI_M} m`, { esistente: duplicato })
+    }
+    const id = await idLibero('poi', dati.nome)
+    await db.query(
+      `INSERT INTO poi (id, nome, categoria, temi, posizione, indirizzo, epoca, sintesi, descrizione,
+                        affresco_autore, affresco_epoca, piatto_consigliato, parole_chiave, fonti)
+       VALUES ($1, $2, $3, $4, ST_SetSRID(ST_MakePoint($5, $6), 4326)::geography, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+      [id, ...valoriPoi(dati)],
+    )
+    res.status(201).json({ id })
+  })
+
+  router.put('/admin/poi/:id', soloAmministratori, async (req, res) => {
+    const dati = valida(schemaPoi, req.body)
+    const duplicato = await cercaDuplicato(dati, req.params.id)
+    if (duplicato && req.query.conferma !== '1') {
+      throw new ErroreHttp(409, 'possibile_duplicato', `Esiste già "${duplicato.nome}" a meno di ${RAGGIO_DUPLICATI_M} m`, { esistente: duplicato })
+    }
+    const [aggiornato] = await db.query(
+      `UPDATE poi SET nome = $2, categoria = $3, temi = $4, posizione = ST_SetSRID(ST_MakePoint($5, $6), 4326)::geography,
+              indirizzo = $7, epoca = $8, sintesi = $9, descrizione = $10, affresco_autore = $11, affresco_epoca = $12,
+              piatto_consigliato = $13, parole_chiave = $14, fonti = $15, aggiornato_il = now()
+        WHERE id = $1 RETURNING id`,
+      [req.params.id, ...valoriPoi(dati)],
+    )
+    if (!aggiornato) throw nonTrovato('Luogo')
+    res.json({ id: aggiornato.id })
+  })
+
+  // 1b: se il POI è una tappa di un itinerario si chiede conferma prima di eliminarlo
+  router.delete('/admin/poi/:id', soloAmministratori, async (req, res) => {
+    const [esiste] = await db.query('SELECT id FROM poi WHERE id = $1', [req.params.id])
+    if (!esiste) throw nonTrovato('Luogo')
+    const itinerari = await db.query(
+      'SELECT DISTINCT i.id, i.titolo FROM itinerari i JOIN tappe t ON t.itinerario = i.id WHERE t.poi = $1',
+      [req.params.id],
+    )
+    if (itinerari.length && req.query.conferma !== '1') {
+      throw new ErroreHttp(409, 'usato_in_itinerari', 'Il luogo è una tappa di uno o più itinerari', { itinerari })
+    }
+    const foto = await db.transazione(async (tx) => {
+      const elenco = await tx.query(
+        `SELECT f.id, f.area FROM foto f JOIN contenuti c ON c.foto = f.id WHERE c.poi = $1`,
+        [req.params.id],
+      )
+      await tx.query('DELETE FROM poi WHERE id = $1', [req.params.id])
+      await tx.query('DELETE FROM preferiti WHERE tipo = \'poi\' AND riferimento = $1', [req.params.id])
+      if (elenco.length) await tx.query('DELETE FROM foto WHERE id = ANY($1::uuid[])', [elenco.map((f) => f.id)])
+      return elenco
+    })
+    for (const f of foto) await archivio.elimina(f.area, f.id)
+    res.status(204).end()
+  })
+
+  async function controllaPoiEsistenti(ids) {
+    if (!ids.length) return
+    const trovati = await db.query('SELECT id FROM poi WHERE id = ANY($1::text[])', [ids])
+    const mancanti = ids.filter((id) => !trovati.some((t) => t.id === id))
+    if (mancanti.length) {
+      throw new ErroreHttp(400, 'dati_non_validi', 'Alcuni luoghi non esistono', { campi: { tappe: `Luoghi inesistenti: ${mancanti.join(', ')}` } })
+    }
+  }
+
+  router.post('/admin/itinerari', soloAmministratori, async (req, res) => {
+    const dati = valida(schemaItinerario, req.body)
+    await controllaPoiEsistenti(dati.tappe)
+    const id = await idLibero('itinerari', dati.titolo)
+    await db.transazione(async (tx) => {
+      await tx.query('INSERT INTO itinerari (id, titolo, tema, durata_minuti, descrizione) VALUES ($1, $2, $3, $4, $5)', [
+        id, dati.titolo, dati.tema, dati.durata_minuti, dati.descrizione,
+      ])
+      for (const [i, poi] of dati.tappe.entries()) {
+        await tx.query('INSERT INTO tappe (itinerario, ordine, poi) VALUES ($1, $2, $3)', [id, i + 1, poi])
+      }
+    })
+    res.status(201).json({ id })
+  })
+
+  router.put('/admin/itinerari/:id', soloAmministratori, async (req, res) => {
+    const dati = valida(schemaItinerario, req.body)
+    await controllaPoiEsistenti(dati.tappe)
+    await db.transazione(async (tx) => {
+      const [esiste] = await tx.query(
+        'UPDATE itinerari SET titolo = $2, tema = $3, durata_minuti = $4, descrizione = $5 WHERE id = $1 RETURNING id',
+        [req.params.id, dati.titolo, dati.tema, dati.durata_minuti, dati.descrizione],
+      )
+      if (!esiste) throw nonTrovato('Itinerario')
+      await tx.query('DELETE FROM tappe WHERE itinerario = $1', [req.params.id])
+      for (const [i, poi] of dati.tappe.entries()) {
+        await tx.query('INSERT INTO tappe (itinerario, ordine, poi) VALUES ($1, $2, $3)', [req.params.id, i + 1, poi])
+      }
+    })
+    res.json({ id: req.params.id })
+  })
+
+  router.delete('/admin/itinerari/:id', soloAmministratori, async (req, res) => {
+    const [eliminato] = await db.query('DELETE FROM itinerari WHERE id = $1 RETURNING id', [req.params.id])
+    if (!eliminato) throw nonTrovato('Itinerario')
+    await db.query('DELETE FROM preferiti WHERE tipo = \'itinerario\' AND riferimento = $1', [req.params.id])
+    res.status(204).end()
+  })
+
+  router.post('/admin/tradizioni', soloAmministratori, async (req, res) => {
+    const dati = valida(schemaTradizione, req.body)
+    await controllaPoiEsistenti(dati.luoghi)
+    const id = await idLibero('tradizioni', dati.nome)
+    await db.transazione(async (tx) => {
+      await tx.query('INSERT INTO tradizioni (id, nome, periodo, mesi, descrizione) VALUES ($1, $2, $3, $4, $5)', [
+        id, dati.nome, dati.periodo, dati.mesi, dati.descrizione,
+      ])
+      for (const poi of new Set(dati.luoghi)) await tx.query('INSERT INTO tradizioni_poi (tradizione, poi) VALUES ($1, $2)', [id, poi])
+    })
+    res.status(201).json({ id })
+  })
+
+  router.put('/admin/tradizioni/:id', soloAmministratori, async (req, res) => {
+    const dati = valida(schemaTradizione, req.body)
+    await controllaPoiEsistenti(dati.luoghi)
+    await db.transazione(async (tx) => {
+      const [esiste] = await tx.query(
+        'UPDATE tradizioni SET nome = $2, periodo = $3, mesi = $4, descrizione = $5 WHERE id = $1 RETURNING id',
+        [req.params.id, dati.nome, dati.periodo, dati.mesi, dati.descrizione],
+      )
+      if (!esiste) throw nonTrovato('Tradizione')
+      await tx.query('DELETE FROM tradizioni_poi WHERE tradizione = $1', [req.params.id])
+      for (const poi of new Set(dati.luoghi)) {
+        await tx.query('INSERT INTO tradizioni_poi (tradizione, poi) VALUES ($1, $2)', [req.params.id, poi])
+      }
+    })
+    res.json({ id: req.params.id })
+  })
+
+  router.delete('/admin/tradizioni/:id', soloAmministratori, async (req, res) => {
+    const [eliminata] = await db.query('DELETE FROM tradizioni WHERE id = $1 RETURNING id', [req.params.id])
+    if (!eliminata) throw nonTrovato('Tradizione')
+    res.status(204).end()
+  })
+
+  return router
+}

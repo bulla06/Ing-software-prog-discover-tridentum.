@@ -66,6 +66,10 @@ export default function MappaLeaflet({
 
     return () => {
       osservatore.disconnect()
+      // Le animazioni (flyTo, fitBounds) vanno fermate prima: chiudere la mappa a metà
+      // di un'animazione fa scattare un errore interno di Leaflet
+      m.stop()
+      m.off()
       m.remove()
       mappa.current = null
     }

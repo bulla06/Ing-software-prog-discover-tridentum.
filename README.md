@@ -43,38 +43,79 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ## Il sito
 
-Il primo prototipo della web app si trova in [`src/frontend/`](src/frontend). È il **Frontend Web** della [Fase 3](docs/fase-3-architettura-user-flow.md#51-frontend-web) (React + Vite, mappa Leaflet su OpenStreetMap), per ora **senza backend né database**: i dati dei luoghi sono file JSON in [`src/frontend/src/data/`](src/frontend/src/data).
+La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
-### Avvio
+- **Frontend** in [`src/frontend/`](src/frontend): React + Vite, mappa Leaflet su OpenStreetMap, italiano e inglese;
+- **Backend** in [`src/backend/`](src/backend): Node.js + Express, API REST con il gateway (token JWT, ruoli, limiti alle richieste) davanti ai quattro moduli *Utenti e accessi*, *POI, itinerari e tradizioni*, *Contenuti e moderazione*, *Gioco*;
+- **Database PostgreSQL + PostGIS**: in sviluppo con [PGlite](https://pglite.dev), lo stesso PostgreSQL eseguito dentro Node, quindi **non serve installare niente**; con Docker Compose un server PostgreSQL vero.
 
-Serve [Node.js](https://nodejs.org) 22 o superiore.
+### Avvio in sviluppo
+
+Serve [Node.js](https://nodejs.org) 22 o superiore. Dalla cartella principale del repository:
 
 ```bash
-cd src/frontend
-npm install        # solo la prima volta
-npm run dev        # sito su http://localhost:5173
-npm test           # test in tests/frontend
-npm run build      # versione da pubblicare, nella cartella dist/
+npm install        # solo la prima volta (installa frontend e backend)
+npm run dev        # avvia backend e frontend insieme
 ```
+
+Poi apri **http://localhost:5173**. Il primo avvio crea il database in `src/backend/.dati/` e lo riempie con i luoghi di [`src/backend/src/db/dati/`](src/backend/src/db/dati): ci vuole una ventina di secondi.
+
+**Account di prova** (solo in sviluppo):
+
+| Ruolo | E-mail | Password |
+|---|---|---|
+| Amministratore | `amministratore@tridentum.test` | `Tridentum-admin-1` |
+| Moderatore | `moderatore@tridentum.test` | `Tridentum-moderatore-1` |
+| Utente | `utente@tridentum.test` | `Tridentum-utente-1` |
+
+In sviluppo le e-mail (conferma della registrazione, password dimenticata, esito della moderazione) non vengono spedite: si leggono nella **posta di prova**, dal Profilo o su http://localhost:5173/#/dev/posta.
+
+Per ripartire da un database pulito basta fermare il server e cancellare la cartella `src/backend/.dati/`.
+
+### Test
+
+```bash
+npm test           # test del frontend e del backend
+```
+
+I test del backend percorrono i casi d'uso (registrazione, ricordi, moderazione, amministrazione, gioco) su un database in memoria. Con `TEST_DATABASE_URL=postgres://utente:password@localhost:5432/postgres` girano invece su un server PostgreSQL + PostGIS vero, creando e cancellando un database per ogni file.
+
+### Avvio con Docker (produzione)
+
+```bash
+cp .env.esempio .env        # solo la prima volta: scegli JWT_SEGRETO
+docker compose up --build   # sito su http://localhost:3000
+```
+
+Il primo amministratore si nomina dopo essersi registrati dal sito:
+
+```bash
+docker compose exec app npm run crea-amministratore -- tua@email.it
+```
+
+Per le e-mail vere serve un server SMTP (`SMTP_URL` nel file `.env`). In produzione il sito va messo dietro un proxy HTTPS (RNF-S01) e `INDIRIZZO_PUBBLICO` deve iniziare con `https://`.
 
 ### Cosa c'è
 
-| Schermata (Fase 3 §3.2) | Stato |
+| Schermata (Fase 3 §3.2) | Casi d'uso |
 |---|---|
-| S-00 Benvenuto, scelta della lingua (italiano/inglese) | ✅ |
-| S-01 Mappa con posizione, S-01L Elenco, S-02 Anteprima | ✅ |
-| S-04 Ricerca e filtri per categoria e tema | ✅ |
-| S-03 Scheda del luogo, con fonti, luoghi vicini e "Come arrivare" | ✅ |
-| S-05 Itinerari con filtro "quanto tempo hai", S-06 Itinerario tappa per tappa | ✅ |
-| S-11 Scopri: tradizioni e piatti tipici | ✅ (locali della Mappa del gusto da selezionare) |
-| S-10 Dov'era? con indizi testuali | ✅ (foto storiche e classifica con il backend) |
-| S-09 Profilo: lingua, luoghi salvati sul dispositivo, export GeoJSON | ✅ |
-| S-07 Accesso, S-08 Ricordi, S-13 Moderazione, S-14 Amministrazione | ⏳ servono backend e database |
+| S-00 Benvenuto, scelta della lingua | — |
+| S-01 Mappa, S-01L Elenco, S-02 Anteprima, S-04 Ricerca e filtri | UC-01 |
+| S-03 Scheda del luogo: storia, fonti, ricordi della community, segnalazioni, luoghi vicini | UC-01 |
+| S-05 Itinerari con filtro "quanto tempo hai", S-06 Itinerario tappa per tappa | UC-02 |
+| S-07 Accedi / Registrati, conferma dell'e-mail, password dimenticata | UC-03 |
+| S-08 Aggiungi un ricordo: foto ridotta e senza dati di posizione, licenza, consenso al gioco | UC-04 |
+| S-09 Profilo: contributi con lo stato, preferiti, eliminazione dell'account | UC-08 |
+| S-10 Dov'era?: indizi e foto della community, punteggio verificato dal server, classifica | UC-06 |
+| S-11 Scopri: tradizioni per periodo dell'anno, mappa del gusto con locali e piatti | UC-10 |
+| S-13 Moderazione: coda dei ricordi e delle segnalazioni | UC-05 |
+| S-14 Amministrazione: luoghi (posizione sulla mappa), itinerari, tradizioni, ruoli | UC-07, UC-09 |
+
+Non ci sono ancora il riconoscimento dei luoghi con la fotocamera (RF-06, *Could*) e l'AI Service, rinviati come previsto dalla [Fase 4](docs/fase-4-pianificazione.md#22-cosa-entra).
 
 **Da sapere**
-- I testi dei luoghi sono **dimostrativi**: date, attribuzioni e fonti vanno verificate dal team (WBS 3) prima della pubblicazione.
-- [`src/frontend/src/data/api.js`](src/frontend/src/data/api.js) ha una funzione per ogni endpoint dell'API Gateway (Fase 3 §5.2): quando ci sarà il backend basterà sostituire il loro contenuto con le chiamate HTTP, senza toccare le pagine.
-- I test in [`tests/frontend/`](tests/frontend) controllano anche la coerenza dei dati (ID unici, almeno una fonte per luogo, tappe esistenti), cioè i vincoli che imporrà il database.
+- I contenuti iniziali (36 luoghi, 9 itinerari, tradizioni, piatti, 14 livelli del gioco) sono una **prima selezione da verificare**: date, attribuzioni, fonti e soprattutto i locali della mappa del gusto vanno controllati dal team (WBS 3) prima della pubblicazione. Si correggono dal pannello di amministrazione oppure nei file di [`src/backend/src/db/dati/`](src/backend/src/db/dati), che vengono caricati quando il database è vuoto.
+- Le foto dei luoghi arrivano dalla community: la prima foto approvata diventa la copertina della scheda.
 
 ## Struttura del repository
 
@@ -91,29 +132,39 @@ npm run build      # versione da pubblicare, nella cartella dist/
 │   ├── presentazione-v1.pptx             # prima versione
 │   └── presentazione-v2.pptx             # versione attuale, nuovo design
 ├── src/
-│   └── frontend/                         # il sito: React + Vite + Leaflet
+│   ├── frontend/                         # il sito: React + Vite + Leaflet
+│   │   └── src/
+│   │       ├── pages/                    # una pagina per schermata
+│   │       ├── components/               # mappa, moduli, finestre, icone…
+│   │       ├── data/api.js               # una funzione per ogni endpoint dell'API
+│   │       ├── i18n/                     # testi in italiano e inglese
+│   │       └── lib/                      # sessione, client HTTP, distanze, posizione
+│   └── backend/                          # API REST: Node.js + Express
 │       └── src/
-│           ├── data/                     # dati dei luoghi (JSON) e accesso ai dati
-│           ├── pages/                    # una pagina per schermata
-│           ├── components/               # mappa, barra di navigazione, icone…
-│           ├── i18n/                     # testi in italiano e inglese
-│           └── lib/                      # distanze, ricerca, posizione, preferenze
+│           ├── gateway/                  # token, ruoli, limiti, errori
+│           ├── moduli/                   # utenti, luoghi, contenuti, gioco
+│           ├── db/                       # connessione, migrazioni, dati iniziali
+│           ├── servizi/                  # e-mail, archivio e preparazione delle foto
+│           └── server.js                 # avvio
 ├── tests/
-│   └── frontend/                         # test automatici (Vitest)
+│   ├── frontend/                         # test del frontend (Vitest)
+│   └── backend/                          # test delle API e dei dati (Vitest + Supertest)
+├── docker-compose.yml                    # avvio completo con PostgreSQL + PostGIS
+├── Dockerfile
 ├── CONTRIBUTING.md                       # convenzioni del team (nomi, commit, documenti)
 └── README.md
 ```
 
 ## Stato del progetto
 
-🚧 Progettazione completata; primo prototipo del sito senza backend e database.
+🚧 MVP del sito completo (frontend, backend e database), contenuti da verificare.
 
 | Fase | Documento | Versione | Stato |
 |---|---|---|---|
 | 0 — Proposta di progetto | [docs/fase-0-proposta-progetto.pdf](docs/fase-0-proposta-progetto.pdf) | — | Consegnato |
 | 1 — Analisi del dominio, Personas, Stakeholder Matrix, Tracciabilità | [docs/fase-1-analisi-dominio.md](docs/fase-1-analisi-dominio.md) | 0.2 | Bozza |
 | 2 — Specifiche dei requisiti (SRS Light): RF con MoSCoW, RNF, casi d'uso, tracciabilità | [docs/fase-2-specifiche-requisiti.md](docs/fase-2-specifiche-requisiti.md) | 0.4 | Bozza |
-| 3 — Architettura del sistema e user flow: casi d'uso (Mermaid), flusso delle schermate, architettura ad alto livello | [docs/fase-3-architettura-user-flow.md](docs/fase-3-architettura-user-flow.md) | 0.1 | Bozza |
+| 3 — Architettura del sistema e user flow: casi d'uso (Mermaid), flusso delle schermate, architettura ad alto livello | [docs/fase-3-architettura-user-flow.md](docs/fase-3-architettura-user-flow.md) | 0.2 | Bozza |
 | 4 — Pianificazione dello sviluppo: WBS, piano degli sprint e roadmap MVP, matrice dei rischi | [docs/fase-4-pianificazione.md](docs/fase-4-pianificazione.md) | 0.2 | Bozza |
 
 ## Team

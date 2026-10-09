@@ -3,58 +3,51 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import Avviso from '../components/Avviso.jsx'
 import Copertina from '../components/Copertina.jsx'
 import Icona from '../components/Icona.jsx'
-import { getItinerariConPoi, getPoi, getPoiById } from '../data/api.js'
+import ModuloSegnalazione from '../components/ModuloSegnalazione.jsx'
+import { getPoiById } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { distanzaMetri, formattaDistanza } from '../lib/geo.js'
+import { urlFoto } from '../lib/http.js'
 import { usePosizione } from '../lib/posizione.jsx'
 import { usePreferiti } from '../lib/preferiti.js'
+import { useSessione } from '../lib/sessione.jsx'
 
-const NUMERO_VICINI = 3
-
-// S-03 Scheda POI (RF-02, RF-03): il centro dell'app, raggiungibile da ogni sezione.
+// S-03 Scheda POI (RF-02, RF-03, RF-15, RF-18): il centro dell'app, raggiungibile da ogni sezione.
 export default function Scheda() {
   const { id } = useParams()
   const { t, lingua } = useT()
   const navigate = useNavigate()
   const { stato, origine } = usePosizione()
+  const { utente } = useSessione()
   const { salvato, alterna } = usePreferiti()
 
   const [poi, setPoi] = useState(undefined)
-  const [vicini, setVicini] = useState([])
-  const [itinerari, setItinerari] = useState([])
   const [avviso, setAvviso] = useState(null)
+  const [segnalazione, setSegnalazione] = useState(null)
   const chiudiAvviso = useCallback(() => setAvviso(null), [])
 
   useEffect(() => {
     window.scrollTo(0, 0)
     let attivo = true
-    Promise.all([getPoiById(id), getPoi(), getItinerariConPoi(id)]).then(([trovato, tutti, its]) => {
-      if (!attivo) return
-      setPoi(trovato)
-      setItinerari(its)
-      if (trovato) {
-        setVicini(
-          tutti
-            .filter((p) => p.id !== trovato.id)
-            .map((p) => ({ poi: p, distanza: distanzaMetri(trovato.posizione, p.posizione) }))
-            .sort((a, b) => a.distanza - b.distanza)
-            .slice(0, NUMERO_VICINI),
-        )
-      }
-    })
+    setPoi(undefined)
+    getPoiById(id).then(
+      (trovato) => attivo && setPoi(trovato),
+      (err) => attivo && setPoi(err.stato === 404 ? null : 'errore'),
+    )
     return () => {
       attivo = false
     }
   }, [id])
 
   const indietro = () => (window.history.state?.idx > 0 ? navigate(-1) : navigate('/'))
+  const vaiAdAccesso = () => navigate(`/accesso?da=${encodeURIComponent(`/poi/${id}`)}`)
 
   if (poi === undefined) return <div className="pagina" aria-busy="true" />
 
-  if (poi === null) {
+  if (poi === null || poi === 'errore') {
     return (
       <div className="pagina pagina--centrata">
-        <p>{t('scheda.nonTrovato')}</p>
+        <p>{poi === null ? t('scheda.nonTrovato') : t('errore.rete')}</p>
         <Link className="pulsante pulsante--primario" to="/">
           {t('scheda.tornaMappa')}
         </Link>
@@ -65,7 +58,16 @@ export default function Scheda() {
   const [lat, lng] = poi.posizione
   const comeArrivare = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking`
   const distanza = distanzaMetri(origine, poi.posizione)
-  const eSalvato = salvato(poi.id)
+  const eSalvato = salvato('poi', poi.id)
+
+  const salva = async () => {
+    if (!utente) return vaiAdAccesso()
+    try {
+      await alterna('poi', poi.id)
+    } catch {
+      setAvviso(t('comune.errore'))
+    }
+  }
 
   return (
     <article className="scheda">
@@ -99,7 +101,7 @@ export default function Scheda() {
         </header>
 
         <div className="azioni">
-          <button type="button" className="azione" aria-pressed={eSalvato} onClick={() => alterna(poi.id)}>
+          <button type="button" className="azione" aria-pressed={eSalvato} onClick={salva} title={utente ? undefined : t('scheda.accediPerSalvare')}>
             <Icona nome="salva" />
             {eSalvato ? t('scheda.salvato') : t('scheda.salva')}
           </button>
@@ -107,11 +109,18 @@ export default function Scheda() {
             <Icona nome="esterno" />
             {t('scheda.arrivare')}
           </a>
-          <button type="button" className="azione" onClick={() => setAvviso(t('scheda.serveAccount'))}>
+          <Link className="azione" to={`/poi/${poi.id}/ricordo`}>
             <Icona nome="ricordo" />
             {t('scheda.ricordo')}
-          </button>
+          </Link>
         </div>
+
+        {poi.piatto_consigliato && (
+          <section className="riquadro riquadro--gusto">
+            <h2>{t('scheda.piatto')}</h2>
+            <p className="riquadro__evidenza">{poi.piatto_consigliato}</p>
+          </section>
+        )}
 
         {poi.affresco && (
           <section className="riquadro riquadro--affresco">
@@ -154,24 +163,77 @@ export default function Scheda() {
             <Icona nome="info" size={16} />
             {t('scheda.bozza')}
           </p>
-        </section>
-
-        <section>
-          <h2>{t('scheda.ricordi')}</h2>
-          <div className="vuoto vuoto--riquadro">
-            <p>{t('scheda.nessunRicordo')}</p>
-          </div>
-          <button type="button" className="collegamento" onClick={() => setAvviso(t('scheda.serveAccount'))}>
+          <button type="button" className="collegamento" onClick={() => setSegnalazione({ tipo: 'poi', id: poi.id })}>
             <Icona nome="segnala" size={16} />
             {t('scheda.segnala')}
           </button>
         </section>
 
-        {itinerari.length > 0 && (
+        <section>
+          <h2>{t('scheda.ricordi')}</h2>
+          {poi.ricordi.length === 0 ? (
+            <div className="vuoto vuoto--riquadro">
+              <p>{t('scheda.nessunRicordo')}</p>
+            </div>
+          ) : (
+            <ul className="ricordi">
+              {poi.ricordi.map((r) => (
+                <li key={r.id} className="ricordo">
+                  {r.foto && (
+                    <a href={urlFoto(r.foto)} target="_blank" rel="noreferrer" className="ricordo__foto">
+                      <img
+                        src={urlFoto(r.foto, 'mini')}
+                        alt={r.testo ? r.testo.slice(0, 80) : t('scheda.ricordi')}
+                        width={r.larghezza}
+                        height={r.altezza}
+                        loading="lazy"
+                      />
+                    </a>
+                  )}
+                  {r.testo && <p className="ricordo__testo">{r.testo}</p>}
+                  <p className="ricordo__meta">
+                    {r.anno && <strong>{r.anno}</strong>}
+                    {r.anno && ' · '}
+                    {r.autore ? t('scheda.di', { autore: r.autore }) : t('scheda.anonimo')}
+                    {' · '}
+                    <abbr title={t(`licenza.${r.licenza}.spiega`)}>{t(`licenza.${r.licenza}.breve`)}</abbr>
+                  </p>
+                  <button type="button" className="collegamento collegamento--piccolo" onClick={() => setSegnalazione({ tipo: 'ricordo', id: r.id })}>
+                    <Icona nome="segnala" size={14} />
+                    {t('scheda.segnalaRicordo')}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+          <Link className="pulsante" to={`/poi/${poi.id}/ricordo`}>
+            <Icona nome="ricordo" size={18} />
+            {t('scheda.ricordo')}
+          </Link>
+        </section>
+
+        {poi.tradizioni.length > 0 && (
+          <section>
+            <h2>{t('scheda.tradizioni')}</h2>
+            <ul className="elenco-semplice">
+              {poi.tradizioni.map((tr) => (
+                <li key={tr.id}>
+                  <Link to="/scopri" className="riga-link">
+                    <Icona nome="calendario" size={18} />
+                    <span>{tr.nome}</span>
+                    <small>{tr.periodo}</small>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {poi.itinerari.length > 0 && (
           <section>
             <h2>{t('scheda.itinerari')}</h2>
             <ul className="elenco-semplice">
-              {itinerari.map((it) => (
+              {poi.itinerari.map((it) => (
                 <li key={it.id}>
                   <Link to={`/itinerari/${it.id}`} className="riga-link">
                     <Icona nome="itinerari" size={18} />
@@ -187,12 +249,12 @@ export default function Scheda() {
         <section>
           <h2>{t('scheda.vicini')}</h2>
           <ul className="griglia-vicini">
-            {vicini.map(({ poi: v, distanza: d }) => (
+            {poi.vicini.map((v) => (
               <li key={v.id}>
                 <Link to={`/poi/${v.id}`} className="scheda-mini">
                   <Copertina poi={v} compatta />
                   <strong>{v.nome}</strong>
-                  <small>{formattaDistanza(d, lingua)}</small>
+                  <small>{formattaDistanza(v.distanza, lingua)}</small>
                 </Link>
               </li>
             ))}
@@ -200,6 +262,14 @@ export default function Scheda() {
         </section>
       </div>
 
+      <ModuloSegnalazione
+        bersaglio={segnalazione}
+        onChiudi={() => setSegnalazione(null)}
+        onInviata={() => {
+          setSegnalazione(null)
+          setAvviso(t('segnala.inviata'))
+        }}
+      />
       <Avviso testo={avviso} onChiudi={chiudiAvviso} />
     </article>
   )

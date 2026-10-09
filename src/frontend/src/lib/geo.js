@@ -29,13 +29,5 @@ export function lunghezzaPercorso(punti) {
   return totale
 }
 
+/** Punteggio massimo di un livello di "Dov'era?": il calcolo lo fa il server (Fase 3, D-14) */
 export const PUNTEGGIO_MAX = 1000
-
-/**
- * Punteggio di "Dov'era?" (RF-21): 1000 punti se si centra il luogo,
- * che si dimezzano circa ogni 200 m di errore; 0 oltre i 2 km.
- */
-export function punteggio(metri) {
-  if (metri > 2000) return 0
-  return Math.round(PUNTEGGIO_MAX * Math.exp(-metri / 290))
-}

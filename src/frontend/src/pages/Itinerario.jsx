@@ -5,6 +5,8 @@ import MappaLeaflet from '../components/MappaLeaflet.jsx'
 import { getItinerario } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { formattaDistanza, lunghezzaPercorso } from '../lib/geo.js'
+import { usePreferiti } from '../lib/preferiti.js'
+import { useSessione } from '../lib/sessione.jsx'
 
 // S-06 Itinerario (RF-07): percorso sulla mappa, tappe numerate e "Prossima tappa".
 export default function Itinerario() {
@@ -14,13 +16,18 @@ export default function Itinerario() {
   const [itinerario, setItinerario] = useState(undefined)
   const [attuale, setAttuale] = useState(0)
   const [vista, setVista] = useState(null)
+  const { utente } = useSessione()
+  const { salvato, alterna } = usePreferiti()
 
   useEffect(() => {
-    getItinerario(id).then((it) => {
-      setItinerario(it)
-      setAttuale(0)
-      setVista(null)
-    })
+    getItinerario(id).then(
+      (it) => {
+        setItinerario(it)
+        setAttuale(0)
+        setVista(null)
+      },
+      () => setItinerario(null),
+    )
   }, [id])
 
   const punti = useMemo(() => itinerario?.tappe.map((p) => p.posizione) ?? [], [itinerario])
@@ -90,6 +97,15 @@ export default function Itinerario() {
               {t('itinerario.km', { d: formattaDistanza(lunghezzaPercorso(punti), lingua) })}
             </span>
           </p>
+          <button
+            type="button"
+            className="pulsante"
+            aria-pressed={salvato('itinerario', itinerario.id)}
+            onClick={() => (utente ? alterna('itinerario', itinerario.id).catch(() => {}) : navigate(`/accesso?da=${encodeURIComponent(`/itinerari/${itinerario.id}`)}`))}
+          >
+            <Icona nome="salva" size={18} />
+            {salvato('itinerario', itinerario.id) ? t('scheda.salvato') : t('scheda.salva')}
+          </button>
         </header>
 
         <section className="tappa-attuale" aria-live="polite">

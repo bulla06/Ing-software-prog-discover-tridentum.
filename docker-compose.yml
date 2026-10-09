@@ -1,0 +1,42 @@
+# Avvio completo con un solo comando (RNF-PO03, Fase 3 §8):
+#   cp .env.esempio .env    (solo la prima volta, poi scegli JWT_SEGRETO)
+#   docker compose up --build
+# Il sito è su http://localhost:3000
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: tridentum
+      POSTGRES_USER: tridentum
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-tridentum}
+    volumes:
+      - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tridentum -d tridentum"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    # Il database non è esposto all'esterno (Fase 3 §8)
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://tridentum:${DB_PASSWORD:-tridentum}@db:5432/tridentum
+      JWT_SEGRETO: ${JWT_SEGRETO:?Imposta JWT_SEGRETO nel file .env (vedi .env.esempio)}
+      INDIRIZZO_PUBBLICO: ${INDIRIZZO_PUBBLICO:-http://localhost:3000}
+      SMTP_URL: ${SMTP_URL:-}
+      EMAIL_MITTENTE: ${EMAIL_MITTENTE:-Discover Tridentum <noreply@discover-tridentum.local>}
+      DATI_DIMOSTRATIVI: ${DATI_DIMOSTRATIVI:-no}
+      PROXY_FIDATI: ${PROXY_FIDATI:-0}
+    ports:
+      - "3000:3000"
+    volumes:
+      - foto:/dati
+
+volumes:
+  database:
+  foto:
