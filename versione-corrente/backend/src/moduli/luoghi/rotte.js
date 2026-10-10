@@ -65,7 +65,8 @@ const idSlug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Identificatore non 
 
 /**
  * Traduzioni facoltative di una voce (RNF-U05): { en: { campo: testo } }.
- * I campi vuoti si tolgono, così nel sito compare il testo italiano.
+ * I campi vuoti si tolgono, così nel sito compare il testo italiano. Se la richiesta non ha il campo
+ * "traduzioni" (per esempio dai pannelli delle versioni precedenti) restano quelle già salvate.
  */
 function schemaTraduzioni(campi) {
   const voce = z.object(campi).partial().transform((t) =>
@@ -73,9 +74,12 @@ function schemaTraduzioni(campi) {
   )
   return z
     .object({ en: voce.optional() })
-    .default({})
-    .transform((t) => (t.en && Object.keys(t.en).length ? { en: t.en } : {}))
+    .optional()
+    .transform((t) => (t === undefined ? undefined : t.en && Object.keys(t.en).length ? { en: t.en } : {}))
 }
+
+/** Valore SQL delle traduzioni: null vuol dire "lascia quelle che ci sono" (vedi coalesce nelle query) */
+const traduzioniSql = (t) => (t === undefined ? null : JSON.stringify(t))
 
 const paragrafi = z.array(z.string().trim().min(1).max(3000)).max(20)
 
@@ -438,14 +442,16 @@ export function rotteLuoghi({ db, archivio }) {
   const valoriPoi = (d) => [
     d.nome, d.categoria, d.temi, d.posizione[1], d.posizione[0], d.indirizzo, d.epoca, d.sintesi, d.descrizione,
     d.affresco_autore, d.affresco_epoca, d.categoria === 'gastronomia' ? d.piatto_consigliato : null, d.parole_chiave,
-    JSON.stringify(d.fonti), JSON.stringify(d.traduzioni),
+    JSON.stringify(d.fonti), traduzioniSql(d.traduzioni),
   ]
   const INSERISCI_POI = `INSERT INTO poi (id, nome, categoria, temi, posizione, indirizzo, epoca, sintesi, descrizione,
                         affresco_autore, affresco_epoca, piatto_consigliato, parole_chiave, fonti, traduzioni)
-       VALUES ($1, $2, $3, $4, ST_SetSRID(ST_MakePoint($5, $6), 4326)::geography, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`
+       VALUES ($1, $2, $3, $4, ST_SetSRID(ST_MakePoint($5, $6), 4326)::geography, $7, $8, $9, $10, $11, $12, $13, $14, $15,
+               coalesce($16::jsonb, '{}'::jsonb))`
   const AGGIORNA_POI = `UPDATE poi SET nome = $2, categoria = $3, temi = $4, posizione = ST_SetSRID(ST_MakePoint($5, $6), 4326)::geography,
               indirizzo = $7, epoca = $8, sintesi = $9, descrizione = $10, affresco_autore = $11, affresco_epoca = $12,
-              piatto_consigliato = $13, parole_chiave = $14, fonti = $15, traduzioni = $16, aggiornato_il = now()
+              piatto_consigliato = $13, parole_chiave = $14, fonti = $15, traduzioni = coalesce($16::jsonb, traduzioni),
+              aggiornato_il = now()
         WHERE id = $1 RETURNING id`
 
   router.post('/admin/poi', soloAmministratori, async (req, res) => {
@@ -558,9 +564,11 @@ export function rotteLuoghi({ db, archivio }) {
     await controllaPoiEsistenti(dati.tappe)
     const id = await idLibero('itinerari', dati.titolo)
     await db.transazione(async (tx) => {
-      await tx.query('INSERT INTO itinerari (id, titolo, tema, durata_minuti, descrizione, traduzioni) VALUES ($1, $2, $3, $4, $5, $6)', [
-        id, dati.titolo, dati.tema, dati.durata_minuti, dati.descrizione, JSON.stringify(dati.traduzioni),
-      ])
+      await tx.query(
+        `INSERT INTO itinerari (id, titolo, tema, durata_minuti, descrizione, traduzioni)
+         VALUES ($1, $2, $3, $4, $5, coalesce($6::jsonb, '{}'::jsonb))`,
+        [id, dati.titolo, dati.tema, dati.durata_minuti, dati.descrizione, traduzioniSql(dati.traduzioni)],
+      )
       for (const [i, poi] of dati.tappe.entries()) {
         await tx.query('INSERT INTO tappe (itinerario, ordine, poi) VALUES ($1, $2, $3)', [id, i + 1, poi])
       }
@@ -573,8 +581,9 @@ export function rotteLuoghi({ db, archivio }) {
     await controllaPoiEsistenti(dati.tappe)
     await db.transazione(async (tx) => {
       const [esiste] = await tx.query(
-        'UPDATE itinerari SET titolo = $2, tema = $3, durata_minuti = $4, descrizione = $5, traduzioni = $6 WHERE id = $1 RETURNING id',
-        [req.params.id, dati.titolo, dati.tema, dati.durata_minuti, dati.descrizione, JSON.stringify(dati.traduzioni)],
+        `UPDATE itinerari SET titolo = $2, tema = $3, durata_minuti = $4, descrizione = $5, traduzioni = coalesce($6::jsonb, traduzioni)
+          WHERE id = $1 RETURNING id`,
+        [req.params.id, dati.titolo, dati.tema, dati.durata_minuti, dati.descrizione, traduzioniSql(dati.traduzioni)],
       )
       if (!esiste) throw nonTrovato('Itinerario')
       await tx.query('DELETE FROM tappe WHERE itinerario = $1', [req.params.id])
@@ -597,9 +606,11 @@ export function rotteLuoghi({ db, archivio }) {
     await controllaPoiEsistenti(dati.luoghi)
     const id = await idLibero('tradizioni', dati.nome)
     await db.transazione(async (tx) => {
-      await tx.query('INSERT INTO tradizioni (id, nome, periodo, mesi, descrizione, traduzioni) VALUES ($1, $2, $3, $4, $5, $6)', [
-        id, dati.nome, dati.periodo, dati.mesi, dati.descrizione, JSON.stringify(dati.traduzioni),
-      ])
+      await tx.query(
+        `INSERT INTO tradizioni (id, nome, periodo, mesi, descrizione, traduzioni)
+         VALUES ($1, $2, $3, $4, $5, coalesce($6::jsonb, '{}'::jsonb))`,
+        [id, dati.nome, dati.periodo, dati.mesi, dati.descrizione, traduzioniSql(dati.traduzioni)],
+      )
       for (const poi of new Set(dati.luoghi)) await tx.query('INSERT INTO tradizioni_poi (tradizione, poi) VALUES ($1, $2)', [id, poi])
     })
     res.status(201).json({ id })
@@ -610,8 +621,9 @@ export function rotteLuoghi({ db, archivio }) {
     await controllaPoiEsistenti(dati.luoghi)
     await db.transazione(async (tx) => {
       const [esiste] = await tx.query(
-        'UPDATE tradizioni SET nome = $2, periodo = $3, mesi = $4, descrizione = $5, traduzioni = $6 WHERE id = $1 RETURNING id',
-        [req.params.id, dati.nome, dati.periodo, dati.mesi, dati.descrizione, JSON.stringify(dati.traduzioni)],
+        `UPDATE tradizioni SET nome = $2, periodo = $3, mesi = $4, descrizione = $5, traduzioni = coalesce($6::jsonb, traduzioni)
+          WHERE id = $1 RETURNING id`,
+        [req.params.id, dati.nome, dati.periodo, dati.mesi, dati.descrizione, traduzioniSql(dati.traduzioni)],
       )
       if (!esiste) throw nonTrovato('Tradizione')
       await tx.query('DELETE FROM tradizioni_poi WHERE tradizione = $1', [req.params.id])
@@ -677,10 +689,12 @@ export function rotteLuoghi({ db, archivio }) {
       const conteggio = { creati: 0, aggiornati: 0 }
       for (const { id, dati } of voci) {
         const [riga] = await tx.query(
-          `INSERT INTO itinerari (id, titolo, tema, durata_minuti, descrizione, traduzioni) VALUES ($1, $2, $3, $4, $5, $6)
-           ON CONFLICT (id) DO UPDATE SET titolo = $2, tema = $3, durata_minuti = $4, descrizione = $5, traduzioni = $6
+          `INSERT INTO itinerari (id, titolo, tema, durata_minuti, descrizione, traduzioni)
+           VALUES ($1, $2, $3, $4, $5, coalesce($6::jsonb, '{}'::jsonb))
+           ON CONFLICT (id) DO UPDATE SET titolo = $2, tema = $3, durata_minuti = $4, descrizione = $5,
+                                          traduzioni = coalesce($6::jsonb, itinerari.traduzioni)
            RETURNING (xmax = 0) AS creato`,
-          [id, dati.titolo, dati.tema, dati.durata_minuti, dati.descrizione, JSON.stringify(dati.traduzioni)],
+          [id, dati.titolo, dati.tema, dati.durata_minuti, dati.descrizione, traduzioniSql(dati.traduzioni)],
         )
         conteggio[riga.creato ? 'creati' : 'aggiornati']++
         await tx.query('DELETE FROM tappe WHERE itinerario = $1', [id])

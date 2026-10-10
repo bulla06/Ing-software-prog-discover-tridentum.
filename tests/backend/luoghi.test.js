@@ -100,6 +100,22 @@ describe('lingua delle schede (RNF-U05)', () => {
     expect(piatti.every((p) => p.descrizione)).toBe(true)
   })
 
+  it('una modifica senza traduzioni, come dai pannelli delle versioni precedenti, non le cancella', async () => {
+    const [duomo] = (await amb.api().get('/api/admin/poi').set(admin)).body.filter((p) => p.id === 'duomo')
+    const { id, lat, lng, posizione, traduzioni, aggiornato_il, tappe, foto, copertina, ...campi } = duomo
+    const r = await amb.api().put('/api/admin/poi/duomo').set(admin).send({ ...campi, posizione, affresco_autore: null })
+    expect(r.status).toBe(200)
+    expect((await amb.api().get('/api/poi/duomo?lingua=en')).body.nome).toBe('St Vigilius Cathedral')
+
+    const itinerario = (await amb.api().get('/api/admin/itinerari').set(admin)).body.find((i) => i.id === 'vecchio-adige')
+    const senza = { titolo: itinerario.titolo, tema: itinerario.tema, durata_minuti: itinerario.durata_minuti, descrizione: itinerario.descrizione, tappe: itinerario.tappe.map((t) => t.id) }
+    expect((await amb.api().put('/api/admin/itinerari/vecchio-adige').set(admin).send(senza)).status).toBe(200)
+    expect((await amb.api().get('/api/itinerari/vecchio-adige?lingua=en')).body.titolo).toBe('Where the Adige used to flow')
+    // Con le traduzioni vuote invece si tolgono
+    expect((await amb.api().put('/api/admin/itinerari/vecchio-adige').set(admin).send({ ...senza, traduzioni: { en: { titolo: '' } } })).status).toBe(200)
+    expect((await amb.api().get('/api/itinerari/vecchio-adige?lingua=en')).body.titolo).toBe(itinerario.titolo)
+  })
+
   it('cerca anche nei testi tradotti', async () => {
     const r = (await amb.api().get('/api/poi?q=cathedral&lingua=en')).body.map((p) => p.id)
     expect(r).toContain('duomo')

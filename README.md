@@ -43,11 +43,11 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ## Il sito
 
-La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v3, che parte dal design della v2 e completa i punti del documento [Cose mancanti](docs/cose-mancanti.md). Le versioni passate (il primo prototipo con solo il frontend, il frontend v1 e il frontend v2) sono in [`versioni-precedenti/`](versioni-precedenti).
+La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v3: parte dal design della v2 e completa i punti del documento [Cose mancanti](docs/cose-mancanti.md). Le versioni passate (il primo prototipo, il frontend v1 e il frontend v2) sono in [`versioni-precedenti/`](versioni-precedenti) e si possono aprire affiancate alla corrente per confrontarle.
 
 La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
-- **Frontend** in [`versione-corrente/frontend/`](versione-corrente/frontend): React + Vite, mappa Leaflet su OpenStreetMap con i luoghi raggruppati, italiano e inglese, tema chiaro e scuro;
+- **Frontend** in [`versione-corrente/frontend/`](versione-corrente/frontend): React + Vite, mappa Leaflet su OpenStreetMap con i luoghi raggruppati, italiano e inglese (interfaccia e contenuti), tema chiaro e scuro, installabile come app;
 - **Backend** in [`versione-corrente/backend/`](versione-corrente/backend): Node.js + Express, API REST con il gateway (token JWT, ruoli, limiti alle richieste) davanti ai quattro moduli *Utenti e accessi*, *POI, itinerari e tradizioni*, *Contenuti e moderazione*, *Gioco*;
 - **Database PostgreSQL + PostGIS**: in sviluppo con [PGlite](https://pglite.dev), lo stesso PostgreSQL eseguito dentro Node, quindi **non serve installare niente**; con Docker Compose un server PostgreSQL vero.
 
@@ -74,20 +74,34 @@ In sviluppo le e-mail (conferma della registrazione, password dimenticata, esito
 
 Per ripartire da un database pulito basta fermare il server e cancellare la cartella `versione-corrente/backend/.dati/`.
 
+**Versioni precedenti**, con lo stesso backend: `npm run dev:v1` (frontend v1, porta 5174) e `npm run dev:v2` (frontend v2, porta 5176), dopo aver installato una volta le loro dipendenze (vedi i README nelle loro cartelle).
+
 ### Test
 
 ```bash
 npm test           # test del frontend e del backend
 ```
 
-I test del backend percorrono i casi d'uso (registrazione, ricordi, moderazione, amministrazione, gioco) su un database in memoria. Con `TEST_DATABASE_URL=postgres://utente:password@localhost:5432/postgres` girano invece su un server PostgreSQL + PostGIS vero, creando e cancellando un database per ogni file.
+I test del backend percorrono i casi d'uso (registrazione, ricordi, moderazione, amministrazione, gioco), il controllo dei ruoli su tutte le rotte riservate, la privacy e la coerenza dei pacchetti di dati, su un database in memoria. Con `TEST_DATABASE_URL=postgres://utente:password@localhost:5432/postgres` girano invece su un server PostgreSQL + PostGIS vero, creando e cancellando un database per ogni file.
+
+Le misure di prestazioni, accessibilità e carico non fanno parte di `npm test`: gli script e le istruzioni sono in [`tests/prestazioni/`](tests/prestazioni), i risultati in [Verifica dei requisiti non funzionali](docs/verifica-requisiti-non-funzionali.md).
 
 ### Avvio con Docker (produzione)
 
 ```bash
-cp .env.esempio .env        # solo la prima volta: scegli JWT_SEGRETO
 docker compose up --build   # sito su http://localhost:3000
 ```
+
+Non serve preparare niente: al primo avvio il server crea il segreto per i token e lo conserva nel volume dei dati. Le impostazioni facoltative (e-mail, indirizzo per la privacy, dominio) stanno in un file `.env`: vedi [`.env.esempio`](.env.esempio).
+
+**In HTTPS** (RNF-S01), su un server con un dominio che punta a lui, il proxy [Caddy](https://caddyserver.com) ottiene da solo il certificato:
+
+```bash
+DOMINIO=tridentum.esempio.it INDIRIZZO_PUBBLICO=https://tridentum.esempio.it PROXY_FIDATI=1 PORTA_APP=127.0.0.1:3000 \
+  docker compose --profile https up -d --build
+```
+
+Con `DOMINIO=localhost` si prova l'HTTPS sul proprio computer, con un certificato locale.
 
 Il primo amministratore si nomina dopo essersi registrati dal sito:
 
@@ -95,49 +109,44 @@ Il primo amministratore si nomina dopo essersi registrati dal sito:
 docker compose exec app npm run crea-amministratore -- tua@email.it
 ```
 
-Per le e-mail vere serve un server SMTP (`SMTP_URL` nel file `.env`). In produzione il sito va messo dietro un proxy HTTPS (RNF-S01) e `INDIRIZZO_PUBBLICO` deve iniziare con `https://`.
+Per le e-mail vere serve un server SMTP (`SMTP_URL`); prima della pubblicazione va indicato anche l'indirizzo per le richieste sui dati personali (`EMAIL_PRIVACY`, vedi la [checklist GDPR](docs/checklist-gdpr.md)).
 
 ### Cosa c'è
 
-| Schermata (Fase 3 §3.2) | Casi d'uso |
+| Schermata (Fase 3 §3.2) | Casi d'uso e requisiti |
 |---|---|
-| S-00 Benvenuto, scelta della lingua | — |
-| S-01 Mappa, S-01L Elenco, S-02 Anteprima, S-04 Ricerca e filtri | UC-01 |
-| S-03 Scheda del luogo: storia, fonti, ricordi della community, segnalazioni, luoghi vicini | UC-01 |
-| S-05 Itinerari con filtro "quanto tempo hai", S-06 Itinerario tappa per tappa | UC-02 |
-| S-07 Accedi / Registrati, conferma dell'e-mail, password dimenticata | UC-03 |
-| S-08 Aggiungi un ricordo: foto ridotta e senza dati di posizione, licenza, consenso al gioco | UC-04 |
-| S-09 Profilo: contributi con lo stato, preferiti, eliminazione dell'account | UC-08 |
-| S-10 Dov'era?: foto storiche (archivi di pubblico dominio e community), punteggio verificato dal server, classifica | UC-06 |
-| S-11 Scopri: tradizioni per periodo dell'anno, mappa del gusto con locali e piatti | UC-10 |
-| S-13 Moderazione: coda dei ricordi e delle segnalazioni | UC-05 |
-| S-14 Amministrazione: luoghi (posizione sulla mappa, foto con i crediti), itinerari, tradizioni, ruoli | UC-07, UC-09 |
+| S-00 Benvenuto, scelta della lingua | RNF-U05 |
+| S-01 Mappa, S-01L Elenco, S-02 Anteprima, S-04 Ricerca e filtri; vista allargata se entro 1 km non c'è niente | UC-01 (E3) |
+| S-03 Scheda del luogo: storia, foto con i crediti, fonti, ricordi della community, segnalazioni, luoghi vicini | UC-01 · RF-02, RF-03 |
+| "Cosa sto guardando?": la fotocamera con posizione e bussola riconosce il luogo che hai davanti | RF-06 |
+| S-05 Itinerari con filtro "quanto tempo hai" e **itinerario su misura** dal tempo e dal punto di partenza | UC-02 · RF-07, RF-08 |
+| S-06 Itinerario tappa per tappa, "Come arrivare", tappe rimosse segnalate, fine del percorso con gli itinerari vicini | UC-02 (7a, 8, E1) |
+| S-07 Accedi / Registrati, conferma dell'e-mail, password dimenticata, informativa privacy | UC-03 · RNF-S04 |
+| S-08 Aggiungi un ricordo: foto ridotta e senza dati di posizione, licenza, consenso al gioco e punto dello scatto | UC-04 |
+| S-09 Profilo: contributi con lo stato, preferiti, cambio del nome, download dei propri dati, eliminazione dell'account | UC-08 · RF-13 |
+| S-10 Dov'era?: foto storiche, punteggio verificato dal server, classifica | UC-06 |
+| S-11 Scopri: tradizioni in corso e in arrivo, con i luoghi sulla mappa; mappa del gusto | UC-10 |
+| S-13 Moderazione: coda dei ricordi (con la scelta dei livelli del gioco) e delle segnalazioni | UC-05 · RF-23 |
+| S-14 Amministrazione: luoghi, itinerari e tradizioni anche in inglese, foto con i crediti, ruoli, esportazione e importazione | UC-07, UC-09 · RNF-PO04 |
 
-Non ci sono ancora il riconoscimento dei luoghi con la fotocamera (RF-06, *Could*) e l'AI Service, rinviati come previsto dalla [Fase 4](docs/fase-4-pianificazione.md#22-cosa-entra).
+Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito si apre anche senza rete, grazie al service worker.
+
+**"Cosa sto guardando?" (RF-06)** riconosce il luogo dalla posizione e dalla direzione del telefono, non dall'immagine: il calcolo si fa tutto nel browser e niente lascia il dispositivo. Il riconoscimento dall'immagine con un modello di AI (AI Service, [Fase 3 §5.4](docs/fase-3-architettura-user-flow.md#54-ai-service)) può aggiungersi in seguito senza cambiare la pagina.
 
 **Da sapere**
-- I contenuti iniziali (36 luoghi, 9 itinerari, tradizioni, piatti, 8 livelli fotografici del gioco) sono una **prima selezione da verificare**: date, attribuzioni, fonti e soprattutto i locali della mappa del gusto vanno controllati dal team (WBS 3) prima della pubblicazione. Si correggono dal pannello di amministrazione oppure nei pacchetti di dati di [`versione-corrente/backend/src/db/dati/`](versione-corrente/backend/src/db/dati).
-- Le foto dei luoghi sono di due tipi: quelle **ufficiali**, caricate dagli amministratori o dai pacchetti di dati con autore, licenza e fonte (obbligatori, perché le licenze libere li richiedono), e i **ricordi** della community, che passano dalla moderazione. La copertina è la prima foto ufficiale, altrimenti il primo ricordo con foto, altrimenti il ritaglio della mappa centrato sul luogo.
-- Le 8 foto storiche del gioco sono in [`versione-corrente/backend/src/db/dati/foto-gioco/`](versione-corrente/backend/src/db/dati/foto-gioco): vengono da Wikimedia Commons, sono di **pubblico dominio** e autore, licenza e fonte sono in [`gioco.json`](versione-corrente/backend/src/db/dati/gioco.json), che viene riallineato nel database a ogni avvio. Il gioco le mostra dopo ogni risposta.
+- **Contenuti:** 45 luoghi, tra cui 16 affreschi, 10 itinerari, 6 tradizioni e 14 piatti, in italiano e inglese. Date e attribuzioni sono prese dalle fonti citate in ogni scheda; il pacchetto [`002-correzioni-e-traduzioni`](versione-corrente/backend/src/db/dati/002-correzioni-e-traduzioni) ha sostituito le note "da verificare" della prima selezione. Resta da fare la verifica con la Soprintendenza (RNF-V02).
+- **Foto dei luoghi:** ci sono quelle **ufficiali**, con autore, licenza e fonte obbligatori, e i **ricordi** della community, che passano dalla moderazione. Le foto ufficiali si prendono da Wikimedia Commons con `npm run scarica-foto`, che usa l'elenco [`foto-da-scaricare.json`](versione-corrente/backend/src/db/dati/foto-da-scaricare.json) e crea un nuovo pacchetto di dati con i crediti; serve un computer che raggiunga Commons. Le foto scelte da una categoria o da una ricerca vanno guardate prima del commit. Finché un luogo non ha foto, la copertina è il ritaglio della mappa.
+- **Gioco:** le 8 foto storiche sono in [`foto-gioco/`](versione-corrente/backend/src/db/dati/foto-gioco), di pubblico dominio, con i crediti in [`gioco.json`](versione-corrente/backend/src/db/dati/gioco.json). Le foto della community diventano livelli se l'autore dà il consenso e un moderatore le sceglie.
+- **Privacy:** tempi di conservazione applicati dal server ogni giorno, informativa completa, dati scaricabili dal profilo: vedi la [checklist GDPR](docs/checklist-gdpr.md).
 
-### Il design della versione corrente
+### Le versioni del frontend
 
-La versione corrente usa il frontend v2. Rispetto alla [v1](versioni-precedenti/frontend-v1), conservata tra le versioni precedenti, cambia:
-
-- **Mappa dei luoghi**: i luoghi vicini si raggruppano in un cerchio con il numero e un anello diviso tra i colori delle categorie; ogni segnaposto ha l'icona della sua categoria; ingrandendo compaiono i nomi; lo sfondo della mappa è attenuato (e invertito nel tema scuro) perché i segnaposti si leggano meglio.
-- **Desktop**: navigazione in una colonna a sinistra; mappa ed elenco affiancati, e passando su un luogo dell'elenco il suo segnaposto si evidenzia; scheda del luogo su due colonne; itinerario con la mappa fissa.
-- **Copertine**: se un luogo non ha foto, la copertina è il ritaglio della mappa centrato sul luogo.
-- **Telefono**: anteprima di un luogo come pannello dal basso che si chiude trascinandolo giù, con la mappa che si sposta per mostrare il luogo sopra il pannello; scheda nell'ordine utile a chi è sul posto (informazioni pratiche prima della storia, luoghi vicini prima delle fonti), con una barra in alto per tornare indietro e condividere; comandi delle tappe dell'itinerario sempre a portata di pollice; aree di tocco di almeno 44 px e campi a 16 px (niente zoom automatico su iPhone).
-- **Dov'era?** in stile GeoGuessr: una foto storica, l'anno come unico indizio, il segnaposto sulla mappa (anche da tastiera, con "Segna il centro della mappa"), poi distanza, punti e crediti della foto.
-- **Stile**: font Geist ospitati con il sito, icone Phosphor, palette "pietra e affresco" con un solo colore d'accento, tema chiaro e scuro.
-- **Accessibilità e dettagli**: controllata con le [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) (link "Salta al contenuto", titoli di pagina, tipografia con apostrofi e virgolette tipografiche, stati vuoti e di caricamento, tappa dell'itinerario nell'URL).
-
-Per confrontarla con la v1, che usa lo stesso backend:
-
-```bash
-npm --prefix versioni-precedenti/frontend-v1 install   # solo la prima volta
-npm run dev:v1     # backend + frontend v1 su http://localhost:5174
-```
+| Versione | Cartella | Novità principali |
+|---|---|---|
+| v3 (corrente) | [`versione-corrente/frontend/`](versione-corrente/frontend) | Completa i punti di [Cose mancanti](docs/cose-mancanti.md): itinerario su misura, fine dell'itinerario, avvisi di connessione, informativa privacy, contenuti in inglese, "Cosa sto guardando?", PWA, esportazione e importazione, JavaScript iniziale più leggero |
+| v2 | [`versioni-precedenti/frontend-v2/`](versioni-precedenti/frontend-v2) | Nuovo design: mappa con i luoghi raggruppati, colonna di navigazione su desktop, esperienza da smartphone, gioco in stile GeoGuessr, palette "pietra e affresco" |
+| v1 | [`versioni-precedenti/frontend-v1/`](versioni-precedenti/frontend-v1) | Primo design del sito completo |
+| Prototipo | [`versioni-precedenti/prototipo/`](versioni-precedenti/prototipo) | Solo frontend, dati in file JSON |
 
 ## Struttura del repository
 
@@ -149,24 +158,30 @@ npm run dev:v1     # backend + frontend v1 su http://localhost:5174
 │   ├── fase-2-specifiche-requisiti.md    # Fase 2: requisiti (MoSCoW), RNF, casi d'uso
 │   ├── fase-3-architettura-user-flow.md  # Fase 3: casi d'uso, user flow, architettura
 │   ├── fase-4-pianificazione.md          # Fase 4: WBS, sprint e roadmap MVP, rischi
+│   ├── cose-mancanti.md                  # cosa mancava rispetto alla Fase 2
+│   ├── verifica-requisiti-non-funzionali.md  # misure e prove dei requisiti non funzionali
+│   ├── checklist-gdpr.md                 # verifica di RNF-S04
 │   └── libretti/                         # libretti delle attività, uno per membro del team
 ├── presentazioni/
 │   ├── presentazione-v1.pptx             # prima versione
 │   └── presentazione-v2.pptx             # versione attuale, nuovo design
 ├── versione-corrente/                    # il sito attuale (si avvia dalla cartella principale)
 │   ├── frontend/                         # frontend v3: React + Vite + Leaflet
-│   │   └── src/
-│   │       ├── pages/                    # una pagina per schermata
-│   │       ├── components/               # mappa, moduli, finestre, icone…
-│   │       ├── data/api.js               # una funzione per ogni endpoint dell'API
-│   │       ├── i18n/                     # testi in italiano e inglese
-│   │       └── lib/                      # sessione, client HTTP, distanze, posizione
+│   │   ├── src/
+│   │   │   ├── pages/                    # una pagina per schermata
+│   │   │   ├── components/               # mappa, moduli, finestre, icone…
+│   │   │   ├── data/api.js               # una funzione per ogni endpoint dell'API
+│   │   │   ├── i18n/                     # testi in italiano e inglese, informativa privacy
+│   │   │   └── lib/                      # sessione, client HTTP, distanze, posizione
+│   │   ├── public/                       # icone, manifest e service worker della PWA
+│   │   └── strumenti/                    # generatore delle icone
 │   └── backend/                          # API REST: Node.js + Express
 │       └── src/
 │           ├── gateway/                  # token, ruoli, limiti, errori
 │           ├── moduli/                   # utenti, luoghi, contenuti, gioco
-│           ├── db/                       # connessione, migrazioni, pacchetti di dati iniziali
-│           ├── servizi/                  # e-mail, archivio e preparazione delle foto
+│           ├── db/                       # connessione, migrazioni, pacchetti di dati
+│           ├── servizi/                  # e-mail, foto, pulizia dei dati scaduti
+│           ├── strumenti/                # crea-amministratore, scarica-foto
 │           └── server.js                 # avvio
 ├── versioni-precedenti/                  # versioni passate del sito, conservate come riferimento
 │   ├── prototipo/                        # primo prototipo: solo frontend, dati in JSON
@@ -174,8 +189,10 @@ npm run dev:v1     # backend + frontend v1 su http://localhost:5174
 │   └── frontend-v2/                      # frontend v2, nuovo design (usa il backend corrente)
 ├── tests/
 │   ├── frontend/                         # test del frontend (Vitest)
-│   └── backend/                          # test delle API e dei dati (Vitest + Supertest)
-├── docker-compose.yml                    # avvio completo con PostgreSQL + PostGIS
+│   ├── backend/                          # test delle API e dei dati (Vitest + Supertest)
+│   └── prestazioni/                      # misure di prestazioni, accessibilità e carico
+├── infrastruttura/Caddyfile              # proxy HTTPS
+├── docker-compose.yml                    # avvio completo con PostgreSQL + PostGIS (e HTTPS)
 ├── Dockerfile
 ├── CONTRIBUTING.md                       # convenzioni del team (nomi, commit, documenti)
 └── README.md
