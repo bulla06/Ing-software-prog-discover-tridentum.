@@ -356,4 +356,6 @@ export default {
   'ricordo.scatto': 'Dove hai scattato la foto? (facoltativo)',
   'ricordo.scattoAiuto': 'Tocca la mappa nel punto da cui hai scattato: rende più preciso il gioco. Serve solo a “Dov’era?”.',
   'ricordo.togliScatto': 'Togli il punto',
+  'itinerario.passaDiQui': 'passa anche di qui',
+  'inquadra.altriVicini': 'Altri luoghi vicini',
 }

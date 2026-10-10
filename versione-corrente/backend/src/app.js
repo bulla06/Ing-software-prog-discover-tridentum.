@@ -3,6 +3,7 @@
 
 import { existsSync } from 'node:fs'
 import path from 'node:path'
+import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import helmet from 'helmet'
@@ -38,6 +39,10 @@ export function creaApp({ db, config, posta, archivio, registro = config.svilupp
       },
     }),
   )
+
+  // Risposte compresse (gzip): JavaScript, CSS e JSON pesano circa un terzo (RNF-P01, RNF-P02).
+  // Dietro il proxy HTTPS comprime già Caddy, che lascia passare le risposte già compresse.
+  app.use(compression())
 
   // Registro degli accessi all'API (Fase 3 §5.2)
   if (registro) {
@@ -78,7 +83,16 @@ export function creaApp({ db, config, posta, archivio, registro = config.svilupp
 
   // Frontend compilato (npm run build): il routing usa l'hash, basta index.html
   if (existsSync(path.join(config.cartellaFrontend, 'index.html'))) {
-    app.use(express.static(config.cartellaFrontend, { index: 'index.html', maxAge: '1h' }))
+    app.use(
+      express.static(config.cartellaFrontend, {
+        index: 'index.html',
+        maxAge: '1h',
+        // I file in assets/ hanno l'impronta nel nome: cambiano nome a ogni versione, si tengono un anno
+        setHeaders: (res, percorso) => {
+          if (percorso.includes(`${path.sep}assets${path.sep}`)) res.set('Cache-Control', 'public, max-age=31536000, immutable')
+        },
+      }),
+    )
   }
 
   app.use(gestoreErrori)

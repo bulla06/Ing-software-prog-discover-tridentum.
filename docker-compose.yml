@@ -38,6 +38,8 @@ services:
       EMAIL_PRIVACY: ${EMAIL_PRIVACY:-}
       DATI_DIMOSTRATIVI: ${DATI_DIMOSTRATIVI:-no}
       PROXY_FIDATI: ${PROXY_FIDATI:-0}
+      # Richieste al minuto per indirizzo IP (protezione dagli abusi); si alza solo per i test di carico
+      LIMITE_RICHIESTE: ${LIMITE_RICHIESTE:-600}
     ports:
       # Solo su questo computer quando c'è il proxy HTTPS (PORTA_APP=127.0.0.1:3000)
       - "${PORTA_APP:-3000}:3000"

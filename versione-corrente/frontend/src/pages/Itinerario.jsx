@@ -307,10 +307,14 @@ function FineItinerario({ itinerario, onRicomincia }) {
               <li key={it.id}>
                 <Link to={`/itinerari/${it.id}`} className="riga-link">
                   <Icona nome="itinerari" size={20} />
-                  <span>{it.titolo}</span>
-                  <small className="numero">
-                    {t('itinerari.durata', { n: it.durata_minuti })} · {t('itinerario.distaDaQui', { d: formattaDistanza(it.distanza, lingua) })}
-                  </small>
+                  <span className="riga-link__testo">
+                    <strong>{it.titolo}</strong>
+                    <small className="numero">
+                      {t('itinerari.durata', { n: it.durata_minuti })} ·{' '}
+                      {it.distanza < 50 ? t('itinerario.passaDiQui') : t('itinerario.distaDaQui', { d: formattaDistanza(it.distanza, lingua) })}
+                    </small>
+                  </span>
+                  <Icona nome="avanti" size={16} />
                 </Link>
               </li>
             ))}

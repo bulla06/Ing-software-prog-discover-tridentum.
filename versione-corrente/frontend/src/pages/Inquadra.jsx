@@ -130,15 +130,15 @@ export default function Inquadra() {
 
   return (
     <div className="inquadra">
-      <div className="inquadra__mirino" aria-hidden={fotocamera !== 'ok'}>
-        <video ref={video} autoPlay playsInline muted aria-label={t('inquadra.video')} />
+      <div className="inquadra__mirino">
+        <video ref={video} autoPlay playsInline muted aria-label={t('inquadra.video')} hidden={fotocamera !== 'ok'} />
         {fotocamera !== 'ok' && (
           <p className="inquadra__senza-fotocamera">
             <Icona nome="inquadra" size={36} />
             {fotocamera === 'attesa' ? t('inquadra.attesaFotocamera') : t('inquadra.senzaFotocamera')}
           </p>
         )}
-        <span className="inquadra__croce" aria-hidden="true" />
+        {fotocamera === 'ok' && <span className="inquadra__croce" aria-hidden="true" />}
         {bussola === 'ok' && direzione != null && (
           <span className="inquadra__bussola numero" aria-hidden="true">
             <Icona nome="direzione" size={14} />
@@ -177,7 +177,7 @@ export default function Inquadra() {
             </Link>
             {altri.length > 0 && (
               <>
-                <p className="etichetta-sezione">{t('inquadra.anche')}</p>
+                <p className="etichetta-sezione">{bussola === 'ok' ? t('inquadra.anche') : t('inquadra.altriVicini')}</p>
                 <ul className="elenco-semplice">
                   {altri.slice(0, ALTRI_IN_VISTA).map(({ poi, distanza }) => (
                     <li key={poi.id}>

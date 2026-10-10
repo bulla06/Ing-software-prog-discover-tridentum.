@@ -1,95 +1,34 @@
-import {
-  ArrowLeft,
-  ArrowSquareOut,
-  ArrowsOut,
-  Bank,
-  BookmarkSimple,
-  CalendarBlank,
-  Camera,
-  CaretLeft,
-  CaretRight,
-  Check,
-  Clock,
-  Compass,
-  Crosshair,
-  DownloadSimple,
-  Flag,
-  FlagCheckered,
-  ForkKnife,
-  Image,
-  Info,
-  ListBullets,
-  MagnifyingGlass,
-  MapPin,
-  MapTrifold,
-  MagicWand,
-  MaskHappy,
-  NavigationArrow,
-  PaintBrush,
-  Path,
-  PencilSimple,
-  PersonSimpleWalk,
-  Scan,
-  ShareNetwork,
-  ShieldCheck,
-  Target,
-  Translate,
-  Trophy,
-  UploadSimple,
-  UserCircle,
-  Warning,
-  WifiSlash,
-  X,
-} from '@phosphor-icons/react'
+import DISEGNI from './icone-svg.js'
 
-// Icone della libreria Phosphor: un'unica famiglia, stesso tratto ovunque.
-// I nomi italiani sono quelli usati dalle pagine della v1.
-export const ICONE = {
-  mappa: MapTrifold,
-  itinerari: Path,
-  scopri: Compass,
-  gioco: Target,
-  profilo: UserCircle,
-  cerca: MagnifyingGlass,
-  posizione: Crosshair,
-  luogo: MapPin,
-  elenco: ListBullets,
-  indietro: ArrowLeft,
-  precedente: CaretLeft,
-  avanti: CaretRight,
-  chiudi: X,
-  salva: BookmarkSimple,
-  esterno: ArrowSquareOut,
-  ricordo: Camera,
-  segnala: Flag,
-  calendario: CalendarBlank,
-  orologio: Clock,
-  scarica: DownloadSimple,
-  lingua: Translate,
-  info: Info,
-  piedi: PersonSimpleWalk,
-  record: Trophy,
-  foto: Image,
-  ingrandisci: ArrowsOut,
-  fatto: Check,
-  condividi: ShareNetwork,
-  offline: WifiSlash,
-  attenzione: Warning,
-  privacy: ShieldCheck,
-  modifica: PencilSimple,
-  carica: UploadSimple,
-  fine: FlagCheckered,
-  suMisura: MagicWand,
-  inquadra: Scan,
-  direzione: NavigationArrow,
-  // Categorie dei luoghi
-  storia: Bank,
-  arte: PaintBrush,
-  tradizioni: MaskHappy,
-  gastronomia: ForkKnife,
+// Icone della libreria Phosphor (https://phosphoricons.com): un'unica famiglia, stesso tratto ovunque.
+// I disegni stanno in icone-svg.js, generato da strumenti/genera-icone.mjs con i soli stili usati
+// (regular, bold, fill): pesano molto meno del pacchetto React completo (RNF-P01).
+// Per aggiungere un'icona: inserirla nell'elenco dello script e rigenerare il file.
+
+export const NOMI_ICONE = Object.keys(DISEGNI)
+
+const disegno = (nome, peso) => {
+  const icona = DISEGNI[nome] ?? DISEGNI.info
+  return icona[peso] ?? icona.regular
+}
+
+/** Markup SVG di un'icona, per l'HTML che non passa da React (i segnaposti della mappa) */
+export function svgIcona(nome, { size = 22, peso = 'regular' } = {}) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true" focusable="false">${disegno(nome, peso)}</svg>`
 }
 
 export default function Icona({ nome, size = 22, peso = 'regular', className = '' }) {
-  const Componente = ICONE[nome] ?? Info
-  return <Componente className={`icona ${className}`} size={size} weight={peso} aria-hidden="true" focusable="false" />
+  return (
+    <svg
+      className={`icona ${className}`}
+      width={size}
+      height={size}
+      viewBox="0 0 256 256"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+      // I disegni sono costanti del sito (icone-svg.js), mai dati degli utenti
+      dangerouslySetInnerHTML={{ __html: disegno(nome, peso) }}
+    />
+  )
 }

@@ -6,8 +6,6 @@
 {$DOMINIO:localhost} {
 	encode zstd gzip
 
-	# HSTS: il browser userà solo HTTPS per questo dominio per un anno
-	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
-
+	# L'header HSTS (solo HTTPS per un anno) lo aggiunge già il server dell'app (helmet)
 	reverse_proxy app:3000
 }

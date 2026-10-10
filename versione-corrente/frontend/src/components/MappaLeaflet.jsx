@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react'
-import { flushSync } from 'react-dom'
-import { createRoot } from 'react-dom/client'
 import L from '../lib/leaflet.js'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
-import { ICONE } from './Icona.jsx'
+import { svgIcona } from './Icona.jsx'
 
 // Sfondo: tile standard di OpenStreetMap (D-07), che non richiedono chiavi. Un filtro CSS
 // sui soli tile (classe "sfondo-mappa") li rende più sobri e nel tema scuro li inverte,
@@ -17,18 +15,9 @@ const ATTRIBUZIONE = '© <a href="https://www.openstreetmap.org/copyright">OpenS
 const ZOOM_ETICHETTE = 17
 const CATEGORIE = ['storia', 'arte', 'tradizioni', 'gastronomia']
 
-// I segnaposti di Leaflet sono HTML, non componenti React: l'SVG di ogni icona di categoria
-// si disegna una volta sola, al caricamento del modulo, e se ne copia il markup.
-function disegna(nome) {
-  const Componente = ICONE[nome]
-  const div = document.createElement('div')
-  const radice = createRoot(div)
-  flushSync(() => radice.render(<Componente size={16} weight="bold" aria-hidden="true" />))
-  const markup = div.innerHTML
-  radice.unmount()
-  return markup
-}
-const SVG_CATEGORIE = Object.fromEntries(CATEGORIE.map((n) => [n, disegna(n)]))
+// I segnaposti di Leaflet sono HTML, non componenti React: si usa direttamente il markup SVG
+// dell'icona di ogni categoria
+const SVG_CATEGORIE = Object.fromEntries(CATEGORIE.map((n) => [n, svgIcona(n, { size: 16, peso: 'bold' })]))
 
 // I nomi dei luoghi arrivano dal database (pannello di amministrazione): vanno "disinnescati"
 // prima di finire nell'HTML dei segnaposti

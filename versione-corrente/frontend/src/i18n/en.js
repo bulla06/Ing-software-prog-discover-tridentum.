@@ -356,4 +356,6 @@ export default {
   'ricordo.scatto': 'Where did you take the photo? (optional)',
   'ricordo.scattoAiuto': 'Tap the map where you took it from: it makes the game more precise. It is only used for “Where was it?”.',
   'ricordo.togliScatto': 'Remove the point',
+  'itinerario.passaDiQui': 'also passes here',
+  'inquadra.altriVicini': 'Other places nearby',
 }

@@ -1469,8 +1469,14 @@ ol {
   color: var(--accento);
 }
 
-.riga-link > span:not(.riga-link__categoria) {
+.riga-link > span:not(.riga-link__categoria, .riga-poi__punto) {
   flex: 1;
+}
+
+/* Titolo e dettagli su due righe */
+.riga-link__testo {
+  display: grid;
+  gap: 2px;
 }
 
 .riga-link small {
@@ -2772,15 +2778,18 @@ ol {
 
   .tabella tr {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 4px 8px;
     padding: 10px 12px;
     border-bottom: 1px solid var(--bordo);
   }
 
+  /* Gli indirizzi e-mail lunghi vanno a capo invece di allargare la pagina (RNF-U01) */
   .tabella td {
+    min-width: 0;
     padding: 0;
     border: 0;
+    overflow-wrap: anywhere;
   }
 
   .tabella td:first-child {
