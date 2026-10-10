@@ -2,7 +2,7 @@
 
 **Discover Tridentum — Trento Nascosta** · versione del 9 ottobre 2026
 
-Il primo frontend del sito completo: tutte le schermate della Fase 3 (mappa, schede, itinerari, Scopri, Dov'era?, accesso, ricordi, profilo, moderazione, amministrazione) con il primo design. È stato sostituito dal [frontend v2](../../versione-corrente/frontend), che ha lo stesso backend e le stesse pagine con un design nuovo (vedi il [README principale](../../README.md#il-design-della-versione-corrente)).
+Il primo frontend del sito completo: tutte le schermate della Fase 3 (mappa, schede, itinerari, Scopri, Dov'era?, accesso, ricordi, profilo, moderazione, amministrazione) con il primo design. È stato sostituito dal [frontend v2](../frontend-v2), che ha lo stesso backend e le stesse pagine con un design nuovo (vedi il [README principale](../../README.md#le-versioni-del-frontend)).
 
 Questa cartella è conservata come riferimento e non si modifica.
 

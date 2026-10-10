@@ -1,7 +1,11 @@
 # Avvio completo con un solo comando (RNF-PO03, Fase 3 §8):
-#   cp .env.esempio .env    (solo la prima volta, poi scegli JWT_SEGRETO)
-#   docker compose up --build
-# Il sito è su http://localhost:3000
+#   docker compose up --build            → sito su http://localhost:3000
+# Non serve preparare niente: al primo avvio il server crea da solo il segreto per i token e lo
+# conserva nel volume dei dati. Le impostazioni facoltative stanno in .env (vedi .env.esempio).
+#
+# In produzione, con HTTPS (RNF-S01) tramite il proxy Caddy e un dominio che punta al server:
+#   DOMINIO=tridentum.esempio.it docker compose --profile https up -d --build
+#   → sito su https://tridentum.esempio.it (il certificato lo ottiene Caddy, la porta 3000 resta chiusa)
 
 services:
   db:
@@ -26,17 +30,41 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: postgres://tridentum:${DB_PASSWORD:-tridentum}@db:5432/tridentum
-      JWT_SEGRETO: ${JWT_SEGRETO:?Imposta JWT_SEGRETO nel file .env (vedi .env.esempio)}
+      # Facoltativo: senza, il server ne crea uno casuale e lo conserva in /dati
+      JWT_SEGRETO: ${JWT_SEGRETO:-}
       INDIRIZZO_PUBBLICO: ${INDIRIZZO_PUBBLICO:-http://localhost:3000}
       SMTP_URL: ${SMTP_URL:-}
       EMAIL_MITTENTE: ${EMAIL_MITTENTE:-Discover Tridentum <noreply@discover-tridentum.local>}
+      EMAIL_PRIVACY: ${EMAIL_PRIVACY:-}
       DATI_DIMOSTRATIVI: ${DATI_DIMOSTRATIVI:-no}
       PROXY_FIDATI: ${PROXY_FIDATI:-0}
+      # Richieste al minuto per indirizzo IP (protezione dagli abusi); si alza solo per i test di carico
+      LIMITE_RICHIESTE: ${LIMITE_RICHIESTE:-600}
     ports:
-      - "3000:3000"
+      # Solo su questo computer quando c'è il proxy HTTPS (PORTA_APP=127.0.0.1:3000)
+      - "${PORTA_APP:-3000}:3000"
     volumes:
       - foto:/dati
+
+  # Proxy HTTPS (RNF-S01), attivo con --profile https
+  https:
+    image: caddy:2.8
+    profiles: ["https"]
+    depends_on:
+      - app
+    environment:
+      DOMINIO: ${DOMINIO:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./infrastruttura/Caddyfile:/etc/caddy/Caddyfile:ro
+      - certificati:/data
+      - configurazione-caddy:/config
 
 volumes:
   database:
   foto:
+  certificati:
+  configurazione-caddy:

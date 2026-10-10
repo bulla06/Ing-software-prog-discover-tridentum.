@@ -5,7 +5,15 @@
 
 let tokenAccesso = null
 let rinnovoInCorso = null
+let lingua = 'it'
 const ascoltatori = new Set()
+
+/** Lingua in cui chiedere i contenuti (RNF-U05): schede, itinerari e tradizioni tradotti dal server */
+export function impostaLingua(nuova) {
+  lingua = nuova
+}
+
+const conLingua = (percorso) => (lingua === 'it' ? percorso : `${percorso}${percorso.includes('?') ? '&' : '?'}lingua=${lingua}`)
 
 export class ErroreApi extends Error {
   constructor(stato, corpo = {}) {
@@ -40,7 +48,7 @@ async function invia(metodo, percorso, { corpo, formData, conToken = true } = {}
     body = JSON.stringify(corpo)
   }
   try {
-    return await fetch(`/api${percorso}`, { method: metodo, headers: intestazioni, body, credentials: 'same-origin' })
+    return await fetch(`/api${conLingua(percorso)}`, { method: metodo, headers: intestazioni, body, credentials: 'same-origin' })
   } catch {
     throw new ErroreApi(0, { messaggio: 'Server non raggiungibile' })
   }
@@ -91,5 +99,24 @@ export async function scaricaBlob(percorso) {
   if (!risposta.ok) throw new ErroreApi(risposta.status)
   return URL.createObjectURL(await risposta.blob())
 }
+
+/** Salva sul dispositivo un file dell'API che richiede l'accesso (es. "Scarica i miei dati") */
+export async function salvaFile(percorso, nomeFile) {
+  const url = await scaricaBlob(percorso)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = nomeFile
+  document.body.append(link)
+  link.click()
+  link.remove()
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}
+
+/**
+ * Vero se l'errore dipende dalla connessione e non dalla richiesta (UC-01 E2): rete assente,
+ * server irraggiungibile o proxy che non riesce a raggiungerlo.
+ */
+export const erroreDiConnessione = (errore) =>
+  errore?.codice === 'rete' || [502, 503, 504].includes(errore?.stato) || (typeof navigator !== 'undefined' && navigator.onLine === false)
 
 export const urlFoto = (id, formato = 'standard') => `/api/foto/${id}${formato === 'mini' ? '?formato=mini' : ''}`

@@ -3,18 +3,19 @@ import { Link, useSearchParams } from 'react-router-dom'
 import Avviso from '../components/Avviso.jsx'
 import Icona from '../components/Icona.jsx'
 import MappaLeaflet from '../components/MappaLeaflet.jsx'
-import { admin, getItinerari, getPoiById, getTradizioni } from '../data/api.js'
+import { URL_GEOJSON, URL_ITINERARI_JSON, admin, getPoiById } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { CENTRO_TRENTO } from '../lib/geo.js'
 import { urlFoto } from '../lib/http.js'
 import { eAmministratore, useSessione } from '../lib/sessione.jsx'
 
-// S-14 Amministrazione (UC-07, UC-09, RF-24, RF-25). Area interna del team: solo in italiano.
+// S-14 Amministrazione (UC-07, UC-09, RF-24, RF-25, RNF-PO04). Area interna del team: solo in italiano.
+// I testi delle schede si scrivono in italiano e, facoltativamente, in inglese (RNF-U05).
 
 const CATEGORIE = { storia: 'Storia', arte: 'Arte', tradizioni: 'Tradizioni', gastronomia: 'Gastronomia' }
 const TEMI_BASE = ['tridentum', 'principi-vescovi', 'concilio', 'trento-austriaca', 'guerra', 'adige', 'trento-contemporanea', 'gusto', 'arte']
 const MESI = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
-const SCHEDE = { luoghi: 'Luoghi', itinerari: 'Itinerari', tradizioni: 'Tradizioni', utenti: 'Utenti e ruoli' }
+const SCHEDE = { luoghi: 'Luoghi', itinerari: 'Itinerari', tradizioni: 'Tradizioni', utenti: 'Utenti e ruoli', dati: 'Esporta e importa' }
 
 export default function Amministrazione() {
   const { t } = useT()
@@ -40,7 +41,7 @@ export default function Amministrazione() {
         <Link className="collegamento" to="/profilo">← {t('profilo.titolo')}</Link>
         <h1>Amministrazione</h1>
       </header>
-      <div className="schede-tab" role="tablist">
+      <div className="schede-tab schede-tab--a-capo" role="tablist">
         {Object.entries(SCHEDE).map(([chiave, nome]) => (
           <button key={chiave} type="button" role="tab" aria-selected={scheda === chiave} className="schede-tab__voce" onClick={() => setParams({ scheda: chiave }, { replace: true })}>
             {nome}
@@ -51,6 +52,7 @@ export default function Amministrazione() {
       {scheda === 'itinerari' && <GestioneItinerari avvisa={setAvviso} />}
       {scheda === 'tradizioni' && <GestioneTradizioni avvisa={setAvviso} />}
       {scheda === 'utenti' && <GestioneUtenti avvisa={setAvviso} />}
+      {scheda === 'dati' && <GestioneDati avvisa={setAvviso} />}
       <Avviso testo={avviso} onChiudi={chiudiAvviso} durata={5000} />
     </div>
   )
@@ -81,6 +83,42 @@ function CampoTesto({ etichetta, valore, onCambia, errore, multilinea, aiuto, ..
     </label>
   )
 }
+
+/**
+ * Testi in inglese (RNF-U05), facoltativi: un campo vuoto nel sito inglese mostra il testo italiano.
+ * `campi`: [{ campo, etichetta, multilinea }]; `valori` e `onCambia` lavorano su { campo: testo }.
+ */
+function Traduzioni({ campi, valori, onCambia }) {
+  const compilati = campi.filter(({ campo }) => valori?.[campo]).length
+  return (
+    <details className="traduzioni" open={compilati > 0}>
+      <summary>
+        Testi in inglese <span className="nota">({compilati} di {campi.length} compilati)</span>
+      </summary>
+      <p className="campo__aiuto">I campi vuoti nel sito in inglese mostrano il testo italiano.</p>
+      {campi.map(({ campo, etichetta, multilinea }) => (
+        <CampoTesto
+          key={campo}
+          etichetta={`${etichetta} (EN)`}
+          valore={valori?.[campo] ?? ''}
+          onCambia={(v) => onCambia({ ...valori, [campo]: v })}
+          multilinea={multilinea}
+          rows={multilinea ? 6 : undefined}
+          lang="en"
+        />
+      ))}
+    </details>
+  )
+}
+
+/** Traduzioni dal formato del modulo (descrizione come testo unico) a quello dell'API */
+const traduzioniPerApi = (en = {}, paragrafi = []) => ({
+  en: Object.fromEntries(
+    Object.entries(en).map(([campo, valore]) =>
+      paragrafi.includes(campo) ? [campo, valore.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)] : [campo, valore.trim()],
+    ),
+  ),
+})
 
 /** Elenco ordinato di luoghi (tappe di un itinerario, luoghi di una tradizione) */
 function SceltaLuoghi({ luoghi, scelti, onCambia, ordinabile, errore }) {
@@ -150,6 +188,7 @@ async function salvaConConferma(salva, avvisa) {
 const POI_VUOTO = {
   nome: '', categoria: 'storia', temi: [], posizione: null, indirizzo: '', epoca: '', sintesi: '', descrizione: '',
   affresco_autore: '', affresco_epoca: '', piatto_consigliato: '', parole_chiave: '', fonti: [{ titolo: '', url: '' }],
+  en: {},
 }
 
 function GestioneLuoghi({ avvisa }) {
@@ -234,6 +273,7 @@ const daPoi = (l) => ({
   affresco_autore: l.affresco_autore ?? '',
   affresco_epoca: l.affresco_epoca ?? '',
   piatto_consigliato: l.piatto_consigliato ?? '',
+  en: { ...l.traduzioni?.en, descrizione: l.traduzioni?.en?.descrizione?.join('\n\n') ?? '' },
 })
 
 function ModuloPoi({ iniziale, tutti, onAnnulla, onSalvato }) {
@@ -254,12 +294,14 @@ function ModuloPoi({ iniziale, tutti, onAnnulla, onSalvato }) {
     e.preventDefault()
     setOccupato(true)
     setErrori({})
+    const { en, ...resto } = d
     const dati = {
-      ...d,
+      ...resto,
       posizione: d.posizione,
       descrizione: d.descrizione.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean),
       parole_chiave: d.parole_chiave.split(',').map((p) => p.trim()).filter(Boolean),
       fonti: d.fonti.filter((f) => f.titolo.trim() || f.url.trim()),
+      traduzioni: traduzioniPerApi(en, ['descrizione']),
     }
     try {
       await salvaConConferma((conferma) => (iniziale.id ? admin.modificaPoi(iniziale.id, dati, conferma) : admin.creaPoi(dati, conferma)))
@@ -331,6 +373,21 @@ function ModuloPoi({ iniziale, tutti, onAnnulla, onSalvato }) {
         <CampoTesto etichetta="Piatto consigliato" valore={d.piatto_consigliato} onCambia={imposta('piatto_consigliato')} />
       )}
       <CampoTesto etichetta="Parole chiave per la ricerca" aiuto="Separate da virgole" valore={d.parole_chiave} onCambia={imposta('parole_chiave')} />
+
+      <Traduzioni
+        valori={d.en}
+        onCambia={imposta('en')}
+        campi={[
+          { campo: 'nome', etichetta: 'Nome' },
+          { campo: 'sintesi', etichetta: 'Sintesi' },
+          { campo: 'descrizione', etichetta: 'Storia', multilinea: true },
+          { campo: 'epoca', etichetta: 'Epoca' },
+          ...(d.categoria === 'arte'
+            ? [{ campo: 'affresco_autore', etichetta: "Autore dell'affresco" }, { campo: 'affresco_epoca', etichetta: "Epoca dell'affresco" }]
+            : []),
+          ...(d.categoria === 'gastronomia' ? [{ campo: 'piatto_consigliato', etichetta: 'Piatto consigliato' }] : []),
+        ]}
+      />
 
       <fieldset className={`campo ${erroreCampo(errori, 'fonti') ? 'campo--errore' : ''}`}>
         <legend className="campo__etichetta">Fonti * (almeno una, RNF-V01)</legend>
@@ -446,7 +503,7 @@ function GestioneItinerari({ avvisa }) {
   const [luoghi, setLuoghi] = useState([])
   const [modifica, setModifica] = useState(null)
 
-  const carica = useCallback(() => getItinerari().then(setItinerari), [])
+  const carica = useCallback(() => admin.getItinerari().then(setItinerari), [])
   useEffect(() => {
     carica()
     admin.getPoi().then(setLuoghi)
@@ -463,7 +520,10 @@ function GestioneItinerari({ avvisa }) {
       <ModuloGenerico
         titolo={modifica.id ? `Modifica "${modifica.dati.titolo}"` : 'Nuovo itinerario'}
         iniziale={modifica.dati}
-        salva={(dati) => (modifica.id ? admin.modificaItinerario(modifica.id, dati) : admin.creaItinerario(dati))}
+        salva={({ en, ...dati }) => {
+          const corpo = { ...dati, traduzioni: traduzioniPerApi(en) }
+          return modifica.id ? admin.modificaItinerario(modifica.id, corpo) : admin.creaItinerario(corpo)
+        }}
         onAnnulla={() => setModifica(null)}
         onSalvato={() => {
           avvisa('Itinerario salvato')
@@ -485,7 +545,24 @@ function GestioneItinerari({ avvisa }) {
             </div>
             <CampoTesto etichetta="Descrizione" valore={d.descrizione} onCambia={imposta('descrizione')} multilinea rows={3} />
             <span className="campo__etichetta">Tappe * (in ordine)</span>
+            {d.tappe_rimosse?.length > 0 && (
+              <p className="messaggio messaggio--attenzione">
+                <Icona nome="attenzione" size={18} />
+                <span>
+                  Luoghi eliminati, che il sito salta: {d.tappe_rimosse.map((r) => r.nome).join(', ')}. Salvando l'itinerario spariscono
+                  anche da qui: se serve, sostituiscili con un altro luogo.
+                </span>
+              </p>
+            )}
             <SceltaLuoghi luoghi={luoghi} scelti={d.tappe} onCambia={imposta('tappe')} ordinabile errore={erroreCampo(errori, 'tappe')} />
+            <Traduzioni
+              valori={d.en}
+              onCambia={imposta('en')}
+              campi={[
+                { campo: 'titolo', etichetta: 'Titolo' },
+                { campo: 'descrizione', etichetta: 'Descrizione', multilinea: true },
+              ]}
+            />
           </>
         )}
       </ModuloGenerico>
@@ -495,7 +572,7 @@ function GestioneItinerari({ avvisa }) {
   return (
     <section>
       <div className="barra-strumenti">
-        <button type="button" className="pulsante pulsante--primario" onClick={() => setModifica({ dati: { titolo: '', tema: 'principi-vescovi', durata_minuti: 60, descrizione: '', tappe: [] } })}>
+        <button type="button" className="pulsante pulsante--primario" onClick={() => setModifica({ dati: { titolo: '', tema: 'principi-vescovi', durata_minuti: 60, descrizione: '', tappe: [], en: {} } })}>
           + Nuovo itinerario
         </button>
       </div>
@@ -506,9 +583,12 @@ function GestioneItinerari({ avvisa }) {
             <tr key={it.id}>
               <td><Link to={`/itinerari/${it.id}`}>{it.titolo}</Link></td>
               <td>{it.durata_minuti} min</td>
-              <td>{it.tappe.length}</td>
+              <td>
+                {it.tappe.length}
+                {it.tappe_rimosse.length > 0 && <span className="stato stato--rifiutato etichetta-tabella">{it.tappe_rimosse.length} rimosse</span>}
+              </td>
               <td className="tabella__azioni">
-                <button type="button" className="pulsante-mini" onClick={() => setModifica({ id: it.id, dati: { ...it, tappe: it.tappe.map((p) => p.id) } })}>Modifica</button>
+                <button type="button" className="pulsante-mini" onClick={() => setModifica({ id: it.id, dati: { ...it, tappe: it.tappe.map((p) => p.id), en: it.traduzioni?.en ?? {} } })}>Modifica</button>
                 <button type="button" className="pulsante-mini pulsante-mini--pericolo" onClick={() => elimina(it)}>Elimina</button>
               </td>
             </tr>
@@ -526,7 +606,7 @@ function GestioneTradizioni({ avvisa }) {
   const [luoghi, setLuoghi] = useState([])
   const [modifica, setModifica] = useState(null)
 
-  const carica = useCallback(() => getTradizioni().then(setTradizioni), [])
+  const carica = useCallback(() => admin.getTradizioni().then(setTradizioni), [])
   useEffect(() => {
     carica()
     admin.getPoi().then(setLuoghi)
@@ -543,7 +623,10 @@ function GestioneTradizioni({ avvisa }) {
       <ModuloGenerico
         titolo={modifica.id ? `Modifica "${modifica.dati.nome}"` : 'Nuova tradizione'}
         iniziale={modifica.dati}
-        salva={(dati) => (modifica.id ? admin.modificaTradizione(modifica.id, dati) : admin.creaTradizione(dati))}
+        salva={({ en, ...dati }) => {
+          const corpo = { ...dati, traduzioni: traduzioniPerApi(en) }
+          return modifica.id ? admin.modificaTradizione(modifica.id, corpo) : admin.creaTradizione(corpo)
+        }}
         onAnnulla={() => setModifica(null)}
         onSalvato={() => {
           avvisa('Tradizione salvata')
@@ -569,6 +652,15 @@ function GestioneTradizioni({ avvisa }) {
             <CampoTesto etichetta="Descrizione" valore={d.descrizione} onCambia={imposta('descrizione')} multilinea rows={4} />
             <span className="campo__etichetta">Luoghi collegati</span>
             <SceltaLuoghi luoghi={luoghi} scelti={d.luoghi} onCambia={imposta('luoghi')} />
+            <Traduzioni
+              valori={d.en}
+              onCambia={imposta('en')}
+              campi={[
+                { campo: 'nome', etichetta: 'Nome' },
+                { campo: 'periodo', etichetta: 'Periodo' },
+                { campo: 'descrizione', etichetta: 'Descrizione', multilinea: true },
+              ]}
+            />
           </>
         )}
       </ModuloGenerico>
@@ -578,7 +670,7 @@ function GestioneTradizioni({ avvisa }) {
   return (
     <section>
       <div className="barra-strumenti">
-        <button type="button" className="pulsante pulsante--primario" onClick={() => setModifica({ dati: { nome: '', periodo: '', mesi: [], descrizione: '', luoghi: [] } })}>
+        <button type="button" className="pulsante pulsante--primario" onClick={() => setModifica({ dati: { nome: '', periodo: '', mesi: [], descrizione: '', luoghi: [], en: {} } })}>
           + Nuova tradizione
         </button>
       </div>
@@ -590,7 +682,7 @@ function GestioneTradizioni({ avvisa }) {
               <td>{tr.nome}</td>
               <td>{tr.periodo}</td>
               <td className="tabella__azioni">
-                <button type="button" className="pulsante-mini" onClick={() => setModifica({ id: tr.id, dati: { ...tr, luoghi: tr.luoghi.map((l) => l.id) } })}>Modifica</button>
+                <button type="button" className="pulsante-mini" onClick={() => setModifica({ id: tr.id, dati: { ...tr, luoghi: tr.luoghi.map((l) => l.id), en: tr.traduzioni?.en ?? {} } })}>Modifica</button>
                 <button type="button" className="pulsante-mini pulsante-mini--pericolo" onClick={() => elimina(tr)}>Elimina</button>
               </td>
             </tr>
@@ -677,6 +769,91 @@ function GestioneUtenti({ avvisa }) {
         </tbody>
       </table>
       <p className="nota"><Icona nome="info" size={16} />Il nuovo ruolo vale dalla richiesta successiva dell'utente; l'interessato riceve un'e-mail.</p>
+    </section>
+  )
+}
+
+// ---------- Esporta e importa (RNF-PO04) ----------
+
+const IMPORTAZIONI = [
+  {
+    chiave: 'poi',
+    titolo: 'Luoghi',
+    formato: 'GeoJSON',
+    esporta: URL_GEOJSON,
+    nomeFile: 'discover-tridentum-luoghi.geojson',
+    accetta: '.geojson,.json,application/geo+json,application/json',
+    importa: admin.importaPoi,
+  },
+  {
+    chiave: 'itinerari',
+    titolo: 'Itinerari',
+    formato: 'JSON',
+    esporta: URL_ITINERARI_JSON,
+    nomeFile: 'discover-tridentum-itinerari.json',
+    accetta: '.json,application/json',
+    importa: admin.importaItinerari,
+  },
+]
+
+function GestioneDati({ avvisa }) {
+  const [esiti, setEsiti] = useState({})
+
+  const importa = async (voce, file) => {
+    setEsiti((e) => ({ ...e, [voce.chiave]: { stato: 'invio' } }))
+    try {
+      const contenuto = JSON.parse(await file.text())
+      const { creati, aggiornati } = await voce.importa(contenuto)
+      setEsiti((e) => ({ ...e, [voce.chiave]: { stato: 'ok', testo: `${voce.titolo}: ${creati} creati, ${aggiornati} aggiornati.` } }))
+      avvisa('Importazione completata')
+    } catch (err) {
+      const testo = err instanceof SyntaxError ? 'Il file non è un JSON valido.' : err.message
+      setEsiti((e) => ({ ...e, [voce.chiave]: { stato: 'errore', testo: `Niente è stato importato. ${testo}` } }))
+    }
+  }
+
+  return (
+    <section className="gestione-dati">
+      <p>
+        Luoghi e itinerari si scaricano in formati aperti e si possono reimportare, anche dopo averli modificati: una voce con un
+        identificatore già presente viene aggiornata, le altre vengono create. Se una voce non è valida non si importa niente.
+      </p>
+      <ul className="elenco-schede">
+        {IMPORTAZIONI.map((voce) => {
+          const esito = esiti[voce.chiave]
+          return (
+            <li key={voce.chiave} className="riquadro">
+              <h2>{voce.titolo} <span className="nota">({voce.formato})</span></h2>
+              <div className="riga-pulsanti">
+                <a className="pulsante" href={voce.esporta} download={voce.nomeFile}>
+                  <Icona nome="scarica" size={18} />
+                  Esporta
+                </a>
+                <label className="pulsante">
+                  <Icona nome="carica" size={18} />
+                  Importa un file…
+                  <input
+                    type="file"
+                    accept={voce.accetta}
+                    className="nascosto"
+                    disabled={esito?.stato === 'invio'}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      e.target.value = ''
+                      if (file) importa(voce, file)
+                    }}
+                  />
+                </label>
+              </div>
+              {esito?.testo && (
+                <p className={`messaggio messaggio--${esito.stato === 'ok' ? 'ok' : 'errore'}`} role={esito.stato === 'ok' ? 'status' : 'alert'}>
+                  {esito.testo}
+                </p>
+              )}
+            </li>
+          )
+        })}
+      </ul>
     </section>
   )
 }

@@ -11,8 +11,10 @@ Regole condivise per mantenere il repository ordinato e i documenti coerenti tra
 | `presentazioni/` | Presentazioni: `presentazione-vN.pptx` |
 | `versione-corrente/frontend/` | Il sito (React + Vite) |
 | `versione-corrente/backend/` | L'API REST e il database (Node.js + Express, PostgreSQL + PostGIS) |
-| `versioni-precedenti/` | Copie delle versioni passate del sito (prototipo, frontend v1), da non modificare |
+| `versioni-precedenti/` | Copie delle versioni passate del sito (prototipo, frontend v1, frontend v2), da non modificare |
 | `tests/frontend/`, `tests/backend/` | I test automatici, separati dal codice |
+| `tests/prestazioni/` | Gli script per le misure di prestazioni, accessibilità e carico (non fanno parte di `npm test`) |
+| `infrastruttura/` | Configurazione del proxy HTTPS usato da `docker-compose.yml` |
 
 ## Nomi dei file
 
@@ -55,7 +57,12 @@ Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fa
 - Avvio in sviluppo dalla cartella principale: `npm install`, poi `npm run dev` (istruzioni complete nel README).
 - Nomi di file, variabili, funzioni e commenti in italiano, come nel resto del codice.
 - **Schema del database:** ogni modifica è un nuovo file numerato in `versione-corrente/backend/src/db/migrazioni/` (es. `002_aggiungi_orari.sql`). I file già presenti non si modificano: sono già stati applicati ai database degli altri.
-- **Dati iniziali:** i luoghi curati dal team stanno in pacchetti numerati, `versione-corrente/backend/src/db/dati/NNN-nome/` (`luoghi.json`, `itinerari.json`, `tradizioni.json`, `piatti.json`, `gioco.json`, `foto.json` con i file in `foto/`). Ogni pacchetto si carica una sola volta, anche nei database già esistenti; per aggiungere dati si crea un pacchetto nuovo, quelli già caricati non si modificano. Ogni luogo ha almeno una fonte (RNF-V01) e ogni foto indica autore, licenza e fonte. Per correggere un database già creato si usa il pannello di amministrazione.
+- **Dati iniziali:** i luoghi curati dal team stanno in pacchetti numerati, `versione-corrente/backend/src/db/dati/NNN-nome/` (`luoghi.json`, `itinerari.json`, `tradizioni.json`, `piatti.json`, `foto.json` con i file in `foto/`). Ogni pacchetto si carica una sola volta, anche nei database già esistenti; per aggiungere dati si crea un pacchetto nuovo, quelli già caricati non si modificano. Ogni luogo ha almeno una fonte (RNF-V01) e ogni foto indica autore, licenza e fonte.
+  - Le voci nuove hanno anche i testi in inglese (`"traduzioni": { "en": { … } }`, RNF-U05).
+  - Per correggere voci di pacchetti già caricati: `correzioni.json` (luoghi e tradizioni) e `traduzioni.json` in un pacchetto nuovo, come [`002-correzioni-e-traduzioni`](versione-corrente/backend/src/db/dati/002-correzioni-e-traduzioni). Un luogo già modificato da un amministratore non viene toccato.
+  - Le foto da Wikimedia Commons si elencano in `dati/foto-da-scaricare.json` e si scaricano con `npm run scarica-foto`, che crea il pacchetto con i crediti.
+  - I livelli di "Dov'era?" stanno in `dati/gioco.json`, con le foto in `dati/foto-gioco/`.
+- **Icone:** si usano solo quelle di `Icona.jsx`. Per aggiungerne una si inserisce il nome nell'elenco di `versione-corrente/frontend/strumenti/genera-icone.mjs` e si esegue `npm run genera-icone -w versione-corrente/frontend`.
 - Ogni endpoint nuovo ha almeno un test in `tests/backend/`; prima di aprire una pull request `npm test` deve passare.
 - Mai segreti nel repository: si usano le variabili d'ambiente (vedi `.env.esempio`).
 

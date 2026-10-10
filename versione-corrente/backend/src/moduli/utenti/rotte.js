@@ -13,6 +13,7 @@ import {
 } from '../../gateway/autenticazione.js'
 import { ErroreHttp, nonTrovato, valida } from '../../gateway/errori.js'
 import { hashPassword, verificaPassword } from '../../servizi/password.js'
+import { linguaRichiesta, testo } from '../lingua.js'
 
 const DURATA_CONFERMA_MS = 24 * 60 * 60 * 1000
 const DURATA_REIMPOSTA_MS = 60 * 60 * 1000
@@ -26,8 +27,10 @@ const password = z
   .regex(/[A-Za-z]/, 'La password deve contenere almeno una lettera')
   .regex(/[0-9]/, 'La password deve contenere almeno un numero')
 
+const nomeVisualizzato = z.string().trim().min(2, 'Il nome deve avere almeno 2 caratteri').max(40, 'Massimo 40 caratteri')
+
 const schemaRegistrazione = z.object({
-  nome: z.string().trim().min(2, 'Il nome deve avere almeno 2 caratteri').max(40, 'Massimo 40 caratteri'),
+  nome: nomeVisualizzato,
   email,
   password,
   privacy: z.literal(true, { error: 'Per registrarti devi accettare l\'informativa privacy' }),
@@ -228,8 +231,9 @@ export function rotteUtenti({ db, config, posta, limiti, archivio }) {
         ORDER BY c.creato_il DESC`,
       [req.utente.id],
     )
+    const lingua = linguaRichiesta(req)
     const preferiti = await db.query(
-      `SELECT f.tipo, f.riferimento, coalesce(p.nome, i.titolo) AS nome, p.categoria
+      `SELECT f.tipo, f.riferimento, coalesce(${testo(lingua, 'p', 'nome')}, ${testo(lingua, 'i', 'titolo')}) AS nome, p.categoria
          FROM preferiti f
          LEFT JOIN poi p ON f.tipo = 'poi' AND p.id = f.riferimento
          LEFT JOIN itinerari i ON f.tipo = 'itinerario' AND i.id = f.riferimento
@@ -252,6 +256,47 @@ export function rotteUtenti({ db, config, posta, limiti, archivio }) {
         creato_il: c.creato_il,
       })),
       preferiti,
+    })
+  })
+
+  // Diritto di rettifica (RNF-S04): il nome visualizzato si cambia dal profilo
+  router.patch('/me', richiediAccesso, async (req, res) => {
+    const { nome } = valida(z.object({ nome: nomeVisualizzato }), req.body)
+    const [utente] = await db.query('UPDATE utenti SET nome_visualizzato = $2 WHERE id = $1 RETURNING *', [req.utente.id, nome])
+    if (!utente) throw new ErroreHttp(401, 'accesso_richiesto', 'Account non più esistente')
+    res.json({ utente: datiPubblici(utente) })
+  })
+
+  /**
+   * Diritto di accesso e portabilità (RNF-S04, GDPR artt. 15 e 20): tutti i dati personali
+   * dell'utente in un file JSON. Le foto si scaricano dagli indirizzi indicati.
+   */
+  router.get('/me/dati', richiediAccesso, async (req, res) => {
+    const [utente] = await db.query(
+      'SELECT nome_visualizzato, email, ruolo, email_confermata, consenso_privacy_il, creato_il FROM utenti WHERE id = $1',
+      [req.utente.id],
+    )
+    if (!utente) throw new ErroreHttp(401, 'accesso_richiesto', 'Account non più esistente')
+    const [contributi, preferiti, partite] = await Promise.all([
+      db.query(
+        `SELECT c.id, c.poi, c.testo, c.anno, c.licenza, c.stato, c.motivazione, c.consenso_gioco, c.livello_gioco,
+                CASE WHEN c.posizione_foto IS NULL THEN NULL
+                     ELSE json_build_array(ST_Y(c.posizione_foto::geometry), ST_X(c.posizione_foto::geometry)) END AS posizione_foto,
+                CASE WHEN c.foto IS NULL THEN NULL ELSE '/api/foto/' || c.foto END AS foto,
+                c.creato_il, c.moderato_il
+           FROM contenuti c WHERE c.autore = $1 ORDER BY c.creato_il`,
+        [req.utente.id],
+      ),
+      db.query('SELECT tipo, riferimento, creato_il FROM preferiti WHERE utente = $1 ORDER BY creato_il', [req.utente.id]),
+      db.query('SELECT punteggio, giocata_il FROM partite WHERE utente = $1 ORDER BY giocata_il', [req.utente.id]),
+    ])
+    res.set('Content-Disposition', 'attachment; filename="discover-tridentum-miei-dati.json"')
+    res.json({
+      esportato_il: new Date().toISOString(),
+      account: utente,
+      contributi,
+      preferiti,
+      partite,
     })
   })
 
@@ -296,17 +341,16 @@ export function rotteUtenti({ db, config, posta, limiti, archivio }) {
     }
 
     const fotoDaEliminare = await db.transazione(async (tx) => {
-      let foto = []
-      if (dati.contributi === 'rimuovi') {
-        foto = await tx.query(
-          `DELETE FROM contenuti c WHERE c.autore = $1 RETURNING c.foto AS id,
-             (SELECT area FROM foto WHERE id = c.foto) AS area`,
-          [utente.id],
-        )
-        const ids = foto.map((f) => f.id).filter(Boolean)
-        if (ids.length) await tx.query('DELETE FROM foto WHERE id = ANY($1::uuid[])', [ids])
-      }
-      // Con "anonimi" i contributi restano e l'autore diventa NULL (ON DELETE SET NULL)
+      // La scelta riguarda solo i ricordi già pubblicati (UC-08, passo 4): quelli in attesa,
+      // rifiutati o rimossi si cancellano sempre, con le loro foto, e lasciano la coda di moderazione.
+      // Con "anonimi" i ricordi pubblicati restano e l'autore diventa NULL (ON DELETE SET NULL).
+      const foto = await tx.query(
+        `DELETE FROM contenuti c WHERE c.autore = $1 ${dati.contributi === 'anonimi' ? "AND c.stato <> 'approvato'" : ''}
+         RETURNING c.foto AS id, (SELECT area FROM foto WHERE id = c.foto) AS area`,
+        [utente.id],
+      )
+      const ids = foto.map((f) => f.id).filter(Boolean)
+      if (ids.length) await tx.query('DELETE FROM foto WHERE id = ANY($1::uuid[])', [ids])
       await tx.query('DELETE FROM utenti WHERE id = $1', [utente.id])
       return foto.filter((f) => f.id)
     })
@@ -320,7 +364,7 @@ export function rotteUtenti({ db, config, posta, limiti, archivio }) {
         'come richiesto abbiamo eliminato il tuo account e i tuoi dati personali. ' +
         (dati.contributi === 'rimuovi'
           ? 'Abbiamo rimosso anche i tuoi contributi.'
-          : 'I contributi già pubblicati restano visibili in forma anonima.'),
+          : 'I contributi già pubblicati restano visibili in forma anonima; quelli non pubblicati sono stati eliminati.'),
     })
     cancellaCookie(res)
     res.status(204).end()

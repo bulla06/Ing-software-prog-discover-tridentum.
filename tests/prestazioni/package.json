@@ -1,0 +1,17 @@
+{
+  "name": "discover-tridentum-misure",
+  "private": true,
+  "description": "Misure di prestazioni, accessibilità e carico (RNF-U04, RNF-P01, RNF-P02, RNF-P04): vedi README.md",
+  "type": "module",
+  "scripts": {
+    "carico": "node carico.mjs",
+    "tempi": "node tempi.mjs",
+    "lighthouse": "node lighthouse.mjs"
+  },
+  "devDependencies": {
+    "autocannon": "^8.0.0",
+    "lighthouse": "^12.8.2",
+    "playwright": "^1.55.1",
+    "puppeteer-core": "^23.11.1"
+  }
+}

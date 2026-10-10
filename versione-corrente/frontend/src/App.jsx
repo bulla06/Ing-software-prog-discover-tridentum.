@@ -6,21 +6,24 @@ import { leggi, scrivi } from './lib/memoria.js'
 import { PosizioneProvider } from './lib/posizione.jsx'
 import { SessioneProvider } from './lib/sessione.jsx'
 import Benvenuto from './pages/Benvenuto.jsx'
-import Gioco from './pages/Gioco.jsx'
-import Itinerari from './pages/Itinerari.jsx'
-import Itinerario from './pages/Itinerario.jsx'
 import Mappa from './pages/Mappa.jsx'
-import Profilo from './pages/Profilo.jsx'
-import Scheda from './pages/Scheda.jsx'
-import Scopri from './pages/Scopri.jsx'
 
-// Le pagine meno usate (account, invio dei ricordi, aree del team) si scaricano solo quando servono:
-// chi visita il sito scarica meno codice all'apertura (RNF-P01)
+// All'apertura servono solo il benvenuto e la mappa: le altre pagine si scaricano quando servono,
+// così il primo caricamento è più leggero (RNF-P01). La scheda si scarica in anticipo appena la
+// mappa ha i luoghi (vedi Mappa.jsx), perché deve aprirsi in fretta dal tocco (RNF-P02).
+const Scheda = lazy(() => import('./pages/Scheda.jsx'))
+const Gioco = lazy(() => import('./pages/Gioco.jsx'))
+const Itinerari = lazy(() => import('./pages/Itinerari.jsx'))
+const Itinerario = lazy(() => import('./pages/Itinerario.jsx'))
+const Profilo = lazy(() => import('./pages/Profilo.jsx'))
+const Scopri = lazy(() => import('./pages/Scopri.jsx'))
 const Accesso = lazy(() => import('./pages/Accesso.jsx'))
 const AggiungiRicordo = lazy(() => import('./pages/AggiungiRicordo.jsx'))
 const Conferma = lazy(() => import('./pages/Conferma.jsx'))
 const PostaDiProva = lazy(() => import('./pages/PostaDiProva.jsx'))
 const Reimposta = lazy(() => import('./pages/Reimposta.jsx'))
+const Informativa = lazy(() => import('./pages/Informativa.jsx'))
+const Inquadra = lazy(() => import('./pages/Inquadra.jsx'))
 const Amministrazione = lazy(() => import('./pages/Amministrazione.jsx'))
 const Moderazione = lazy(() => import('./pages/Moderazione.jsx'))
 
@@ -29,7 +32,7 @@ const Moderazione = lazy(() => import('./pages/Moderazione.jsx'))
 export default function App() {
   const [benvenutoVisto, setBenvenutoVisto] = useState(
     // Chi arriva da un link nelle e-mail non deve passare dal benvenuto
-    () => leggi('benvenuto-visto', false) || /^#\/(conferma|reimposta)/.test(window.location.hash),
+    () => leggi('benvenuto-visto', false) || /^#\/(conferma|reimposta|privacy)/.test(window.location.hash),
   )
 
   const chiudiBenvenuto = () => {
@@ -93,6 +96,8 @@ function Contenuto({ onRivediBenvenuto }) {
           <Route path="/accesso" element={<Accesso />} />
           <Route path="/conferma" element={<Conferma />} />
           <Route path="/reimposta" element={<Reimposta />} />
+          <Route path="/privacy" element={<Informativa />} />
+          <Route path="/inquadra" element={<Inquadra />} />
           <Route path="/moderazione" element={<Moderazione />} />
           <Route path="/amministrazione" element={<Amministrazione />} />
           <Route path="/dev/posta" element={<PostaDiProva />} />

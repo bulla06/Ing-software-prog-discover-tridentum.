@@ -166,10 +166,14 @@ export default function Accesso() {
 
         {scheda === 'registrati' && (
           <div className={`campo ${errori.privacy ? 'campo--errore' : ''}`}>
-            <details className="informativa">
-              <summary>{t('accesso.informativa')}</summary>
+            <div className="informativa">
               <p>{t('accesso.informativaTesto')}</p>
-            </details>
+              {/* In una nuova scheda: chi la legge non perde quello che ha scritto nel modulo */}
+              <a className="collegamento" href="#/privacy" target="_blank" rel="noopener">
+                <Icona nome="privacy" size={16} />
+                {t('accesso.informativa')}
+              </a>
+            </div>
             <label className="scelta">
               <input type="checkbox" checked={campi.privacy} onChange={cambia('privacy')} aria-invalid={errori.privacy ? true : undefined} />
               <span>{t('accesso.privacy')}</span>

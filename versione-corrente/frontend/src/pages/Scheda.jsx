@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import Avviso from '../components/Avviso.jsx'
 import Copertina from '../components/Copertina.jsx'
 import CreditiFoto from '../components/CreditiFoto.jsx'
+import ErroreCaricamento from '../components/ErroreCaricamento.jsx'
 import Finestra from '../components/Finestra.jsx'
 import Icona from '../components/Icona.jsx'
 import ModuloSegnalazione from '../components/ModuloSegnalazione.jsx'
@@ -31,6 +32,8 @@ export default function Scheda() {
   const largo = useSchermoLargo()
 
   const [poi, setPoi] = useState(undefined)
+  const [errore, setErrore] = useState(null)
+  const [tentativo, setTentativo] = useState(0)
   const [avviso, setAvviso] = useState(null)
   const [segnalazione, setSegnalazione] = useState(null)
   const [fotoAperta, setFotoAperta] = useState(null)
@@ -41,15 +44,20 @@ export default function Scheda() {
   useEffect(() => {
     window.scrollTo(0, 0)
     let attivo = true
-    setPoi(undefined)
+    setPoi((attuale) => (attuale?.id === id ? attuale : undefined))
+    setErrore(null)
     getPoiById(id).then(
       (trovato) => attivo && setPoi(trovato),
-      (err) => attivo && setPoi(err.stato === 404 ? null : 'errore'),
+      (err) => {
+        if (!attivo) return
+        setPoi(err.stato === 404 ? null : 'errore')
+        setErrore(err)
+      },
     )
     return () => {
       attivo = false
     }
-  }, [id])
+  }, [id, lingua, tentativo])
 
   // La barra in alto compare quando la copertina non si vede più (niente ascolto dello scroll)
   const caricato = poi && typeof poi === 'object'
@@ -79,11 +87,23 @@ export default function Scheda() {
     )
   }
 
-  if (poi === null || poi === 'errore') {
+  // UC-01 E2: senza connessione si propone di riprovare
+  if (poi === 'errore') {
+    return (
+      <div className="pagina pagina--centrata">
+        <ErroreCaricamento errore={errore} onRiprova={() => setTentativo((n) => n + 1)} />
+        <Link className="collegamento" to="/">
+          {t('scheda.tornaMappa')}
+        </Link>
+      </div>
+    )
+  }
+
+  if (poi === null) {
     return (
       <div className="pagina pagina--centrata">
         <Icona nome="luogo" size={40} />
-        <p>{poi === null ? t('scheda.nonTrovato') : t('errore.rete')}</p>
+        <p>{t('scheda.nonTrovato')}</p>
         <Link className="pulsante pulsante--primario" to="/">
           {t('scheda.tornaMappa')}
         </Link>

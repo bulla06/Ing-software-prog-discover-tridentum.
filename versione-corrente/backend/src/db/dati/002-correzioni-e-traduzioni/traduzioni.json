@@ -1,0 +1,623 @@
+{
+  "luoghi": {
+    "duomo": {
+      "en": {
+        "nome": "St Vigilius Cathedral",
+        "sintesi": "The Romanesque cathedral where the Council of Trent opened in 1545.",
+        "epoca": "From the 13th century",
+        "descrizione": [
+          "The Romanesque cathedral was begun in 1212 by Prince-Bishop Federico Vanga, on the site of an early Christian basilica dedicated to Saint Vigilius, the city’s patron saint.",
+          "On 13 December 1545 the Council of Trent opened here, bringing cardinals, bishops and theologians from all over Europe to the city for eighteen years.",
+          "Beneath the church you can visit the remains of the older basilica: a first layer of the city’s history that few tourists go down to see."
+        ]
+      }
+    },
+    "nettuno": {
+      "en": {
+        "nome": "Neptune Fountain",
+        "sintesi": "The Baroque fountain in the middle of Piazza Duomo, where the people of Trento meet.",
+        "descrizione": [
+          "The fountain was built between 1767 and 1769 to a design by Francesco Antonio Giongo, to bring the water of a new aqueduct to the square.",
+          "Neptune’s trident recalls the city’s Latin name, Tridentum: a play on words locals are happy to tell you about.",
+          "It is still the most popular meeting point in the old town: “see you at the Neptune”."
+        ]
+      }
+    },
+    "case-cazuffi-rella": {
+      "en": {
+        "nome": "Cazuffi-Rella Houses",
+        "sintesi": "Two fully painted façades facing the square, and hardly anyone looks up.",
+        "epoca": "16th century",
+        "affresco_autore": "Marcello Fogolino (attributed)",
+        "affresco_epoca": "1530s",
+        "descrizione": [
+          "The two Renaissance houses on the north side of Piazza Duomo have façades covered in frescoes: the city considers them the most important “painted house” of Renaissance Trento.",
+          "The left-hand house shows gods and figures from mythology: at the top the allegories of Fortune, Opportunity and Nemesis, lower down Damocles at the table of the tyrant Dionysius. The right-hand one shows Virtue, Time, the Triumphs of Love, Apollo and Abundance. The Latin inscriptions turn them into a book of morals open onto the square.",
+          "The frescoes are attributed to Marcello Fogolino, who worked in Trento in the years of Prince-Bishop Bernardo Cles; according to some studies only the left-hand house is his. The blue background, painted with a mineral pigment, has now largely disappeared.",
+          "The best place to see them is from the edge of the Neptune Fountain, in the afternoon sun."
+        ]
+      }
+    },
+    "palazzo-pretorio": {
+      "en": {
+        "nome": "Palazzo Pretorio and the Civic Tower",
+        "sintesi": "The bishops’ old residence and the tower with the “Renga” bell.",
+        "epoca": "11th–13th century",
+        "descrizione": [
+          "Before the Buonconsiglio Castle, the bishops of Trento lived here, next to the cathedral. Today the palace houses the Tridentine Diocesan Museum.",
+          "The Civic Tower keeps the bell known as the “Renga”, which once rang to gather the citizens and to announce executions.",
+          "The museum holds tapestries and works linked to the Council of Trent."
+        ]
+      }
+    },
+    "sass": {
+      "en": {
+        "nome": "S.A.S.S. — Underground Tridentum",
+        "sintesi": "Under the square, a paved street of the Roman city of Tridentum.",
+        "epoca": "1st century BC – 5th century AD",
+        "descrizione": [
+          "A few metres below Piazza Cesare Battisti, the Underground Archaeological Space of the Sas preserves a section of the Roman city: a paved street with cart ruts, the walls, a tower and the remains of houses with mosaic floors.",
+          "It is the part of history the city doesn’t show above ground: walking through the old town you pass over Tridentum without knowing it."
+        ]
+      }
+    },
+    "palazzo-geremia": {
+      "en": {
+        "nome": "Palazzo Geremia",
+        "sintesi": "A painted façade that tells the story of Renaissance Trento along the street of palaces.",
+        "epoca": "Late 15th – early 16th century",
+        "affresco_autore": "Unidentified painter trained in the Veneto",
+        "affresco_epoca": "First years of the 16th century",
+        "descrizione": [
+          "Via Belenzani is the Renaissance street of noble palaces. Palazzo Geremia, owned by the city since 1912, is the most photographed thanks to its frescoed façade.",
+          "The frescoes from the first years of the 16th century celebrate the Geremia family and Maximilian of Habsburg, who appears several times in the top band, when he was not yet emperor. Beside them are legends of ancient Rome, such as Marcus Curtius on horseback and Mucius Scaevola.",
+          "The painter has not been identified: studies point to an artist trained in the Veneto, active at the start of the century. A recent reading links one of the scenes to the diplomatic meeting of October 1501 between Maximilian and Cardinal Georges d’Amboise.",
+          "The façade has been restored several times, in 1941, 1960, 1973 and 1993, and rain keeps damaging it: the city is preparing a new restoration."
+        ]
+      }
+    },
+    "palazzo-thun": {
+      "en": {
+        "nome": "Palazzo Thun",
+        "sintesi": "The palace of one of Trentino’s great families, now the city hall.",
+        "epoca": "16th century",
+        "descrizione": [
+          "The Thun are one of the oldest noble families of Trentino: their town palace is now the seat of the City Council.",
+          "The stories of the families who built Via Belenzani are one of the themes on which the community can add memories and anecdotes."
+        ]
+      }
+    },
+    "santa-maria-maggiore": {
+      "en": {
+        "nome": "Church of Santa Maria Maggiore",
+        "sintesi": "The Renaissance church built by Bernardo Cles, where the Council often met.",
+        "descrizione": [
+          "Prince-Bishop Bernardo Cles had the church rebuilt in the 1520s, entrusting it to the architect Antonio Medaglia.",
+          "During the Council it hosted many meetings of the Council Fathers, when the cathedral was not enough.",
+          "Roman and early Christian remains have been found beneath the church."
+        ]
+      }
+    },
+    "buonconsiglio": {
+      "en": {
+        "nome": "Buonconsiglio Castle",
+        "sintesi": "The residence of the prince-bishops and, in 1916, the place where Cesare Battisti was tried.",
+        "epoca": "13th–18th century",
+        "descrizione": [
+          "From the 13th to the late 18th century the castle was the residence of the prince-bishops of Trento. The oldest part is the Castelvecchio; the Magno Palazzo was built by Bernardo Cles in the 16th century.",
+          "In 1916, in the Fossa dei Martiri, the Austrians executed Cesare Battisti, Damiano Chiesa and Fabio Filzi, Trentino irredentists who had joined the Italian army.",
+          "Today it is the city’s largest museum."
+        ]
+      }
+    },
+    "torre-aquila": {
+      "en": {
+        "nome": "Eagle Tower — Cycle of the Months",
+        "sintesi": "One of the finest Gothic secular cycles in Europe: a year of life in Trento.",
+        "epoca": "Around 1400",
+        "affresco_autore": "Master Wenceslas (attributed)",
+        "affresco_epoca": "Around 1400",
+        "descrizione": [
+          "Prince-Bishop George of Liechtenstein had a room in the tower frescoed with the months of the year: nobles having a snowball fight, peasants ploughing, harvesting grapes and making cheese.",
+          "The frescoes are attributed to a painter of Bohemian origin, known as Master Wenceslas. Eleven of the twelve months survive: March has been lost.",
+          "The tower is visited as part of the Buonconsiglio Castle tour."
+        ]
+      }
+    },
+    "loggia-romanino": {
+      "en": {
+        "nome": "Romanino’s Loggia",
+        "sintesi": "The painted loggia of Bernardo Cles’s palace, full of myths and grotesque figures.",
+        "descrizione": [
+          "For his new Magno Palazzo, Bernardo Cles called some of the best painters of the time. Girolamo Romanino frescoed the loggia with mythological scenes and lively figures.",
+          "It is the Renaissance heart of the castle and the symbol of a Trento getting ready to host the Council."
+        ]
+      }
+    },
+    "piazza-fiera": {
+      "en": {
+        "nome": "Piazza Fiera and the walls",
+        "sintesi": "The last stretch of the medieval walls and the square of the Christmas markets.",
+        "epoca": "13th-century walls",
+        "descrizione": [
+          "One side of the square keeps one of the best-preserved stretches of the walls that enclosed the medieval city.",
+          "For centuries the square has hosted fairs and markets: today it is home to the Christmas Markets and some events of the Feste Vigiliane."
+        ]
+      }
+    },
+    "torre-vanga": {
+      "en": {
+        "nome": "Vanga Tower",
+        "sintesi": "A tower built to guard the bridge over the Adige, now far from the river.",
+        "epoca": "Early 13th century",
+        "descrizione": [
+          "Prince-Bishop Federico Vanga had it built in the early 13th century to control the San Lorenzo bridge, the only crossing over the Adige.",
+          "Back then the river flowed here, beneath the walls. After the Adige was straightened in the mid-19th century the tower was left in the middle of the city: it is the clearest sign of where the old riverbed ran."
+        ]
+      }
+    },
+    "adige": {
+      "en": {
+        "nome": "Straightening the Adige",
+        "sintesi": "The river was moved: the modern city grew on its old bed.",
+        "epoca": "Mid-19th century",
+        "descrizione": [
+          "Until the 19th century the Adige made a bend that skirted the city and often flooded it. Under Austrian rule, in the mid-19th century, its course was straightened and moved further west.",
+          "The old riverbed was filled in and streets, houses and the station district were built on top. Vanga Tower and Piedicastello still show what the city looked like before."
+        ]
+      }
+    },
+    "piazza-dante": {
+      "en": {
+        "nome": "Dante Monument",
+        "sintesi": "A statue unveiled when Trento was Austrian, to say the city felt Italian.",
+        "descrizione": [
+          "The monument, by the Florentine sculptor Cesare Zocchi, was unveiled in 1896, when Trento was part of the Austro-Hungarian Empire.",
+          "Choosing Dante, the father of the Italian language, was a statement: the statue became the symbol of Trentino irredentism."
+        ]
+      }
+    },
+    "bombardamenti": {
+      "en": {
+        "nome": "The station and the 1943 bombings",
+        "sintesi": "From September 1943 the city was bombed to hit the Brenner railway.",
+        "descrizione": [
+          "On 2 September 1943 Trento suffered its first Allied air raid: the bombs fell mostly around the Portela, near the station, and the city records 198 confirmed victims. Until 1945 further raids targeted the Brenner railway and the bridges over the Adige, with a total of 348 deaths in the city.",
+          "Whole blocks around the station and towards the Adige were destroyed and rebuilt after the war: many “new” buildings in the centre date from then. A monument remembers the civilian victims of the bombings."
+        ]
+      }
+    },
+    "gallerie-piedicastello": {
+      "en": {
+        "nome": "The Piedicastello Tunnels",
+        "sintesi": "Two old bypass tunnels turned into an exhibition space on Trentino’s history.",
+        "epoca": "20th-century road tunnels",
+        "descrizione": [
+          "When the road was moved, the two tunnels under Doss Trento were closed to traffic and turned into an exhibition space of the Fondazione Museo storico del Trentino.",
+          "They host exhibitions on 20th-century history, from the Great War to the post-war reconstruction."
+        ]
+      }
+    },
+    "doss-trento": {
+      "en": {
+        "nome": "Doss Trento and the Battisti Mausoleum",
+        "sintesi": "The hill above the Adige with Cesare Battisti’s mausoleum and a view over the city.",
+        "descrizione": [
+          "Doss Trento is the rocky hill on the right bank of the Adige. At the top stands the mausoleum dedicated to Cesare Battisti, inaugurated in 1935.",
+          "From the hill you can clearly see the shape of the city and the course of the river after it was straightened."
+        ]
+      }
+    },
+    "palazzo-albere": {
+      "en": {
+        "nome": "Palazzo delle Albere",
+        "sintesi": "The fortified villa of the Madruzzo, the lords of Trento at the time of the Council.",
+        "epoca": "16th century",
+        "affresco_autore": "Marcello Fogolino and unidentified painters",
+        "affresco_epoca": "Mid-16th century",
+        "descrizione": [
+          "The Madruzzo, a family of prince-bishops in the years of the Council, built this villa with corner towers and a moat, once surrounded by an avenue of trees (albere): hence the name.",
+          "Inside, 16th-century fresco cycles survive: the twelve months in the fireplace room, beneath the large Madruzzo coat of arms; the life of man in one tower, attributed to Marcello Fogolino; the liberal arts and the virtues on the upper floors. Of the hall with the deeds of Charles V, painted after his death in 1558, only a few fragments remain: a fire in 1796 destroyed most of the paintings.",
+          "Today it stands next to the Le Albere district and the MUSE, between old and contemporary."
+        ]
+      }
+    },
+    "muse": {
+      "en": {
+        "nome": "MUSE — Science Museum",
+        "sintesi": "Renzo Piano’s museum in a district built where a factory used to be.",
+        "descrizione": [
+          "MUSE, designed by Renzo Piano and opened in 2013, tells the story of the nature and history of the Alps, from glaciers to dinosaurs.",
+          "It stands in the Le Albere district, built on the site of the former Michelin plant: an example of how the city has transformed its industrial areas."
+        ]
+      }
+    },
+    "sociologia": {
+      "en": {
+        "nome": "Sociology and 1968",
+        "sintesi": "Italy’s first sociology faculty was born in Trento, at the heart of the student protests.",
+        "epoca": "Since 1962",
+        "descrizione": [
+          "In autumn 1962 the Higher Institute of Social Sciences opened in Trento, with 226 first-year students: it was the first sociology faculty in Italy. In 1972 it became the Free University of Trento, from which today’s university was born.",
+          "In the 1960s sociology students were among the leaders of the protests: occupations and assemblies changed the face of a city that had been quiet until then.",
+          "Today the Department of Sociology is housed in the historic building at Via Verdi 26, where the sixtieth anniversary was celebrated in 2022."
+        ]
+      }
+    },
+    "simonino": {
+      "en": {
+        "nome": "Saints Peter and Paul and the case of Simonino",
+        "sintesi": "A false accusation against the Jewish community and a cult that lasted five centuries.",
+        "descrizione": [
+          "In 1475 the death of a child, Simon, was used to falsely accuse the Jews of Trento of ritual murder. Trials under torture and death sentences followed, and the Jewish community was driven out of the city.",
+          "For centuries “Blessed Simonino” was venerated in this church. Only in 1965 did the Church recognise that the accusations were unfounded and abolish the cult.",
+          "It is one of the darkest chapters in the city’s history, told today also by the Tridentine Diocesan Museum."
+        ]
+      }
+    },
+    "teatro-sociale": {
+      "en": {
+        "nome": "Teatro Sociale",
+        "sintesi": "The city’s Italian-style theatre, opened in 1819 above the remains of Tridentum.",
+        "descrizione": [
+          "The theatre opened on 23 May 1819 as the Teatro Mazzurana, named after Felice Mazzurana, who promoted its construction. It has the classic Italian horseshoe plan, with boxes.",
+          "The Autonomous Province of Trento bought it, restored it and returned it to the city in 2000. During the works, a stretch of paved road, a house with mosaics and a craftsman’s workshop of the Roman city came to light beneath the theatre: today they can be visited in the S.A.S.S., the Underground Archaeological Space of the Sas."
+        ]
+      }
+    },
+    "torre-verde": {
+      "en": {
+        "nome": "Green Tower",
+        "sintesi": "A tower of the medieval walls named after the colour of its roof.",
+        "epoca": "13th century",
+        "descrizione": [
+          "The tower was part of the medieval walls in the area between the centre and the Buonconsiglio Castle.",
+          "Its name comes from the green-glazed tiles of its roof, which make it recognisable from afar."
+        ]
+      }
+    },
+    "sant-apollinare": {
+      "en": {
+        "nome": "Church of Sant’Apollinare",
+        "sintesi": "One of the oldest churches in the city, at the foot of Doss Trento, painted by Dürer in 1494.",
+        "epoca": "12th–14th century",
+        "descrizione": [
+          "Piedicastello is the district on the right bank of the Adige, at the foot of Doss Trento. Before the river was straightened, the Adige’s bend separated it from the city.",
+          "The church stands on very old, Byzantine-era foundations; the Benedictines rebuilt it in Romanesque style in the 12th century and in the 14th century it took on its present look, with its tall sloping roof. Albrecht Dürer painted it in a watercolour in 1494.",
+          "Inside, two tall octagonal ribbed domes rest on corbels; to the right of the entrance is a 14th-century sarcophagus carved by Lombard artists. Excavations in the area have uncovered the remains of the Benedictine monastery."
+        ]
+      }
+    },
+    "san-lorenzo": {
+      "en": {
+        "nome": "San Lorenzo Abbey",
+        "sintesi": "A Romanesque church next to the station, linked to an old monastery.",
+        "epoca": "12th century",
+        "descrizione": [
+          "The Romanesque church of San Lorenzo, a short walk from the station, belonged to a Benedictine monastery founded in the Middle Ages.",
+          "Today it is surrounded by the modern city: people arriving by train walk past it without noticing."
+        ]
+      }
+    },
+    "san-francesco-saverio": {
+      "en": {
+        "nome": "Church of San Francesco Saverio",
+        "sintesi": "The Baroque Jesuit church, built according to the ideas of Trento-born Andrea Pozzo.",
+        "affresco_autore": "Carlo Mignocchi (atrium and sacristy)",
+        "affresco_epoca": "18th century",
+        "descrizione": [
+          "The Society of Jesus built the church between 1708 and 1711 following the architectural theories of Andrea Pozzo, a painter and writer born in Trento. It is one of the few examples of full Baroque in a city that is mostly medieval and Renaissance.",
+          "Inside is the altarpiece by Paul Troger and Carlo Mignocchi; Mignocchi also painted the frescoes in the atrium and the sacristy.",
+          "The church is still in use for worship."
+        ]
+      }
+    },
+    "villa-margon": {
+      "en": {
+        "nome": "Villa Margon",
+        "sintesi": "A Renaissance villa on the hills of Ravina, with frescoed rooms.",
+        "epoca": "16th century",
+        "affresco_autore": "Unidentified Italian, Flemish and German painters",
+        "affresco_epoca": "16th century",
+        "descrizione": [
+          "Villa Margon is a Renaissance residence among the vineyards above Ravina, south of the city, linked to the Madruzzo family.",
+          "Its rooms were decorated by Italian, Flemish and German artists whose names are unknown: the most famous cycle is made of twelve frescoes with the victories of Emperor Charles V. According to tradition, Charles V was also a guest at the villa.",
+          "It is a private residence: it can be visited by booking and on some open days, such as the national day of historic houses."
+        ]
+      }
+    },
+    "funivia-sardagna": {
+      "en": {
+        "nome": "Trento–Sardagna Cable Car",
+        "sintesi": "A few minutes from the river to the Sardagna viewpoint, with the whole city below you.",
+        "epoca": "20th century",
+        "descrizione": [
+          "The cable car leaves from the right bank of the Adige and climbs to the village of Sardagna, on the slopes of Monte Bondone.",
+          "From the viewpoint you can see the whole city and clearly follow the straight course of the Adige after its 19th-century straightening. The ride is part of the city’s public transport."
+        ]
+      }
+    },
+    "caproni": {
+      "en": {
+        "nome": "Gianni Caproni Aeronautical Museum",
+        "sintesi": "Historic aircraft of one of the aviation pioneers, born in Trentino.",
+        "epoca": "20th century",
+        "descrizione": [
+          "Gianni Caproni, born in Trentino in 1886, was one of the pioneers of Italian aviation: his bombers were used in the First World War.",
+          "The museum, next to the Mattarello airport, keeps historic aircraft and documents from the family collection."
+        ]
+      }
+    },
+    "calisio": {
+      "en": {
+        "nome": "Monte Calisio and the silver mines",
+        "sintesi": "The mountain riddled with thousands of shafts: the silver that made medieval Trento rich.",
+        "epoca": "Middle Ages",
+        "descrizione": [
+          "On the Argentario plateau, north-east of the city, silver was mined in the Middle Ages. The ground is still marked by thousands of shafts and tunnels, called “canopi” like the miners themselves.",
+          "The mining rules collected in the early 13th century by Bishop Federico Vanga are considered among the oldest mining statutes in Europe."
+        ]
+      }
+    },
+    "palazzo-roccabruna": {
+      "en": {
+        "nome": "Palazzo Roccabruna — Provincial Wine Shop",
+        "sintesi": "A Renaissance palace where you can taste the wines and products of Trentino.",
+        "epoca": "16th century",
+        "piatto_consigliato": "A Trentodoc tasting",
+        "descrizione": [
+          "Palazzo Roccabruna is a 16th-century residence in the old town. Today it houses the House of Trentino Products and the Provincial Wine Shop, with tastings and events devoted to local wines, cheeses and cured meats.",
+          "The tasting calendar is on the palace’s website."
+        ]
+      }
+    },
+    "birreria-pedavena": {
+      "en": {
+        "nome": "Pedavena Brewery",
+        "sintesi": "The historic beer hall of the old town, a few steps from the walls of Piazza Fiera.",
+        "epoca": "Since 1921",
+        "piatto_consigliato": "Carne salada with polenta",
+        "descrizione": [
+          "Opened in 1921 and renovated in 2002, the beer hall on Piazza di Fiera has been a meeting place for generations of locals, with a large hall, beer and traditional dishes such as carne salada and polenta.",
+          "The name comes from the Pedavena brewery, in the province of Belluno."
+        ]
+      }
+    },
+    "le-due-spade": {
+      "en": {
+        "nome": "Le Due Spade",
+        "sintesi": "The tavern that tradition dates back to the year the Council opened.",
+        "epoca": "Tradition dating from 1545",
+        "piatto_consigliato": "Char or game, depending on the season",
+        "descrizione": [
+          "A document from 1545, the year the Council of Trent opened, is the first record of this place as an inn for people coming to the city for the Council. The date is still on the sign.",
+          "Today it is a restaurant with a small vaulted stube, a short walk from Santa Maria Maggiore: the cooking combines Trentino dishes, such as char and game, with more modern ideas."
+        ]
+      }
+    },
+    "scrigno-del-duomo": {
+      "en": {
+        "nome": "Scrigno del Duomo",
+        "sintesi": "A restaurant in a 15th-century palace on Piazza Duomo, with a Roman well in the dining room.",
+        "epoca": "Palace from 1465",
+        "piatto_consigliato": "A glass from the wine list",
+        "descrizione": [
+          "The restaurant occupies a palace from 1465 overlooking the cathedral square. On the ground floor there is a wine bar with a long list of wines by the glass.",
+          "During excavations a Roman-era well came to light: restored, it can be seen in the restaurant’s most striking room. A small taste of Tridentum at the table too."
+        ]
+      }
+    },
+    "cantine-ferrari": {
+      "en": {
+        "nome": "Ferrari Winery",
+        "sintesi": "The winery founded in 1902 by Giulio Ferrari, one of the historic names of Trentino sparkling wine.",
+        "epoca": "Since 1902",
+        "piatto_consigliato": "Trentodoc",
+        "descrizione": [
+          "Giulio Ferrari founded the winery in 1902 with the idea of making a classic-method sparkling wine in Trentino.",
+          "Today it is one of the best-known Trentodoc producers and offers guided tours by booking."
+        ]
+      }
+    }
+  },
+  "itinerari": {
+    "affreschi-all-aperto": {
+      "en": {
+        "titolo": "Open-air frescoes",
+        "descrizione": "The painted façades of the old town and the Buonconsiglio cycles: just look up."
+      }
+    },
+    "tridentum-e-concilio": {
+      "en": {
+        "titolo": "From Tridentum to the Council",
+        "descrizione": "From the Roman street under Piazza Battisti to the churches that hosted the Council."
+      }
+    },
+    "vecchio-adige": {
+      "en": {
+        "titolo": "Where the Adige used to flow",
+        "descrizione": "Follow the river’s old course, from the bridge tower to the hill on the right bank."
+      }
+    },
+    "guerra-e-ricostruzione": {
+      "en": {
+        "titolo": "War and reconstruction",
+        "descrizione": "Trento’s 20th century: irredentism, the Great War, the bombings and the post-war years."
+      }
+    },
+    "mezza-giornata": {
+      "en": {
+        "titolo": "Half a day in the heart of Trento",
+        "descrizione": "The full tour for those with an afternoon: squares, palaces, castle and walls."
+      }
+    },
+    "storie-nascoste": {
+      "en": {
+        "titolo": "Hidden stories of the old town",
+        "descrizione": "The pages classic guides skip: a false accusation, a tower with a green roof, the theatre above the Roman city."
+      }
+    },
+    "trento-dall-alto": {
+      "en": {
+        "titolo": "Trento from above",
+        "descrizione": "Across the river: Piedicastello, Doss Trento and the cable car to see the whole city from the Sardagna viewpoint."
+      }
+    },
+    "citta-che-cambia": {
+      "en": {
+        "titolo": "A changing city",
+        "descrizione": "From the Madruzzo villa to the district built where the Michelin factory stood, by way of the university of 1968."
+      }
+    },
+    "sapori-del-centro": {
+      "en": {
+        "titolo": "Flavours of the old town",
+        "descrizione": "A tour of wines, beers and traditional dishes, to be enjoyed slowly."
+      }
+    }
+  },
+  "tradizioni": {
+    "feste-vigiliane": {
+      "en": {
+        "nome": "Feste Vigiliane",
+        "periodo": "June",
+        "descrizione": "The celebrations of the patron saint Vigilius (26 June): costume parades, the Tonca dei Ciusi e dei Gobj with polenta in Piazza Fiera, and the Palio dell’Oca, a raft race on the Adige."
+      }
+    },
+    "trento-film-festival": {
+      "en": {
+        "nome": "Trento Film Festival",
+        "periodo": "April – May",
+        "descrizione": "Since 1952, the film festival devoted to mountains, exploration and adventure: the oldest of its kind."
+      }
+    },
+    "festival-economia": {
+      "en": {
+        "nome": "Festival of Economics",
+        "periodo": "Late May – early June",
+        "descrizione": "Since 2006, economists, journalists and Nobel laureates have met in the squares, palaces and theatres of the old town."
+      }
+    },
+    "mercatini-natale": {
+      "en": {
+        "nome": "Christmas Markets",
+        "periodo": "Late November – early January",
+        "descrizione": "Wooden huts with crafts, mulled wine and traditional sweets in Piazza Fiera and Piazza Cesare Battisti."
+      }
+    },
+    "santa-lucia": {
+      "en": {
+        "nome": "St Lucy’s Day",
+        "periodo": "13 December",
+        "descrizione": "In Trentino children receive presents from Saint Lucy, who arrives at night with her donkey: the evening before, they leave out hay and a carrot. Around 13 December Trento also holds the St Lucy Fair, with hundreds of stalls in the streets and squares of the old town, from Piazza Fiera to Piazza Duomo."
+      }
+    },
+    "carnevale": {
+      "en": {
+        "nome": "Carnival and grostoli",
+        "periodo": "February",
+        "descrizione": "Fancy-dress parties in the districts and villages around the city; in the centre the floats parade, usually from Piazza Fiera to Piazza Duomo, where the best float wins a prize. Every pastry shop fills up with grostoli, fried pastry ribbons dusted with sugar."
+      }
+    }
+  },
+  "piatti": {
+    "strangolapreti": {
+      "en": {
+        "nome": "Strangolapreti",
+        "tipo": "First course",
+        "descrizione": "Dumplings of stale bread with spinach or chard, dressed with melted butter and grated cheese. The name, “priest-chokers”, jokes about the priests of the Council, who supposedly ate too many."
+      }
+    },
+    "canederli": {
+      "en": {
+        "nome": "Canederli",
+        "tipo": "First course",
+        "descrizione": "Large bread dumplings made with milk, eggs and speck or cheese, served in broth or dry with butter."
+      }
+    },
+    "carne-salada": {
+      "en": {
+        "nome": "Carne salada",
+        "tipo": "Main course",
+        "descrizione": "Beef left to rest in brine with spices, served raw in thin slices or seared with beans."
+      }
+    },
+    "tortel-patate": {
+      "en": {
+        "nome": "Tortel di patate",
+        "tipo": "Main course",
+        "descrizione": "A crispy fritter of grated potatoes, served with cured meats and mountain-hut cheeses."
+      }
+    },
+    "polenta": {
+      "en": {
+        "nome": "Polenta",
+        "tipo": "Side dish",
+        "descrizione": "Made from maize or potatoes, with mushrooms, melted cheese or stew: the dish of the Tonca dei Ciusi e dei Gobj."
+      }
+    },
+    "puzzone": {
+      "en": {
+        "nome": "Puzzone di Moena",
+        "tipo": "Cheese",
+        "descrizione": "A PDO cheese from Val di Fassa with a strong smell, due to the rind being washed while it ripens."
+      }
+    },
+    "strudel": {
+      "en": {
+        "nome": "Apple strudel",
+        "tipo": "Dessert",
+        "descrizione": "Thin rolled pastry filled with apples, raisins, pine nuts and cinnamon: a legacy of Austrian cooking."
+      }
+    },
+    "zelten": {
+      "en": {
+        "nome": "Zelten",
+        "tipo": "Dessert",
+        "descrizione": "A sweet Christmas bread full of dried and candied fruit, different in every family."
+      }
+    },
+    "trentodoc": {
+      "en": {
+        "nome": "Trentodoc",
+        "tipo": "Wine",
+        "descrizione": "Mountain sparkling wine made with the classic method, from grapes grown on the hills of Trentino."
+      }
+    },
+    "mela-val-di-non": {
+      "en": {
+        "nome": "Val di Non apple",
+        "tipo": "Fruit",
+        "descrizione": "A PDO apple grown in the valley north of Trento, the star of strudels and juices."
+      }
+    },
+    "smacafam": {
+      "en": {
+        "nome": "Smacafam",
+        "tipo": "Main course",
+        "descrizione": "A savoury buckwheat or maize pie with lucanica sausage, typical of Carnival time. The name means “hunger-killer”."
+      }
+    },
+    "lucanica": {
+      "en": {
+        "nome": "Lucanica trentina",
+        "tipo": "Cured meat",
+        "descrizione": "A pork sausage, aged or fresh, eaten raw, grilled or with polenta."
+      }
+    },
+    "fregolotti": {
+      "en": {
+        "nome": "Torta de fregolotti",
+        "tipo": "Dessert",
+        "descrizione": "A crumbly cake of flour, almonds, butter and sugar, to be broken with your hands: “fregoloti” are the crumbs."
+      }
+    },
+    "grappa": {
+      "en": {
+        "nome": "Trentino grappa",
+        "tipo": "Spirit",
+        "descrizione": "A spirit distilled from Trentino grape pomace, protected by a mark of origin: drunk at the end of a meal."
+      }
+    }
+  }
+}

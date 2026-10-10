@@ -1,0 +1,222 @@
+{
+  "luoghi": [
+    {
+      "id": "palazzo-geremia",
+      "temi": ["principi-vescovi", "arte"],
+      "affresco": {
+        "autore": "Pittore di formazione veneta, non identificato",
+        "epoca": "Primi anni del Cinquecento"
+      },
+      "descrizione": [
+        "Via Belenzani è la strada rinascimentale dei palazzi nobili. Palazzo Geremia, di proprietà del Comune dal 1912, è il più fotografato per la sua facciata affrescata.",
+        "Gli affreschi dei primi anni del Cinquecento celebrano la famiglia Geremia e Massimiliano d'Asburgo, che nella fascia più alta compare più volte, quando non era ancora imperatore. Accanto ci sono leggende della Roma antica, come Marco Curzio a cavallo e Muzio Scevola.",
+        "Il pittore non è stato identificato: gli studi parlano di un artista di formazione veneta attivo all'inizio del secolo. Una lettura recente collega una delle scene all'incontro diplomatico dell'ottobre 1501 tra Massimiliano e il cardinale Georges d'Amboise.",
+        "La facciata è stata restaurata più volte, nel 1941, nel 1960, nel 1973 e nel 1993, e la pioggia continua a rovinarla: il Comune sta preparando un nuovo intervento."
+      ],
+      "fonti": [
+        { "titolo": "Ezio Chini, «Trento, città dipinta» (Italia Nostra)", "url": "https://www.italianostra.org/wp-content/uploads/Chini_Art-e-Dossier.pdf" },
+        { "titolo": "L'Adige — L'affresco di Palazzo Geremia e la visita di Massimiliano nel 1501", "url": "https://www.ladige.it/cultura-e-spettacoli/laffresco-di-palazzo-geremia-come-un-fumetto-sulla-visita-di-maximilian-a-trento-nel-1501-o36ormuh" },
+        { "titolo": "Finestre sull'Arte — Un piano per salvare gli affreschi di Palazzo Geremia", "url": "https://www.finestresullarte.info/attualita/trento-al-via-un-piano-per-salvare-affreschi-palazzo-geremia" }
+      ]
+    },
+    {
+      "id": "case-cazuffi-rella",
+      "temi": ["principi-vescovi", "arte"],
+      "affresco": {
+        "autore": "Marcello Fogolino (attribuzione)",
+        "epoca": "Anni Trenta del Cinquecento"
+      },
+      "descrizione": [
+        "Le due case rinascimentali sul lato nord di Piazza Duomo hanno le facciate coperte di affreschi: il Comune le considera la più importante «casa dipinta» della Trento del Rinascimento.",
+        "Sulla casa di sinistra compaiono divinità e figure della mitologia: in alto le allegorie della Fortuna, dell'Occasione e di Nemesi, più in basso Damocle alla tavola del tiranno Dionisio. Su quella di destra la Virtù, il Tempo, i Trionfi d'Amore, Apollo e l'Abbondanza. Le scritte in latino ne fanno un libro di morale aperto sulla piazza.",
+        "Gli affreschi sono attribuiti a Marcello Fogolino, attivo a Trento negli anni del principe vescovo Bernardo Clesio; secondo alcuni studi solo la casa di sinistra è sua. Il fondo azzurro, dipinto con un pigmento minerale, oggi è in gran parte scomparso.",
+        "Il modo migliore per vederle è dal bordo della Fontana del Nettuno, con il sole del pomeriggio."
+      ],
+      "fonti": [
+        { "titolo": "Comune di Trento — Casa Cazuffi-Rella", "url": "https://old.comune.trento.it/Aree-tematiche/Cultura-e-turismo/Visitare/Edifici-storici/Casa-Cazuffi-Rella/(language)/eng-GB" },
+        { "titolo": "Ezio Chini, «Trento, città dipinta» (Italia Nostra)", "url": "https://www.italianostra.org/wp-content/uploads/Chini_Art-e-Dossier.pdf" },
+        { "titolo": "Artribune — Indagine su Marcello Fogolino a Trento", "url": "https://www.artribune.com/?p=493490" }
+      ]
+    },
+    {
+      "id": "torre-aquila",
+      "temi": ["principi-vescovi", "arte"]
+    },
+    {
+      "id": "loggia-romanino",
+      "temi": ["principi-vescovi", "concilio", "arte"]
+    },
+    {
+      "id": "nettuno",
+      "temi": ["principi-vescovi", "arte"]
+    },
+    {
+      "id": "san-francesco-saverio",
+      "temi": ["principi-vescovi", "arte"],
+      "epoca": "1708–1711",
+      "affresco": {
+        "autore": "Carlo Mignocchi (atrio e sacrestia)",
+        "epoca": "XVIII secolo"
+      },
+      "sintesi": "La chiesa barocca dei Gesuiti, costruita secondo le idee del trentino Andrea Pozzo.",
+      "descrizione": [
+        "La Compagnia di Gesù costruì la chiesa tra il 1708 e il 1711 seguendo le teorie architettoniche di Andrea Pozzo, pittore e trattatista nato a Trento. È uno dei pochi esempi di barocco pieno in una città soprattutto medievale e rinascimentale.",
+        "Dentro si trova la pala d'altare di Paul Troger e Carlo Mignocchi; Mignocchi dipinse anche gli affreschi dell'atrio e della sacrestia.",
+        "La chiesa è ancora aperta al culto."
+      ],
+      "fonti": [
+        { "titolo": "Comune di Trento — Chiesa e convento di San Francesco Saverio", "url": "https://old.comune.trento.it/Aree-tematiche/Cultura-e-turismo/Visitare/Chiese/Chiesa-di-San-Francesco-Saverio/(language)/eng-GB" },
+        { "titolo": "Arcidiocesi di Trento", "url": "https://www.diocesitn.it" }
+      ]
+    },
+    {
+      "id": "villa-margon",
+      "temi": ["principi-vescovi", "arte"],
+      "affresco": {
+        "autore": "Pittori italiani, fiamminghi e tedeschi non identificati",
+        "epoca": "XVI secolo"
+      },
+      "descrizione": [
+        "Villa Margon è una residenza rinascimentale immersa nei vigneti sopra Ravina, a sud della città, legata alla famiglia Madruzzo.",
+        "Le sale sono decorate da artisti italiani, fiamminghi e di area tedesca, di cui non si conoscono i nomi: il ciclo più famoso è formato da dodici affreschi con le vittorie dell'imperatore Carlo V. Secondo la tradizione Carlo V fu anche ospite della villa.",
+        "È una dimora privata: si visita su prenotazione e in alcune giornate di apertura, come quella nazionale delle dimore storiche."
+      ],
+      "fonti": [
+        { "titolo": "MuseiOnline — Villa Margon", "url": "https://museionline.info/trentino-alto-adige-musei-monumenti/villa-margon" },
+        { "titolo": "Associazione Dimore Storiche Italiane — Villa Margon", "url": "https://www.associazionedimorestoricheitaliane.it/evento-dimora/474436/?lan=it" }
+      ]
+    },
+    {
+      "id": "palazzo-albere",
+      "temi": ["principi-vescovi", "concilio", "arte"],
+      "affresco": {
+        "autore": "Marcello Fogolino e pittori non identificati",
+        "epoca": "Metà del XVI secolo"
+      },
+      "descrizione": [
+        "I Madruzzo, famiglia di principi vescovi negli anni del Concilio, costruirono questa villa con torri angolari e fossato, un tempo circondata da un viale di alberi: da qui il nome.",
+        "Dentro restano cicli di affreschi del Cinquecento: i dodici mesi nella sala del camino, sotto il grande stemma dei Madruzzo; la vita dell'uomo in una torre, attribuita a Marcello Fogolino; le arti liberali e le virtù ai piani alti. Della sala con le imprese di Carlo V, dipinta dopo la sua morte nel 1558, restano pochi frammenti: un incendio nel 1796 distrusse gran parte delle pitture.",
+        "Oggi si trova accanto al quartiere Le Albere e al MUSE, tra antico e contemporaneo."
+      ],
+      "fonti": [
+        { "titolo": "Cultura Trentino — Palazzo delle Albere", "url": "https://www.cultura.trentino.it/eng/Cultural-venues/All-cultural-venues/Documentation-centres2/Palazzo-delle-Albere" },
+        { "titolo": "Visit Trentino — Palazzo delle Albere", "url": "https://visittrentino.info/en-us/guide/must-see/palazzo-delle-albere_md_2670" }
+      ]
+    },
+    {
+      "id": "sociologia",
+      "indirizzo": "Via Giuseppe Verdi 26",
+      "descrizione": [
+        "Nell'autunno del 1962 a Trento aprì l'Istituto superiore di scienze sociali, con 226 studenti al primo anno: fu la prima facoltà di sociologia in Italia. Nel 1972 diventò la Libera Università degli Studi di Trento, da cui è nata l'università di oggi.",
+        "Negli anni Sessanta gli studenti di sociologia furono tra i protagonisti della contestazione: occupazioni e assemblee cambiarono il volto di una città fino ad allora tranquilla.",
+        "Oggi il dipartimento di Sociologia ha sede nello storico edificio di via Verdi 26, dove nel 2022 si sono festeggiati i sessant'anni dalla fondazione."
+      ],
+      "fonti": [
+        { "titolo": "Provincia autonoma di Trento — Una festa della Sociologia (2022)", "url": "https://www.ufficiostampa.provincia.tn.it/layout/set/print/Comunicati/Una-festa-della-Sociologia" },
+        { "titolo": "Università di Trento", "url": "https://www.unitn.it" },
+        { "titolo": "Fondazione Museo storico del Trentino", "url": "https://www.museostorico.it" }
+      ]
+    },
+    {
+      "id": "teatro-sociale",
+      "epoca": "1819",
+      "sintesi": "Il teatro all'italiana della città, inaugurato nel 1819 sopra i resti di Tridentum.",
+      "descrizione": [
+        "Il teatro fu inaugurato il 23 maggio 1819 come Teatro Mazzurana, dal nome di Felice Mazzurana che ne promosse la costruzione. Ha la classica pianta all'italiana a ferro di cavallo, con i palchi.",
+        "La Provincia autonoma di Trento lo acquistò, lo restaurò e lo restituì alla città nel 2000. Durante i lavori sotto il teatro sono emersi un tratto di strada lastricata, una casa con mosaici e una bottega artigiana della città romana: oggi si visitano nello S.A.S.S., lo Spazio Archeologico Sotterraneo del Sas."
+      ],
+      "fonti": [
+        { "titolo": "Comune di Trento — Teatro Sociale", "url": "https://old.comune.trento.it/Aree-tematiche/Cultura-e-turismo/Visitare/Altri-siti-di-interesse-turistico/Teatro-Sociale/(language)/eng-GB" },
+        { "titolo": "L'Adige — Il Teatro Sociale festeggia i primi due secoli di vita", "url": "https://www.ladige.it/territori/trento/il-teatro-sociale-festeggia-i-primi-due-secoli-di-vita-nel-nome-di-mazzurana-l46dq8nt" },
+        { "titolo": "Centro Servizi Culturali Santa Chiara", "url": "https://www.centrosantachiara.it" }
+      ]
+    },
+    {
+      "id": "sant-apollinare",
+      "epoca": "XII–XIV secolo",
+      "sintesi": "Una delle chiese più antiche della città, ai piedi del Doss Trento, dipinta da Dürer nel 1494.",
+      "descrizione": [
+        "Piedicastello è il quartiere sulla riva destra dell'Adige, ai piedi del Doss Trento. Prima della rettifica del fiume era separato dalla città dall'ansa dell'Adige.",
+        "La chiesa sorge su una base molto antica, di epoca bizantina; i Benedettini la trasformarono in stile romanico nel XII secolo e nel Trecento prese l'aspetto attuale, con l'alto tetto spiovente. Albrecht Dürer la ritrasse in un acquerello del 1494.",
+        "Dentro, due alte cupole ottagonali con i costoloni poggiano su mensole; a destra dell'ingresso c'è un sarcofago del Trecento scolpito da artisti lombardi. Gli scavi nella zona hanno riportato alla luce i resti del monastero benedettino."
+      ],
+      "fonti": [
+        { "titolo": "Comune di Trento — Chiesa di S. Apollinare", "url": "https://old.comune.trento.it/Aree-tematiche/Cultura-e-turismo/Visitare/Chiese/Chiesa-di-S.-Apollinare/(language)/eng-GB" },
+        { "titolo": "Arcidiocesi di Trento", "url": "https://www.diocesitn.it" }
+      ]
+    },
+    {
+      "id": "bombardamenti",
+      "descrizione": [
+        "Il 2 settembre 1943 Trento subì il primo bombardamento aereo alleato: le bombe caddero soprattutto nella zona della Portela, vicino alla stazione, e il Comune conta 198 vittime accertate. Fino al 1945 seguirono altre incursioni contro la ferrovia del Brennero e i ponti sull'Adige, per un totale di 348 morti in città.",
+        "Interi isolati attorno alla stazione e verso l'Adige furono distrutti e poi ricostruiti nel dopoguerra: molti edifici «nuovi» del centro nascono da qui. Un monumento ricorda le vittime civili dei bombardamenti."
+      ],
+      "fonti": [
+        { "titolo": "Comune di Trento — Monumento alle vittime civili dei bombardamenti", "url": "https://www.comune.trento.it/ocmultibinary/download/39902/1532390/40/ef39564d65359383e4799236d57259b4.pdf/file/115%2B-%2BMonumento%2Balle%2Bvittime%2Bcivili%2Bdei%2Bbombardamenti.pdf" },
+        { "titolo": "L'Adige — La strage della Portela", "url": "https://www.ladige.it/blog/la-strage-della-portela-quando-su-trento-si-abbatte-la-guerra-yf128tix" },
+        { "titolo": "Fondazione Museo storico del Trentino", "url": "https://www.museostorico.it" }
+      ]
+    },
+    {
+      "id": "palazzo-roccabruna",
+      "descrizione": [
+        "Palazzo Roccabruna è una dimora del Cinquecento nel centro storico. Oggi ospita la Casa dei prodotti trentini e l'Enoteca provinciale, con degustazioni e incontri dedicati a vini, formaggi e salumi del territorio.",
+        "Il calendario delle degustazioni si trova sul sito del palazzo."
+      ]
+    },
+    {
+      "id": "birreria-pedavena",
+      "epoca": "Dal 1921",
+      "piatto_consigliato": "Carne salada con la polenta",
+      "descrizione": [
+        "Aperta nel 1921 e rinnovata nel 2002, la birreria di Piazza di Fiera è da generazioni un punto di ritrovo dei trentini, con una grande sala, la birra e piatti della tradizione come carne salada e polenta.",
+        "Il nome viene dal birrificio di Pedavena, nel Bellunese."
+      ],
+      "fonti": [
+        { "titolo": "Visit Trentino — Antica Birreria Pedavena", "url": "https://www.visittrentino.info/en/trentino/tourist-areas/antica-birreria-pedavena_md_84752643" }
+      ]
+    },
+    {
+      "id": "le-due-spade",
+      "indirizzo": "Via Don Arcangelo Rizzi 11",
+      "piatto_consigliato": "Salmerino o selvaggina, secondo la stagione",
+      "descrizione": [
+        "Un documento del 1545, l'anno di apertura del Concilio di Trento, attesta per la prima volta l'attività di questo locale come locanda per chi arrivava in città per il Concilio. La data è ancora sull'insegna.",
+        "Oggi è un ristorante con una piccola stube dal soffitto a volta, a due passi da Santa Maria Maggiore: la cucina unisce piatti trentini, come il salmerino e la selvaggina, a proposte più moderne."
+      ],
+      "fonti": [
+        { "titolo": "Visit Trentino — Le Due Spade", "url": "https://visittrentino.info/en/taste/food-wine/le-due-spade_md_3997" },
+        { "titolo": "Gambero Rosso — Osteria a Le Due Spade", "url": "https://www.gamberorosso.it/luoghi/locali/ristorante/osteria-a-le-due-spade" }
+      ]
+    },
+    {
+      "id": "scrigno-del-duomo",
+      "indirizzo": "Piazza Duomo 29",
+      "epoca": "Palazzo del 1465",
+      "piatto_consigliato": "Un calice dalla carta dei vini",
+      "sintesi": "Un ristorante in un palazzo del Quattrocento su Piazza Duomo, con un pozzo romano in sala.",
+      "descrizione": [
+        "Il ristorante occupa un palazzo del 1465 affacciato sulla piazza della cattedrale. Al piano terra c'è un wine bar con una lunga lista di vini da bere al calice.",
+        "Durante gli scavi è emerso un pozzo di epoca romana: restaurato, si vede nella sala più suggestiva del ristorante. Un piccolo assaggio di Tridentum anche a tavola."
+      ],
+      "fonti": [
+        { "titolo": "Visit Trentino — Scrigno del Duomo", "url": "https://www.visittrentino.info/en/taste/scrigno-del-duomo_md_3875" },
+        { "titolo": "Gambero Rosso — Lo Scrigno del Duomo", "url": "https://www.gamberorosso.it/luoghi/locali/ristorante/lo-scrigno-del-duomo" }
+      ]
+    }
+  ],
+  "tradizioni": [
+    {
+      "id": "santa-lucia",
+      "aggiungi_luoghi": ["piazza-fiera", "duomo"],
+      "descrizione": "In Trentino i bambini ricevono i doni da Santa Lucia, che arriva di notte con il suo asinello: la sera prima si lasciano fieno e una carota. A Trento intorno al 13 dicembre c'è anche la Fiera di Santa Lucia, con centinaia di bancarelle nelle vie e nelle piazze del centro, da Piazza Fiera a Piazza Duomo.",
+      "descrizione_precedente": "In Trentino i bambini ricevono i doni da Santa Lucia, che arriva di notte con il suo asinello: la sera prima si lasciano fieno e una carota."
+    },
+    {
+      "id": "carnevale",
+      "aggiungi_luoghi": ["piazza-fiera", "duomo"],
+      "descrizione": "Feste in maschera nei quartieri e nei paesi intorno alla città; in centro sfilano i carri, di solito da Piazza Fiera fino a Piazza Duomo, dove si premia il carro più bello. In ogni pasticceria compaiono i grostoli, sfoglie fritte e zuccherate.",
+      "descrizione_precedente": "Feste in maschera nei quartieri e nei paesi intorno alla città; in ogni pasticceria compaiono i grostoli, sfoglie fritte e zuccherate."
+    }
+  ]
+}

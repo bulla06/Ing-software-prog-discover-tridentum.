@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Campo from '../components/Campo.jsx'
 import Icona from '../components/Icona.jsx'
+import MappaLeaflet from '../components/MappaLeaflet.jsx'
 import { getPoiById, inviaRicordo } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { messaggioErrore } from '../lib/errori.js'
@@ -22,6 +23,10 @@ export default function AggiungiRicordo() {
   const [anno, setAnno] = useState('')
   const [licenza, setLicenza] = useState('cc-by')
   const [consensoGioco, setConsensoGioco] = useState(false)
+  // RF-23: punto in cui è stata scattata la foto, facoltativo, solo per il gioco
+  const [scatto, setScatto] = useState(null)
+  const vistaScatto = useMemo(() => (poi ? { centro: poi.posizione, zoom: 17 } : null), [poi])
+  const segnapostoScatto = useMemo(() => (scatto ? [{ id: 'scatto', posizione: scatto, tipo: 'ipotesi' }] : []), [scatto])
   const [errori, setErrori] = useState({})
   const [stato, setStato] = useState('modulo') // modulo | compressione | invio | inviato
   const [erroreInvio, setErroreInvio] = useState(null)
@@ -99,6 +104,10 @@ export default function AggiungiRicordo() {
       dati.append('anno', anno.trim())
       dati.append('licenza', licenza)
       dati.append('consenso_gioco', String(Boolean(foto) && consensoGioco))
+      if (foto && consensoGioco && scatto) {
+        dati.append('lat', String(scatto[0]))
+        dati.append('lng', String(scatto[1]))
+      }
       setStato('invio')
       await inviaRicordo(id, dati)
       setStato('inviato')
@@ -174,6 +183,21 @@ export default function AggiungiRicordo() {
             <input type="checkbox" checked={consensoGioco} onChange={(e) => setConsensoGioco(e.target.checked)} />
             <span>{t('ricordo.gioco')}</span>
           </label>
+        )}
+
+        {foto && consensoGioco && (
+          <div className="campo">
+            <span className="campo__etichetta" id="titolo-scatto">{t('ricordo.scatto')}</span>
+            <p className="campo__aiuto">{t('ricordo.scattoAiuto')}</p>
+            <div className="mappa-scatto" aria-labelledby="titolo-scatto">
+              <MappaLeaflet etichetta={t('ricordo.scatto')} vista={vistaScatto} segnaposti={segnapostoScatto} onClickMappa={setScatto} />
+            </div>
+            {scatto && (
+              <button type="button" className="collegamento" onClick={() => setScatto(null)}>
+                {t('ricordo.togliScatto')}
+              </button>
+            )}
+          </div>
         )}
 
         {erroreInvio && <p className="messaggio messaggio--errore" role="alert">{erroreInvio}</p>}

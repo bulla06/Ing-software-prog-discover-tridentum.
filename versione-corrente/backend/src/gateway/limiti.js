@@ -4,11 +4,11 @@ import { ErroreHttp } from './errori.js'
 
 const risposta = (codice, messaggio) => (req, res, next) => next(new ErroreHttp(429, codice, messaggio))
 
-export function creaLimiti() {
+export function creaLimiti({ limiteRichieste = 600 } = {}) {
   return {
     generale: rateLimit({
       windowMs: 60 * 1000,
-      limit: 600,
+      limit: limiteRichieste,
       handler: risposta('troppe_richieste', 'Troppe richieste: riprova tra poco'),
     }),
 
