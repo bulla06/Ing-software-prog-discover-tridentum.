@@ -8,6 +8,7 @@ import { migra } from './db/migra.js'
 import { ACCOUNT_DIMOSTRATIVI, popola } from './db/popola.js'
 import { creaArchivioFoto } from './servizi/archivio-foto.js'
 import { creaPosta } from './servizi/posta.js'
+import { avviaPulizia } from './servizi/pulizia.js'
 
 const config = leggiConfigurazione()
 
@@ -16,6 +17,7 @@ const db = await apriDatabase(config)
 const archivio = await creaArchivioFoto(path.join(config.cartellaDati, 'foto'))
 await migra(db)
 await popola(db, { ...config, archivio })
+avviaPulizia(db, archivio)
 
 const posta = creaPosta(config)
 const app = creaApp({ db, config, posta, archivio })
@@ -26,6 +28,9 @@ const server = app.listen(config.porta, () => {
   if (config.datiDimostrativi) {
     console.log('\nAccount di prova:')
     for (const a of ACCOUNT_DIMOSTRATIVI) console.log(`  ${a.ruolo.padEnd(15)} ${a.email}  ·  ${a.password}`)
+  }
+  if (!config.sviluppo && !config.contattoPrivacy) {
+    console.warn('Attenzione: manca EMAIL_PRIVACY, l\'indirizzo da indicare nell\'informativa privacy (vedi .env.esempio)')
   }
   console.log('')
 })

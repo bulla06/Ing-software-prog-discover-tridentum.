@@ -10,7 +10,8 @@
     "dev": "node --watch-path=src src/server.js",
     "start": "node src/server.js",
     "test": "vitest run",
-    "crea-amministratore": "node src/strumenti/crea-amministratore.js"
+    "crea-amministratore": "node src/strumenti/crea-amministratore.js",
+    "scarica-foto": "node src/strumenti/scarica-foto.js"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.8",

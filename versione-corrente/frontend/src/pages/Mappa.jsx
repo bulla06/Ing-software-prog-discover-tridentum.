@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import MappaLeaflet from '../components/MappaLeaflet.jsx'
 import Copertina from '../components/Copertina.jsx'
+import ErroreCaricamento from '../components/ErroreCaricamento.jsx'
 import Icona from '../components/Icona.jsx'
-import { getPoi } from '../data/api.js'
+import { getPoi, getTradizioni } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { CENTRO_TRENTO, distanzaMetri, formattaDistanza } from '../lib/geo.js'
 import { usePosizione } from '../lib/posizione.jsx'
@@ -13,6 +14,9 @@ import { useTrascinaPerChiudere } from '../lib/trascina.js'
 // Gli avvisi informativi sulla posizione spariscono da soli: su telefono lo spazio sopra la mappa
 // è poco. Gli errori (dati non caricati, mappa non disponibile) restano finché non si risolvono.
 const DURATA_AVVISO_MS = 6000
+// UC-01 E3: se entro questa distanza non c'è nessun luogo, la mappa si allarga fino ai più vicini
+const RAGGIO_VICINI_M = 1000
+const QUANTI_VICINI = 3
 
 // S-01 Mappa · S-01L Elenco · S-02 Anteprima · S-04 Ricerca e filtri (UC-01).
 // Ricerca, filtri, vista e luogo selezionato stanno nell'URL: tornando indietro
@@ -29,10 +33,13 @@ export default function Mappa() {
   const tema = params.get('tema')
   const elenco = params.get('vista') === 'elenco'
   const selezionatoId = params.get('poi')
+  // Luoghi di una tradizione, aperti da Scopri (UC-10, passo 6)
+  const tradizione = params.get('tradizione')
 
   const [luoghi, setLuoghi] = useState(null)
   const [tutti, setTutti] = useState([])
-  const [errore, setErrore] = useState(false)
+  const [nomeTradizione, setNomeTradizione] = useState(null)
+  const [errore, setErrore] = useState(null)
   const [tentativo, setTentativo] = useState(0)
   const [vista, setVista] = useState({ centro: CENTRO_TRENTO, zoom: 16 })
   const [mappaRotta, setMappaRotta] = useState(false)
@@ -52,21 +59,26 @@ export default function Mappa() {
 
   // Tutti i luoghi, per costruire i filtri con le categorie e i temi presenti
   useEffect(() => {
-    getPoi().then(setTutti, () => setErrore(true))
-  }, [tentativo])
+    getPoi().then(setTutti, setErrore)
+  }, [tentativo, lingua])
+
+  useEffect(() => {
+    if (!tradizione) return setNomeTradizione(null)
+    getTradizioni().then((elenco) => setNomeTradizione(elenco.find((tr) => tr.id === tradizione)?.nome ?? null), () => {})
+  }, [tradizione, lingua])
 
   // Risultati filtrati dal server; la ricerca parte quando si smette di scrivere
   useEffect(() => {
     let attivo = true
     const timer = setTimeout(
       () =>
-        getPoi({ q, categoria, tema }).then(
+        getPoi({ q, categoria, tema, tradizione }).then(
           (risultati) => {
             if (!attivo) return
             setLuoghi(risultati)
-            setErrore(false)
+            setErrore(null)
           },
-          () => attivo && setErrore(true),
+          (err) => attivo && setErrore(err),
         ),
       q ? 250 : 0,
     )
@@ -74,10 +86,20 @@ export default function Mappa() {
       attivo = false
       clearTimeout(timer)
     }
-  }, [q, categoria, tema, tentativo])
+  }, [q, categoria, tema, tradizione, tentativo, lingua])
 
   const categorie = useMemo(() => [...new Set(tutti.map((p) => p.categoria))], [tutti])
   const temi = useMemo(() => [...new Set(tutti.flatMap((p) => p.temi))].sort(), [tutti])
+
+  // Con i luoghi sulla mappa, il codice della scheda si scarica in anticipo nei momenti liberi:
+  // al tocco su un luogo la scheda si apre subito (RNF-P02)
+  const luoghiPronti = luoghi !== null
+  useEffect(() => {
+    if (!luoghiPronti) return
+    const precarica = () => import('./Scheda.jsx')
+    const id = window.requestIdleCallback ? window.requestIdleCallback(precarica) : setTimeout(precarica, 1500)
+    return () => (window.cancelIdleCallback ? window.cancelIdleCallback(id) : clearTimeout(id))
+  }, [luoghiPronti])
 
   // La posizione si chiede la prima volta che si apre la mappa (dopo il benvenuto)
   useEffect(() => {
@@ -88,7 +110,7 @@ export default function Mappa() {
     if (stato === 'ok') setVista({ centro: coordinate, zoom: 16 })
   }, [stato, coordinate])
 
-  const filtriAttivi = Boolean(q || categoria || tema)
+  const filtriAttivi = Boolean(q || categoria || tema || tradizione)
   const conDistanza = useMemo(
     () =>
       (luoghi ?? [])
@@ -120,26 +142,34 @@ export default function Mappa() {
     [luoghi, selezionatoId, evidenziato],
   )
 
-  // Con filtri o ricerca attivi la mappa inquadra i risultati
-  const inquadra = useMemo(
-    () => (filtriAttivi && luoghi?.length ? luoghi.map((p) => p.posizione) : null),
-    [filtriAttivi, luoghi],
-  )
+  // UC-01 E3: l'utente è a Trento ma lontano da tutti i luoghi (l'elenco è ordinato per distanza)
+  const nessunoVicino =
+    stato === 'ok' && !filtriAttivi && conDistanza.length > 0 && conDistanza[0].distanza > RAGGIO_VICINI_M
+
+  // Con filtri o ricerca attivi la mappa inquadra i risultati; se non c'è niente vicino all'utente,
+  // allarga la vista fino a mostrare lui e i luoghi più vicini
+  const inquadra = useMemo(() => {
+    if (filtriAttivi && luoghi?.length) return luoghi.map((p) => p.posizione)
+    if (nessunoVicino) return [coordinate, ...conDistanza.slice(0, QUANTI_VICINI).map((r) => r.poi.posizione)]
+    return null
+  }, [filtriAttivi, luoghi, nessunoVicino, coordinate, conDistanza])
 
   const distanzaTesto = (metri) =>
     t(stato === 'ok' ? 'mappa.daTe' : 'mappa.daDuomo', { d: formattaDistanza(metri, lingua) })
 
-  const messaggio = errore
-    ? t('mappa.erroreCaricamento')
-    : mappaRotta && !elenco
+  // L'errore di caricamento ha il suo riquadro (ErroreCaricamento); questi sono gli altri avvisi
+  const messaggio =
+    mappaRotta && !elenco
       ? t('mappa.nonDisponibile')
       : stato === 'negata'
         ? t('mappa.posizioneNegata')
         : stato === 'lontano'
           ? t('mappa.lontano')
-          : null
+          : nessunoVicino
+            ? t('mappa.nessunoVicino')
+            : null
 
-  const avvisoInformativo = Boolean(messaggio) && !errore && !(mappaRotta && !elenco)
+  const avvisoInformativo = Boolean(messaggio) && !(mappaRotta && !elenco)
   useEffect(() => {
     if (!avvisoInformativo || avvisoChiuso) return
     const timer = setTimeout(() => setAvvisoChiuso(true), DURATA_AVVISO_MS)
@@ -200,15 +230,23 @@ export default function Mappa() {
             </label>
           </div>
 
-          {messaggio && (!avvisoChiuso || errore) && (
+          {tradizione && (
+            <p className="filtro-attivo">
+              <Icona nome="calendario" size={16} />
+              <span>{t('mappa.luoghiDi', { nome: nomeTradizione ?? '' })}</span>
+              <button type="button" className="banner__chiudi" aria-label={t('mappa.togliFiltri')} onClick={() => aggiorna({ tradizione: null, poi: null })}>
+                <Icona nome="chiudi" size={16} />
+              </button>
+            </p>
+          )}
+
+          {errore && <ErroreCaricamento riga errore={errore} onRiprova={() => setTentativo((n) => n + 1)} />}
+
+          {!errore && messaggio && !avvisoChiuso && (
             <div className="banner" role="status">
               <Icona nome="info" size={18} />
               <span>{messaggio}</span>
-              {errore ? (
-                <button type="button" className="banner__azione" onClick={() => setTentativo((n) => n + 1)}>
-                  {t('comune.riprova')}
-                </button>
-              ) : mappaRotta && !elenco ? (
+              {mappaRotta && !elenco ? (
                 <button type="button" className="banner__azione" onClick={() => aggiorna({ vista: 'elenco' })}>
                   {t('mappa.vistaElenco')}
                 </button>
@@ -245,7 +283,7 @@ export default function Mappa() {
                   <Icona nome="cerca" size={28} />
                   <p>{t('mappa.nessuno')}</p>
                   {filtriAttivi && (
-                    <button type="button" className="pulsante" onClick={() => aggiorna({ q: null, categoria: null, tema: null })}>
+                    <button type="button" className="pulsante" onClick={() => aggiorna({ q: null, categoria: null, tema: null, tradizione: null })}>
                       {t('mappa.togliFiltri')}
                     </button>
                   )}
@@ -300,6 +338,10 @@ export default function Mappa() {
         {filtriAttivi && luoghi?.length === 0 && <p className="mappa-vuota">{t('mappa.nessuno')}</p>}
 
         <div className="comandi-mappa">
+          {/* RF-06: riconoscere il luogo che si ha davanti, con fotocamera, posizione e bussola */}
+          <Link className="pulsante-tondo" to="/inquadra" aria-label={t('inquadra.titolo')} title={t('inquadra.titolo')}>
+            <Icona nome="inquadra" />
+          </Link>
           <button
             type="button"
             className="pulsante-tondo"

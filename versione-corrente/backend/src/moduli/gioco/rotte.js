@@ -12,6 +12,7 @@ import { SignJWT, jwtVerify } from 'jose'
 import { z } from 'zod'
 import { richiediAccesso } from '../../gateway/autenticazione.js'
 import { ErroreHttp, valida } from '../../gateway/errori.js'
+import { linguaRichiesta, testo } from '../lingua.js'
 
 export const LIVELLI_PER_PARTITA = 5
 export const PUNTEGGIO_MAX = 1000
@@ -28,17 +29,18 @@ export function punteggio(metri) {
 const posizione = z.tuple([z.number().min(-90).max(90), z.number().min(-180).max(180)])
 
 // Ogni livello è una foto storica: quelle curate dal team (db/dati/gioco.json) e quelle della
-// community approvate con il consenso dell'autore (RF-23). I nomi dei file sono neutri (f01.webp)
-// e i crediti, che contengono il nome del luogo, si mandano solo dopo la risposta.
+// community che un moderatore ha scelto, con il consenso dell'autore (RF-23). I nomi dei file sono
+// neutri (f01.webp) e i crediti, che contengono il nome del luogo, si mandano solo dopo la risposta.
+// La posizione giusta è quella dello scatto, se l'autore l'ha indicata, altrimenti quella del luogo.
 const LIVELLI = `
   SELECT 'l-' || l.id AS id, l.indizio, l.anno, NULL::uuid AS foto, l.foto_file, l.poi,
-         l.foto_autore AS autore, l.foto_licenza AS licenza, l.foto_fonte AS fonte
+         l.foto_autore AS autore, l.foto_licenza AS licenza, l.foto_fonte AS fonte, NULL::geography AS scatto
     FROM livelli_gioco l
    WHERE l.foto_file IS NOT NULL
   UNION ALL
-  SELECT 'c-' || c.id, '', c.anno, c.foto, NULL, c.poi, u.nome_visualizzato, c.licenza, ''
+  SELECT 'c-' || c.id, '', c.anno, c.foto, NULL, c.poi, u.nome_visualizzato, c.licenza, '', c.posizione_foto
     FROM contenuti c JOIN utenti u ON u.id = c.autore
-   WHERE c.stato = 'approvato' AND c.consenso_gioco AND c.foto IS NOT NULL`
+   WHERE c.stato = 'approvato' AND c.livello_gioco AND c.foto IS NOT NULL`
 
 /** Indirizzo della foto di un livello, per il tag <img> */
 const urlFotoLivello = (l) => (l.foto_file ? `/api/gioco/foto/${l.foto_file}` : `/api/foto/${l.foto}`)
@@ -55,11 +57,12 @@ export function rotteGioco({ db, config }) {
     }
   }
 
-  /** Distanza in metri tra la risposta e il POI del livello, calcolata con PostGIS */
-  async function valuta(idLivello, [lat, lng]) {
+  /** Distanza in metri tra la risposta e il punto del livello, calcolata con PostGIS */
+  async function valuta(idLivello, [lat, lng], lingua = 'it') {
     const [riga] = await db.query(
-      `SELECT p.id, p.nome, ST_Y(p.posizione::geometry) AS lat, ST_X(p.posizione::geometry) AS lng,
-              ST_Distance(p.posizione, ST_SetSRID(ST_MakePoint($2, $3), 4326)::geography) AS metri,
+      `SELECT p.id, ${testo(lingua, 'p', 'nome')} AS nome,
+              ST_Y(coalesce(l.scatto, p.posizione)::geometry) AS lat, ST_X(coalesce(l.scatto, p.posizione)::geometry) AS lng,
+              ST_Distance(coalesce(l.scatto, p.posizione), ST_SetSRID(ST_MakePoint($2, $3), 4326)::geography) AS metri,
               l.autore, l.licenza, l.fonte
          FROM (${LIVELLI}) l JOIN poi p ON p.id = l.poi
         WHERE l.id = $1`,
@@ -112,7 +115,7 @@ export function rotteGioco({ db, config }) {
       req.body,
     )
     const { livelli } = await leggiPartita(dati.partita)
-    res.json(await valuta(livelli[dati.indice], dati.posizione))
+    res.json(await valuta(livelli[dati.indice], dati.posizione, linguaRichiesta(req)))
   })
 
   /** POST /api/gioco/punteggi — salva il punteggio di un utente registrato (RF-22) */

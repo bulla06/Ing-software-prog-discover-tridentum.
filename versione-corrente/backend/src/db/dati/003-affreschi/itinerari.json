@@ -1,0 +1,24 @@
+[
+  {
+    "id": "trento-dipinta",
+    "titolo": "Trento dipinta",
+    "tema": "arte",
+    "durata_minuti": 75,
+    "descrizione": "Le facciate affrescate del centro, dall'affresco riscoperto nel 2020 in piazza Pasi alle fatiche di Ercole e alla via dei palazzi.",
+    "tappe": [
+      "palazzo-niccolini",
+      "case-cazuffi-rella",
+      "affreschi-duomo",
+      "palazzo-sardagna",
+      "palazzo-del-monte",
+      "palazzo-quetta-alberti-colico",
+      "palazzo-geremia"
+    ],
+    "traduzioni": {
+      "en": {
+        "titolo": "Painted Trento",
+        "descrizione": "The frescoed façades of the old town, from the fresco rediscovered in 2020 in Piazza Pasi to the Labours of Hercules and the street of palaces."
+      }
+    }
+  }
+]

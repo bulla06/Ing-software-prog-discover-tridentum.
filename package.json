@@ -17,7 +17,8 @@
     "build": "npm run build -w versione-corrente/frontend",
     "start": "npm run build && npm start -w versione-corrente/backend",
     "test": "npm test -w versione-corrente/frontend && npm test -w versione-corrente/backend",
-    "crea-amministratore": "npm run crea-amministratore -w versione-corrente/backend --"
+    "crea-amministratore": "npm run crea-amministratore -w versione-corrente/backend --",
+    "scarica-foto": "npm run scarica-foto -w versione-corrente/backend --"
   },
   "devDependencies": {
     "concurrently": "^10.0.6"

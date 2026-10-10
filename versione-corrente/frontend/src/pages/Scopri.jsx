@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import ErroreCaricamento from '../components/ErroreCaricamento.jsx'
 import Icona from '../components/Icona.jsx'
 import MappaLeaflet from '../components/MappaLeaflet.jsx'
 import { getGusto, getTradizioni } from '../data/api.js'
@@ -9,17 +10,25 @@ const SCHEDE = ['tradizioni', 'gusto']
 
 // S-11 Scopri: "Tradizioni" per periodo dell'anno (RF-19) e "Mappa del gusto" (RF-20).
 export default function Scopri() {
-  const { t } = useT()
+  const { t, lingua } = useT()
   const [params, setParams] = useSearchParams()
   const scheda = SCHEDE.includes(params.get('scheda')) ? params.get('scheda') : 'tradizioni'
-  const [tradizioni, setTradizioni] = useState([])
+  const [tradizioni, setTradizioni] = useState(null)
   const [gusto, setGusto] = useState({ piatti: [], locali: [] })
+  const [errore, setErrore] = useState(null)
+  const [tentativo, setTentativo] = useState(0)
   const navigate = useNavigate()
 
   useEffect(() => {
-    getTradizioni().then(setTradizioni, () => {})
-    getGusto().then(setGusto, () => {})
-  }, [])
+    setErrore(null)
+    Promise.all([getTradizioni(), getGusto()]).then(
+      ([elenco, gustoCaricato]) => {
+        setTradizioni(elenco)
+        setGusto(gustoCaricato)
+      },
+      setErrore,
+    )
+  }, [tentativo, lingua])
 
   // UC-10 3a: i locali sulla mappa, toccandone uno si apre la scheda
   const segnaposti = useMemo(
@@ -29,9 +38,14 @@ export default function Scopri() {
   const inquadra = useMemo(() => (gusto.locali.length ? gusto.locali.map((l) => l.posizione) : null), [gusto])
   const vistaGusto = useMemo(() => ({ centro: [46.0675, 11.1215], zoom: 15 }), [])
 
+  // UC-10 passo 4: prima le voci in corso, poi quelle del mese prossimo, poi il resto dell'anno
+  // (E1: se nel periodo non c'è niente, si vedono comunque tutte)
   const meseAttuale = new Date().getMonth() + 1
-  const adesso = tradizioni.filter((tr) => tr.mesi.includes(meseAttuale))
-  const altre = tradizioni.filter((tr) => !tr.mesi.includes(meseAttuale))
+  const meseProssimo = (meseAttuale % 12) + 1
+  const elenco = tradizioni ?? []
+  const adesso = elenco.filter((tr) => tr.mesi.includes(meseAttuale))
+  const traPoco = elenco.filter((tr) => !tr.mesi.includes(meseAttuale) && tr.mesi.includes(meseProssimo))
+  const altre = elenco.filter((tr) => !adesso.includes(tr) && !traPoco.includes(tr))
 
   // Tastiera sulle schede: frecce sinistra/destra come nel pattern ARIA "tabs"
   const tastoSchede = (e) => {
@@ -65,7 +79,11 @@ export default function Scopri() {
         ))}
       </div>
 
-      {scheda === 'tradizioni' ? (
+      {errore ? (
+        <ErroreCaricamento errore={errore} onRiprova={() => setTentativo((n) => n + 1)} />
+      ) : tradizioni === null ? (
+        <div aria-busy="true" className="scheletro scheletro--scheda" />
+      ) : scheda === 'tradizioni' ? (
         <div id="pannello-tradizioni" role="tabpanel" aria-labelledby="tab-tradizioni">
           {adesso.length > 0 && (
             <>
@@ -77,11 +95,26 @@ export default function Scopri() {
               </ul>
             </>
           )}
-          <ul className="elenco-schede">
-            {altre.map((tr) => (
-              <Tradizione key={tr.id} tradizione={tr} />
-            ))}
-          </ul>
+          {traPoco.length > 0 && (
+            <>
+              <h2 className="etichetta-sezione">{t('scopri.traPoco')}</h2>
+              <ul className="elenco-schede">
+                {traPoco.map((tr) => (
+                  <Tradizione key={tr.id} tradizione={tr} evidenza />
+                ))}
+              </ul>
+            </>
+          )}
+          {altre.length > 0 && (
+            <>
+              {(adesso.length > 0 || traPoco.length > 0) && <h2 className="etichetta-sezione">{t('scopri.restoAnno')}</h2>}
+              <ul className="elenco-schede">
+                {altre.map((tr) => (
+                  <Tradizione key={tr.id} tradizione={tr} />
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       ) : (
         <div id="pannello-gusto" role="tabpanel" aria-labelledby="tab-gusto">
@@ -145,16 +178,23 @@ function Tradizione({ tradizione, evidenza = false }) {
       <h2>{tradizione.nome}</h2>
       <p>{tradizione.descrizione}</p>
       {tradizione.luoghi.length > 0 && (
-        <ul className="etichette" aria-label={t('scopri.dove')}>
-          {tradizione.luoghi.map((poi) => (
-            <li key={poi.id}>
-              <Link className="chip chip--piccolo" to={`/poi/${poi.id}`}>
-                <Icona nome="posizione" size={14} />
-                {poi.nome}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="etichette" aria-label={t('scopri.dove')}>
+            {tradizione.luoghi.map((poi) => (
+              <li key={poi.id}>
+                <Link className="chip chip--piccolo" to={`/poi/${poi.id}`}>
+                  <Icona nome="posizione" size={14} />
+                  {poi.nome}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {/* UC-10 passo 6: i luoghi collegati sulla mappa */}
+          <Link className="collegamento" to={`/?tradizione=${tradizione.id}`}>
+            <Icona nome="mappa" size={16} />
+            {t('scopri.sullaMappa')}
+          </Link>
+        </>
       )}
     </li>
   )

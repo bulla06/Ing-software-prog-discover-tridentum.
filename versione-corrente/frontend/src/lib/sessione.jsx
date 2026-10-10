@@ -36,8 +36,11 @@ export function SessioneProvider({ children }) {
 
   const dimentica = useCallback(() => impostaSessione(null), [])
 
+  // Dati dell'utente cambiati dal profilo (es. il nome visualizzato): la sessione resta la stessa
+  const aggiorna = useCallback((dati) => setUtente((u) => (u ? { ...u, ...dati } : u)), [])
+
   return (
-    <SessioneContext.Provider value={{ utente, pronta, accedi, confermaEmail, esci, dimentica }}>
+    <SessioneContext.Provider value={{ utente, pronta, accedi, confermaEmail, esci, dimentica, aggiorna }}>
       {children}
     </SessioneContext.Provider>
   )

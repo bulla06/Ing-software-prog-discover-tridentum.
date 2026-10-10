@@ -1,4 +1,5 @@
 // UC-04 Caricare un ricordo · UC-05 Moderare un contenuto · RF-18 Segnalazioni
+import { SignJWT } from 'jose'
 import sharp from 'sharp'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { ACCOUNT, accedi, creaAmbiente } from './ambiente.js'
@@ -57,7 +58,7 @@ describe('caricare un ricordo (UC-04)', () => {
   })
 
   it('riduce la foto sotto i 500 KB e rimuove l\'EXIF (RNF-P03, RNF-S05)', async () => {
-    const r = await carica('sass', { testo: 'Gli scavi negli anni Novanta', anno: 'anni \'90', licenza: 'cc-by-nc', consenso_gioco: 'true' }, await fotoConExif())
+    const r = await carica('sass', { testo: 'Gli scavi negli anni Novanta', anno: 'anni \'90', licenza: 'cc-by-nc', consenso_gioco: 'true', lat: '46.06895', lng: '11.12285' }, await fotoConExif())
     expect(r.status).toBe(201)
 
     const [{ foto }] = await amb.db.query('SELECT foto FROM contenuti WHERE id = $1', [r.body.id])
@@ -110,8 +111,12 @@ describe('moderazione (UC-05)', () => {
 
   it('pubblica il ricordo approvato con la foto nell\'area pubblica', async () => {
     const conFoto = (await codaModerazione()).contenuti.find((c) => c.foto)
-    const r = await amb.api().post(`/api/moderazione/contenuti/${conFoto.id}/decisione`).set(moderatore).send({ esito: 'approva' })
+    // Il moderatore vede il consenso e il punto dello scatto indicato dall'autore
+    expect(conFoto).toMatchObject({ consenso_gioco: true, posizione_foto: [46.06895, 11.12285] })
+    const r = await amb.api().post(`/api/moderazione/contenuti/${conFoto.id}/decisione`).set(moderatore).send({ esito: 'approva', livello_gioco: true })
     expect(r.status).toBe(200)
+    expect(r.body.livello_gioco).toBe(true)
+    expect(amb.posta.postaDiProva()[0].testo).toMatch(/livello del gioco/)
 
     const scheda = (await amb.api().get('/api/poi/sass')).body
     expect(scheda.ricordi).toHaveLength(1)
@@ -131,11 +136,41 @@ describe('moderazione (UC-05)', () => {
     expect((await codaModerazione()).contenuti).toHaveLength(0)
   })
 
-  it('usa le foto approvate con consenso come livelli del gioco (RF-23)', async () => {
-    const [livello] = await amb.db.query(
-      `SELECT count(*)::int AS n FROM contenuti WHERE stato = 'approvato' AND consenso_gioco AND foto IS NOT NULL`,
-    )
-    expect(livello.n).toBe(1)
+  it('usa come livello del gioco la foto scelta dal moderatore, con il punto dello scatto (RF-23)', async () => {
+    const [livello] = await amb.db.query('SELECT id FROM contenuti WHERE livello_gioco')
+    expect(livello).toBeTruthy()
+    // Partita con quel livello: la risposta esatta è il punto dello scatto, non il luogo
+    const segreto = new TextEncoder().encode('segreto-solo-per-lo-sviluppo-locale')
+    const partita = await new SignJWT({ livelli: [`c-${livello.id}`] })
+      .setProtectedHeader({ alg: 'HS256' }).setJti('prova').setAudience('partita').setExpirationTime('1h').sign(segreto)
+    const r = await amb.api().post('/api/gioco/verifica').send({ partita, indice: 0, posizione: [46.06895, 11.12285] })
+    expect(r.body).toMatchObject({ metri: 0, punti: 1000, poi: { id: 'sass', posizione: [46.06895, 11.12285] } })
+  })
+})
+
+describe('livelli del gioco dalla community (RF-23)', () => {
+  it('una foto senza il consenso dell\'autore non può diventare un livello', async () => {
+    const inviato = await carica('duomo', { licenza: 'cc-by' }, await fotoConExif())
+    const r = await amb.api().post(`/api/moderazione/contenuti/${inviato.body.id}/decisione`).set(moderatore)
+      .send({ esito: 'approva', livello_gioco: true })
+    expect(r.status).toBe(400)
+    expect(r.body.errore).toBe('senza_consenso')
+    // Il ricordo resta in coda: il moderatore può approvarlo senza farne un livello
+    const ok = await amb.api().post(`/api/moderazione/contenuti/${inviato.body.id}/decisione`).set(moderatore).send({ esito: 'approva' })
+    expect(ok.body).toMatchObject({ stato: 'approvato', livello_gioco: false })
+  })
+
+  it('con il consenso, è il moderatore a scegliere: approvata senza "livello" non entra nel gioco', async () => {
+    const inviato = await carica('duomo', { licenza: 'cc-by', consenso_gioco: 'true' }, await fotoConExif())
+    await amb.api().post(`/api/moderazione/contenuti/${inviato.body.id}/decisione`).set(moderatore).send({ esito: 'approva' })
+    const [riga] = await amb.db.query('SELECT livello_gioco, posizione_foto FROM contenuti WHERE id = $1', [inviato.body.id])
+    expect(riga).toEqual({ livello_gioco: false, posizione_foto: null })
+  })
+
+  it('il punto dello scatto si salva solo con il consenso', async () => {
+    const inviato = await carica('duomo', { licenza: 'cc-by', lat: '46.07', lng: '11.12' }, await fotoConExif())
+    const [riga] = await amb.db.query('SELECT posizione_foto FROM contenuti WHERE id = $1', [inviato.body.id])
+    expect(riga.posizione_foto).toBeNull()
   })
 })
 

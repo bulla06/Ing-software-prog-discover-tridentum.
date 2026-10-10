@@ -1,0 +1,334 @@
+[
+  {
+    "id": "palazzo-del-monte",
+    "nome": "Palazzo Del Monte — Le fatiche di Ercole",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "arte"],
+    "posizione": [46.0699, 11.1238],
+    "indirizzo": "Via San Marco, angolo via del Suffragio",
+    "epoca": "Fine XV – inizio XVI secolo",
+    "affresco": {
+      "autore": "Pittori di area lombarda o veneta vicini a Giovanni Maria Falconetto",
+      "epoca": "Inizio del Cinquecento"
+    },
+    "sintesi": "Una facciata con le fatiche di Ercole, ferita da un incendio di guerra e salvata con pazienza.",
+    "descrizione": [
+      "All'incrocio tra via Manci, via San Marco e via del Suffragio, la facciata di Palazzo Del Monte racconta le fatiche di Ercole: se ne riconoscono dieci delle dodici, insieme a due episodi minori, iscrizioni in latino, medaglioni e putti.",
+      "Gli affreschi sono opera di pittori di area lombarda o veneta vicini allo stile di Giovanni Maria Falconetto e risalgono ai primi decenni del Cinquecento, prima della morte dell'imperatore Massimiliano I nel 1519.",
+      "Nel 1944 un incendio seguito a un bombardamento li danneggiò gravemente. Restaurati in parte negli anni Cinquanta e tra il 1980 e il 1983, nella primavera del 2025 sono stati messi in sicurezza in attesa di un nuovo restauro."
+    ],
+    "parole_chiave": ["ercole", "fatiche", "facciata", "affreschi", "via manci", "falconetto", "del monte"],
+    "fonti": [
+      { "titolo": "Provincia autonoma di Trento — Palazzo Del Monte, il futuro dei dipinti rinascimentali (2025)", "url": "https://www.ufficiostampa.provincia.tn.it/layout/set/print/Comunicati/Palazzo-Del-Monte-a-Trento-il-futuro-dei-dipinti-rinascimentali" },
+      { "titolo": "Ezio Chini, «Trento, città dipinta» (Italia Nostra)", "url": "https://www.italianostra.org/wp-content/uploads/Chini_Art-e-Dossier.pdf" },
+      { "titolo": "Catalogo generale dei Beni Culturali — Palazzo Del Monte", "url": "https://catalogo.beniculturali.it/detail/Trento/ArchitecturalOrLandscapeHeritage/SBC002_4599_S222" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "Palazzo Del Monte — The Labours of Hercules",
+        "sintesi": "A façade showing the Labours of Hercules, scarred by a wartime fire and patiently saved.",
+        "epoca": "Late 15th – early 16th century",
+        "affresco_autore": "Painters from Lombardy or the Veneto close to Giovanni Maria Falconetto",
+        "affresco_epoca": "Early 16th century",
+        "descrizione": [
+          "Where Via Manci meets Via San Marco and Via del Suffragio, the façade of Palazzo Del Monte tells the Labours of Hercules: ten of the twelve can be recognised, along with two minor episodes, Latin inscriptions, medallions and cherubs.",
+          "The frescoes were painted by artists from Lombardy or the Veneto close to the style of Giovanni Maria Falconetto, in the first decades of the 16th century, before Emperor Maximilian I died in 1519.",
+          "In 1944 a fire caused by a bombing raid badly damaged them. Partly restored in the 1950s and between 1980 and 1983, they were made safe in spring 2025 while awaiting a new restoration."
+        ]
+      }
+    }
+  },
+  {
+    "id": "palazzo-quetta-alberti-colico",
+    "nome": "Palazzo Quetta Alberti-Colico",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "arte"],
+    "posizione": [46.0694, 11.1204],
+    "indirizzo": "Via Rodolfo Belenzani 32",
+    "epoca": "XV–XVI secolo",
+    "affresco": {
+      "autore": "Marcello Fogolino (attribuzione)",
+      "epoca": "XVI secolo"
+    },
+    "sintesi": "Due secoli di pittura sulla stessa facciata: il Cinquecento dipinto sopra il Quattrocento.",
+    "descrizione": [
+      "Lungo via Belenzani, poco oltre Palazzo Geremia, la facciata di questo palazzo mostra affreschi del Cinquecento stesi sopra decorazioni più antiche, del Quattrocento, che in alcuni punti riaffiorano.",
+      "Gli affreschi cinquecenteschi sono attribuiti a Marcello Fogolino, il pittore delle Case Cazuffi-Rella e di molte sale del Castello del Buonconsiglio. Le finestre a una sola luce ricordano l'aspetto più antico dell'edificio."
+    ],
+    "parole_chiave": ["via belenzani", "affreschi", "fogolino", "facciata", "alberti colico", "quetta"],
+    "fonti": [
+      { "titolo": "Comune di Trento — Palazzo Quetta Alberti-Colico", "url": "https://old.comune.trento.it/Aree-tematiche/Cultura-e-turismo/Visitare/Edifici-storici/Palazzo-Quetta-Alberti-Colico/(language)/eng-GB" },
+      { "titolo": "Via Belenzani — guida della città", "url": "https://icaps03.icaps-conference.org/turism/trento/belenzani.htm" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "Palazzo Quetta Alberti-Colico",
+        "sintesi": "Two centuries of painting on one façade: the 16th century painted over the 15th.",
+        "epoca": "15th–16th century",
+        "affresco_autore": "Marcello Fogolino (attributed)",
+        "affresco_epoca": "16th century",
+        "descrizione": [
+          "Along Via Belenzani, just past Palazzo Geremia, this palace’s façade shows 16th-century frescoes painted over older 15th-century decoration, which shows through in places.",
+          "The 16th-century frescoes are attributed to Marcello Fogolino, the painter of the Cazuffi-Rella houses and of many rooms in the Buonconsiglio Castle. The single-light windows recall the building’s older appearance."
+        ]
+      }
+    }
+  },
+  {
+    "id": "palazzo-niccolini",
+    "nome": "Palazzo Niccolini — L'affresco ritrovato",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "concilio", "arte"],
+    "posizione": [46.06775, 11.12215],
+    "indirizzo": "Piazza Mario Pasi",
+    "epoca": "1574",
+    "affresco": {
+      "autore": "Pittori di scuola veneta (attribuzione incerta)",
+      "epoca": "1574"
+    },
+    "sintesi": "Un affresco del 1574 rimasto per decenni sotto l'intonaco, riscoperto nel 2020.",
+    "descrizione": [
+      "Per decenni la facciata del palazzo, sopra il bar che porta lo stesso nome, era coperta da un intonaco color mattone. Nel marzo 2020 quella che doveva essere una semplice tinteggiatura è diventata un restauro: sotto c'era un grande affresco.",
+      "La scena centrale mostra la traslazione della Santa Casa di Nazareth a Loreto, portata in volo dagli angeli; ai lati San Sebastiano e San Rocco, i santi invocati contro la peste, e Cristo che versa il suo sangue in un calice. In basso c'è lo stemma dei Madruzzo e un cartiglio con la data, 1574.",
+      "L'autore non è noto: si pensa a pittori di scuola veneta. Il restauro, seguito dalla Soprintendenza, è stato pagato in gran parte dalle proprietarie, le sorelle Niccolini."
+    ],
+    "parole_chiave": ["piazza pasi", "loreto", "santa casa", "madruzzo", "san rocco", "san sebastiano", "affresco ritrovato", "niccolini"],
+    "fonti": [
+      { "titolo": "L'Adige — Il meraviglioso affresco ritrovato su Palazzo Niccolini in piazza Pasi", "url": "https://www.ladige.it/territori/trento/il-meraviglioso-affresco-ritrovato-su-palazzo-niccolini-in-piazza-pasi-rende-trento-ancora-piu-bella-rgb1aql7" },
+      { "titolo": "Visit Trento — Affreschi di Palazzo Niccolini", "url": "https://www.visittrento.it/en/points-of-interest/frescoes-in-palazzo-niccolini" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "Palazzo Niccolini — The rediscovered fresco",
+        "sintesi": "A fresco from 1574, hidden under plaster for decades and rediscovered in 2020.",
+        "affresco_autore": "Painters of the Venetian school (uncertain attribution)",
+        "descrizione": [
+          "For decades the palace façade, above the café of the same name, was covered in brick-coloured plaster. In March 2020 what was meant to be a simple repaint turned into a restoration: underneath was a large fresco.",
+          "The central scene shows the Holy House of Nazareth being carried by angels to Loreto; at the sides are Saint Sebastian and Saint Roch, the saints invoked against the plague, and Christ pouring his blood into a chalice. Below are the Madruzzo coat of arms and a scroll with the date, 1574.",
+          "The painter is unknown: probably artists of the Venetian school. The restoration, supervised by the heritage authority, was largely paid for by the owners, the Niccolini sisters."
+        ]
+      }
+    }
+  },
+  {
+    "id": "affreschi-duomo",
+    "nome": "Gli affreschi del Trecento nel Duomo",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "arte"],
+    "posizione": [46.06655, 11.12165],
+    "indirizzo": "Cattedrale di San Vigilio, Piazza Duomo",
+    "epoca": "XIV secolo",
+    "affresco": {
+      "autore": "Pittori del Trecento non identificati",
+      "epoca": "XIV secolo"
+    },
+    "sintesi": "Dentro la cattedrale, frammenti di pittura gotica che quasi nessuno nota.",
+    "descrizione": [
+      "Chi entra in Duomo guarda l'altare e il baldacchino; nel transetto però restano affreschi del Trecento con la leggenda di San Giuliano, frammenti della decorazione medievale della chiesa.",
+      "Nella navata nord è tornata visibile, dopo un restauro, una Madonna in trono con il Bambino dipinta anch'essa nel Trecento.",
+      "Sono dipinti più antichi del Concilio di Trento di oltre due secoli: la cattedrale romanica era stata iniziata nel 1212 e i lavori proseguirono per più di cento anni."
+    ],
+    "parole_chiave": ["duomo", "cattedrale", "san giuliano", "trecento", "gotico", "madonna", "transetto"],
+    "fonti": [
+      { "titolo": "L'Adige — Nel Duomo di Trento spunta un prezioso affresco del Trecento", "url": "https://www.ladige.it/cultura-e-spettacoli/nel-duomo-di-trento-spunta-un-prezioso-affresco-la-madonna-della-pace-del-1300-r0pkuhyq" },
+      { "titolo": "Il Turista — Visita alla cattedrale di San Vigilio", "url": "https://www.ilturista.info/da-vedere/visita-cattedrale-san-vigilio-trento/" },
+      { "titolo": "Arcidiocesi di Trento", "url": "https://www.diocesitn.it" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "The 14th-century frescoes in the Cathedral",
+        "sintesi": "Inside the cathedral, fragments of Gothic painting that hardly anyone notices.",
+        "epoca": "14th century",
+        "affresco_autore": "Unidentified 14th-century painters",
+        "affresco_epoca": "14th century",
+        "descrizione": [
+          "Visitors to the cathedral look at the altar and its canopy, but the transept still holds 14th-century frescoes with the legend of Saint Julian, fragments of the church’s medieval decoration.",
+          "In the north aisle, a restoration has brought back to view an enthroned Madonna and Child, also painted in the 14th century.",
+          "These paintings are more than two centuries older than the Council of Trent: the Romanesque cathedral was begun in 1212 and work went on for over a hundred years."
+        ]
+      }
+    }
+  },
+  {
+    "id": "sala-grande-dossi",
+    "nome": "Magno Palazzo — Gli affreschi dei Dossi",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "arte"],
+    "posizione": [46.0707, 11.1268],
+    "indirizzo": "Castello del Buonconsiglio, Magno Palazzo",
+    "epoca": "1531–1532",
+    "affresco": {
+      "autore": "Dosso e Battista Dossi",
+      "epoca": "1531–1532"
+    },
+    "sintesi": "I pittori più pagati del cantiere di Bernardo Clesio, chiamati da Ferrara.",
+    "descrizione": [
+      "Per il suo nuovo palazzo il principe vescovo Bernardo Clesio chiamò i fratelli Dosso e Battista Dossi, pittori della corte di Ferrara, che lavorarono qui nel 1531 e nel 1532. Dosso arrivò con una grande fama: fu pagato il doppio di Fogolino e Romanino.",
+      "Nella Sala Grande putti giocano con le lettere del nome di Bernardo; in cima allo scalone che vi conduce, un affresco dei Dossi mostra il santo patrono che presenta il Clesio alla Madonna.",
+      "Clesio controllava di persona i disegni: quando vide i soggetti dell'Antico Testamento proposti da Dosso per un'altra sala, li giudicò adatti più a una chiesa e chiese invece «qualche favola d'Ovidio». Quelle sale non si sono conservate."
+    ],
+    "parole_chiave": ["dossi", "dosso", "battista dossi", "sala grande", "magno palazzo", "clesio", "ferrara", "buonconsiglio"],
+    "fonti": [
+      { "titolo": "Provincia autonoma di Trento — Rinascimenti eccentrici, Dosso Dossi al Buonconsiglio", "url": "https://www.ufficiostampa.provincia.tn.it/content/view/pdf/48048" },
+      { "titolo": "Arte.it — Dosso Dossi al Castello del Buonconsiglio", "url": "https://arte.it/calendario-arte/trento/mostra-rinascimenti-eccentrici-dosso-dossi-al-castello-del-buonconsiglio-di-trento-7821" },
+      { "titolo": "Castello del Buonconsiglio", "url": "https://www.buonconsiglio.it" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "Magno Palazzo — The Dossi frescoes",
+        "sintesi": "The best-paid painters of Bernardo Cles’s building site, called from Ferrara.",
+        "affresco_autore": "Dosso and Battista Dossi",
+        "descrizione": [
+          "For his new palace, Prince-Bishop Bernardo Cles called the brothers Dosso and Battista Dossi, painters at the court of Ferrara, who worked here in 1531 and 1532. Dosso arrived with a great reputation: he was paid twice as much as Fogolino and Romanino.",
+          "In the Great Hall, cherubs play with the letters of Bernardo’s name; at the top of the staircase leading to it, a fresco by the Dossi shows the patron saint presenting Cles to the Madonna.",
+          "Cles checked the designs himself: when he saw the Old Testament subjects Dosso proposed for another room, he found them better suited to a church and asked instead for “some fable from Ovid”. Those rooms have not survived."
+        ]
+      }
+    }
+  },
+  {
+    "id": "fogolino-torrion-da-basso",
+    "nome": "Torrion da basso — Gli imperatori di Fogolino",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "arte"],
+    "posizione": [46.0702, 11.1262],
+    "indirizzo": "Castello del Buonconsiglio, Magno Palazzo",
+    "epoca": "1532–1533",
+    "affresco": {
+      "autore": "Marcello Fogolino",
+      "epoca": "1532–1533"
+    },
+    "sintesi": "Imperatori romani a cavallo e storie di Giulio Cesare nella sala al piano terra del torrione.",
+    "descrizione": [
+      "Marcello Fogolino, pittore vicentino, arrivò al cantiere del Magno Palazzo intorno al 1531. Dipinse prima alcuni fregi sulla facciata, poi la sala al piano terra del Torrion da basso.",
+      "Qui, tra il 1532 e il 1533, affrescò un fregio con gli imperatori romani a cavallo, grottesche ed episodi della vita di Giulio Cesare: si vede quanto avesse guardato il lavoro di Dosso Dossi e di Romanino, che dipingevano nelle sale vicine."
+    ],
+    "parole_chiave": ["fogolino", "imperatori", "giulio cesare", "grottesche", "torrione", "magno palazzo", "buonconsiglio"],
+    "fonti": [
+      { "titolo": "Panorama — Il Rinascimento di Marcello Fogolino in mostra a Trento", "url": "https://www.panorama.it/lifestyle/rinascimento-marcello-fogolino-in-mostra-trento" },
+      { "titolo": "Arte.it — Ordine e bizzarria: il Rinascimento di Marcello Fogolino", "url": "https://arte.it/calendario-arte/trento/mostra-ordine-e-bizzarria-il-rinascimento-di-marcello-fogolino-39687" },
+      { "titolo": "Touring Club Italiano — Castello del Buonconsiglio", "url": "https://www.touringclub.it/destinazioni/trento/vedere/209540-castello-del-buonconsiglio" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "Torrion da basso — Fogolino’s emperors",
+        "sintesi": "Roman emperors on horseback and stories of Julius Caesar in the ground-floor room of the tower.",
+        "affresco_autore": "Marcello Fogolino",
+        "descrizione": [
+          "Marcello Fogolino, a painter from Vicenza, joined the Magno Palazzo building site around 1531. He first painted some friezes on the façade, then the ground-floor room of the Torrion da basso, the lower tower.",
+          "Here, in 1532 and 1533, he frescoed a frieze of Roman emperors on horseback, grotesques and episodes from the life of Julius Caesar: you can see how closely he had studied the work of Dosso Dossi and Romanino, who were painting the nearby rooms."
+        ]
+      }
+    }
+  },
+  {
+    "id": "loggia-castelvecchio",
+    "nome": "Castelvecchio — La loggia veneziana",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "arte"],
+    "posizione": [46.0713, 11.1281],
+    "indirizzo": "Castello del Buonconsiglio, Castelvecchio",
+    "epoca": "1475; affreschi del 1535",
+    "affresco": {
+      "autore": "Marcello Fogolino e altri pittori",
+      "epoca": "XV–XVI secolo"
+    },
+    "sintesi": "Il cortile gotico del castello più antico, con le logge dipinte affacciate una sull'altra.",
+    "descrizione": [
+      "Il Castelvecchio è il nucleo più antico del Buonconsiglio, con le mura merlate del Duecento. Nel 1475 il principe vescovo Giovanni Hinderbach lo fece trasformare nello stile gotico veneziano, con logge sovrapposte intorno al cortile.",
+      "Le pareti delle logge sono dipinte: tra gli affreschi ce ne sono alcuni di Marcello Fogolino, datati 1535. Si visitano con il percorso del museo."
+    ],
+    "parole_chiave": ["castelvecchio", "loggia", "gotico veneziano", "hinderbach", "cortile", "fogolino", "buonconsiglio"],
+    "fonti": [
+      { "titolo": "Touring Club Italiano — Castello del Buonconsiglio", "url": "https://www.touringclub.it/destinazioni/trento/vedere/209540-castello-del-buonconsiglio" },
+      { "titolo": "MuseiOnline — Castello del Buonconsiglio", "url": "https://www.museionline.info/musei/castello-del-buonconsiglio" },
+      { "titolo": "Castello del Buonconsiglio", "url": "https://www.buonconsiglio.it" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "Castelvecchio — The Venetian loggia",
+        "sintesi": "The Gothic courtyard of the oldest castle, with painted loggias stacked one above the other.",
+        "epoca": "1475; frescoes from 1535",
+        "affresco_autore": "Marcello Fogolino and other painters",
+        "affresco_epoca": "15th–16th century",
+        "descrizione": [
+          "The Castelvecchio is the oldest part of the Buonconsiglio, with battlemented 13th-century walls. In 1475 Prince-Bishop Johannes Hinderbach had it remodelled in Venetian Gothic style, with loggias stacked around the courtyard.",
+          "The loggia walls are painted: among the frescoes are some by Marcello Fogolino, dated 1535. They are part of the museum tour."
+        ]
+      }
+    }
+  },
+  {
+    "id": "palazzo-sardagna",
+    "nome": "Palazzo Sardagna — Le sale di Fogolino",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "trento-contemporanea", "arte"],
+    "posizione": [46.0668, 11.1235],
+    "indirizzo": "Via Calepina 14",
+    "epoca": "XVI secolo",
+    "affresco": {
+      "autore": "Marcello Fogolino",
+      "epoca": "1535–1540"
+    },
+    "sintesi": "Il palazzo del Rettorato dell'università nasconde due sale affrescate da Fogolino.",
+    "descrizione": [
+      "Non si sa chi siano stati i primi proprietari né quando sia iniziata la costruzione: le uniche date certe sono quelle tra il 1535 e il 1540, quando Marcello Fogolino affrescò due sale al piano terra. La facciata è invece del Seicento.",
+      "Il palazzo ha il cortile più grande tra quelli dei palazzi storici della città. Dal 2014 ospita il Rettorato dell'Università di Trento: le sale di Fogolino si vedono durante le visite guidate e in alcuni eventi, come il Festival dell'Economia."
+    ],
+    "parole_chiave": ["fogolino", "rettorato", "università", "via calepina", "cortile", "sardagna"],
+    "fonti": [
+      { "titolo": "Università di Trento — Palazzo Sardagna", "url": "https://www.unitn.it/en/node/51160" },
+      { "titolo": "Comune di Trento — Palazzo Sardagna", "url": "https://old.comune.trento.it/Aree-tematiche/Cultura-e-turismo/Visitare/Edifici-storici/Palazzo-Sardagna/(language)/eng-GB" },
+      { "titolo": "Luca Gabrielli, «Cieli d'angeli e d'astri», Studi Trentini. Arte 100/1 (2021)", "url": "https://heyjoe.fbk.eu/index.php/sttrar/article/download/6915/6916/6917" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "Palazzo Sardagna — Fogolino’s rooms",
+        "sintesi": "The university’s Rectorate building hides two rooms frescoed by Fogolino.",
+        "epoca": "16th century",
+        "descrizione": [
+          "Nobody knows who the first owners were or when building began: the only certain dates are 1535 to 1540, when Marcello Fogolino frescoed two ground-floor rooms. The façade dates from the 17th century.",
+          "The palace has the largest courtyard of any historic building in the city. Since 2014 it has housed the Rectorate of the University of Trento: Fogolino’s rooms can be seen on guided tours and at some events, such as the Festival of Economics."
+        ]
+      }
+    }
+  },
+  {
+    "id": "chiesa-sardagna",
+    "nome": "Antica chiesa di Sardagna",
+    "categoria": "arte",
+    "temi": ["principi-vescovi", "arte"],
+    "posizione": [46.0645, 11.0958],
+    "indirizzo": "Sardagna, cimitero",
+    "epoca": "XVI secolo",
+    "affresco": {
+      "autore": "Più pittori non identificati, vicini alla maniera di Fogolino",
+      "epoca": "Prima metà del XVI secolo"
+    },
+    "sintesi": "Sopra la città, una piccola chiesa con affreschi del Cinquecento e una pala di Fogolino.",
+    "descrizione": [
+      "L'antica chiesa dei Santi Filippo e Giacomo, oggi chiesa del cimitero di Sardagna, conserva affreschi della prima metà del Cinquecento dipinti da più mani: alcune figure ricordano la maniera di Marcello Fogolino. Gli Evangelisti della volta dell'abside derivano da incisioni di Agostino Veneziano del 1518.",
+      "Per l'altare, voluto nel 1533 dal principe vescovo Bernardo Clesio, Fogolino dipinse la pala con la Madonna, il Bambino e i santi Filippo e Giacomo, oggi custodita nella canonica. L'altare originale fu sostituito nel 1617 da quello in legno intagliato e dorato che si vede ancora.",
+      "L'umidità ha rovinato a lungo gli affreschi. Uno studio del 2021 si è chiesto se tra queste pitture ci sia anche un'opera di Romanino. Sardagna si raggiunge con la funivia dalla riva dell'Adige."
+    ],
+    "parole_chiave": ["sardagna", "santi filippo e giacomo", "fogolino", "pala", "clesio", "cimitero", "romanino"],
+    "fonti": [
+      { "titolo": "Studi Trentini. Arte 100/2 (2021) — L'antica chiesa di Sardagna e i suoi affreschi", "url": "https://heyjoe.fbk.eu/index.php/sttrar/article/download/6918/6919/6920" },
+      { "titolo": "Studi Trentini. Arte 100/2 (2021) — La pala di Fogolino a Sardagna", "url": "https://heyjoe.fbk.eu/index.php/sttrar/article/download/6917/6918/6919" }
+    ],
+    "traduzioni": {
+      "en": {
+        "nome": "Old church of Sardagna",
+        "sintesi": "Above the city, a small church with 16th-century frescoes and an altarpiece by Fogolino.",
+        "epoca": "16th century",
+        "affresco_autore": "Several unidentified painters close to Fogolino’s manner",
+        "affresco_epoca": "First half of the 16th century",
+        "descrizione": [
+          "The old church of Saints Philip and James, now the cemetery church of Sardagna, keeps frescoes from the first half of the 16th century painted by several hands: some figures recall the manner of Marcello Fogolino. The Evangelists on the apse vault are based on engravings by Agostino Veneziano from 1518.",
+          "For the altar, commissioned in 1533 by Prince-Bishop Bernardo Cles, Fogolino painted the altarpiece with the Madonna, the Child and Saints Philip and James, now kept in the parish house. The original altar was replaced in 1617 by the carved and gilded wooden one still in place.",
+          "Damp damaged the frescoes for a long time. A 2021 study asked whether a work by Romanino is also among these paintings. Sardagna can be reached by cable car from the banks of the Adige."
+        ]
+      }
+    }
+  }
+]

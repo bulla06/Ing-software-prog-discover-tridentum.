@@ -1,4 +1,5 @@
 // UC-03 Registrarsi e accedere · UC-08 Gestire il proprio account · UC-09 Gestire i ruoli
+import sharp from 'sharp'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { ACCOUNT, accedi, creaAmbiente, tokenDallaPosta } from './ambiente.js'
 
@@ -141,8 +142,16 @@ describe('eliminazione dell\'account (RF-13)', () => {
     expect(r.body.errore).toBe('unico_amministratore')
   })
 
-  it('cancella i dati personali e lascia i contributi pubblicati in forma anonima', async () => {
+  it('cancella i dati personali e lascia in forma anonima solo i contributi pubblicati (UC-08, passo 4)', async () => {
     const auth = await accedi(amb.app, ACCOUNT.utente)
+    // Oltre al ricordo pubblicato e a quello in coda dei dati di prova, uno in coda con una foto
+    const immagine = await sharp({ create: { width: 800, height: 600, channels: 3, background: '#2f5e8c' } }).jpeg().toBuffer()
+    const inviato = await amb.api().post('/api/poi/duomo/contenuti').set(auth).field('licenza', 'cc-by')
+      .attach('foto', immagine, { filename: 'f.jpg', contentType: 'image/jpeg' })
+    const [{ foto }] = await amb.db.query('SELECT foto FROM contenuti WHERE id = $1', [inviato.body.id])
+    const moderatore = await accedi(amb.app, ACCOUNT.moderatore)
+    expect((await amb.api().get('/api/moderazione/coda').set(moderatore)).body.contenuti).toHaveLength(2)
+
     const r = await amb.api().delete('/api/me').set(auth).send({ password: ACCOUNT.utente.password, contributi: 'anonimi' })
     expect(r.status).toBe(204)
 
@@ -151,6 +160,11 @@ describe('eliminazione dell\'account (RF-13)', () => {
     const scheda = await amb.api().get('/api/poi/nettuno')
     expect(scheda.body.ricordi).toHaveLength(1)
     expect(scheda.body.ricordi[0].autore).toBeNull()
+    // I ricordi non pubblicati spariscono, anche dalla coda di moderazione, con le loro foto
+    expect(await amb.db.query("SELECT 1 FROM contenuti WHERE autore IS NULL AND stato <> 'approvato'")).toHaveLength(0)
+    expect((await amb.api().get('/api/moderazione/coda').set(moderatore)).body.contenuti).toHaveLength(0)
+    expect(await amb.db.query('SELECT 1 FROM foto WHERE id = $1', [foto])).toHaveLength(0)
+    await expect(amb.archivio.leggi('privata', foto, 'standard')).rejects.toThrow()
     expect(amb.posta.postaDiProva()[0].oggetto).toMatch(/eliminato/)
   })
 })

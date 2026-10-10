@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Avviso from '../components/Avviso.jsx'
 import Campo from '../components/Campo.jsx'
 import Finestra from '../components/Finestra.jsx'
 import FotoProtetta from '../components/FotoProtetta.jsx'
 import Icona from '../components/Icona.jsx'
 import SceltaLingua from '../components/SceltaLingua.jsx'
-import { URL_GEOJSON, eliminaAccount, getProfilo } from '../data/api.js'
+import { URL_GEOJSON, URL_ITINERARI_JSON, cambiaNome, eliminaAccount, getProfilo, scaricaMieiDati } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { messaggioErrore } from '../lib/errori.js'
 import { eAmministratore, puoModerare, useSessione } from '../lib/sessione.jsx'
@@ -22,6 +23,9 @@ export default function Profilo({ onRivediBenvenuto }) {
   const sviluppo = useSviluppo()
   const [profilo, setProfilo] = useState(null)
   const [eliminazione, setEliminazione] = useState(false)
+  const [modificaNome, setModificaNome] = useState(false)
+  const [avviso, setAvviso] = useState(null)
+  const chiudiAvviso = useCallback(() => setAvviso(null), [])
 
   useEffect(() => {
     if (!utente) {
@@ -29,7 +33,10 @@ export default function Profilo({ onRivediBenvenuto }) {
       return
     }
     getProfilo().then(setProfilo, () => setProfilo(null))
-  }, [utente])
+  }, [utente, lingua])
+
+  // Diritto di accesso e portabilità (RNF-S04)
+  const scaricaDati = () => scaricaMieiDati().catch((err) => setAvviso(messaggioErrore(t, err)))
 
   return (
     <div className="pagina">
@@ -70,7 +77,13 @@ export default function Profilo({ onRivediBenvenuto }) {
               )}
             </ul>
           )}
-          <button type="button" className="pulsante" onClick={esci}>{t('profilo.esci')}</button>
+          <div className="riga-pulsanti">
+            <button type="button" className="pulsante" onClick={() => setModificaNome(true)}>
+              <Icona nome="modifica" size={18} />
+              {t('profilo.cambiaNome')}
+            </button>
+            <button type="button" className="pulsante" onClick={esci}>{t('profilo.esci')}</button>
+          </div>
         </section>
       ) : (
         <section className="riquadro">
@@ -159,6 +172,18 @@ export default function Profilo({ onRivediBenvenuto }) {
             </a>
           </li>
           <li>
+            <a className="riga-link" href={URL_ITINERARI_JSON} download="discover-tridentum-itinerari.json">
+              <Icona nome="scarica" size={18} />
+              <span>{t('profilo.esportaItinerari')}</span>
+            </a>
+          </li>
+          <li>
+            <Link className="riga-link" to="/privacy">
+              <Icona nome="privacy" size={18} />
+              <span>{t('profilo.privacy')}</span>
+            </Link>
+          </li>
+          <li>
             <button type="button" className="riga-link" onClick={onRivediBenvenuto}>
               <Icona nome="info" size={18} />
               <span>{t('profilo.benvenuto')}</span>
@@ -178,14 +203,76 @@ export default function Profilo({ onRivediBenvenuto }) {
 
       {utente && (
         <section>
-          <button type="button" className="collegamento collegamento--pericolo" onClick={() => setEliminazione(true)}>
-            {t('profilo.elimina')}
-          </button>
+          <h2>{t('profilo.tuoiDati')}</h2>
+          <div className="riga-pulsanti">
+            <button type="button" className="pulsante" onClick={scaricaDati}>
+              <Icona nome="scarica" size={18} />
+              {t('profilo.scaricaDati')}
+            </button>
+            <button type="button" className="collegamento collegamento--pericolo" onClick={() => setEliminazione(true)}>
+              {t('profilo.elimina')}
+            </button>
+          </div>
         </section>
       )}
 
       <EliminaAccount aperta={eliminazione} onChiudi={() => setEliminazione(false)} />
+      <CambiaNome
+        aperta={modificaNome}
+        onChiudi={() => setModificaNome(false)}
+        onCambiato={() => {
+          setModificaNome(false)
+          setAvviso(t('profilo.nomeCambiato'))
+        }}
+      />
+      <Avviso testo={avviso} onChiudi={chiudiAvviso} />
     </div>
+  )
+}
+
+// Diritto di rettifica (RNF-S04): il nome visualizzato accanto ai ricordi e in classifica
+function CambiaNome({ aperta, onChiudi, onCambiato }) {
+  const { t } = useT()
+  const { utente, aggiorna } = useSessione()
+  const [nome, setNome] = useState('')
+  const [errore, setErrore] = useState(null)
+  const [occupato, setOccupato] = useState(false)
+
+  useEffect(() => {
+    if (aperta) {
+      setNome(utente?.nome ?? '')
+      setErrore(null)
+    }
+  }, [aperta, utente])
+
+  const salva = async (e) => {
+    e.preventDefault()
+    setOccupato(true)
+    try {
+      const { utente: aggiornato } = await cambiaNome(nome.trim())
+      aggiorna(aggiornato)
+      onCambiato()
+    } catch (err) {
+      setErrore(err.campi?.nome ?? messaggioErrore(t, err))
+    } finally {
+      setOccupato(false)
+    }
+  }
+
+  return (
+    <Finestra titolo={t('profilo.cambiaNome')} aperta={aperta} onChiudi={onChiudi}>
+      <form className="modulo" onSubmit={salva}>
+        <Campo etichetta={t('accesso.nome')} aiuto={t('accesso.nomeAiuto')} errore={errore}>
+          {(p) => <input {...p} type="text" autoComplete="nickname" minLength={2} maxLength={40} value={nome} onChange={(e) => setNome(e.target.value)} required />}
+        </Campo>
+        <div className="modulo__azioni">
+          <button type="button" className="pulsante" onClick={onChiudi}>{t('comune.annulla')}</button>
+          <button type="submit" className="pulsante pulsante--primario" disabled={occupato || nome.trim().length < 2}>
+            {t('comune.salva')}
+          </button>
+        </div>
+      </form>
+    </Finestra>
   )
 }
 

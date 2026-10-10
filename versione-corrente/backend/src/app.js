@@ -9,6 +9,7 @@ import helmet from 'helmet'
 import { identifica } from './gateway/autenticazione.js'
 import { ErroreHttp, gestoreErrori } from './gateway/errori.js'
 import { creaLimiti } from './gateway/limiti.js'
+import { CONSERVAZIONE } from './servizi/pulizia.js'
 import { rotteContenuti } from './moduli/contenuti/rotte.js'
 import { rotteGioco } from './moduli/gioco/rotte.js'
 import { rotteLuoghi } from './moduli/luoghi/rotte.js'
@@ -16,7 +17,7 @@ import { rotteUtenti } from './moduli/utenti/rotte.js'
 
 export function creaApp({ db, config, posta, archivio, registro = config.sviluppo }) {
   const app = express()
-  const limiti = creaLimiti()
+  const limiti = creaLimiti(config)
   const dipendenze = { db, config, posta, archivio, limiti }
 
   // Dietro un proxy HTTPS l'IP del visitatore arriva in X-Forwarded-For: lo si legge solo se il proxy
@@ -49,11 +50,18 @@ export function creaApp({ db, config, posta, archivio, registro = config.svilupp
 
   const api = express.Router()
   api.use(limiti.generale)
-  api.use(express.json({ limit: '200kb' }))
+  // Le importazioni dei dati hanno un loro limite più alto (modulo dei luoghi)
+  const json = express.json({ limit: '200kb' })
+  api.use((req, res, next) => (req.path.startsWith('/admin/importa/') ? next() : json(req, res, next)))
   api.use(cookieParser())
   api.use(identifica(config.jwtSegreto))
 
   api.get('/stato', (req, res) => res.json({ ok: true, sviluppo: config.sviluppo, database: db.tipo }))
+
+  // Dati per l'informativa privacy (RNF-S04): contatto e tempi di conservazione effettivi
+  api.get('/informazioni', (req, res) =>
+    res.json({ contatto_privacy: config.contattoPrivacy, conservazione: CONSERVAZIONE }),
+  )
 
   api.use(rotteUtenti(dipendenze))
   api.use(rotteLuoghi(dipendenze))

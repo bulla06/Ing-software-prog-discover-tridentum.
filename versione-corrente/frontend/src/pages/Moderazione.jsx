@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Avviso from '../components/Avviso.jsx'
 import FotoProtetta from '../components/FotoProtetta.jsx'
+import MappaLeaflet from '../components/MappaLeaflet.jsx'
 import { decidiContenuto, decidiSegnalazione, getCodaModerazione } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { messaggioErrore } from '../lib/errori.js'
+import { distanzaMetri, formattaDistanza } from '../lib/geo.js'
 import { puoModerare, useSessione } from '../lib/sessione.jsx'
 
 // S-13 Moderazione (UC-05, RF-16…RF-18). Area interna del team: solo in italiano.
@@ -75,8 +77,13 @@ export default function Moderazione() {
               <ContenutoInAttesa
                 key={c.id}
                 contenuto={c}
-                onApprova={() => esegui(() => decidiContenuto(c.id, 'approva'), 'Ricordo pubblicato')}
-                onRifiuta={(motivazione) => esegui(() => decidiContenuto(c.id, 'rifiuta', motivazione), 'Ricordo rifiutato')}
+                onApprova={(livelloGioco) =>
+                  esegui(
+                    () => decidiContenuto(c.id, 'approva', { livelloGioco }),
+                    livelloGioco ? 'Ricordo pubblicato e aggiunto a "Dov\'era?"' : 'Ricordo pubblicato',
+                  )
+                }
+                onRifiuta={(motivazione) => esegui(() => decidiContenuto(c.id, 'rifiuta', { motivazione }), 'Ricordo rifiutato')}
               />
             ))}
           </ul>
@@ -129,6 +136,19 @@ export default function Moderazione() {
 function ContenutoInAttesa({ contenuto: c, onApprova, onRifiuta }) {
   const [rifiuto, setRifiuto] = useState(false)
   const [motivazione, setMotivazione] = useState('')
+  // RF-23: è il moderatore a scegliere se la foto diventa un livello del gioco (solo con il consenso)
+  const [livello, setLivello] = useState(false)
+  const puoEssereLivello = Boolean(c.foto && c.consenso_gioco)
+  const segnaposti = useMemo(
+    () =>
+      c.posizione_foto
+        ? [
+            { id: 'luogo', posizione: c.poi.posizione, tipo: 'tappa', etichetta: 'L' },
+            { id: 'scatto', posizione: c.posizione_foto, tipo: 'ipotesi' },
+          ]
+        : [],
+    [c],
+  )
 
   return (
     <li className="riquadro moderazione">
@@ -154,7 +174,21 @@ function ContenutoInAttesa({ contenuto: c, onApprova, onRifiuta }) {
             <dd>{c.consenso_gioco ? 'L\'autore consente di usare la foto in "Dov\'era?"' : 'Non usare nel gioco'}</dd>
           </>
         )}
+        {c.posizione_foto && (
+          <>
+            <dt>Scatto</dt>
+            <dd>
+              Punto indicato dall'autore (● sulla mappa), a {formattaDistanza(distanzaMetri(c.posizione_foto, c.poi.posizione), 'it')} dal
+              luogo (L)
+            </dd>
+          </>
+        )}
       </dl>
+      {c.posizione_foto && (
+        <div className="moderazione__mappa">
+          <MappaLeaflet statica etichetta="Punto dello scatto e posizione del luogo" vista={{ centro: c.posizione_foto, zoom: 16 }} segnaposti={segnaposti} inquadra={[c.poi.posizione, c.posizione_foto]} />
+        </div>
+      )}
       {rifiuto ? (
         <form
           className="modulo"
@@ -173,10 +207,18 @@ function ContenutoInAttesa({ contenuto: c, onApprova, onRifiuta }) {
           </div>
         </form>
       ) : (
-        <div className="riga-pulsanti">
-          <button type="button" className="pulsante pulsante--primario" onClick={onApprova}>Approva e pubblica</button>
-          <button type="button" className="pulsante" onClick={() => setRifiuto(true)}>Rifiuta…</button>
-        </div>
+        <>
+          {puoEssereLivello && (
+            <label className="scelta">
+              <input type="checkbox" checked={livello} onChange={(e) => setLivello(e.target.checked)} />
+              <span>Usa la foto come livello di "Dov'era?" (è una foto d'epoca riconoscibile e il punto è credibile)</span>
+            </label>
+          )}
+          <div className="riga-pulsanti">
+            <button type="button" className="pulsante pulsante--primario" onClick={() => onApprova(livello)}>Approva e pubblica</button>
+            <button type="button" className="pulsante" onClick={() => setRifiuto(true)}>Rifiuta…</button>
+          </div>
+        </>
       )}
     </li>
   )

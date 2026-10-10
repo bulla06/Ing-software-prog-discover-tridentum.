@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import it from './it.js'
 import en from './en.js'
+import { impostaLingua } from '../lib/http.js'
 import { leggi, scrivi } from '../lib/memoria.js'
 
 export const LINGUE = { it: 'Italiano', en: 'English' }
@@ -10,14 +11,20 @@ const LinguaContext = createContext(null)
 
 function linguaIniziale() {
   const salvata = leggi('lingua', null)
-  if (salvata in TESTI) return salvata
   // Prima lingua preferita tra quelle disponibili, nell'ordine scelto dall'utente nel browser
   const preferita = (navigator.languages ?? [navigator.language]).map((l) => l?.slice(0, 2)).find((l) => l in TESTI)
-  return preferita ?? 'en'
+  const scelta = salvata in TESTI ? salvata : (preferita ?? 'en')
+  // Subito, prima che le pagine chiedano i dati: i contenuti arrivano già nella lingua giusta
+  impostaLingua(scelta)
+  return scelta
 }
 
 export function LinguaProvider({ children }) {
-  const [lingua, setLingua] = useState(linguaIniziale)
+  const [lingua, setLinguaStato] = useState(linguaIniziale)
+  const setLingua = useCallback((nuova) => {
+    impostaLingua(nuova)
+    setLinguaStato(nuova)
+  }, [])
 
   useEffect(() => {
     scrivi('lingua', lingua)

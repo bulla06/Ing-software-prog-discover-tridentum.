@@ -31,3 +31,35 @@ export function lunghezzaPercorso(punti) {
 
 /** Punteggio massimo di un livello di "Dov'era?": il calcolo lo fa il server (Fase 3, D-14) */
 export const PUNTEGGIO_MAX = 1000
+
+/** Direzione in gradi (0 = nord, 90 = est) per andare dal punto `da` al punto `a`. */
+export function direzioneGradi([lat1, lng1], [lat2, lng2]) {
+  const rad = (g) => (g * Math.PI) / 180
+  const y = Math.sin(rad(lng2 - lng1)) * Math.cos(rad(lat2))
+  const x = Math.cos(rad(lat1)) * Math.sin(rad(lat2)) - Math.sin(rad(lat1)) * Math.cos(rad(lat2)) * Math.cos(rad(lng2 - lng1))
+  return ((Math.atan2(y, x) * 180) / Math.PI + 360) % 360
+}
+
+/** Differenza tra due direzioni in gradi, da 0 a 180 (350° e 10° distano 20°). */
+export function scartoAngolare(a, b) {
+  const d = Math.abs(a - b) % 360
+  return d > 180 ? 360 - d : d
+}
+
+/**
+ * RF-06 "Cosa sto guardando?": i luoghi davanti a chi si trova in `posizione` e guarda verso
+ * `direzione` (gradi dalla bussola), entro `raggio` metri e `apertura` gradi a destra e a sinistra,
+ * dal più vicino. Senza direzione (niente bussola) restituisce i luoghi più vicini entro `raggioVicini`.
+ */
+export function luoghiInVista(posizione, direzione, luoghi, { raggio = 300, apertura = 25, raggioVicini = 150 } = {}) {
+  const conDati = luoghi.map((poi) => ({
+    poi,
+    distanza: distanzaMetri(posizione, poi.posizione),
+    direzione: direzioneGradi(posizione, poi.posizione),
+  }))
+  const inVista =
+    direzione == null
+      ? conDati.filter((l) => l.distanza <= raggioVicini)
+      : conDati.filter((l) => l.distanza <= raggio && (l.distanza < 15 || scartoAngolare(l.direzione, direzione) <= apertura))
+  return inVista.sort((a, b) => a.distanza - b.distanza)
+}

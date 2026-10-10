@@ -1,0 +1,13 @@
+# Proxy HTTPS davanti al sito (RNF-S01: tutto il traffico in HTTPS).
+# Caddy ottiene e rinnova da solo il certificato (Let's Encrypt) per il dominio in DOMINIO e
+# reindirizza le richieste http:// su https://. Con DOMINIO=localhost usa un certificato locale,
+# utile per provare l'HTTPS sul proprio computer.
+
+{$DOMINIO:localhost} {
+	encode zstd gzip
+
+	# HSTS: il browser userà solo HTTPS per questo dominio per un anno
+	header Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+	reverse_proxy app:3000
+}

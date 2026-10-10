@@ -12,3 +12,9 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+// Installabile come app (RNF-PO02): il service worker si registra solo nel sito compilato,
+// in sviluppo darebbe file vecchi a ogni modifica
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}))
+}

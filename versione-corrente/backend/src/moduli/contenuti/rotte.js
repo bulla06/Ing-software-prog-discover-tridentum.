@@ -26,6 +26,9 @@ const schemaRicordo = z
       .union([z.boolean(), z.enum(['true', 'false'])])
       .default(false)
       .transform((v) => v === true || v === 'true'),
+    // Dove è stata scattata la foto (facoltativo, RF-23): rende più preciso il livello del gioco
+    lat: z.union([z.literal(''), z.coerce.number().min(-90).max(90)]).optional(),
+    lng: z.union([z.literal(''), z.coerce.number().min(-180).max(180)]).optional(),
   })
 
 const schemaSegnalazione = z.object({
@@ -37,6 +40,8 @@ const schemaDecisione = z
   .object({
     esito: z.enum(['approva', 'rifiuta']),
     motivazione: z.string().trim().max(500).default(''),
+    // RF-23: il moderatore decide se la foto diventa un livello di "Dov'era?"
+    livello_gioco: z.boolean().default(false),
   })
   .refine((d) => d.esito === 'approva' || d.motivazione.length >= 5, {
     message: 'Spiega all\'autore perché il contenuto è rifiutato',
@@ -44,9 +49,12 @@ const schemaDecisione = z
   })
 
 const ESITO_EMAIL = {
-  approva: (nome, poi) => ({
+  approva: (nome, poi, _motivazione, livello) => ({
     oggetto: 'Il tuo ricordo è stato pubblicato',
-    testo: `Ciao ${nome},\n\nil ricordo che hai condiviso su "${poi}" è stato approvato ed è ora visibile nella scheda del luogo. Grazie!`,
+    testo:
+      `Ciao ${nome},\n\nil ricordo che hai condiviso su "${poi}" è stato approvato ed è ora visibile nella scheda del luogo.` +
+      (livello ? ' La tua foto è diventata anche un livello del gioco "Dov\'era?".' : '') +
+      ' Grazie!',
   }),
   rifiuta: (nome, poi, motivazione) => ({
     oggetto: 'Il tuo ricordo non è stato pubblicato',
@@ -87,10 +95,15 @@ export function rotteContenuti({ db, posta, limiti, archivio }) {
         await archivio.salva('privata', idFoto, foto)
       }
 
+      const consenso = Boolean(idFoto) && dati.consenso_gioco
+      // La posizione dello scatto serve solo al gioco: si salva solo con il consenso
+      const scatto = consenso && typeof dati.lat === 'number' && typeof dati.lng === 'number' ? [dati.lng, dati.lat] : null
       const [contenuto] = await db.query(
-        `INSERT INTO contenuti (poi, autore, testo, anno, licenza, foto, consenso_gioco)
-         VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, stato`,
-        [poi.id, req.utente.id, dati.testo, dati.anno, dati.licenza, idFoto, Boolean(idFoto) && dati.consenso_gioco],
+        `INSERT INTO contenuti (poi, autore, testo, anno, licenza, foto, consenso_gioco, posizione_foto)
+         VALUES ($1, $2, $3, $4, $5, $6, $7,
+                 CASE WHEN $8::float8 IS NULL THEN NULL ELSE ST_SetSRID(ST_MakePoint($8, $9), 4326)::geography END)
+         RETURNING id, stato`,
+        [poi.id, req.utente.id, dati.testo, dati.anno, dati.licenza, idFoto, consenso, scatto?.[0] ?? null, scatto?.[1] ?? null],
       )
       res.status(201).json(contenuto)
     },
@@ -150,7 +163,9 @@ export function rotteContenuti({ db, posta, limiti, archivio }) {
       // Dal più vecchio (passo 2)
       db.query(
         `SELECT c.id, c.testo, c.anno, c.licenza, c.foto, c.consenso_gioco, c.creato_il,
-                u.nome_visualizzato AS autore, p.id AS poi_id, p.nome AS poi_nome
+                u.nome_visualizzato AS autore, p.id AS poi_id, p.nome AS poi_nome,
+                ST_Y(p.posizione::geometry) AS poi_lat, ST_X(p.posizione::geometry) AS poi_lng,
+                ST_Y(c.posizione_foto::geometry) AS scatto_lat, ST_X(c.posizione_foto::geometry) AS scatto_lng
            FROM contenuti c
            JOIN poi p ON p.id = c.poi
            LEFT JOIN utenti u ON u.id = c.autore
@@ -170,7 +185,11 @@ export function rotteContenuti({ db, posta, limiti, archivio }) {
       ),
     ])
     res.json({
-      contenuti: contenuti.map(({ poi_id, poi_nome, ...c }) => ({ ...c, poi: { id: poi_id, nome: poi_nome } })),
+      contenuti: contenuti.map(({ poi_id, poi_nome, poi_lat, poi_lng, scatto_lat, scatto_lng, ...c }) => ({
+        ...c,
+        poi: { id: poi_id, nome: poi_nome, posizione: [poi_lat, poi_lng] },
+        posizione_foto: scatto_lat == null ? null : [scatto_lat, scatto_lng],
+      })),
       segnalazioni: segnalazioni.map((s) => ({
         id: s.id,
         motivo: s.motivo,
@@ -186,17 +205,22 @@ export function rotteContenuti({ db, posta, limiti, archivio }) {
     const id = valida(z.uuid(), req.params.id)
     const dati = valida(schemaDecisione, req.body)
     const approva = dati.esito === 'approva'
+    const livello = approva && dati.livello_gioco
 
     // E1: vale la prima decisione salvata. L'aggiornamento riesce solo se il contenuto è ancora in attesa.
+    // Una foto diventa un livello del gioco solo se l'autore ha dato il consenso.
     const [contenuto] = await db.query(
-      `UPDATE contenuti SET stato = $2, motivazione = $3, moderato_da = $4, moderato_il = now()
-        WHERE id = $1 AND stato = 'in_attesa'
+      `UPDATE contenuti SET stato = $2, motivazione = $3, moderato_da = $4, moderato_il = now(), livello_gioco = $5
+        WHERE id = $1 AND stato = 'in_attesa' AND (NOT $5 OR (consenso_gioco AND foto IS NOT NULL))
         RETURNING id, foto, poi, autore`,
-      [id, approva ? 'approvato' : 'rifiutato', approva ? null : dati.motivazione, req.utente.id],
+      [id, approva ? 'approvato' : 'rifiutato', approva ? null : dati.motivazione, req.utente.id, livello],
     )
     if (!contenuto) {
-      const [esiste] = await db.query('SELECT stato FROM contenuti WHERE id = $1', [id])
+      const [esiste] = await db.query('SELECT stato, consenso_gioco, foto FROM contenuti WHERE id = $1', [id])
       if (!esiste) throw nonTrovato('Contenuto')
+      if (esiste.stato === 'in_attesa') {
+        throw new ErroreHttp(400, 'senza_consenso', 'L\'autore non ha dato il consenso a usare la foto nel gioco')
+      }
       throw new ErroreHttp(409, 'gia_moderato', 'Un altro moderatore ha già deciso su questo contenuto')
     }
 
@@ -212,10 +236,10 @@ export function rotteContenuti({ db, posta, limiti, archivio }) {
       [id],
     )
     if (info?.email) {
-      const messaggio = ESITO_EMAIL[dati.esito](info.nome_visualizzato, info.poi, dati.motivazione)
+      const messaggio = ESITO_EMAIL[dati.esito](info.nome_visualizzato, info.poi, dati.motivazione, livello)
       await posta.inviaSenzaBloccare({ a: info.email, ...messaggio })
     }
-    res.json({ id, stato: approva ? 'approvato' : 'rifiutato' })
+    res.json({ id, stato: approva ? 'approvato' : 'rifiutato', livello_gioco: livello })
   })
 
   // 1a: decisione su una segnalazione. "rimuovi" toglie il ricordo dalla scheda;
