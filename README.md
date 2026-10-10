@@ -43,7 +43,7 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ## Il sito
 
-La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v2, con il nuovo design. Le versioni passate (il primo prototipo con solo il frontend e il frontend v1) sono in [`versioni-precedenti/`](versioni-precedenti).
+La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v3, che parte dal design della v2 e completa i punti del documento [Cose mancanti](docs/cose-mancanti.md). Le versioni passate (il primo prototipo con solo il frontend, il frontend v1 e il frontend v2) sono in [`versioni-precedenti/`](versioni-precedenti).
 
 La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
@@ -154,7 +154,7 @@ npm run dev:v1     # backend + frontend v1 su http://localhost:5174
 │   ├── presentazione-v1.pptx             # prima versione
 │   └── presentazione-v2.pptx             # versione attuale, nuovo design
 ├── versione-corrente/                    # il sito attuale (si avvia dalla cartella principale)
-│   ├── frontend/                         # frontend v2: React + Vite + Leaflet
+│   ├── frontend/                         # frontend v3: React + Vite + Leaflet
 │   │   └── src/
 │   │       ├── pages/                    # una pagina per schermata
 │   │       ├── components/               # mappa, moduli, finestre, icone…
@@ -170,7 +170,8 @@ npm run dev:v1     # backend + frontend v1 su http://localhost:5174
 │           └── server.js                 # avvio
 ├── versioni-precedenti/                  # versioni passate del sito, conservate come riferimento
 │   ├── prototipo/                        # primo prototipo: solo frontend, dati in JSON
-│   └── frontend-v1/                      # frontend v1, primo design (usa il backend corrente)
+│   ├── frontend-v1/                      # frontend v1, primo design (usa il backend corrente)
+│   └── frontend-v2/                      # frontend v2, nuovo design (usa il backend corrente)
 ├── tests/
 │   ├── frontend/                         # test del frontend (Vitest)
 │   └── backend/                          # test delle API e dei dati (Vitest + Supertest)

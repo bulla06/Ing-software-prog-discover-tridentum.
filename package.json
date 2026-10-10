@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "concurrently --kill-others-on-fail -n backend,frontend -c red,blue \"npm run dev -w versione-corrente/backend\" \"npm run dev -w versione-corrente/frontend\"",
     "dev:v1": "concurrently --kill-others-on-fail -n backend,frontend-v1 -c red,magenta \"npm run dev -w versione-corrente/backend\" \"npm --prefix versioni-precedenti/frontend-v1 run dev\"",
+    "dev:v2": "concurrently --kill-others-on-fail -n backend,frontend-v2 -c red,magenta \"npm run dev -w versione-corrente/backend\" \"npm --prefix versioni-precedenti/frontend-v2 run dev\"",
     "build": "npm run build -w versione-corrente/frontend",
     "start": "npm run build && npm start -w versione-corrente/backend",
     "test": "npm test -w versione-corrente/frontend && npm test -w versione-corrente/backend",
