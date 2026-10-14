@@ -30,7 +30,8 @@ export function creaApp({ db, config, posta, archivio, registro = config.svilupp
     helmet({
       contentSecurityPolicy: {
         directives: {
-          'img-src': ["'self'", 'data:', 'blob:', 'https://*.tile.openstreetmap.org'],
+          // Tessere della mappa: MapTiler (con chiave) oppure OpenStreetMap (senza chiave, di ripiego)
+          'img-src': ["'self'", 'data:', 'blob:', 'https://api.maptiler.com', 'https://*.tile.openstreetmap.org'],
           // Leaflet posiziona mappa e segnaposti con attributi style
           'style-src': ["'self'", "'unsafe-inline'"],
           // Solo se il sito è davvero in HTTPS: su http://localhost bloccherebbe le risorse

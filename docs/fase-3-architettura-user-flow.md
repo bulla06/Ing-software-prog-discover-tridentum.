@@ -572,7 +572,7 @@ erDiagram
 | **D-04** | API Gateway come unico punto d'ingresso | Frontend collegato direttamente ai servizi | Sicurezza in un punto solo (HTTPS, token, ruoli, limiti); il frontend conosce un solo indirizzo |
 | **D-05** | PostgreSQL + PostGIS | MongoDB | Query geografiche precise (vicinanza, distanze); dati fortemente collegati (utenti, contenuti, POI) che beneficiano di vincoli di integrità |
 | **D-06** | Object storage per le foto | Foto salvate nel database | Database leggero, foto servite direttamente, aree pubblica e privata separate; MinIO permette di avere lo stesso sistema in locale |
-| **D-07** | OpenStreetMap + Leaflet | Google Maps | Dati aperti, nessun costo per richiesta e nessuna carta di credito per la chiave; chiude il punto aperto della Fase 2 |
+| **D-07** | OpenStreetMap + Leaflet, sfondo MapTiler | Google Maps | Dati aperti, nessun costo per richiesta e nessuna carta di credito per la chiave; chiude il punto aperto della Fase 2. Dal 14/10/2026 lo sfondo è lo stile "dataviz-light" di MapTiler (chiave gratuita, dati OSM), che non disegna negozi e bar; senza chiave si ripiega sui tile di OpenStreetMap |
 | **D-08** | Token JWT di breve durata + token di rinnovo | Sessioni sul server | Il gateway verifica l'identità senza interrogare il database; il backend resta senza stato e scalabile |
 | **D-09** | Lavori dell'AI in una coda asincrona | Chiamate sincrone | Il caricamento di un ricordo non aspetta l'AI (RNF-U02); se l'AI è lenta o ferma i lavori restano in coda |
 

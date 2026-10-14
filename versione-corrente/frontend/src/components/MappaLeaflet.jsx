@@ -5,11 +5,10 @@ import 'leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import { svgIcona } from './Icona.jsx'
 
-// Sfondo: tile standard di OpenStreetMap (D-07), che non richiedono chiavi. Un filtro CSS
-// sui soli tile (classe "sfondo-mappa") li rende più sobri e nel tema scuro li inverte,
-// così i segnaposti colorati dell'app si leggono meglio.
-const TILE_OSM = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-const ATTRIBUZIONE = '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+import { ATTRIBUZIONE_SFONDO, SOTTODOMINI_SFONDO, URL_SFONDO } from '../lib/sfondo.js'
+
+// Un filtro CSS sui soli tile (classe "sfondo-mappa") li rende più sobri e nel tema scuro
+// li inverte, così i segnaposti colorati dell'app si leggono meglio.
 
 // Da questo zoom in su accanto ai segnaposti compare il nome del luogo
 const ZOOM_ETICHETTE = 17
@@ -111,7 +110,7 @@ export default function MappaLeaflet({
     if (pulsantiZoom && !statica) L.control.zoom({ position: 'topright' }).addTo(m)
 
     let errori = 0
-    L.tileLayer(TILE_OSM, { maxZoom: 19, attribution: ATTRIBUZIONE, className: 'sfondo-mappa' })
+    L.tileLayer(URL_SFONDO, { maxZoom: 19, subdomains: SOTTODOMINI_SFONDO, attribution: ATTRIBUZIONE_SFONDO, className: 'sfondo-mappa' })
       .on('tileerror', () => {
         errori += 1
         if (errori === 4) gestori.current.onErroreMappa?.()

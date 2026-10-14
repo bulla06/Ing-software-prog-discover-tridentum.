@@ -24,7 +24,10 @@ services:
     # Il database non è esposto all'esterno (Fase 3 §8)
 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        VITE_MAPTILER_KEY: ${VITE_MAPTILER_KEY:-}
     depends_on:
       db:
         condition: service_healthy

@@ -26,7 +26,7 @@ for (const pagina of PAGINE) {
   const page = await browser.newPage()
   if (process.env.TESSERE_FINTE) {
     await page.setRequestInterception(true)
-    page.on('request', (r) => (/tile\.openstreetmap\.org/.test(r.url()) ? r.respond({ status: 200, contentType: 'image/png', body: TESSERA }) : r.continue()))
+    page.on('request', (r) => (/(tile\.openstreetmap\.org|api\.maptiler\.com)/.test(r.url()) ? r.respond({ status: 200, contentType: 'image/png', body: TESSERA }) : r.continue()))
   }
   // Benvenuto già visto, impostato da un file statico dello stesso sito senza scaricare l'app
   await page.goto(`${base}/manifest.webmanifest`)
