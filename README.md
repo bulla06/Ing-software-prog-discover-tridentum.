@@ -43,7 +43,7 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ## Il sito
 
-La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v3: parte dal design della v2 e completa i punti del documento [Cose mancanti](docs/cose-mancanti.md). Le versioni passate (il primo prototipo, il frontend v1 e il frontend v2) sono in [`versioni-precedenti/`](versioni-precedenti) e si possono aprire affiancate alla corrente per confrontarle.
+La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v3: parte dal design della v2 e completa i punti rimasti aperti rispetto alla Fase 2 (elenco in [`docs/compiti.xlsx`](docs/compiti.xlsx)). Le versioni passate (il primo prototipo, il frontend v1 e il frontend v2) sono in [`versioni-precedenti/`](versioni-precedenti) e si possono aprire affiancate alla corrente per confrontarle.
 
 La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
@@ -109,7 +109,7 @@ Il primo amministratore si nomina dopo essersi registrati dal sito:
 docker compose exec app npm run crea-amministratore -- tua@email.it
 ```
 
-Per le e-mail vere serve un server SMTP (`SMTP_URL`); prima della pubblicazione va indicato anche l'indirizzo per le richieste sui dati personali (`EMAIL_PRIVACY`, vedi la [checklist GDPR](docs/checklist-gdpr.md)).
+Per le e-mail vere serve un server SMTP (`SMTP_URL`); prima della pubblicazione va indicato anche l'indirizzo per le richieste sui dati personali (`EMAIL_PRIVACY`, vedi i compiti GDPR in [`docs/compiti.xlsx`](docs/compiti.xlsx)).
 
 ### Cosa c'è
 
@@ -137,13 +137,13 @@ Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito
 - **Contenuti:** 45 luoghi, tra cui 16 affreschi, 10 itinerari, 6 tradizioni e 14 piatti, in italiano e inglese. Date e attribuzioni sono prese dalle fonti citate in ogni scheda; il pacchetto [`002-correzioni-e-traduzioni`](versione-corrente/backend/src/db/dati/002-correzioni-e-traduzioni) ha sostituito le note "da verificare" della prima selezione. Resta da fare la verifica con la Soprintendenza (RNF-V02).
 - **Foto dei luoghi:** ci sono quelle **ufficiali**, con autore, licenza e fonte obbligatori, e i **ricordi** della community, che passano dalla moderazione. Le foto ufficiali si prendono da Wikimedia Commons con `npm run scarica-foto`, che usa l'elenco [`foto-da-scaricare.json`](versione-corrente/backend/src/db/dati/foto-da-scaricare.json) e crea un nuovo pacchetto di dati con i crediti; serve un computer che raggiunga Commons. Le foto scelte da una categoria o da una ricerca vanno guardate prima del commit. Finché un luogo non ha foto, la copertina è il ritaglio della mappa.
 - **Gioco:** le 8 foto storiche sono in [`foto-gioco/`](versione-corrente/backend/src/db/dati/foto-gioco), di pubblico dominio, con i crediti in [`gioco.json`](versione-corrente/backend/src/db/dati/gioco.json). Le foto della community diventano livelli se l'autore dà il consenso e un moderatore le sceglie.
-- **Privacy:** tempi di conservazione applicati dal server ogni giorno, informativa completa, dati scaricabili dal profilo: vedi la [checklist GDPR](docs/checklist-gdpr.md).
+- **Privacy:** tempi di conservazione applicati dal server ogni giorno, informativa completa, dati scaricabili dal profilo: vedi i compiti GDPR in [`docs/compiti.xlsx`](docs/compiti.xlsx).
 
 ### Le versioni del frontend
 
 | Versione | Cartella | Novità principali |
 |---|---|---|
-| v3 (corrente) | [`versione-corrente/frontend/`](versione-corrente/frontend) | Completa i punti di [Cose mancanti](docs/cose-mancanti.md): itinerario su misura, fine dell'itinerario, avvisi di connessione, informativa privacy, contenuti in inglese, "Cosa sto guardando?", PWA, esportazione e importazione, JavaScript iniziale più leggero |
+| v3 (corrente) | [`versione-corrente/frontend/`](versione-corrente/frontend) | Completa i punti rimasti aperti rispetto alla Fase 2: itinerario su misura, fine dell'itinerario, avvisi di connessione, informativa privacy, contenuti in inglese, "Cosa sto guardando?", PWA, esportazione e importazione, JavaScript iniziale più leggero |
 | v2 | [`versioni-precedenti/frontend-v2/`](versioni-precedenti/frontend-v2) | Nuovo design: mappa con i luoghi raggruppati, colonna di navigazione su desktop, esperienza da smartphone, gioco in stile GeoGuessr, palette "pietra e affresco" |
 | v1 | [`versioni-precedenti/frontend-v1/`](versioni-precedenti/frontend-v1) | Primo design del sito completo |
 | Prototipo | [`versioni-precedenti/prototipo/`](versioni-precedenti/prototipo) | Solo frontend, dati in file JSON |
@@ -158,9 +158,8 @@ Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito
 │   ├── fase-2-specifiche-requisiti.md    # Fase 2: requisiti (MoSCoW), RNF, casi d'uso
 │   ├── fase-3-architettura-user-flow.md  # Fase 3: casi d'uso, user flow, architettura
 │   ├── fase-4-pianificazione.md          # Fase 4: WBS, sprint e roadmap MVP, rischi
-│   ├── cose-mancanti.md                  # cosa mancava rispetto alla Fase 2
+│   ├── compiti.xlsx                      # compiti ancora da fare, con assegnatario e stato (rosso/giallo/verde)
 │   ├── verifica-requisiti-non-funzionali.md  # misure e prove dei requisiti non funzionali
-│   ├── checklist-gdpr.md                 # verifica di RNF-S04
 │   └── libretti/                         # libretti delle attività con il conta ore (Excel), uno per membro
 ├── presentazioni/
 │   ├── presentazione-v1.pptx             # prima versione
