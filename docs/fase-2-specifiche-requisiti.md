@@ -3,7 +3,7 @@
 **Progetto:** Discover Tridentum — Trento Nascosta
 **Corso:** Ingegneria del Software · Prof. Paolo Giorgini · A.A. 2026-2027
 **Team:** Manuel Bulla · Marco Buffa · Pietro Crea
-**Versione:** 0.4 · **Stato:** Bozza
+**Versione:** 0.5 · **Stato:** Bozza
 **Documento precedente:** [Fase 1 — Analisi del dominio](fase-1-analisi-dominio.md)
 **Documento successivo:** [Fase 3 — Architettura e user flow](fase-3-architettura-user-flow.md)
 
@@ -15,6 +15,7 @@
 | 0.2 | 30/09/2026 | Manuel Bulla | Aggiunta la matrice di tracciabilità (§5); corretti i requisiti di UC-07; riordinati i flussi alternativi |
 | 0.3 | 30/09/2026 | Manuel Bulla | Aggiunti UC-08, UC-09, UC-10: ora tutti i requisiti *Must* e *Should* hanno un caso d'uso |
 | 0.4 | 01/10/2026 | Manuel Bulla | Priorità riviste: più peso ai luoghi (RF-04, RF-05, RF-07 da *Should* a *Must*), gioco in secondo piano (RF-21 da *Should* a *Could*) |
+| 0.5 | 14/10/2026 | Manuel Bulla | RNF-U05: il tedesco entra tra le lingue dell'interfaccia e delle schede, insieme a italiano e inglese |
 
 ---
 
@@ -162,7 +163,7 @@ Ogni requisito ha una **metrica** misurabile e un **metodo di verifica**.
 | **RNF-U02** | Caricare un contenuto deve essere semplice | Al massimo 3 passaggi dalla scheda del POI all'invio | Conteggio dei passaggi sul prototipo | **S** |
 | **RNF-U03** | Un nuovo utente trova un POI vicino senza istruzioni | 4 utenti su 5 ci riescono entro 30 secondi | Test di usabilità con 5 persone | **S** |
 | **RNF-U04** | Accessibilità | Linee guida WCAG 2.1 livello AA; punteggio Accessibilità di Lighthouse ≥ 90 | Lighthouse + controllo manuale | **S** |
-| **RNF-U05** | Lingue | Interfaccia e schede principali in italiano e inglese; tedesco in seguito | Revisione dei testi | **S** |
+| **RNF-U05** | Lingue | Interfaccia e schede principali in italiano, inglese e tedesco | Revisione dei testi | **S** |
 
 ### 3.2 Prestazioni
 

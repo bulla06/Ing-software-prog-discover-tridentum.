@@ -1,8 +1,10 @@
 // Lingua dei contenuti (RNF-U05): le schede, gli itinerari, le tradizioni e i piatti hanno i testi
 // in italiano nelle loro colonne e le traduzioni nella colonna "traduzioni" (migrazione 005).
-// Il frontend chiede la lingua con ?lingua=en; un testo senza traduzione resta in italiano.
+// Il frontend chiede la lingua con ?lingua=en (o de); un testo senza traduzione resta in italiano.
 
-export const LINGUE = ['it', 'en']
+export const LINGUE = ['it', 'en', 'de']
+/** Le lingue che stanno nella colonna "traduzioni" (tutte tranne l'italiano) */
+export const LINGUE_TRADOTTE = LINGUE.filter((l) => l !== 'it')
 
 export const linguaRichiesta = (req) => (LINGUE.includes(req.query?.lingua) ? req.query.lingua : 'it')
 

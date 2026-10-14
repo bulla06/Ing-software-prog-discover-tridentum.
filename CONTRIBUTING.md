@@ -58,7 +58,7 @@ Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fa
 - Nomi di file, variabili, funzioni e commenti in italiano, come nel resto del codice.
 - **Schema del database:** ogni modifica è un nuovo file numerato in `versione-corrente/backend/src/db/migrazioni/` (es. `002_aggiungi_orari.sql`). I file già presenti non si modificano: sono già stati applicati ai database degli altri.
 - **Dati iniziali:** i luoghi curati dal team stanno in pacchetti numerati, `versione-corrente/backend/src/db/dati/NNN-nome/` (`luoghi.json`, `itinerari.json`, `tradizioni.json`, `piatti.json`, `foto.json` con i file in `foto/`). Ogni pacchetto si carica una sola volta, anche nei database già esistenti; per aggiungere dati si crea un pacchetto nuovo, quelli già caricati non si modificano. Ogni luogo ha almeno una fonte (RNF-V01) e ogni foto indica autore, licenza e fonte.
-  - Le voci nuove hanno anche i testi in inglese (`"traduzioni": { "en": { … } }`, RNF-U05).
+  - Le voci nuove hanno anche i testi in inglese e in tedesco (`"traduzioni": { "en": { … }, "de": { … } }`, RNF-U05).
   - Per correggere voci di pacchetti già caricati: `correzioni.json` (luoghi e tradizioni) e `traduzioni.json` in un pacchetto nuovo, come [`002-correzioni-e-traduzioni`](versione-corrente/backend/src/db/dati/002-correzioni-e-traduzioni). Un luogo già modificato da un amministratore non viene toccato.
   - Le foto da Wikimedia Commons si elencano in `dati/foto-da-scaricare.json` e si scaricano con `npm run scarica-foto`, che crea il pacchetto con i crediti.
   - I livelli di "Dov'era?" stanno in `dati/gioco.json`, con le foto in `dati/foto-gioco/`.

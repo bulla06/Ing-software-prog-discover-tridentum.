@@ -14,8 +14,9 @@
 //                      "tradizioni": [{ "id", "aggiungi_luoghi": [...], "descrizione", "descrizione_precedente" }] }.
 //   Un luogo già modificato da un amministratore non viene toccato: vale la sua versione. La descrizione
 //   di una tradizione cambia solo se è ancora quella indicata in "descrizione_precedente".
-// - traduzioni.json: { "luoghi": { id: { "en": {...} } }, "itinerari": {...}, "tradizioni": {...}, "piatti": {...} }.
-//   Si scrivono solo nelle voci che non hanno ancora traduzioni.
+// - traduzioni.json: { "luoghi": { id: { "en": {...}, "de": {...} } }, "itinerari": {...}, "tradizioni": {...}, "piatti": {...} }.
+//   Ogni lingua si scrive solo nelle voci che non l'hanno ancora (una lingua nuova si aggiunge
+//   anche a voci che hanno già l'inglese).
 //
 // I livelli di "Dov'era?" invece stanno fuori dai pacchetti, in dati/gioco.json con le foto in
 // dati/foto-gioco/: il file è la fonte e a ogni avvio il database viene allineato.
@@ -205,11 +206,17 @@ async function caricaPacchetto(db, archivio, nome) {
         [piatto.id, piatto.nome, piatto.tipo, piatto.descrizione, ultimo + 1 + i, JSON.stringify(piatto.traduzioni ?? {})],
       )
     }
-    // Traduzioni di voci già presenti, solo dove non ce ne sono ancora
+    // Traduzioni di voci già presenti, lingua per lingua e solo dove quella lingua non c'è ancora:
+    // una traduzione scritta da un amministratore non viene mai toccata
     const TABELLE = { luoghi: 'poi', itinerari: 'itinerari', tradizioni: 'tradizioni', piatti: 'piatti' }
     for (const [chiave, tabella] of Object.entries(TABELLE)) {
       for (const [id, tradotto] of Object.entries(traduzioni[chiave])) {
-        await tx.query(`UPDATE ${tabella} SET traduzioni = $2 WHERE id = $1 AND traduzioni = '{}'::jsonb`, [id, JSON.stringify(tradotto)])
+        for (const [lingua, campi] of Object.entries(tradotto)) {
+          await tx.query(
+            `UPDATE ${tabella} SET traduzioni = traduzioni || jsonb_build_object($2::text, $3::jsonb) WHERE id = $1 AND NOT (traduzioni ? $2::text)`,
+            [id, lingua, JSON.stringify(campi)],
+          )
+        }
       }
     }
     const salvate = []

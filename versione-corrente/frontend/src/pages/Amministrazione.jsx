@@ -84,41 +84,63 @@ function CampoTesto({ etichetta, valore, onCambia, errore, multilinea, aiuto, ..
   )
 }
 
+// Lingue in cui si possono tradurre i testi, con il nome che compare nel pannello
+const LINGUE_TRADUZIONI = { en: 'inglese', de: 'tedesco' }
+
 /**
- * Testi in inglese (RNF-U05), facoltativi: un campo vuoto nel sito inglese mostra il testo italiano.
- * `campi`: [{ campo, etichetta, multilinea }]; `valori` e `onCambia` lavorano su { campo: testo }.
+ * Testi tradotti (RNF-U05), facoltativi: un campo vuoto nel sito tradotto mostra il testo italiano.
+ * `campi`: [{ campo, etichetta, multilinea }]. `dati` è il modulo, che per ogni lingua ha un
+ * oggetto { campo: testo } (dati.en, dati.de); `imposta(lingua)(valori)` lo aggiorna.
  */
-function Traduzioni({ campi, valori, onCambia }) {
-  const compilati = campi.filter(({ campo }) => valori?.[campo]).length
-  return (
-    <details className="traduzioni" open={compilati > 0}>
-      <summary>
-        Testi in inglese <span className="nota">({compilati} di {campi.length} compilati)</span>
-      </summary>
-      <p className="campo__aiuto">I campi vuoti nel sito in inglese mostrano il testo italiano.</p>
-      {campi.map(({ campo, etichetta, multilinea }) => (
-        <CampoTesto
-          key={campo}
-          etichetta={`${etichetta} (EN)`}
-          valore={valori?.[campo] ?? ''}
-          onCambia={(v) => onCambia({ ...valori, [campo]: v })}
-          multilinea={multilinea}
-          rows={multilinea ? 6 : undefined}
-          lang="en"
-        />
-      ))}
-    </details>
-  )
+function Traduzioni({ campi, dati, imposta }) {
+  return Object.entries(LINGUE_TRADUZIONI).map(([lingua, nome]) => {
+    const valori = dati[lingua]
+    const compilati = campi.filter(({ campo }) => valori?.[campo]).length
+    return (
+      <details key={lingua} className="traduzioni" open={compilati > 0}>
+        <summary>
+          Testi in {nome} <span className="nota">({compilati} di {campi.length} compilati)</span>
+        </summary>
+        <p className="campo__aiuto">I campi vuoti nel sito in {nome} mostrano il testo italiano.</p>
+        {campi.map(({ campo, etichetta, multilinea }) => (
+          <CampoTesto
+            key={campo}
+            etichetta={`${etichetta} (${lingua.toUpperCase()})`}
+            valore={valori?.[campo] ?? ''}
+            onCambia={(v) => imposta(lingua)({ ...valori, [campo]: v })}
+            multilinea={multilinea}
+            rows={multilinea ? 6 : undefined}
+            lang={lingua}
+          />
+        ))}
+      </details>
+    )
+  })
 }
 
-/** Traduzioni dal formato del modulo (descrizione come testo unico) a quello dell'API */
-const traduzioniPerApi = (en = {}, paragrafi = []) => ({
-  en: Object.fromEntries(
-    Object.entries(en).map(([campo, valore]) =>
-      paragrafi.includes(campo) ? [campo, valore.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)] : [campo, valore.trim()],
-    ),
-  ),
-})
+/** Traduzioni dal formato del modulo (descrizione come testo unico) a quello dell'API: { en, de } */
+const traduzioniPerApi = (dati = {}, paragrafi = []) =>
+  Object.fromEntries(
+    Object.keys(LINGUE_TRADUZIONI).map((lingua) => [
+      lingua,
+      Object.fromEntries(
+        Object.entries(dati[lingua] ?? {}).map(([campo, valore]) =>
+          paragrafi.includes(campo) ? [campo, valore.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)] : [campo, valore.trim()],
+        ),
+      ),
+    ]),
+  )
+
+/** Traduzioni salvate (API) nel formato del modulo, una voce per lingua; `paragrafi`: i campi da unire in un testo */
+const traduzioniPerModulo = (traduzioni = {}, paragrafi = []) =>
+  Object.fromEntries(
+    Object.keys(LINGUE_TRADUZIONI).map((lingua) => [
+      lingua,
+      Object.fromEntries(
+        Object.entries(traduzioni[lingua] ?? {}).map(([campo, valore]) => [campo, paragrafi.includes(campo) ? valore.join('\n\n') : valore]),
+      ),
+    ]),
+  )
 
 /** Elenco ordinato di luoghi (tappe di un itinerario, luoghi di una tradizione) */
 function SceltaLuoghi({ luoghi, scelti, onCambia, ordinabile, errore }) {
@@ -189,6 +211,7 @@ const POI_VUOTO = {
   nome: '', categoria: 'storia', temi: [], posizione: null, indirizzo: '', epoca: '', sintesi: '', descrizione: '',
   affresco_autore: '', affresco_epoca: '', piatto_consigliato: '', parole_chiave: '', fonti: [{ titolo: '', url: '' }],
   en: {},
+  de: {},
 }
 
 function GestioneLuoghi({ avvisa }) {
@@ -273,7 +296,7 @@ const daPoi = (l) => ({
   affresco_autore: l.affresco_autore ?? '',
   affresco_epoca: l.affresco_epoca ?? '',
   piatto_consigliato: l.piatto_consigliato ?? '',
-  en: { ...l.traduzioni?.en, descrizione: l.traduzioni?.en?.descrizione?.join('\n\n') ?? '' },
+  ...traduzioniPerModulo(l.traduzioni, ['descrizione']),
 })
 
 function ModuloPoi({ iniziale, tutti, onAnnulla, onSalvato }) {
@@ -294,14 +317,14 @@ function ModuloPoi({ iniziale, tutti, onAnnulla, onSalvato }) {
     e.preventDefault()
     setOccupato(true)
     setErrori({})
-    const { en, ...resto } = d
+    const { en, de, ...resto } = d
     const dati = {
       ...resto,
       posizione: d.posizione,
       descrizione: d.descrizione.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean),
       parole_chiave: d.parole_chiave.split(',').map((p) => p.trim()).filter(Boolean),
       fonti: d.fonti.filter((f) => f.titolo.trim() || f.url.trim()),
-      traduzioni: traduzioniPerApi(en, ['descrizione']),
+      traduzioni: traduzioniPerApi({ en, de }, ['descrizione']),
     }
     try {
       await salvaConConferma((conferma) => (iniziale.id ? admin.modificaPoi(iniziale.id, dati, conferma) : admin.creaPoi(dati, conferma)))
@@ -375,8 +398,8 @@ function ModuloPoi({ iniziale, tutti, onAnnulla, onSalvato }) {
       <CampoTesto etichetta="Parole chiave per la ricerca" aiuto="Separate da virgole" valore={d.parole_chiave} onCambia={imposta('parole_chiave')} />
 
       <Traduzioni
-        valori={d.en}
-        onCambia={imposta('en')}
+        dati={d}
+        imposta={imposta}
         campi={[
           { campo: 'nome', etichetta: 'Nome' },
           { campo: 'sintesi', etichetta: 'Sintesi' },
@@ -520,8 +543,8 @@ function GestioneItinerari({ avvisa }) {
       <ModuloGenerico
         titolo={modifica.id ? `Modifica "${modifica.dati.titolo}"` : 'Nuovo itinerario'}
         iniziale={modifica.dati}
-        salva={({ en, ...dati }) => {
-          const corpo = { ...dati, traduzioni: traduzioniPerApi(en) }
+        salva={({ en, de, ...dati }) => {
+          const corpo = { ...dati, traduzioni: traduzioniPerApi({ en, de }) }
           return modifica.id ? admin.modificaItinerario(modifica.id, corpo) : admin.creaItinerario(corpo)
         }}
         onAnnulla={() => setModifica(null)}
@@ -556,8 +579,8 @@ function GestioneItinerari({ avvisa }) {
             )}
             <SceltaLuoghi luoghi={luoghi} scelti={d.tappe} onCambia={imposta('tappe')} ordinabile errore={erroreCampo(errori, 'tappe')} />
             <Traduzioni
-              valori={d.en}
-              onCambia={imposta('en')}
+              dati={d}
+              imposta={imposta}
               campi={[
                 { campo: 'titolo', etichetta: 'Titolo' },
                 { campo: 'descrizione', etichetta: 'Descrizione', multilinea: true },
@@ -572,7 +595,7 @@ function GestioneItinerari({ avvisa }) {
   return (
     <section>
       <div className="barra-strumenti">
-        <button type="button" className="pulsante pulsante--primario" onClick={() => setModifica({ dati: { titolo: '', tema: 'principi-vescovi', durata_minuti: 60, descrizione: '', tappe: [], en: {} } })}>
+        <button type="button" className="pulsante pulsante--primario" onClick={() => setModifica({ dati: { titolo: '', tema: 'principi-vescovi', durata_minuti: 60, descrizione: '', tappe: [], en: {}, de: {} } })}>
           + Nuovo itinerario
         </button>
       </div>
@@ -588,7 +611,7 @@ function GestioneItinerari({ avvisa }) {
                 {it.tappe_rimosse.length > 0 && <span className="stato stato--rifiutato etichetta-tabella">{it.tappe_rimosse.length} rimosse</span>}
               </td>
               <td className="tabella__azioni">
-                <button type="button" className="pulsante-mini" onClick={() => setModifica({ id: it.id, dati: { ...it, tappe: it.tappe.map((p) => p.id), en: it.traduzioni?.en ?? {} } })}>Modifica</button>
+                <button type="button" className="pulsante-mini" onClick={() => setModifica({ id: it.id, dati: { ...it, tappe: it.tappe.map((p) => p.id), ...traduzioniPerModulo(it.traduzioni) } })}>Modifica</button>
                 <button type="button" className="pulsante-mini pulsante-mini--pericolo" onClick={() => elimina(it)}>Elimina</button>
               </td>
             </tr>
@@ -623,8 +646,8 @@ function GestioneTradizioni({ avvisa }) {
       <ModuloGenerico
         titolo={modifica.id ? `Modifica "${modifica.dati.nome}"` : 'Nuova tradizione'}
         iniziale={modifica.dati}
-        salva={({ en, ...dati }) => {
-          const corpo = { ...dati, traduzioni: traduzioniPerApi(en) }
+        salva={({ en, de, ...dati }) => {
+          const corpo = { ...dati, traduzioni: traduzioniPerApi({ en, de }) }
           return modifica.id ? admin.modificaTradizione(modifica.id, corpo) : admin.creaTradizione(corpo)
         }}
         onAnnulla={() => setModifica(null)}
@@ -653,8 +676,8 @@ function GestioneTradizioni({ avvisa }) {
             <span className="campo__etichetta">Luoghi collegati</span>
             <SceltaLuoghi luoghi={luoghi} scelti={d.luoghi} onCambia={imposta('luoghi')} />
             <Traduzioni
-              valori={d.en}
-              onCambia={imposta('en')}
+              dati={d}
+              imposta={imposta}
               campi={[
                 { campo: 'nome', etichetta: 'Nome' },
                 { campo: 'periodo', etichetta: 'Periodo' },
@@ -670,7 +693,7 @@ function GestioneTradizioni({ avvisa }) {
   return (
     <section>
       <div className="barra-strumenti">
-        <button type="button" className="pulsante pulsante--primario" onClick={() => setModifica({ dati: { nome: '', periodo: '', mesi: [], descrizione: '', luoghi: [], en: {} } })}>
+        <button type="button" className="pulsante pulsante--primario" onClick={() => setModifica({ dati: { nome: '', periodo: '', mesi: [], descrizione: '', luoghi: [], en: {}, de: {} } })}>
           + Nuova tradizione
         </button>
       </div>
@@ -682,7 +705,7 @@ function GestioneTradizioni({ avvisa }) {
               <td>{tr.nome}</td>
               <td>{tr.periodo}</td>
               <td className="tabella__azioni">
-                <button type="button" className="pulsante-mini" onClick={() => setModifica({ id: tr.id, dati: { ...tr, luoghi: tr.luoghi.map((l) => l.id), en: tr.traduzioni?.en ?? {} } })}>Modifica</button>
+                <button type="button" className="pulsante-mini" onClick={() => setModifica({ id: tr.id, dati: { ...tr, luoghi: tr.luoghi.map((l) => l.id), ...traduzioniPerModulo(tr.traduzioni) } })}>Modifica</button>
                 <button type="button" className="pulsante-mini pulsante-mini--pericolo" onClick={() => elimina(tr)}>Elimina</button>
               </td>
             </tr>

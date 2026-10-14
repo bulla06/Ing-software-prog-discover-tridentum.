@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { richiediRuolo } from '../../gateway/autenticazione.js'
 import { ErroreHttp, nonTrovato, valida } from '../../gateway/errori.js'
 import { preparaFoto } from '../../servizi/immagini.js'
-import { linguaRichiesta, testi, testo } from '../lingua.js'
+import { LINGUE_TRADOTTE, linguaRichiesta, testi, testo } from '../lingua.js'
 import { creaItinerarioSuMisura } from './su-misura.js'
 
 const CATEGORIE = ['storia', 'arte', 'tradizioni', 'gastronomia']
@@ -64,7 +64,7 @@ const testoBreve = (massimo) => z.string().trim().max(massimo, `Massimo ${massim
 const idSlug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Identificatore non valido')
 
 /**
- * Traduzioni facoltative di una voce (RNF-U05): { en: { campo: testo } }.
+ * Traduzioni facoltative di una voce (RNF-U05): { en: { campo: testo }, de: { campo: testo } }.
  * I campi vuoti si tolgono, così nel sito compare il testo italiano. Se la richiesta non ha il campo
  * "traduzioni" (per esempio dai pannelli delle versioni precedenti) restano quelle già salvate.
  */
@@ -73,9 +73,13 @@ function schemaTraduzioni(campi) {
     Object.fromEntries(Object.entries(t).filter(([, v]) => (Array.isArray(v) ? v.length > 0 : Boolean(v)))),
   )
   return z
-    .object({ en: voce.optional() })
+    .object(Object.fromEntries(LINGUE_TRADOTTE.map((lingua) => [lingua, voce.optional()])))
     .optional()
-    .transform((t) => (t === undefined ? undefined : t.en && Object.keys(t.en).length ? { en: t.en } : {}))
+    .transform((t) =>
+      t === undefined
+        ? undefined
+        : Object.fromEntries(LINGUE_TRADOTTE.filter((lingua) => t[lingua] && Object.keys(t[lingua]).length).map((lingua) => [lingua, t[lingua]])),
+    )
 }
 
 /** Valore SQL delle traduzioni: null vuol dire "lascia quelle che ci sono" (vedi coalesce nelle query) */
@@ -189,8 +193,10 @@ export function rotteLuoghi({ db, archivio }) {
 
     // Ricerca: ogni parola deve comparire nel testo (in italiano o tradotto); prima chi le ha nel nome (RF-05)
     const parole = normalizza(filtri.q ?? '').split(/\s+/).filter(Boolean).slice(0, 8)
-    const tradotti = `coalesce(p.traduzioni->'en'->>'nome', '') || ' ' || coalesce(p.traduzioni->'en'->>'sintesi', '') || ' ' ||
-      coalesce((SELECT string_agg(x, ' ') FROM jsonb_array_elements_text(p.traduzioni->'en'->'descrizione') AS x), '')`
+    const tradotti = LINGUE_TRADOTTE.map(
+      (l) => `coalesce(p.traduzioni->'${l}'->>'nome', '') || ' ' || coalesce(p.traduzioni->'${l}'->>'sintesi', '') || ' ' ||
+      coalesce((SELECT string_agg(x, ' ') FROM jsonb_array_elements_text(p.traduzioni->'${l}'->'descrizione') AS x), '')`,
+    ).join(` || ' ' || `)
     const testoRicerca = normalizzaSql(
       `p.nome || ' ' || p.sintesi || ' ' || p.indirizzo || ' ' || array_to_string(p.parole_chiave, ' ') || ' ' || array_to_string(p.descrizione, ' ') || ' ' || ${tradotti}`,
     )

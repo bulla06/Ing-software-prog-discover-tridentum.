@@ -7,6 +7,8 @@ import { describe, expect, it } from 'vitest'
 import { CARTELLA_DATI, elencaPacchetti, leggiPacchetto } from '../../versione-corrente/backend/src/db/popola.js'
 import testiIt from '../../versione-corrente/frontend/src/i18n/it.js'
 import testiEn from '../../versione-corrente/frontend/src/i18n/en.js'
+import testiDe from '../../versione-corrente/frontend/src/i18n/de.js'
+import informativa from '../../versione-corrente/frontend/src/i18n/informativa.js'
 
 // Tutti i pacchetti insieme, come risultano nel database alla fine del caricamento:
 // le voci nuove, con le correzioni e le traduzioni dei pacchetti successivi
@@ -14,8 +16,14 @@ const pacchetti = await Promise.all((await elencaPacchetti()).map(async (nome) =
 const tutti = (chiave) => pacchetti.flatMap((p) => p[chiave].map((voce) => ({ ...voce, pacchetto: p.nome })))
 const correzioni = pacchetti.flatMap((p) => p.correzioni.luoghi)
 const correzioniTradizioni = pacchetti.flatMap((p) => p.correzioni.tradizioni)
-const traduzioni = (chiave) => Object.assign({}, ...pacchetti.map((p) => p.traduzioni[chiave]))
-const conTraduzioni = (voci, chiave) => voci.map((v) => ({ ...v, traduzioni: v.traduzioni ?? traduzioni(chiave)[v.id] ?? {} }))
+// Le lingue si sommano: ogni lingua si scrive solo dove non c'è ancora (come popola.js), e le traduzioni
+// scritte dentro la voce valgono più di quelle dei pacchetti successivi
+const traduzioni = (chiave) => {
+  const tutte = {}
+  for (const p of pacchetti) for (const [id, t] of Object.entries(p.traduzioni[chiave])) tutte[id] = { ...t, ...tutte[id] }
+  return tutte
+}
+const conTraduzioni = (voci, chiave) => voci.map((v) => ({ ...v, traduzioni: { ...traduzioni(chiave)[v.id], ...v.traduzioni } }))
 const luoghi = conTraduzioni(
   tutti('luoghi').map((p) => Object.assign({}, p, ...correzioni.filter((c) => c.id === p.id))),
   'luoghi',
@@ -187,8 +195,55 @@ describe('traduzioni in inglese (RNF-U05)', () => {
   })
 })
 
+describe('traduzioni in tedesco (RNF-U05)', () => {
+  // Il tedesco ha le stesse voci tradotte dell'inglese, con gli stessi campi e gli stessi paragrafi
+  const campi = (t) => Object.keys(t ?? {}).sort()
+
+  it('ogni luogo, itinerario, tradizione e piatto tradotto in inglese lo è anche in tedesco', () => {
+    for (const [chiave, voci] of [['luoghi', luoghi], ['itinerari', itinerari], ['tradizioni', tradizioni], ['piatti', piatti]]) {
+      for (const v of voci) {
+        expect(campi(v.traduzioni.de), `${chiave}: ${v.id}`).toEqual(campi(v.traduzioni.en))
+        if (Array.isArray(v.traduzioni.en?.descrizione)) {
+          expect(v.traduzioni.de.descrizione.length, `${chiave}: ${v.id}`).toBe(v.traduzioni.en.descrizione.length)
+        }
+        for (const testo of Object.values(v.traduzioni.de ?? {}).flat()) expect(testo.trim(), `${chiave}: ${v.id}`).not.toBe('')
+      }
+    }
+  })
+
+  it('le traduzioni tedesche non sono copie dell\'inglese né dell\'italiano', () => {
+    for (const p of luoghi) {
+      expect(p.traduzioni.de.sintesi, p.id).not.toBe(p.traduzioni.en.sintesi)
+      expect(p.traduzioni.de.sintesi, p.id).not.toBe(p.sintesi)
+    }
+  })
+})
+
 describe('testi dell\'interfaccia', () => {
-  it('italiano e inglese hanno le stesse chiavi (RNF-U05)', () => {
+  const segnaposto = (t) => [...t.matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort()
+
+  it('italiano, inglese e tedesco hanno le stesse chiavi (RNF-U05)', () => {
     expect(Object.keys(testiEn).sort()).toEqual(Object.keys(testiIt).sort())
+    expect(Object.keys(testiDe).sort()).toEqual(Object.keys(testiIt).sort())
+  })
+
+  it('ogni testo tradotto ha gli stessi segnaposto dell\'italiano e nessun testo è vuoto', () => {
+    for (const [lingua, testi] of [['en', testiEn], ['de', testiDe]]) {
+      for (const [chiave, testo] of Object.entries(testiIt)) {
+        expect(segnaposto(testi[chiave]), `${lingua}: ${chiave}`).toEqual(segnaposto(testo))
+        expect(testi[chiave].trim(), `${lingua}: ${chiave}`).not.toBe('')
+      }
+    }
+  })
+
+  it('l\'informativa privacy ha le stesse sezioni e gli stessi segnaposto in tutte le lingue', () => {
+    expect(Object.keys(informativa).sort()).toEqual(['de', 'en', 'it'])
+    const forma = (i) => i.sezioni.map((x) => [x.testi?.length ?? 0, x.elenco?.length ?? 0])
+    const segnapostiDei = (i) => i.sezioni.flatMap((x) => [...(x.testi ?? []), ...(x.elenco ?? [])]).map(segnaposto)
+    for (const lingua of ['en', 'de']) {
+      expect(forma(informativa[lingua]), lingua).toEqual(forma(informativa.it))
+      expect(segnapostiDei(informativa[lingua]), lingua).toEqual(segnapostiDei(informativa.it))
+      expect(informativa[lingua].titolo && informativa[lingua].aggiornata && informativa[lingua].intro && informativa[lingua].contattoMancante, lingua).toBeTruthy()
+    }
   })
 })

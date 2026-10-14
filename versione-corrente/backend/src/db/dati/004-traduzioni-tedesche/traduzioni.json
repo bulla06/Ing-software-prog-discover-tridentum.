@@ -1,0 +1,743 @@
+{
+  "luoghi": {
+    "duomo": {
+      "de": {
+        "nome": "Dom San Vigilio",
+        "sintesi": "Der romanische Dom, in dem 1545 das Konzil von Trient eröffnet wurde.",
+        "epoca": "Ab dem 13. Jahrhundert",
+        "descrizione": [
+          "Der romanische Dom wurde 1212 vom Fürstbischof Friedrich von Wangen begonnen, an der Stelle einer frühchristlichen Basilika, die dem heiligen Vigilius, dem Stadtpatron, geweiht war.",
+          "Am 13. Dezember 1545 wurde hier das Konzil von Trient eröffnet, das Kardinäle, Bischöfe und Theologen aus ganz Europa für achtzehn Jahre in die Stadt brachte.",
+          "Unter der Kirche kann man die Überreste der älteren Basilika besichtigen: eine erste Schicht der Stadtgeschichte, die nur wenige Touristen besuchen."
+        ]
+      }
+    },
+    "nettuno": {
+      "de": {
+        "nome": "Neptunbrunnen",
+        "sintesi": "Der Barockbrunnen mitten auf der Piazza Duomo, dem Treffpunkt der Trentiner.",
+        "descrizione": [
+          "Der Brunnen wurde zwischen 1767 und 1769 nach einem Entwurf von Francesco Antonio Giongo gebaut, um das Wasser einer neuen Wasserleitung auf den Platz zu bringen.",
+          "Der Dreizack Neptuns erinnert an den lateinischen Namen der Stadt, Tridentum: ein Wortspiel, das die Einheimischen gern erzählen.",
+          "Noch heute ist er der beliebteste Treffpunkt der Altstadt: „Wir sehen uns am Neptun“."
+        ]
+      }
+    },
+    "case-cazuffi-rella": {
+      "de": {
+        "nome": "Häuser Cazuffi-Rella",
+        "sintesi": "Zwei vollständig bemalte Fassaden am Platz, und kaum jemand schaut hinauf.",
+        "epoca": "16. Jahrhundert",
+        "descrizione": [
+          "Die beiden Renaissancehäuser an der Nordseite der Piazza Duomo haben Fassaden voller Fresken: Die Stadt betrachtet sie als das wichtigste „bemalte Haus“ des Trient der Renaissance.",
+          "Das linke Haus zeigt Götter und Gestalten der Mythologie: oben die Allegorien von Fortuna, Gelegenheit und Nemesis, weiter unten Damokles an der Tafel des Tyrannen Dionysios. Das rechte zeigt die Tugend, die Zeit, die Triumphe der Liebe, Apollo und den Überfluss. Die lateinischen Inschriften machen aus ihnen ein Sittenbuch, das sich zum Platz hin öffnet.",
+          "Die Fresken werden Marcello Fogolino zugeschrieben, der in Trient in den Jahren des Fürstbischofs Bernhard von Cles arbeitete; nach einigen Studien stammt nur das linke Haus von ihm. Der blaue Hintergrund, mit einem mineralischen Pigment gemalt, ist heute größtenteils verschwunden.",
+          "Am besten sieht man sie vom Rand des Neptunbrunnens aus, in der Nachmittagssonne."
+        ],
+        "affresco_autore": "Marcello Fogolino (zugeschrieben)",
+        "affresco_epoca": "1530er-Jahre"
+      }
+    },
+    "palazzo-pretorio": {
+      "de": {
+        "nome": "Palazzo Pretorio und Stadtturm",
+        "sintesi": "Die alte Residenz der Bischöfe und der Turm mit der Glocke „Renga“.",
+        "epoca": "11.–13. Jahrhundert",
+        "descrizione": [
+          "Vor dem Schloss Buonconsiglio wohnten die Bischöfe von Trient hier, neben dem Dom. Heute beherbergt der Palast das Diözesanmuseum von Trient.",
+          "Im Stadtturm hängt die Glocke, die als „Renga“ bekannt ist: Sie läutete einst, um die Bürger zu versammeln und Hinrichtungen anzukündigen.",
+          "Das Museum bewahrt Wandteppiche und Werke, die mit dem Konzil von Trient zusammenhängen."
+        ]
+      }
+    },
+    "sass": {
+      "de": {
+        "nome": "S.A.S.S. — Das unterirdische Tridentum",
+        "sintesi": "Unter dem Platz liegt eine gepflasterte Straße der römischen Stadt Tridentum.",
+        "epoca": "1. Jahrhundert v. Chr. – 5. Jahrhundert n. Chr.",
+        "descrizione": [
+          "Wenige Meter unter der Piazza Cesare Battisti bewahrt der Archäologische Untergrundbereich des Sas einen Abschnitt der römischen Stadt: eine gepflasterte Straße mit Wagenspuren, die Mauern, einen Turm und die Reste von Häusern mit Mosaikböden.",
+          "Es ist der Teil der Geschichte, den die Stadt über der Erde nicht zeigt: Wer durch die Altstadt geht, überquert Tridentum, ohne es zu wissen."
+        ]
+      }
+    },
+    "palazzo-geremia": {
+      "de": {
+        "nome": "Palazzo Geremia",
+        "sintesi": "Eine bemalte Fassade, die in der Straße der Paläste die Geschichte des Trient der Renaissance erzählt.",
+        "epoca": "Spätes 15. – frühes 16. Jahrhundert",
+        "descrizione": [
+          "Die Via Belenzani ist die Renaissancestraße der Adelspaläste. Der Palazzo Geremia, seit 1912 im Besitz der Stadt, ist dank seiner freskierten Fassade der meistfotografierte.",
+          "Die Fresken aus den ersten Jahren des 16. Jahrhunderts feiern die Familie Geremia und Maximilian von Habsburg, der im oberen Streifen mehrmals erscheint, als er noch nicht Kaiser war. Daneben stehen Legenden aus dem alten Rom, etwa Marcus Curtius zu Pferd und Mucius Scaevola.",
+          "Der Maler ist nicht bekannt: Die Studien weisen auf einen im Veneto ausgebildeten Künstler hin, der zu Beginn des Jahrhunderts tätig war. Eine neuere Deutung verbindet eine der Szenen mit dem diplomatischen Treffen vom Oktober 1501 zwischen Maximilian und Kardinal Georges d’Amboise.",
+          "Die Fassade wurde mehrmals restauriert, 1941, 1960, 1973 und 1993, und der Regen beschädigt sie weiter: Die Stadt bereitet eine neue Restaurierung vor."
+        ],
+        "affresco_autore": "Nicht identifizierter, im Veneto ausgebildeter Maler",
+        "affresco_epoca": "Erste Jahre des 16. Jahrhunderts"
+      }
+    },
+    "palazzo-thun": {
+      "de": {
+        "nome": "Palazzo Thun",
+        "sintesi": "Der Palast einer der großen Familien des Trentino, heute das Rathaus.",
+        "epoca": "16. Jahrhundert",
+        "descrizione": [
+          "Die Thun gehören zu den ältesten Adelsfamilien des Trentino: Ihr Stadtpalast ist heute der Sitz des Gemeinderats.",
+          "Die Geschichten der Familien, die die Via Belenzani gebaut haben, sind eines der Themen, zu denen die Gemeinschaft Erinnerungen und Anekdoten beitragen kann."
+        ]
+      }
+    },
+    "santa-maria-maggiore": {
+      "de": {
+        "nome": "Kirche Santa Maria Maggiore",
+        "sintesi": "Die Renaissancekirche von Bernhard von Cles, in der das Konzil oft tagte.",
+        "descrizione": [
+          "Fürstbischof Bernhard von Cles ließ die Kirche in den 1520er-Jahren neu bauen und übertrug sie dem Architekten Antonio Medaglia.",
+          "Während des Konzils fanden hier viele Sitzungen der Konzilsväter statt, wenn der Dom nicht ausreichte.",
+          "Unter der Kirche wurden römische und frühchristliche Überreste gefunden."
+        ]
+      }
+    },
+    "buonconsiglio": {
+      "de": {
+        "nome": "Schloss Buonconsiglio",
+        "sintesi": "Die Residenz der Fürstbischöfe und 1916 der Ort, an dem Cesare Battisti vor Gericht stand.",
+        "epoca": "13.–18. Jahrhundert",
+        "descrizione": [
+          "Vom 13. bis zum späten 18. Jahrhundert war das Schloss die Residenz der Fürstbischöfe von Trient. Der älteste Teil ist das Castelvecchio; der Magno Palazzo wurde im 16. Jahrhundert von Bernhard von Cles errichtet.",
+          "1916 ließen die Österreicher in der Fossa dei Martiri Cesare Battisti, Damiano Chiesa und Fabio Filzi hinrichten, Trentiner Irredentisten, die in die italienische Armee eingetreten waren.",
+          "Heute ist es das größte Museum der Stadt."
+        ]
+      }
+    },
+    "torre-aquila": {
+      "de": {
+        "nome": "Adlerturm — Monatszyklus",
+        "sintesi": "Einer der schönsten gotischen Profanzyklen Europas: ein Jahr Leben in Trient.",
+        "epoca": "Um 1400",
+        "descrizione": [
+          "Fürstbischof Georg von Liechtenstein ließ einen Raum im Turm mit den Monaten des Jahres ausmalen: Adlige bei einer Schneeballschlacht, Bauern beim Pflügen, bei der Weinlese und bei der Käseherstellung.",
+          "Die Fresken werden einem Maler böhmischer Herkunft zugeschrieben, der als Meister Wenzel bekannt ist. Elf der zwölf Monate sind erhalten: Der März ist verloren gegangen.",
+          "Der Turm wird im Rahmen des Rundgangs durch das Schloss Buonconsiglio besichtigt."
+        ],
+        "affresco_autore": "Meister Wenzel (zugeschrieben)",
+        "affresco_epoca": "Um 1400"
+      }
+    },
+    "loggia-romanino": {
+      "de": {
+        "nome": "Romaninos Loggia",
+        "sintesi": "Die bemalte Loggia des Palastes von Bernhard von Cles, voller Mythen und Groteskfiguren.",
+        "descrizione": [
+          "Für seinen neuen Magno Palazzo rief Bernhard von Cles einige der besten Maler seiner Zeit. Girolamo Romanino freskierte die Loggia mit mythologischen Szenen und lebhaften Figuren.",
+          "Sie ist das Renaissanceherz des Schlosses und das Symbol eines Trient, das sich darauf vorbereitet, das Konzil zu beherbergen."
+        ]
+      }
+    },
+    "piazza-fiera": {
+      "de": {
+        "nome": "Piazza Fiera und die Stadtmauer",
+        "sintesi": "Das letzte Stück der mittelalterlichen Mauern und der Platz der Weihnachtsmärkte.",
+        "epoca": "Mauern aus dem 13. Jahrhundert",
+        "descrizione": [
+          "Eine Seite des Platzes bewahrt eines der am besten erhaltenen Stücke der Mauern, die die mittelalterliche Stadt umschlossen.",
+          "Seit Jahrhunderten finden auf dem Platz Jahrmärkte und Märkte statt: Heute sind hier die Weihnachtsmärkte und einige Veranstaltungen der Feste Vigiliane zu Hause."
+        ]
+      }
+    },
+    "torre-vanga": {
+      "de": {
+        "nome": "Vanga-Turm",
+        "sintesi": "Ein Turm, der die Brücke über die Etsch bewachen sollte und heute weit vom Fluss entfernt steht.",
+        "epoca": "Frühes 13. Jahrhundert",
+        "descrizione": [
+          "Fürstbischof Friedrich von Wangen ließ ihn im frühen 13. Jahrhundert bauen, um die Brücke San Lorenzo zu kontrollieren, den einzigen Übergang über die Etsch.",
+          "Damals floss der Fluss hier, unter den Mauern. Nachdem die Etsch Mitte des 19. Jahrhunderts begradigt worden war, blieb der Turm mitten in der Stadt stehen: Er ist das deutlichste Zeichen dafür, wo das alte Flussbett verlief."
+        ]
+      }
+    },
+    "adige": {
+      "de": {
+        "nome": "Die Begradigung der Etsch",
+        "sintesi": "Der Fluss wurde verlegt: Die moderne Stadt wuchs auf seinem alten Bett.",
+        "epoca": "Mitte des 19. Jahrhunderts",
+        "descrizione": [
+          "Bis ins 19. Jahrhundert beschrieb die Etsch eine Schleife, die an der Stadt entlangführte und sie oft überschwemmte. Unter österreichischer Herrschaft wurde ihr Lauf Mitte des 19. Jahrhunderts begradigt und weiter nach Westen verlegt.",
+          "Das alte Flussbett wurde aufgefüllt, und darauf entstanden Straßen, Häuser und das Bahnhofsviertel. Der Vanga-Turm und Piedicastello zeigen noch, wie die Stadt vorher aussah."
+        ]
+      }
+    },
+    "piazza-dante": {
+      "de": {
+        "nome": "Dante-Denkmal",
+        "sintesi": "Eine Statue, die enthüllt wurde, als Trient österreichisch war, um zu sagen, dass sich die Stadt italienisch fühlte.",
+        "descrizione": [
+          "Das Denkmal des Florentiner Bildhauers Cesare Zocchi wurde 1896 enthüllt, als Trient zur Österreichisch-Ungarischen Monarchie gehörte.",
+          "Die Wahl Dantes, des Vaters der italienischen Sprache, war ein Bekenntnis: Die Statue wurde zum Symbol des Trentiner Irredentismus."
+        ]
+      }
+    },
+    "bombardamenti": {
+      "de": {
+        "nome": "Der Bahnhof und die Bombardierungen von 1943",
+        "sintesi": "Ab September 1943 wurde die Stadt bombardiert, um die Brennerbahn zu treffen.",
+        "descrizione": [
+          "Am 2. September 1943 erlebte Trient den ersten alliierten Luftangriff: Die Bomben fielen vor allem rund um die Portela, in der Nähe des Bahnhofs, und die Stadt zählt 198 bestätigte Opfer. Bis 1945 galten weitere Angriffe der Brennerbahn und den Brücken über die Etsch; insgesamt starben in der Stadt 348 Menschen.",
+          "Ganze Häuserblöcke um den Bahnhof und in Richtung Etsch wurden zerstört und nach dem Krieg wieder aufgebaut: Viele „neue“ Gebäude im Zentrum stammen aus dieser Zeit. Ein Denkmal erinnert an die zivilen Opfer der Bombardierungen."
+        ]
+      }
+    },
+    "gallerie-piedicastello": {
+      "de": {
+        "nome": "Die Tunnel von Piedicastello",
+        "sintesi": "Zwei alte Umgehungstunnel, die zu einem Ausstellungsraum zur Geschichte des Trentino wurden.",
+        "epoca": "Straßentunnel aus dem 20. Jahrhundert",
+        "descrizione": [
+          "Als die Straße verlegt wurde, wurden die beiden Tunnel unter dem Doss Trento für den Verkehr gesperrt und in einen Ausstellungsraum der Fondazione Museo storico del Trentino umgewandelt.",
+          "Sie zeigen Ausstellungen zur Geschichte des 20. Jahrhunderts, vom Ersten Weltkrieg bis zum Wiederaufbau nach dem Krieg."
+        ]
+      }
+    },
+    "doss-trento": {
+      "de": {
+        "nome": "Doss Trento und das Battisti-Mausoleum",
+        "sintesi": "Der Hügel über der Etsch mit dem Mausoleum von Cesare Battisti und einem Blick über die Stadt.",
+        "descrizione": [
+          "Der Doss Trento ist der felsige Hügel am rechten Ufer der Etsch. Auf dem Gipfel steht das Cesare Battisti gewidmete Mausoleum, das 1935 eingeweiht wurde.",
+          "Vom Hügel aus erkennt man deutlich die Form der Stadt und den Verlauf des Flusses nach seiner Begradigung."
+        ]
+      }
+    },
+    "palazzo-albere": {
+      "de": {
+        "nome": "Palazzo delle Albere",
+        "sintesi": "Die befestigte Villa der Madruzzo, der Herren von Trient zur Zeit des Konzils.",
+        "epoca": "16. Jahrhundert",
+        "descrizione": [
+          "Die Madruzzo, eine Fürstbischofsfamilie in den Jahren des Konzils, bauten diese Villa mit Ecktürmen und einem Wassergraben, die einst von einer Baumallee (albere) umgeben war: daher der Name.",
+          "Im Inneren sind Freskenzyklen aus dem 16. Jahrhundert erhalten: die zwölf Monate im Kaminzimmer, unter dem großen Wappen der Madruzzo; das Leben des Menschen in einem Turm, Marcello Fogolino zugeschrieben; die freien Künste und die Tugenden in den oberen Stockwerken. Vom Saal mit den Taten Karls V., der nach seinem Tod 1558 gemalt wurde, sind nur wenige Fragmente übrig: Ein Brand im Jahr 1796 zerstörte den größten Teil der Malereien.",
+          "Heute steht sie neben dem Viertel Le Albere und dem MUSE, zwischen Alt und Zeitgenössisch."
+        ],
+        "affresco_autore": "Marcello Fogolino und nicht identifizierte Maler",
+        "affresco_epoca": "Mitte des 16. Jahrhunderts"
+      }
+    },
+    "muse": {
+      "de": {
+        "nome": "MUSE — Wissenschaftsmuseum",
+        "sintesi": "Das Museum von Renzo Piano in einem Viertel, das dort entstand, wo früher eine Fabrik stand.",
+        "descrizione": [
+          "Das MUSE, von Renzo Piano entworfen und 2013 eröffnet, erzählt die Natur- und Kulturgeschichte der Alpen, von den Gletschern bis zu den Dinosauriern.",
+          "Es steht im Viertel Le Albere, das auf dem Gelände des ehemaligen Michelin-Werks gebaut wurde: ein Beispiel dafür, wie die Stadt ihre Industrieflächen verwandelt hat."
+        ]
+      }
+    },
+    "sociologia": {
+      "de": {
+        "nome": "Soziologie und 1968",
+        "sintesi": "Die erste soziologische Fakultät Italiens entstand in Trient, mitten in den Studentenprotesten.",
+        "epoca": "Seit 1962",
+        "descrizione": [
+          "Im Herbst 1962 öffnete in Trient das Höhere Institut für Sozialwissenschaften mit 226 Erstsemestern: Es war die erste soziologische Fakultät Italiens. 1972 wurde es zur Freien Universität Trient, aus der die heutige Universität hervorging.",
+          "In den 1960er-Jahren gehörten die Soziologiestudenten zu den Anführern der Proteste: Besetzungen und Versammlungen veränderten das Gesicht einer bis dahin ruhigen Stadt.",
+          "Heute ist das Department für Soziologie in dem historischen Gebäude in der Via Verdi 26 untergebracht, wo 2022 das sechzigjährige Jubiläum gefeiert wurde."
+        ]
+      }
+    },
+    "simonino": {
+      "de": {
+        "nome": "Santi Pietro e Paolo und der Fall Simonino",
+        "sintesi": "Eine falsche Anschuldigung gegen die jüdische Gemeinde und ein Kult, der fünf Jahrhunderte dauerte.",
+        "descrizione": [
+          "1475 wurde der Tod eines Kindes, Simon, genutzt, um die Juden von Trient fälschlich des Ritualmords zu beschuldigen. Es folgten Prozesse unter Folter und Todesurteile, und die jüdische Gemeinde wurde aus der Stadt vertrieben.",
+          "Jahrhundertelang wurde in dieser Kirche der „selige Simonino“ verehrt. Erst 1965 erkannte die Kirche an, dass die Anschuldigungen unbegründet waren, und schaffte den Kult ab.",
+          "Es ist eines der dunkelsten Kapitel der Stadtgeschichte, das heute auch das Diözesanmuseum von Trient erzählt."
+        ]
+      }
+    },
+    "teatro-sociale": {
+      "de": {
+        "nome": "Teatro Sociale",
+        "sintesi": "Das Theater der Stadt im italienischen Stil, 1819 über den Resten von Tridentum eröffnet.",
+        "descrizione": [
+          "Das Theater wurde am 23. Mai 1819 als Teatro Mazzurana eröffnet, benannt nach Felice Mazzurana, der den Bau förderte. Es hat den klassischen italienischen Hufeisengrundriss mit Logen.",
+          "Die Autonome Provinz Trient kaufte es, restaurierte es und gab es der Stadt im Jahr 2000 zurück. Bei den Arbeiten kamen unter dem Theater ein Stück gepflasterte Straße, ein Haus mit Mosaiken und eine Handwerkerwerkstatt der römischen Stadt zum Vorschein: Heute kann man sie im S.A.S.S., dem Archäologischen Untergrundbereich des Sas, besichtigen."
+        ]
+      }
+    },
+    "torre-verde": {
+      "de": {
+        "nome": "Grüner Turm",
+        "sintesi": "Ein Turm der mittelalterlichen Mauern, benannt nach der Farbe seines Daches.",
+        "epoca": "13. Jahrhundert",
+        "descrizione": [
+          "Der Turm gehörte zu den mittelalterlichen Mauern im Bereich zwischen dem Zentrum und dem Schloss Buonconsiglio.",
+          "Sein Name kommt von den grün glasierten Ziegeln seines Daches, an denen man ihn schon von Weitem erkennt."
+        ]
+      }
+    },
+    "sant-apollinare": {
+      "de": {
+        "nome": "Kirche Sant’Apollinare",
+        "sintesi": "Eine der ältesten Kirchen der Stadt, am Fuß des Doss Trento, 1494 von Dürer gemalt.",
+        "epoca": "12.–14. Jahrhundert",
+        "descrizione": [
+          "Piedicastello ist das Viertel am rechten Ufer der Etsch, am Fuß des Doss Trento. Vor der Begradigung trennte die Flussschleife der Etsch es von der Stadt.",
+          "Die Kirche steht auf sehr alten Fundamenten aus byzantinischer Zeit; die Benediktiner bauten sie im 12. Jahrhundert im romanischen Stil neu, und im 14. Jahrhundert erhielt sie ihr heutiges Aussehen mit dem hohen Spitzdach. Albrecht Dürer malte sie 1494 in einem Aquarell.",
+          "Im Inneren ruhen zwei hohe achteckige Rippenkuppeln auf Konsolen; rechts vom Eingang steht ein Sarkophag aus dem 14. Jahrhundert, von lombardischen Künstlern gemeißelt. Grabungen in der Umgebung haben die Überreste des Benediktinerklosters freigelegt."
+        ]
+      }
+    },
+    "san-lorenzo": {
+      "de": {
+        "nome": "Abtei San Lorenzo",
+        "sintesi": "Eine romanische Kirche neben dem Bahnhof, verbunden mit einem alten Kloster.",
+        "epoca": "12. Jahrhundert",
+        "descrizione": [
+          "Die romanische Kirche San Lorenzo, nur einen kurzen Fußweg vom Bahnhof entfernt, gehörte zu einem im Mittelalter gegründeten Benediktinerkloster.",
+          "Heute ist sie von der modernen Stadt umgeben: Wer mit dem Zug ankommt, geht an ihr vorbei, ohne sie zu bemerken."
+        ]
+      }
+    },
+    "san-francesco-saverio": {
+      "de": {
+        "nome": "Kirche San Francesco Saverio",
+        "sintesi": "Die barocke Jesuitenkirche, errichtet nach den Ideen des aus Trient stammenden Andrea Pozzo.",
+        "descrizione": [
+          "Die Gesellschaft Jesu baute die Kirche zwischen 1708 und 1711 nach den architektonischen Theorien von Andrea Pozzo, einem in Trient geborenen Maler und Autor. Sie ist eines der wenigen Beispiele für den vollen Barock in einer Stadt, die überwiegend mittelalterlich und von der Renaissance geprägt ist.",
+          "Im Inneren befindet sich das Altarbild von Paul Troger und Carlo Mignocchi; Mignocchi malte auch die Fresken im Vorraum und in der Sakristei.",
+          "Die Kirche wird weiterhin für den Gottesdienst genutzt."
+        ],
+        "affresco_autore": "Carlo Mignocchi (Vorraum und Sakristei)",
+        "affresco_epoca": "18. Jahrhundert"
+      }
+    },
+    "villa-margon": {
+      "de": {
+        "nome": "Villa Margon",
+        "sintesi": "Eine Renaissancevilla auf den Hügeln von Ravina mit freskierten Räumen.",
+        "epoca": "16. Jahrhundert",
+        "descrizione": [
+          "Die Villa Margon ist eine Renaissanceresidenz zwischen den Weinbergen oberhalb von Ravina, südlich der Stadt, die mit der Familie Madruzzo verbunden ist.",
+          "Ihre Räume wurden von italienischen, flämischen und deutschen Künstlern ausgeschmückt, deren Namen unbekannt sind: Der berühmteste Zyklus besteht aus zwölf Fresken mit den Siegen Kaiser Karls V. Der Überlieferung nach war Karl V. auch Gast in der Villa.",
+          "Es ist ein Privatwohnsitz: Er kann nach Voranmeldung und an einigen offenen Tagen besichtigt werden, etwa am nationalen Tag der historischen Häuser."
+        ],
+        "affresco_autore": "Nicht identifizierte italienische, flämische und deutsche Maler",
+        "affresco_epoca": "16. Jahrhundert"
+      }
+    },
+    "funivia-sardagna": {
+      "de": {
+        "nome": "Seilbahn Trient–Sardagna",
+        "sintesi": "Wenige Minuten vom Fluss bis zum Aussichtspunkt von Sardagna, mit der ganzen Stadt unter dir.",
+        "epoca": "20. Jahrhundert",
+        "descrizione": [
+          "Die Seilbahn startet am rechten Ufer der Etsch und führt hinauf zum Dorf Sardagna an den Hängen des Monte Bondone.",
+          "Vom Aussichtspunkt sieht man die ganze Stadt und kann den geraden Lauf der Etsch nach ihrer Begradigung im 19. Jahrhundert deutlich verfolgen. Die Fahrt gehört zum öffentlichen Nahverkehr der Stadt."
+        ]
+      }
+    },
+    "caproni": {
+      "de": {
+        "nome": "Luftfahrtmuseum Gianni Caproni",
+        "sintesi": "Historische Flugzeuge eines der Luftfahrtpioniere, der im Trentino geboren wurde.",
+        "epoca": "20. Jahrhundert",
+        "descrizione": [
+          "Gianni Caproni, 1886 im Trentino geboren, war einer der Pioniere der italienischen Luftfahrt: Seine Bomber wurden im Ersten Weltkrieg eingesetzt.",
+          "Das Museum neben dem Flughafen Mattarello bewahrt historische Flugzeuge und Dokumente aus der Sammlung der Familie."
+        ]
+      }
+    },
+    "calisio": {
+      "de": {
+        "nome": "Monte Calisio und die Silberminen",
+        "sintesi": "Der von Tausenden Schächten durchlöcherte Berg: das Silber, das das mittelalterliche Trient reich machte.",
+        "epoca": "Mittelalter",
+        "descrizione": [
+          "Auf dem Plateau des Argentario, nordöstlich der Stadt, wurde im Mittelalter Silber abgebaut. Der Boden ist noch heute von Tausenden Schächten und Stollen gezeichnet, die wie die Bergleute selbst „canopi“ genannt werden.",
+          "Die Bergordnung, die Bischof Friedrich von Wangen im frühen 13. Jahrhundert zusammenstellen ließ, gilt als eines der ältesten Bergbaustatuten Europas."
+        ]
+      }
+    },
+    "palazzo-roccabruna": {
+      "de": {
+        "nome": "Palazzo Roccabruna — Provinzielle Enothek",
+        "sintesi": "Ein Renaissancepalast, in dem man die Weine und Produkte des Trentino verkosten kann.",
+        "epoca": "16. Jahrhundert",
+        "descrizione": [
+          "Der Palazzo Roccabruna ist eine Residenz aus dem 16. Jahrhundert in der Altstadt. Heute beherbergt er das Haus der Produkte des Trentino und die Provinzielle Enothek, mit Verkostungen und Veranstaltungen rund um lokale Weine, Käse und Wurstwaren.",
+          "Der Kalender der Verkostungen steht auf der Website des Palastes."
+        ],
+        "piatto_consigliato": "Eine Trentodoc-Verkostung"
+      }
+    },
+    "birreria-pedavena": {
+      "de": {
+        "nome": "Bierhaus Pedavena",
+        "sintesi": "Das historische Bierhaus der Altstadt, wenige Schritte von den Mauern der Piazza Fiera entfernt.",
+        "epoca": "Seit 1921",
+        "descrizione": [
+          "Das 1921 eröffnete und 2002 renovierte Bierhaus an der Piazza di Fiera ist seit Generationen ein Treffpunkt der Einheimischen, mit einem großen Saal, Bier und traditionellen Gerichten wie Carne salada und Polenta.",
+          "Der Name stammt von der Brauerei Pedavena in der Provinz Belluno."
+        ],
+        "piatto_consigliato": "Carne salada mit Polenta"
+      }
+    },
+    "le-due-spade": {
+      "de": {
+        "nome": "Le Due Spade",
+        "sintesi": "Das Gasthaus, das der Überlieferung nach auf das Jahr der Konzilseröffnung zurückgeht.",
+        "epoca": "Überlieferung seit 1545",
+        "descrizione": [
+          "Ein Dokument von 1545, dem Jahr der Eröffnung des Konzils von Trient, ist der erste Nachweis dieses Ortes als Gasthaus für Menschen, die wegen des Konzils in die Stadt kamen. Das Datum steht noch heute auf dem Schild.",
+          "Heute ist es ein Restaurant mit einer kleinen gewölbten Stube, nur wenige Schritte von Santa Maria Maggiore entfernt: Die Küche verbindet Gerichte des Trentino, etwa Saibling und Wild, mit moderneren Ideen."
+        ],
+        "piatto_consigliato": "Saibling oder Wild, je nach Jahreszeit"
+      }
+    },
+    "scrigno-del-duomo": {
+      "de": {
+        "nome": "Scrigno del Duomo",
+        "sintesi": "Ein Restaurant in einem Palast aus dem 15. Jahrhundert an der Piazza Duomo, mit einem römischen Brunnen im Speisesaal.",
+        "epoca": "Palast von 1465",
+        "descrizione": [
+          "Das Restaurant befindet sich in einem Palast von 1465 mit Blick auf den Domplatz. Im Erdgeschoss gibt es eine Weinbar mit einer langen Liste offener Weine.",
+          "Bei Grabungen kam ein Brunnen aus römischer Zeit zum Vorschein: Restauriert, ist er im eindrucksvollsten Raum des Restaurants zu sehen. Ein kleiner Geschmack von Tridentum auch am Tisch."
+        ],
+        "piatto_consigliato": "Ein Glas von der Weinkarte"
+      }
+    },
+    "cantine-ferrari": {
+      "de": {
+        "nome": "Kellerei Ferrari",
+        "sintesi": "Die 1902 von Giulio Ferrari gegründete Kellerei, einer der historischen Namen des Trentiner Schaumweins.",
+        "epoca": "Seit 1902",
+        "descrizione": [
+          "Giulio Ferrari gründete die Kellerei 1902 mit der Idee, im Trentino einen Schaumwein nach der klassischen Methode herzustellen.",
+          "Heute ist sie einer der bekanntesten Trentodoc-Erzeuger und bietet Führungen nach Voranmeldung an."
+        ],
+        "piatto_consigliato": "Trentodoc"
+      }
+    },
+    "palazzo-del-monte": {
+      "de": {
+        "nome": "Palazzo Del Monte — Die Taten des Herkules",
+        "sintesi": "Eine Fassade mit den Taten des Herkules, von einem Kriegsbrand gezeichnet und geduldig gerettet.",
+        "epoca": "Spätes 15. – frühes 16. Jahrhundert",
+        "descrizione": [
+          "Dort, wo die Via Manci auf die Via San Marco und die Via del Suffragio trifft, erzählt die Fassade des Palazzo Del Monte die Taten des Herkules: Zehn der zwölf lassen sich erkennen, dazu zwei Nebenepisoden, lateinische Inschriften, Medaillons und Putten.",
+          "Die Fresken wurden in den ersten Jahrzehnten des 16. Jahrhunderts von Künstlern aus der Lombardei oder dem Veneto im Stil von Giovanni Maria Falconetto gemalt, noch vor dem Tod Kaiser Maximilians I. im Jahr 1519.",
+          "1944 beschädigte sie ein durch einen Bombenangriff verursachter Brand schwer. In den 1950er-Jahren und zwischen 1980 und 1983 teilweise restauriert, wurden sie im Frühjahr 2025 gesichert, bis eine neue Restaurierung möglich ist."
+        ],
+        "affresco_autore": "Maler aus der Lombardei oder dem Veneto im Umkreis von Giovanni Maria Falconetto",
+        "affresco_epoca": "Frühes 16. Jahrhundert"
+      }
+    },
+    "palazzo-quetta-alberti-colico": {
+      "de": {
+        "nome": "Palazzo Quetta Alberti-Colico",
+        "sintesi": "Zwei Jahrhunderte Malerei an einer Fassade: das 16. Jahrhundert über dem 15.",
+        "epoca": "15.–16. Jahrhundert",
+        "descrizione": [
+          "In der Via Belenzani, gleich hinter dem Palazzo Geremia, zeigt die Fassade dieses Palastes Fresken aus dem 16. Jahrhundert, die über eine ältere Ausmalung aus dem 15. Jahrhundert gemalt wurden; diese scheint stellenweise durch.",
+          "Die Fresken des 16. Jahrhunderts werden Marcello Fogolino zugeschrieben, dem Maler der Häuser Cazuffi-Rella und vieler Räume des Schlosses Buonconsiglio. Die einfachen Fenster erinnern an das ältere Aussehen des Gebäudes."
+        ],
+        "affresco_autore": "Marcello Fogolino (zugeschrieben)",
+        "affresco_epoca": "16. Jahrhundert"
+      }
+    },
+    "palazzo-niccolini": {
+      "de": {
+        "nome": "Palazzo Niccolini — Das wiederentdeckte Fresko",
+        "sintesi": "Ein Fresko von 1574, jahrzehntelang unter Putz verborgen und 2020 wiederentdeckt.",
+        "descrizione": [
+          "Jahrzehntelang war die Fassade des Palastes über dem gleichnamigen Café mit ziegelfarbenem Putz bedeckt. Im März 2020 wurde aus einem einfachen Neuanstrich eine Restaurierung: Darunter lag ein großes Fresko.",
+          "Die zentrale Szene zeigt das Heilige Haus von Nazareth, von Engeln nach Loreto getragen; an den Seiten stehen der heilige Sebastian und der heilige Rochus, die gegen die Pest angerufenen Heiligen, sowie Christus, der sein Blut in einen Kelch gießt. Darunter sieht man das Wappen der Madruzzo und eine Schriftrolle mit dem Datum 1574.",
+          "Der Maler ist unbekannt: wahrscheinlich Künstler der venezianischen Schule. Die vom Denkmalamt überwachte Restaurierung wurde zum großen Teil von den Eigentümerinnen, den Schwestern Niccolini, bezahlt."
+        ],
+        "affresco_autore": "Maler der venezianischen Schule (unsichere Zuschreibung)"
+      }
+    },
+    "affreschi-duomo": {
+      "de": {
+        "nome": "Die Fresken des 14. Jahrhunderts im Dom",
+        "sintesi": "Im Inneren des Doms Fragmente gotischer Malerei, die kaum jemand bemerkt.",
+        "epoca": "14. Jahrhundert",
+        "descrizione": [
+          "Wer den Dom besucht, schaut auf den Altar und seinen Baldachin, doch im Querschiff befinden sich noch Fresken des 14. Jahrhunderts mit der Legende des heiligen Julian, Fragmente der mittelalterlichen Ausmalung der Kirche.",
+          "Im nördlichen Seitenschiff hat eine Restaurierung eine thronende Madonna mit Kind wieder sichtbar gemacht, ebenfalls im 14. Jahrhundert gemalt.",
+          "Diese Malereien sind mehr als zwei Jahrhunderte älter als das Konzil von Trient: Der romanische Dom wurde 1212 begonnen, und die Arbeiten dauerten über hundert Jahre."
+        ],
+        "affresco_autore": "Nicht identifizierte Maler des 14. Jahrhunderts",
+        "affresco_epoca": "14. Jahrhundert"
+      }
+    },
+    "sala-grande-dossi": {
+      "de": {
+        "nome": "Magno Palazzo — Die Fresken der Dossi",
+        "sintesi": "Die bestbezahlten Maler auf der Baustelle von Bernhard von Cles, aus Ferrara gerufen.",
+        "descrizione": [
+          "Für seinen neuen Palast rief Fürstbischof Bernhard von Cles die Brüder Dosso und Battista Dossi, Maler am Hof von Ferrara, die hier 1531 und 1532 arbeiteten. Dosso kam mit großem Ruf: Er wurde doppelt so hoch bezahlt wie Fogolino und Romanino.",
+          "Im Großen Saal spielen Putten mit den Buchstaben des Namens Bernhards; oben an der Treppe, die dorthin führt, zeigt ein Fresko der Dossi den Schutzpatron, der Cles der Madonna vorstellt.",
+          "Cles prüfte die Entwürfe selbst: Als er die alttestamentlichen Themen sah, die Dosso für einen anderen Raum vorschlug, fand er sie besser für eine Kirche geeignet und bat stattdessen um „eine Fabel aus Ovid“. Diese Räume sind nicht erhalten."
+        ],
+        "affresco_autore": "Dosso und Battista Dossi"
+      }
+    },
+    "fogolino-torrion-da-basso": {
+      "de": {
+        "nome": "Torrion da basso — Fogolinos Kaiser",
+        "sintesi": "Römische Kaiser zu Pferd und Geschichten von Julius Caesar im Erdgeschossraum des Turms.",
+        "descrizione": [
+          "Marcello Fogolino, ein Maler aus Vicenza, kam um 1531 auf die Baustelle des Magno Palazzo. Zuerst malte er einige Friese an der Fassade, dann den Erdgeschossraum des Torrion da basso, des unteren Turms.",
+          "Hier freskierte er 1532 und 1533 einen Fries mit römischen Kaisern zu Pferd, Grotesken und Episoden aus dem Leben Julius Caesars: Man sieht, wie genau er die Werke von Dosso Dossi und Romanino studiert hatte, die in den Nachbarräumen malten."
+        ],
+        "affresco_autore": "Marcello Fogolino"
+      }
+    },
+    "loggia-castelvecchio": {
+      "de": {
+        "nome": "Castelvecchio — Die venezianische Loggia",
+        "sintesi": "Der gotische Hof des ältesten Schlosses, mit übereinandergestapelten bemalten Loggien.",
+        "epoca": "1475; Fresken von 1535",
+        "descrizione": [
+          "Das Castelvecchio ist der älteste Teil des Buonconsiglio, mit zinnenbewehrten Mauern aus dem 13. Jahrhundert. 1475 ließ Fürstbischof Johannes Hinderbach es im venezianischen Gotikstil umbauen, mit Loggien, die sich um den Hof stapeln.",
+          "Die Wände der Loggien sind bemalt: Unter den Fresken befinden sich einige von Marcello Fogolino, auf 1535 datiert. Sie gehören zum Rundgang durch das Museum."
+        ],
+        "affresco_autore": "Marcello Fogolino und andere Maler",
+        "affresco_epoca": "15.–16. Jahrhundert"
+      }
+    },
+    "palazzo-sardagna": {
+      "de": {
+        "nome": "Palazzo Sardagna — Fogolinos Räume",
+        "sintesi": "Das Rektoratsgebäude der Universität birgt zwei von Fogolino freskierte Räume.",
+        "epoca": "16. Jahrhundert",
+        "descrizione": [
+          "Niemand weiß, wer die ersten Eigentümer waren oder wann der Bau begann: Die einzigen sicheren Daten sind 1535 bis 1540, als Marcello Fogolino zwei Räume im Erdgeschoss freskierte. Die Fassade stammt aus dem 17. Jahrhundert.",
+          "Der Palast hat den größten Innenhof aller historischen Gebäude der Stadt. Seit 2014 beherbergt er das Rektorat der Universität Trient: Fogolinos Räume kann man bei Führungen und bei einigen Veranstaltungen besichtigen, etwa beim Wirtschaftsfestival."
+        ]
+      }
+    },
+    "chiesa-sardagna": {
+      "de": {
+        "nome": "Alte Kirche von Sardagna",
+        "sintesi": "Hoch über der Stadt eine kleine Kirche mit Fresken des 16. Jahrhunderts und einem Altarbild von Fogolino.",
+        "epoca": "16. Jahrhundert",
+        "descrizione": [
+          "Die alte Kirche der heiligen Philippus und Jakobus, heute die Friedhofskirche von Sardagna, bewahrt Fresken aus der ersten Hälfte des 16. Jahrhunderts, die von mehreren Händen gemalt wurden: Einige Figuren erinnern an die Manier von Marcello Fogolino. Die Evangelisten im Gewölbe der Apsis beruhen auf Stichen von Agostino Veneziano aus dem Jahr 1518.",
+          "Für den Altar, den Fürstbischof Bernhard von Cles 1533 in Auftrag gab, malte Fogolino das Altarbild mit der Madonna, dem Kind und den heiligen Philippus und Jakobus, das heute im Pfarrhaus aufbewahrt wird. Der ursprüngliche Altar wurde 1617 durch den geschnitzten und vergoldeten Holzaltar ersetzt, der noch heute dort steht.",
+          "Feuchtigkeit hat die Fresken lange Zeit beschädigt. Eine Studie von 2021 fragte, ob sich unter diesen Malereien auch ein Werk von Romanino befindet. Sardagna erreicht man mit der Seilbahn vom Ufer der Etsch."
+        ],
+        "affresco_autore": "Mehrere nicht identifizierte Maler im Umkreis der Manier Fogolinos",
+        "affresco_epoca": "Erste Hälfte des 16. Jahrhunderts"
+      }
+    }
+  },
+  "itinerari": {
+    "affreschi-all-aperto": {
+      "de": {
+        "titolo": "Fresken unter freiem Himmel",
+        "descrizione": "Die bemalten Fassaden der Altstadt und die Zyklen des Buonconsiglio: Man muss nur nach oben schauen."
+      }
+    },
+    "tridentum-e-concilio": {
+      "de": {
+        "titolo": "Von Tridentum zum Konzil",
+        "descrizione": "Von der römischen Straße unter der Piazza Battisti bis zu den Kirchen, in denen das Konzil tagte."
+      }
+    },
+    "vecchio-adige": {
+      "de": {
+        "titolo": "Wo die Etsch früher floss",
+        "descrizione": "Folge dem alten Lauf des Flusses, vom Brückenturm bis zum Hügel am rechten Ufer."
+      }
+    },
+    "guerra-e-ricostruzione": {
+      "de": {
+        "titolo": "Krieg und Wiederaufbau",
+        "descrizione": "Das 20. Jahrhundert Trients: Irredentismus, der Große Krieg, die Bombardierungen und die Nachkriegsjahre."
+      }
+    },
+    "mezza-giornata": {
+      "de": {
+        "titolo": "Ein halber Tag im Herzen von Trient",
+        "descrizione": "Der vollständige Rundgang für alle, die einen Nachmittag Zeit haben: Plätze, Paläste, Schloss und Mauern."
+      }
+    },
+    "storie-nascoste": {
+      "de": {
+        "titolo": "Verborgene Geschichten der Altstadt",
+        "descrizione": "Die Seiten, die klassische Reiseführer überspringen: eine falsche Anschuldigung, ein Turm mit grünem Dach, das Theater über der römischen Stadt."
+      }
+    },
+    "trento-dall-alto": {
+      "de": {
+        "titolo": "Trient von oben",
+        "descrizione": "Auf der anderen Seite des Flusses: Piedicastello, der Doss Trento und die Seilbahn, um die ganze Stadt vom Aussichtspunkt Sardagna zu sehen."
+      }
+    },
+    "citta-che-cambia": {
+      "de": {
+        "titolo": "Eine Stadt im Wandel",
+        "descrizione": "Von der Villa der Madruzzo bis zum Viertel, das dort entstand, wo die Michelin-Fabrik stand, über die Universität von 1968."
+      }
+    },
+    "sapori-del-centro": {
+      "de": {
+        "titolo": "Genüsse der Altstadt",
+        "descrizione": "Ein Rundgang durch Weine, Biere und traditionelle Gerichte, den man in Ruhe genießen sollte."
+      }
+    },
+    "trento-dipinta": {
+      "de": {
+        "titolo": "Das bemalte Trient",
+        "descrizione": "Die freskierten Fassaden der Altstadt, vom 2020 wiederentdeckten Fresko an der Piazza Pasi bis zu den Taten des Herkules und der Straße der Paläste."
+      }
+    }
+  },
+  "tradizioni": {
+    "feste-vigiliane": {
+      "de": {
+        "nome": "Feste Vigiliane",
+        "periodo": "Juni",
+        "descrizione": "Die Feiern zu Ehren des Stadtpatrons Vigilius (26. Juni): Trachtenumzüge, die Tonca dei Ciusi e dei Gobj mit Polenta auf der Piazza Fiera und der Palio dell’Oca, ein Floßrennen auf der Etsch."
+      }
+    },
+    "trento-film-festival": {
+      "de": {
+        "nome": "Trento Film Festival",
+        "periodo": "April – Mai",
+        "descrizione": "Seit 1952 das Filmfestival, das den Bergen, der Erkundung und dem Abenteuer gewidmet ist: das älteste seiner Art."
+      }
+    },
+    "festival-economia": {
+      "de": {
+        "nome": "Wirtschaftsfestival",
+        "periodo": "Ende Mai – Anfang Juni",
+        "descrizione": "Seit 2006 treffen sich Wirtschaftswissenschaftler, Journalisten und Nobelpreisträger auf den Plätzen, in den Palästen und Theatern der Altstadt."
+      }
+    },
+    "mercatini-natale": {
+      "de": {
+        "nome": "Weihnachtsmärkte",
+        "periodo": "Ende November – Anfang Januar",
+        "descrizione": "Holzhütten mit Kunsthandwerk, Glühwein und traditionellem Gebäck auf der Piazza Fiera und der Piazza Cesare Battisti."
+      }
+    },
+    "santa-lucia": {
+      "de": {
+        "nome": "Luzientag",
+        "periodo": "13. Dezember",
+        "descrizione": "Im Trentino bekommen die Kinder ihre Geschenke von der heiligen Luzia, die nachts mit ihrem Esel kommt: Am Abend davor stellen sie Heu und eine Karotte bereit. Um den 13. Dezember findet in Trient auch der Luzienmarkt mit Hunderten von Ständen in den Straßen und auf den Plätzen der Altstadt statt, von der Piazza Fiera bis zur Piazza Duomo."
+      }
+    },
+    "carnevale": {
+      "de": {
+        "nome": "Karneval und Grostoli",
+        "periodo": "Februar",
+        "descrizione": "Kostümfeste in den Stadtvierteln und Dörfern rund um die Stadt; im Zentrum ziehen die Festwagen vorbei, meist von der Piazza Fiera zur Piazza Duomo, wo der schönste Wagen einen Preis gewinnt. Jede Konditorei füllt sich mit Grostoli, in Fett gebackenen Teigbändern mit Puderzucker."
+      }
+    }
+  },
+  "piatti": {
+    "strangolapreti": {
+      "de": {
+        "nome": "Strangolapreti",
+        "tipo": "Erster Gang",
+        "descrizione": "Knödel aus altem Brot mit Spinat oder Mangold, mit zerlassener Butter und geriebenem Käse angerichtet. Der Name, „Priesterwürger“, spielt scherzhaft auf die Priester des Konzils an, die angeblich zu viele davon aßen."
+      }
+    },
+    "canederli": {
+      "de": {
+        "nome": "Canederli",
+        "tipo": "Erster Gang",
+        "descrizione": "Große Semmelknödel aus Milch, Eiern und Speck oder Käse, in der Brühe oder trocken mit Butter serviert."
+      }
+    },
+    "carne-salada": {
+      "de": {
+        "nome": "Carne salada",
+        "tipo": "Hauptgericht",
+        "descrizione": "Rindfleisch, das mit Gewürzen in Salzlake ruht, roh in dünnen Scheiben oder kurz angebraten mit Bohnen serviert."
+      }
+    },
+    "tortel-patate": {
+      "de": {
+        "nome": "Tortel di patate",
+        "tipo": "Hauptgericht",
+        "descrizione": "Ein knuspriger Puffer aus geriebenen Kartoffeln, serviert mit Wurstwaren und Käse von Almhütten."
+      }
+    },
+    "polenta": {
+      "de": {
+        "nome": "Polenta",
+        "tipo": "Beilage",
+        "descrizione": "Aus Mais oder Kartoffeln, mit Pilzen, geschmolzenem Käse oder Schmorgericht: das Gericht der Tonca dei Ciusi e dei Gobj."
+      }
+    },
+    "puzzone": {
+      "de": {
+        "nome": "Puzzone di Moena",
+        "tipo": "Käse",
+        "descrizione": "Ein Käse mit geschützter Ursprungsbezeichnung aus dem Fassatal mit starkem Geruch, weil die Rinde während der Reifung gewaschen wird."
+      }
+    },
+    "strudel": {
+      "de": {
+        "nome": "Apfelstrudel",
+        "tipo": "Dessert",
+        "descrizione": "Dünner, gerollter Teig, gefüllt mit Äpfeln, Rosinen, Pinienkernen und Zimt: ein Erbe der österreichischen Küche."
+      }
+    },
+    "zelten": {
+      "de": {
+        "nome": "Zelten",
+        "tipo": "Dessert",
+        "descrizione": "Ein süßes Weihnachtsbrot voller getrockneter und kandierter Früchte, in jeder Familie anders."
+      }
+    },
+    "trentodoc": {
+      "de": {
+        "nome": "Trentodoc",
+        "tipo": "Wein",
+        "descrizione": "Schaumwein aus den Bergen, nach der klassischen Methode hergestellt, aus Trauben, die auf den Hügeln des Trentino wachsen."
+      }
+    },
+    "mela-val-di-non": {
+      "de": {
+        "nome": "Apfel aus dem Nonstal",
+        "tipo": "Obst",
+        "descrizione": "Ein Apfel mit geschützter Ursprungsbezeichnung, der im Tal nördlich von Trient wächst, der Star von Strudeln und Säften."
+      }
+    },
+    "smacafam": {
+      "de": {
+        "nome": "Smacafam",
+        "tipo": "Hauptgericht",
+        "descrizione": "Ein herzhafter Kuchen aus Buchweizen oder Mais mit Lucanica-Wurst, typisch für die Faschingszeit. Der Name bedeutet „Hungertöter“."
+      }
+    },
+    "lucanica": {
+      "de": {
+        "nome": "Trentiner Lucanica",
+        "tipo": "Wurstware",
+        "descrizione": "Eine Schweinswurst, gereift oder frisch, roh, gegrillt oder mit Polenta gegessen."
+      }
+    },
+    "fregolotti": {
+      "de": {
+        "nome": "Torta de fregolotti",
+        "tipo": "Dessert",
+        "descrizione": "Ein mürber Kuchen aus Mehl, Mandeln, Butter und Zucker, der mit den Händen gebrochen wird: „fregoloti“ sind die Krümel."
+      }
+    },
+    "grappa": {
+      "de": {
+        "nome": "Trentiner Grappa",
+        "tipo": "Spirituose",
+        "descrizione": "Ein Destillat aus Trentiner Traubentrester, durch eine Herkunftsbezeichnung geschützt: wird am Ende einer Mahlzeit getrunken."
+      }
+    }
+  }
+}

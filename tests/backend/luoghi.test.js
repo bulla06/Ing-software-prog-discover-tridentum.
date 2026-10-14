@@ -120,6 +120,41 @@ describe('lingua delle schede (RNF-U05)', () => {
     const r = (await amb.api().get('/api/poi?q=cathedral&lingua=en')).body.map((p) => p.id)
     expect(r).toContain('duomo')
   })
+
+  it('restituisce i testi in tedesco con ?lingua=de', async () => {
+    const it = (await amb.api().get('/api/poi/duomo')).body
+    const en = (await amb.api().get('/api/poi/duomo?lingua=en')).body
+    const de = (await amb.api().get('/api/poi/duomo?lingua=de')).body
+    expect(de.nome).toBe('Dom San Vigilio')
+    expect(de.sintesi).not.toBe(it.sintesi)
+    expect(de.sintesi).not.toBe(en.sintesi)
+    expect(de.descrizione).toHaveLength(it.descrizione.length)
+    expect(de.indirizzo).toBe(it.indirizzo)
+    expect((await amb.api().get('/api/poi?lingua=de')).body.find((p) => p.id === 'duomo').nome).toBe('Dom San Vigilio')
+    expect((await amb.api().get('/api/itinerari?lingua=de')).body.find((i) => i.id === 'guerra-e-ricostruzione').titolo).toBe('Krieg und Wiederaufbau')
+    expect((await amb.api().get('/api/tradizioni?lingua=de')).body.find((t) => t.id === 'santa-lucia').nome).toBe('Luzientag')
+    const { piatti } = (await amb.api().get('/api/gusto?lingua=de')).body
+    expect(piatti.find((p) => p.id === 'strudel').nome).toBe('Apfelstrudel')
+  })
+
+  it('cerca anche nei testi in tedesco, senza perdere quelli in inglese', async () => {
+    const tedesco = (await amb.api().get('/api/poi?q=Fürstbischof&lingua=de')).body.map((p) => p.id)
+    expect(tedesco).toContain('duomo')
+    expect((await amb.api().get('/api/poi?q=cathedral&lingua=de')).body.map((p) => p.id)).toContain('duomo')
+  })
+
+  it('il pannello salva anche le traduzioni in tedesco e le toglie se vuote', async () => {
+    const itinerario = (await amb.api().get('/api/admin/itinerari').set(admin)).body.find((i) => i.id === 'mezza-giornata')
+    const base = { titolo: itinerario.titolo, tema: itinerario.tema, durata_minuti: itinerario.durata_minuti, descrizione: itinerario.descrizione, tappe: itinerario.tappe.map((t) => t.id) }
+    const salva = (traduzioni) => amb.api().put('/api/admin/itinerari/mezza-giornata').set(admin).send({ ...base, traduzioni })
+    expect((await salva({ en: { titolo: 'Half a day' }, de: { titolo: 'Ein halber Tag' } })).status).toBe(200)
+    expect((await amb.api().get('/api/itinerari/mezza-giornata?lingua=de')).body.titolo).toBe('Ein halber Tag')
+    expect((await amb.api().get('/api/itinerari/mezza-giornata?lingua=en')).body.titolo).toBe('Half a day')
+    // Si toglie solo il tedesco: l'inglese resta, in tedesco compare l'italiano
+    expect((await salva({ en: { titolo: 'Half a day' }, de: { titolo: '' } })).status).toBe(200)
+    expect((await amb.api().get('/api/itinerari/mezza-giornata?lingua=de')).body.titolo).toBe(itinerario.titolo)
+    expect((await amb.api().get('/api/itinerari/mezza-giornata?lingua=en')).body.titolo).toBe('Half a day')
+  })
 })
 
 describe('itinerario su misura (RF-08)', () => {
@@ -372,5 +407,19 @@ describe('pacchetti di dati', () => {
     expect(nomi[0]).toBe('001-luoghi-iniziali')
     // Il POI eliminato nei test precedenti non è tornato
     expect((await amb.api().get('/api/poi/nettuno')).status).toBe(404)
+  })
+
+  it('una lingua aggiunta da un pacchetto successivo arriva anche nei database esistenti, senza toccare le altre', async () => {
+    const traduzioni = async (id) => (await amb.db.query('SELECT traduzioni FROM poi WHERE id = $1', [id]))[0].traduzioni
+    // Un luogo con il solo inglese scritto da un amministratore e uno con un tedesco già scritto a mano
+    await amb.db.query(`UPDATE poi SET traduzioni = '{"en": {"nome": "Chosen by the administrator"}}'::jsonb WHERE id = 'caproni'`)
+    await amb.db.query(`UPDATE poi SET traduzioni = '{"de": {"nome": "Von Hand geschrieben"}}'::jsonb WHERE id = 'calisio'`)
+    await amb.db.query("DELETE FROM pacchetti_dati WHERE nome = '004-traduzioni-tedesche'")
+    await popola(amb.db, { datiDimostrativi: false, archivio: amb.archivio })
+
+    const caproni = await traduzioni('caproni')
+    expect(caproni.en.nome).toBe("Chosen by the administrator")
+    expect(caproni.de.nome).toBe('Luftfahrtmuseum Gianni Caproni')
+    expect((await traduzioni('calisio')).de.nome).toBe('Von Hand geschrieben')
   })
 })

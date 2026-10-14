@@ -1,11 +1,12 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import it from './it.js'
 import en from './en.js'
+import de from './de.js'
 import { impostaLingua } from '../lib/http.js'
 import { leggi, scrivi } from '../lib/memoria.js'
 
-export const LINGUE = { it: 'Italiano', en: 'English' }
-const TESTI = { it, en }
+export const LINGUE = { it: 'Italiano', en: 'English', de: 'Deutsch' }
+const TESTI = { it, en, de }
 
 const LinguaContext = createContext(null)
 

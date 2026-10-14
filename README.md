@@ -47,7 +47,7 @@ La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa i
 
 La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
-- **Frontend** in [`versione-corrente/frontend/`](versione-corrente/frontend): React + Vite, mappa Leaflet su OpenStreetMap con i luoghi raggruppati, italiano e inglese (interfaccia e contenuti), tema chiaro e scuro, installabile come app;
+- **Frontend** in [`versione-corrente/frontend/`](versione-corrente/frontend): React + Vite, mappa Leaflet su OpenStreetMap con i luoghi raggruppati, italiano, inglese e tedesco (interfaccia e contenuti), tema chiaro e scuro, installabile come app;
 - **Backend** in [`versione-corrente/backend/`](versione-corrente/backend): Node.js + Express, API REST con il gateway (token JWT, ruoli, limiti alle richieste) davanti ai quattro moduli *Utenti e accessi*, *POI, itinerari e tradizioni*, *Contenuti e moderazione*, *Gioco*;
 - **Database PostgreSQL + PostGIS**: in sviluppo con [PGlite](https://pglite.dev), lo stesso PostgreSQL eseguito dentro Node, quindi **non serve installare niente**; con Docker Compose un server PostgreSQL vero.
 
@@ -127,14 +127,14 @@ Per le e-mail vere serve un server SMTP (`SMTP_URL`); prima della pubblicazione 
 | S-10 Dov'era?: foto storiche, punteggio verificato dal server, classifica | UC-06 |
 | S-11 Scopri: tradizioni in corso e in arrivo, con i luoghi sulla mappa; mappa del gusto | UC-10 |
 | S-13 Moderazione: coda dei ricordi (con la scelta dei livelli del gioco) e delle segnalazioni | UC-05 · RF-23 |
-| S-14 Amministrazione: luoghi, itinerari e tradizioni anche in inglese, foto con i crediti, ruoli, esportazione e importazione | UC-07, UC-09 · RNF-PO04 |
+| S-14 Amministrazione: luoghi, itinerari e tradizioni anche in inglese e tedesco, foto con i crediti, ruoli, esportazione e importazione | UC-07, UC-09 · RNF-PO04 |
 
 Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito si apre anche senza rete, grazie al service worker.
 
 **"Cosa sto guardando?" (RF-06)** riconosce il luogo dalla posizione e dalla direzione del telefono, non dall'immagine: il calcolo si fa tutto nel browser e niente lascia il dispositivo. Il riconoscimento dall'immagine con un modello di AI (AI Service, [Fase 3 §5.4](docs/fase-3-architettura-user-flow.md#54-ai-service)) può aggiungersi in seguito senza cambiare la pagina.
 
 **Da sapere**
-- **Contenuti:** 45 luoghi, tra cui 16 affreschi, 10 itinerari, 6 tradizioni e 14 piatti, in italiano e inglese. Date e attribuzioni sono prese dalle fonti citate in ogni scheda; il pacchetto [`002-correzioni-e-traduzioni`](versione-corrente/backend/src/db/dati/002-correzioni-e-traduzioni) ha sostituito le note "da verificare" della prima selezione. Resta da fare la verifica con la Soprintendenza (RNF-V02).
+- **Contenuti:** 45 luoghi, tra cui 16 affreschi, 10 itinerari, 6 tradizioni e 14 piatti, in italiano, inglese e tedesco (le traduzioni tedesche sono nel pacchetto [`004-traduzioni-tedesche`](versione-corrente/backend/src/db/dati/004-traduzioni-tedesche)). Date e attribuzioni sono prese dalle fonti citate in ogni scheda; il pacchetto [`002-correzioni-e-traduzioni`](versione-corrente/backend/src/db/dati/002-correzioni-e-traduzioni) ha sostituito le note "da verificare" della prima selezione. Resta da fare la verifica con la Soprintendenza (RNF-V02).
 - **Foto dei luoghi:** ci sono quelle **ufficiali**, con autore, licenza e fonte obbligatori, e i **ricordi** della community, che passano dalla moderazione. Le foto ufficiali si prendono da Wikimedia Commons con `npm run scarica-foto`, che usa l'elenco [`foto-da-scaricare.json`](versione-corrente/backend/src/db/dati/foto-da-scaricare.json) e crea un nuovo pacchetto di dati con i crediti; serve un computer che raggiunga Commons. Le foto scelte da una categoria o da una ricerca vanno guardate prima del commit. Finché un luogo non ha foto, la copertina è il ritaglio della mappa.
 - **Gioco:** le 8 foto storiche sono in [`foto-gioco/`](versione-corrente/backend/src/db/dati/foto-gioco), di pubblico dominio, con i crediti in [`gioco.json`](versione-corrente/backend/src/db/dati/gioco.json). Le foto della community diventano livelli se l'autore dà il consenso e un moderatore le sceglie.
 - **Privacy:** tempi di conservazione applicati dal server ogni giorno, informativa completa, dati scaricabili dal profilo: vedi i compiti GDPR in [`docs/compiti.xlsx`](docs/compiti.xlsx).
@@ -170,7 +170,7 @@ Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito
 │   │   │   ├── pages/                    # una pagina per schermata
 │   │   │   ├── components/               # mappa, moduli, finestre, icone…
 │   │   │   ├── data/api.js               # una funzione per ogni endpoint dell'API
-│   │   │   ├── i18n/                     # testi in italiano e inglese, informativa privacy
+│   │   │   ├── i18n/                     # testi in italiano, inglese e tedesco, informativa privacy
 │   │   │   └── lib/                      # sessione, client HTTP, distanze, posizione
 │   │   ├── public/                       # icone, manifest e service worker della PWA
 │   │   └── strumenti/                    # generatore delle icone

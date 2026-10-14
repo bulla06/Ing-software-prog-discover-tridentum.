@@ -1,4 +1,4 @@
-// Informativa privacy (RNF-S04, GDPR artt. 12–14), in italiano e in inglese.
+// Informativa privacy (RNF-S04, GDPR artt. 12–14), in italiano, inglese e tedesco.
 // I tempi di conservazione e l'indirizzo di contatto arrivano dal server (GET /api/informazioni),
 // così l'informativa dice sempre quello che il server fa davvero.
 // Segnaposti: {contatto} {account} {contenuti} {sessione}
@@ -140,5 +140,73 @@ export default {
       },
     ],
     contattoMancante: 'the address given by whoever runs the site',
+  },
+
+  de: {
+    titolo: 'Datenschutzerklärung',
+    aggiornata: 'Zuletzt aktualisiert am 10. Oktober 2026',
+    intro:
+      'Diese Seite erklärt, welche personenbezogenen Daten Discover Tridentum erhebt, warum, wie lange und wie du sie kontrollieren kannst. Zum Entdecken von Karte, Orten, Routen und Spiel brauchst du kein Konto, und wir erheben keine Daten, die dich identifizieren.',
+    sezioni: [
+      {
+        titolo: 'Wer die Daten verarbeitet',
+        testi: [
+          'Discover Tridentum ist ein Projekt des Kurses Software Engineering an der Universität Trient (Studienjahr 2026-2027), umgesetzt von Manuel Bulla, Marco Buffa und Pietro Crea, die die Verantwortlichen für die Datenverarbeitung sind.',
+          'Für jede Anfrage zu deinen Daten schreibe an {contatto}.',
+        ],
+      },
+      {
+        titolo: 'Welche Daten, warum und auf welcher Rechtsgrundlage',
+        elenco: [
+          '**Konto**: Anzeigename, E-Mail, Passwort (nur verschlüsselt gespeichert, für niemanden lesbar) und das Datum, an dem du diese Erklärung akzeptiert hast. Sie dienen dazu, dein Konto zu verwalten und dir Service-E-Mails zu schicken: Bestätigung der Adresse, vergessenes Passwort, Ergebnis der Moderation. Rechtsgrundlage: der Dienst, den du mit der Registrierung anforderst (Art. 6 Abs. 1 Buchst. b DSGVO).',
+          '**Erinnerungen, die du teilst**: Text, Jahr, gewählte Lizenz und Foto. Vor dem Senden wird das Foto verkleinert und von versteckten Daten (EXIF) befreit, auch vom GPS-Standort. Nach der Prüfung durch einen Moderator wird die Erinnerung mit deinem Anzeigenamen im Steckbrief des Ortes veröffentlicht. Wenn du der Verwendung des Fotos im Spiel zustimmst, kannst du auch den Punkt angeben, an dem du es aufgenommen hast: Er dient nur dem Spiel. Rechtsgrundlage: deine Einwilligung (Art. 6 Abs. 1 Buchst. a), die du widerrufen kannst, indem du den Beitrag mit dem Konto löschst.',
+          '**Gemerkte Orte und Punktestände von „Wo war das?“**: mit deinem Konto verknüpft; in der Rangliste erscheint dein Anzeigename. Rechtsgrundlage: der Dienst, den du anforderst (Art. 6 Abs. 1 Buchst. b).',
+          '**Standort**: Dein Browser nutzt ihn, um dir Entfernungen und das zu zeigen, was in deiner Nähe ist, und nur, wenn du ihn freigibst. Er gelangt nicht zu unserem Server, außer wenn du eine Route nach Maß erstellst: Dann dient er der Berechnung der Strecke und wird nicht gespeichert.',
+          '**Technische Daten**: Um die Website vor Missbrauch zu schützen, hält der Server die IP-Adresse von Personen, die viele Anfragen stellen, höchstens einen Tag lang im Speicher, ohne sie zu speichern. Das Anfrageprotokoll enthält keine IP-Adressen. Rechtsgrundlage: das berechtigte Interesse an der Sicherheit des Dienstes (Art. 6 Abs. 1 Buchst. f).',
+        ],
+      },
+      {
+        titolo: 'Wie lange',
+        elenco: [
+          'Das Konto und die verknüpften Daten bleiben bestehen, bis du das Konto löschst. Wenn du die E-Mail nicht bestätigst, wird das Konto nach {account} Tagen gelöscht.',
+          'Veröffentlichte Erinnerungen bleiben bestehen, bis du das Konto löschst; dann entscheidest du, ob sie gelöscht oder anonym belassen werden. Noch nicht veröffentlichte Erinnerungen werden immer gelöscht.',
+          'Abgelehnte oder nach einer Meldung entfernte Erinnerungen werden {contenuti} Tage nach der Entscheidung samt Fotos gelöscht.',
+          'Eine Sitzung dauert höchstens {sessione} Tage ab der letzten Nutzung; wenn du dich abmeldest, wird sie sofort beendet.',
+        ],
+      },
+      {
+        titolo: 'Wer die Daten erhält',
+        elenco: [
+          'Wir verkaufen oder übermitteln deine Daten nicht. Sie werden auf dem Server gespeichert, der die Website hostet; E-Mails werden über den für die Website eingerichteten Maildienst versendet.',
+          'Die Kartenbilder stammen von OpenStreetMap (tile.openstreetmap.org): Wie bei jeder Website teilt dein Browser diesem Dienst seine IP-Adresse mit.',
+          '„Anreise“ öffnet Google Maps, und zwar nur, wenn du es antippst.',
+        ],
+      },
+      {
+        titolo: 'Cookies und Speicher des Browsers',
+        elenco: [
+          'Wir verwenden nur ein einziges Cookie, „tridentum_rinnovo“, und nur nachdem du dich angemeldet hast: Es ist ein technisches Cookie, das deine Sitzung {sessione} Tage lang offen hält und beim Abmelden gelöscht wird. Wir verwenden keine Profiling-Cookies und keine Cookies von Dritten.',
+          'Im Speicher deines Browsers sichern wir die gewählte Sprache, ob du den Willkommensbildschirm schon gesehen hast, deinen Rekord bei „Wo war das?“ und das laufende Spiel. Sie bleiben nur auf deinem Gerät, und du kannst sie in den Einstellungen des Browsers löschen.',
+        ],
+      },
+      {
+        titolo: 'Deine Rechte',
+        elenco: [
+          '**Auskunft und Übertragbarkeit**: Im Profil gibt dir „Meine Daten herunterladen“ alle deine Daten in einer JSON-Datei.',
+          '**Berichtigung**: Im Profil kannst du den Anzeigenamen ändern; für die E-Mail-Adresse schreibe uns.',
+          '**Löschung**: Im Profil löscht „Mein Konto löschen“ sofort das Konto und die personenbezogenen Daten.',
+          '**Widerruf der Einwilligung, Einschränkung und Widerspruch**: Schreibe an die oben genannte Adresse; wir antworten innerhalb von 30 Tagen.',
+          '**Beschwerde**: Du kannst dich an die italienische Datenschutzbehörde wenden (garanteprivacy.it).',
+        ],
+      },
+      {
+        titolo: 'Mindestalter und Sicherheit',
+        testi: [
+          'Für die Registrierung musst du mindestens 14 Jahre alt sein.',
+          'Die Website verwendet verschlüsselte Verbindungen (HTTPS). Fotos, die auf die Moderation warten, sind nur für dich und die Moderatoren sichtbar; die Funktionen zur Moderation und Verwaltung sind denjenigen vorbehalten, die diese Rolle haben.',
+        ],
+      },
+    ],
+    contattoMancante: 'die Adresse, die von den Betreibern der Website angegeben wird',
   },
 }
