@@ -161,7 +161,7 @@ Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito
 │   ├── cose-mancanti.md                  # cosa mancava rispetto alla Fase 2
 │   ├── verifica-requisiti-non-funzionali.md  # misure e prove dei requisiti non funzionali
 │   ├── checklist-gdpr.md                 # verifica di RNF-S04
-│   └── libretti/                         # libretti delle attività, uno per membro del team
+│   └── libretti/                         # libretti delle attività con il conta ore (Excel), uno per membro
 ├── presentazioni/
 │   ├── presentazione-v1.pptx             # prima versione
 │   └── presentazione-v2.pptx             # versione attuale, nuovo design

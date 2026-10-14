@@ -7,7 +7,7 @@ Regole condivise per mantenere il repository ordinato e i documenti coerenti tra
 | Cartella | Contenuto |
 |---|---|
 | `docs/` | Documenti di progetto, uno per fase: `fase-N-argomento.md` |
-| `docs/libretti/` | Libretto delle attività di ciascun membro: `nome-cognome.docx` |
+| `docs/libretti/` | Libretto delle attività di ciascun membro, con il conta ore: `nome-cognome.xlsx` |
 | `presentazioni/` | Presentazioni: `presentazione-vN.pptx` |
 | `versione-corrente/frontend/` | Il sito (React + Vite) |
 | `versione-corrente/backend/` | L'API REST e il database (Node.js + Express, PostgreSQL + PostGIS) |
@@ -77,4 +77,11 @@ Ogni requisito rimanda ai bisogni che soddisfa; le matrici di tracciabilità (Fa
 
 ## Libretto delle attività
 
-Ogni membro aggiorna il proprio libretto in `docs/libretti/` con: data, attività, descrizione, file prodotto.
+Ogni membro aggiorna il proprio libretto in `docs/libretti/` con: data, attività, ore, descrizione, file prodotto.
+
+Il libretto è un file Excel con due fogli:
+
+- **Libretto**: una riga per attività, scritta subito sotto l'ultima (la tabella si allunga da sola). Le ore vanno in decimali (1,5 = un'ora e mezza); le celle gialle sono le ore ancora da inserire. In alto si vedono le ore totali e le voci senza ore.
+- **Riepilogo**: le ore e le voci per settimana, calcolate dal foglio Libretto, senza niente da compilare.
+
+Ogni membro modifica solo il proprio file, così non ci sono conflitti in Git (i file Excel non si uniscono automaticamente).
