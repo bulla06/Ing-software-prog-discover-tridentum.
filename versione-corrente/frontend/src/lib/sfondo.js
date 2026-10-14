@@ -1,9 +1,13 @@
-// Sfondo della mappa (D-07). Con una chiave gratuita di MapTiler (variabile VITE_MAPTILER_KEY,
-// in versione-corrente/frontend/.env.local) si usa lo stile "dataviz-light", che non disegna
-// negozi, bar o servizi: sulla mappa restano strade e quartieri, e i luoghi sono quelli del progetto.
-// Senza chiave si ripiega sui tile standard di OpenStreetMap, che invece li mostrano.
+// Sfondo della mappa (D-07). Si usa lo stile "dataviz-light" di MapTiler, che non disegna negozi,
+// bar o servizi: sulla mappa restano strade e quartieri, e i luoghi sono quelli del progetto.
+// La chiave gratuita del progetto è scritta qui, così la mappa funziona subito dopo un pull: una
+// chiave per le mappe nel browser è comunque visibile a chiunque apra il sito. VITE_MAPTILER_KEY
+// (frontend/.env.local o build Docker) la sostituisce; con VITE_MAPTILER_KEY=nessuna si ripiega sui
+// tile standard di OpenStreetMap, che invece mostrano negozi e bar.
 
-const CHIAVE = import.meta.env.VITE_MAPTILER_KEY?.trim() || null
+const CHIAVE_PROGETTO = '0Yxf3Q93jxDMQwHWzWzC'
+const DA_AMBIENTE = import.meta.env.VITE_MAPTILER_KEY?.trim()
+const CHIAVE = DA_AMBIENTE === 'nessuna' ? null : DA_AMBIENTE || CHIAVE_PROGETTO
 
 export const SFONDO_CON_CHIAVE = Boolean(CHIAVE)
 
