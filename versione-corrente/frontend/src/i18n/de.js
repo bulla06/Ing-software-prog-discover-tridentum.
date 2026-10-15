@@ -34,7 +34,11 @@ export default {
   'benvenuto.c2.testo': 'Themenrouten für die Zeit, die du hast, und „Wo war das?“, um alle zu testen, die die Stadt kennen.',
   'benvenuto.posizione': 'Dein Standort dient nur dazu, dir zu zeigen, was in deiner Nähe ist: Der Browser fragt auf der Karte danach. Wenn du ihn nicht freigibst, startet die Karte an der Piazza Duomo.',
   'benvenuto.inizia': 'Los geht’s',
-  'benvenuto.mappa': 'Karte des Zentrums von Trient mit den Orten des Reiseführers',
+  'benvenuto.foto': 'Fotos von Trient, damals und heute',
+  'benvenuto.oggi': 'Heute',
+  'benvenuto.autoreIgnoto': 'Unbekannter Autor',
+  'benvenuto.pausa': 'Fotos anhalten',
+  'benvenuto.riprendi': 'Fotos fortsetzen',
 
   'mappa.cerca': 'Suche nach einem Ort, einem Fresko, einem Thema …',
   'mappa.svuota': 'Suche leeren',

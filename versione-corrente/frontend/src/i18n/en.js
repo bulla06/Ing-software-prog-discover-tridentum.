@@ -34,7 +34,11 @@ export default {
   'benvenuto.c2.testo': 'Themed walks for the time you have, and “Where was it?” to test who really knows the city.',
   'benvenuto.posizione': 'Your location is only used to show what’s near you: your browser will ask for it on the map. If you say no, the map starts from Piazza Duomo.',
   'benvenuto.inizia': 'Start exploring',
-  'benvenuto.mappa': 'Map of central Trento with the places in the guide',
+  'benvenuto.foto': 'Photos of Trento, past and present',
+  'benvenuto.oggi': 'Today',
+  'benvenuto.autoreIgnoto': 'Unknown author',
+  'benvenuto.pausa': 'Pause the photos',
+  'benvenuto.riprendi': 'Resume the photos',
 
   'mappa.cerca': 'Search a place, a fresco, a theme…',
   'mappa.svuota': 'Clear search',

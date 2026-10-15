@@ -34,7 +34,11 @@ export default {
   'benvenuto.c2.testo': 'Percorsi a tema per il tempo che hai, e “Dov’era?” per mettere alla prova chi conosce la città.',
   'benvenuto.posizione': 'La posizione serve solo a mostrarti cosa c’è vicino a te: il browser te la chiederà sulla mappa. Se non la concedi, la mappa parte da Piazza Duomo.',
   'benvenuto.inizia': 'Inizia a esplorare',
-  'benvenuto.mappa': 'Mappa del centro di Trento con i luoghi della guida',
+  'benvenuto.foto': 'Foto di Trento, di ieri e di oggi',
+  'benvenuto.oggi': 'Oggi',
+  'benvenuto.autoreIgnoto': 'Autore sconosciuto',
+  'benvenuto.pausa': 'Metti in pausa le foto',
+  'benvenuto.riprendi': 'Riprendi le foto',
 
   'mappa.cerca': 'Cerca un luogo, un affresco, un tema…',
   'mappa.svuota': 'Svuota la ricerca',

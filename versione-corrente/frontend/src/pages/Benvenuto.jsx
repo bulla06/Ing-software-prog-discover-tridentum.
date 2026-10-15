@@ -1,38 +1,23 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Icona from '../components/Icona.jsx'
-import MappaLeaflet from '../components/MappaLeaflet.jsx'
+import GalleriaBenvenuto from '../components/GalleriaBenvenuto.jsx'
 import SceltaLingua from '../components/SceltaLingua.jsx'
-import { getPoi } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
-import { CENTRO_TRENTO } from '../lib/geo.js'
 
 // S-00: mostrata solo al primo accesso. Lingua, cosa offre l'app e perché chiederemo
-// la posizione. L'immagine è la mappa vera del centro con tutti i luoghi dell'app.
+// la posizione. Al posto della mappa, foto di Trento di ieri e di oggi che scorrono.
 export default function Benvenuto({ onInizia }) {
   const { t } = useT()
   const pulsante = useRef(null)
-  const [luoghi, setLuoghi] = useState([])
 
   useEffect(() => {
     pulsante.current?.focus()
-    getPoi().then(setLuoghi, () => {})
   }, [])
-
-  const segnaposti = useMemo(
-    () => luoghi.map((p) => ({ id: p.id, posizione: p.posizione, colore: `var(--c-${p.categoria})`, icona: p.categoria })),
-    [luoghi],
-  )
-  // Vista centrata sul baricentro dei luoghi: tutti visibili anche nella fascia stretta del telefono
-  const vista = useMemo(() => {
-    if (!luoghi.length) return { centro: CENTRO_TRENTO, zoom: 15 }
-    const media = (i) => luoghi.reduce((s, p) => s + p.posizione[i], 0) / luoghi.length
-    return { centro: [media(0), media(1)], zoom: 15 }
-  }, [luoghi])
 
   return (
     <div className="benvenuto" role="dialog" aria-modal="true" aria-labelledby="benvenuto-titolo">
-      <div className="benvenuto__mappa">
-        <MappaLeaflet statica etichetta={t('benvenuto.mappa')} vista={vista} segnaposti={segnaposti} />
+      <div className="benvenuto__foto">
+        <GalleriaBenvenuto />
       </div>
 
       <div className="benvenuto__corpo">

@@ -700,26 +700,93 @@ ol {
   overflow-y: auto;
   background: var(--sfondo);
   display: grid;
-  grid-template-rows: 26dvh auto;
+  grid-template-rows: 34dvh auto;
+  grid-template-columns: minmax(0, 1fr);
 }
 
-.benvenuto__mappa {
+.benvenuto__foto {
   position: relative;
+  overflow: hidden;
+  min-height: 0;
 }
 
-.benvenuto__mappa .mappa {
-  position: absolute;
-  inset: 0;
-}
-
-.benvenuto__mappa::after {
+.benvenuto__foto::after {
   content: '';
   position: absolute;
   inset: auto 0 0;
-  height: 40%;
+  height: 14%;
   background: linear-gradient(to bottom, transparent, var(--sfondo));
-  z-index: 500;
+  z-index: 2;
   pointer-events: none;
+}
+
+/* Vetrina del benvenuto: una foto alla volta a tutto riquadro, con dissolvenza */
+.vetrina {
+  position: absolute;
+  inset: 0;
+  background: var(--superficie-2);
+}
+
+.vetrina__foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1.2s ease, transform 6s linear;
+  user-select: none;
+}
+
+.vetrina__foto--attiva {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.vetrina__credito {
+  position: absolute;
+  z-index: 3;
+  inset: auto 0 0;
+  margin: 0;
+  padding: 26px 56px 10px 12px;
+  background: linear-gradient(to bottom, transparent, rgb(8 24 28 / 0.78));
+  color: rgb(251 253 253 / 0.9);
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.vetrina__credito strong {
+  color: #fbfdfd;
+  font-weight: 650;
+}
+
+.vetrina__pausa {
+  position: absolute;
+  z-index: 4;
+  right: 10px;
+  bottom: 10px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgb(251 253 253 / 0.5);
+  border-radius: var(--pillola);
+  background: rgb(8 24 28 / 0.55);
+  color: #fbfdfd;
+  cursor: pointer;
+}
+
+.vetrina__pausa:hover {
+  background: rgb(8 24 28 / 0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vetrina__foto {
+    transform: none;
+    transition: opacity 0.2s;
+  }
 }
 
 .benvenuto__corpo {
@@ -780,6 +847,7 @@ ol {
 
 .benvenuto__lingua {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -2133,11 +2201,11 @@ ol {
     grid-template-columns: minmax(440px, 5fr) 7fr;
   }
 
-  .benvenuto__mappa {
+  .benvenuto__foto {
     order: 2;
   }
 
-  .benvenuto__mappa::after {
+  .benvenuto__foto::after {
     inset: 0 auto 0 0;
     width: 22%;
     height: auto;
@@ -4131,6 +4199,7 @@ body {
   --su-accento: #0c262c;
   --accento-tenue: rgb(244 213 138 / 0.18);
   --focus: var(--oro);
+  color: var(--testo);
   color-scheme: dark;
 }
 

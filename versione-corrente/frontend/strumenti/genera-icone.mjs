@@ -48,6 +48,8 @@ const ICONE = {
   suMisura: 'magic-wand',
   inquadra: 'scan',
   direzione: 'navigation-arrow',
+  pausa: 'pause',
+  riproduci: 'play',
   // Categorie dei luoghi
   storia: 'bank',
   arte: 'paint-brush',
