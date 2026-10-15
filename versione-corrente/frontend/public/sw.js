@@ -3,7 +3,7 @@
 // (UC-01 E2). Tiene in cache solo il "guscio" dell'app (HTML, JavaScript, CSS, font, icone):
 // i dati dell'API e le foto vengono sempre dalla rete, perché devono essere aggiornati e alcuni sono personali.
 
-const CACHE = 'tridentum-guscio-v3'
+const CACHE = 'tridentum-guscio-v4'
 const GUSCIO = ['./', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png']
 
 self.addEventListener('install', (evento) => {

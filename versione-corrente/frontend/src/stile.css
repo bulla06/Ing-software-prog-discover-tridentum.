@@ -4139,3 +4139,10 @@ body {
     --sfondo: #12303a;
   }
 }
+
+/* Il logo è petrolio come lo sfondo di barra e benvenuto: un filo d'oro ne tiene la cornice */
+.barra-nav__marchio img,
+.benvenuto__marchio img {
+  border-radius: 9px;
+  box-shadow: 0 0 0 1.5px rgb(244 213 138 / 0.7);
+}
