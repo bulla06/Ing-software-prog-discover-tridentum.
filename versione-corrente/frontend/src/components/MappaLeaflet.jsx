@@ -131,13 +131,14 @@ export default function MappaLeaflet({
     if (cambiaSfondo && !statica) {
       const Controllo = L.Control.extend({
         onAdd() {
-          const barra = L.DomUtil.create('div', 'leaflet-bar controllo-sfondo')
+          const barra = L.DomUtil.create('div', 'leaflet-control controllo-sfondo')
           const pulsante = L.DomUtil.create('button', '', barra)
           pulsante.type = 'button'
           L.DomEvent.disableClickPropagation(barra)
           const aggiorna = () => {
             const tt = tRef.current
-            pulsante.textContent = satellite ? tt('mappa.sfondoNormale') : tt('mappa.sfondoSatellite')
+            // L'icona mostra dove si va: dalla mappa il globo del satellite, dal satellite la mappa
+            pulsante.innerHTML = svgIcona(satellite ? 'mappa' : 'satellite', { size: 26, peso: 'bold' })
             pulsante.title = satellite ? tt('mappa.passaNormale') : tt('mappa.passaSatellite')
             pulsante.setAttribute('aria-label', pulsante.title)
             barra.classList.toggle('controllo-sfondo--satellite', satellite)
@@ -154,7 +155,7 @@ export default function MappaLeaflet({
           return barra
         },
       })
-      new Controllo({ position: 'bottomleft' }).addTo(m)
+      new Controllo({ position: 'topright' }).addTo(m)
     }
 
     m.on('click', (e) => gestori.current.onClickMappa?.([e.latlng.lat, e.latlng.lng]))

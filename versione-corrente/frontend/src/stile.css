@@ -4081,23 +4081,67 @@ body {
   }
 }
 
-/* Pulsante per passare dalla mappa alla vista satellitare */
-.controllo-sfondo button {
-  display: block;
-  min-width: 44px;
-  min-height: 34px;
-  padding: 0 12px;
+/* Pulsante per passare dalla mappa alla vista satellitare: in alto a destra, solo icona.
+   Sul telefono sta sotto ricerca e filtri, che coprono la parte alta della mappa. */
+.leaflet-control.controllo-sfondo {
+  margin: calc(132px + env(safe-area-inset-top)) 12px 0 0;
   border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.controllo-sfondo button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid var(--bordo);
+  border-radius: 14px;
   background: var(--superficie);
-  color: var(--testo);
-  font: inherit;
-  font-size: 13px;
-  font-weight: 600;
+  color: var(--accento);
+  box-shadow: var(--ombra-2);
   cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.12s;
 }
 
 .controllo-sfondo button:hover {
-  background: var(--superficie-2);
+  background: var(--accento-tenue);
+}
+
+.controllo-sfondo button:active {
+  transform: scale(0.94);
+}
+
+.controllo-sfondo button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Con il satellite attivo il pulsante è petrolio con l'icona d'oro, come la barra di navigazione */
+.controllo-sfondo--satellite button {
+  background: var(--nav-sfondo, #1d5560);
+  border-color: var(--oro);
+  color: var(--oro);
+}
+
+.controllo-sfondo--satellite button:hover {
+  background: var(--petrolio-chiaro);
+}
+
+@media (max-width: 767px) {
+  /* Avvisi e filtro attivo lasciano libera la colonna del pulsante */
+  .pagina-mappa:not(.pagina-mappa--elenco) .strumenti .banner,
+  .pagina-mappa:not(.pagina-mappa--elenco) .strumenti .filtro-attivo {
+    margin-right: 58px;
+  }
+}
+
+@media (min-width: 768px) {
+  /* Da tablet ricerca e filtri stanno nel pannello a sinistra: la mappa ha l'angolo libero */
+  .leaflet-control.controllo-sfondo {
+    margin: 14px 14px 0 0;
+  }
 }
 
 /* ---------- Colori del logo: petrolio e oro ---------- */

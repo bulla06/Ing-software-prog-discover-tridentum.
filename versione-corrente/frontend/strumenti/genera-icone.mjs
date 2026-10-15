@@ -49,6 +49,7 @@ const ICONE = {
   inquadra: 'scan',
   direzione: 'navigation-arrow',
   pausa: 'pause',
+  satellite: 'globe-hemisphere-west',
   riproduci: 'play',
   // Categorie dei luoghi
   storia: 'bank',

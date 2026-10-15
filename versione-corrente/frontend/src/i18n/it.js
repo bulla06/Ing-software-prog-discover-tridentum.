@@ -48,8 +48,6 @@ export default {
   'mappa.posizione': 'La mia posizione',
   'mappa.vistaElenco': 'Elenco',
   'mappa.vistaMappa': 'Mappa',
-  'mappa.sfondoSatellite': 'Satellite',
-  'mappa.sfondoNormale': 'Mappa',
   'mappa.passaSatellite': 'Mostra la vista satellitare',
   'mappa.passaNormale': 'Mostra la mappa normale',
   'mappa.risultati': '{n} luoghi',
