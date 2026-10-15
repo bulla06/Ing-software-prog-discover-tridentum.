@@ -173,6 +173,8 @@ export default {
   'comune.errore': 'Etwas hat nicht funktioniert. Versuche es noch einmal.',
   'comune.invia': 'Senden',
   'comune.riprova': 'Erneut versuchen',
+  'comune.ricarica': 'Seite neu laden',
+  'errore.imprevisto': 'Diese Seite wurde nicht richtig geladen. Lade sie neu, um fortzufahren.',
   'comune.salva': 'Speichern',
   'errore.rete': 'Der Server antwortet nicht. Prüfe die Verbindung und versuche es erneut.',
   'errore.credenziali_errate': 'E-Mail oder Passwort nicht korrekt.',

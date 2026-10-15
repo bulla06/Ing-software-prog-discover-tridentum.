@@ -5,7 +5,14 @@ import { createRoot } from 'react-dom/client'
 import '@fontsource-variable/geist'
 import '@fontsource-variable/geist-mono'
 import App from './App.jsx'
+import { ricaricaUnaVolta } from './lib/ricarica.js'
 import './stile.css'
+
+// Dopo un aggiornamento del sito i file di una pagina possono avere un nuovo nome: si ricarica da soli
+window.addEventListener('vite:preloadError', (evento) => {
+  evento.preventDefault()
+  ricaricaUnaVolta()
+})
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

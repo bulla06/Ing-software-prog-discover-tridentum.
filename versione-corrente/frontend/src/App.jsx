@@ -1,6 +1,7 @@
 import { Suspense, lazy, useState } from 'react'
 import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import BarraNavigazione from './components/BarraNavigazione.jsx'
+import ErroreImprevisto from './components/ErroreImprevisto.jsx'
 import { LinguaProvider, useT } from './i18n/index.jsx'
 import { leggi, scrivi } from './lib/memoria.js'
 import { PosizioneProvider } from './lib/posizione.jsx'
@@ -83,6 +84,7 @@ function Contenuto({ onRivediBenvenuto }) {
   const { pathname } = useLocation()
   return (
     <main className="app__contenuto" id="contenuto" tabIndex={-1} key={pathname}>
+      <ErroreImprevisto>
       <Suspense fallback={<div className="pagina" aria-busy="true" />}>
         <Routes>
           <Route path="/" element={<Mappa />} />
@@ -104,6 +106,7 @@ function Contenuto({ onRivediBenvenuto }) {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
+      </ErroreImprevisto>
     </main>
   )
 }

@@ -173,6 +173,8 @@ export default {
   'comune.errore': "Qualcosa non ha funzionato. Riprova.",
   'comune.invia': "Invia",
   'comune.riprova': "Riprova",
+  'comune.ricarica': "Ricarica la pagina",
+  'errore.imprevisto': "Questa pagina non si è caricata bene. Ricaricala per continuare.",
   'comune.salva': "Salva",
   'errore.rete': "Il server non risponde. Controlla la connessione e riprova.",
   'errore.credenziali_errate': "E-mail o password non corrette.",

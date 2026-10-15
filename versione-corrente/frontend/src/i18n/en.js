@@ -173,6 +173,8 @@ export default {
   'comune.errore': "Something went wrong. Please try again.",
   'comune.invia': "Send",
   'comune.riprova': "Try again",
+  'comune.ricarica': "Reload the page",
+  'errore.imprevisto': "This page did not load properly. Reload it to continue.",
   'comune.salva': "Save",
   'errore.rete': "The server is not responding. Check your connection and try again.",
   'errore.credenziali_errate': "Wrong e-mail or password.",
