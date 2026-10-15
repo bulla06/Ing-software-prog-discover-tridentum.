@@ -166,7 +166,7 @@ export default {
   'profilo.repository': 'Codice e documentazione su GitHub',
   'profilo.esporta': 'Scarica i luoghi (GeoJSON)',
   'profilo.benvenuto': 'Rivedi la schermata di benvenuto',
-  'profilo.mappa': 'Mappa © MapTiler © OpenStreetMap contributors',
+  'profilo.mappa': 'Mappa © MapTiler © OpenStreetMap contributors · Esri',
 
   'comune.annulla': "Annulla",
   'comune.chiudi': "Chiudi",
