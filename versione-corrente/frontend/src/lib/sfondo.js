@@ -11,6 +11,13 @@ const CHIAVE = DA_AMBIENTE === 'nessuna' ? null : DA_AMBIENTE || CHIAVE_PROGETTO
 
 export const SFONDO_CON_CHIAVE = Boolean(CHIAVE)
 
+// Vista satellitare (pulsante sulla mappa): serve sempre una chiave MapTiler, anche quando lo
+// sfondo normale ripiega su OpenStreetMap
+const CHIAVE_SATELLITE = DA_AMBIENTE && DA_AMBIENTE !== 'nessuna' ? DA_AMBIENTE : CHIAVE_PROGETTO
+export const URL_SATELLITE = `https://api.maptiler.com/tiles/satellite-v2/{z}/{x}/{y}.jpg?key=${CHIAVE_SATELLITE}`
+export const ATTRIBUZIONE_SATELLITE =
+  '© <a href="https://www.maptiler.com/copyright/">MapTiler</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+
 // Tile da 256 px, come nel ritaglio delle copertine
 export const URL_SFONDO = CHIAVE
   ? `https://api.maptiler.com/maps/dataviz-light/256/{z}/{x}/{y}.png?key=${CHIAVE}`

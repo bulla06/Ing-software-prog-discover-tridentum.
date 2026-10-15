@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react'
+import { useT } from '../i18n/index.jsx'
+import { leggi, scrivi } from '../lib/memoria.js'
 import L from '../lib/leaflet.js'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import { svgIcona } from './Icona.jsx'
 
-import { ATTRIBUZIONE_SFONDO, SOTTODOMINI_SFONDO, URL_SFONDO } from '../lib/sfondo.js'
+import { ATTRIBUZIONE_SATELLITE, ATTRIBUZIONE_SFONDO, SOTTODOMINI_SFONDO, URL_SATELLITE, URL_SFONDO } from '../lib/sfondo.js'
 
 // Un filtro CSS sui soli tile (classe "sfondo-mappa") li rende più sobri e nel tema scuro
 // li inverte, così i segnaposti colorati dell'app si leggono meglio.
@@ -66,6 +68,7 @@ function iconaGruppo(gruppo) {
  * - `inquadra`: punti da far entrare nella vista; la mappa li inquadra quando l'elenco cambia
  * - `pulsantiZoom`: mostra i pulsanti + e - (su smartphone basta il pizzico)
  * - `statica`: mappa non interattiva, usata come immagine
+ * - `cambiaSfondo`: pulsante per passare dalla mappa alla vista satellitare (scelta ricordata nel browser)
  * - `mostra`: { punto, margineAlto, margineBasso }; la mappa si sposta perché il punto sia visibile
  *   fuori dai margini (pannelli sopra la mappa)
  * - `onPronta(mappa)`: riceve l'oggetto Leaflet, per esempio per leggerne il centro
@@ -80,6 +83,7 @@ export default function MappaLeaflet({
   mostra = null,
   pulsantiZoom = true,
   statica = false,
+  cambiaSfondo = true,
   onClickSegnaposto,
   onClickMappa,
   onErroreMappa,
@@ -91,6 +95,10 @@ export default function MappaLeaflet({
   const mappa = useRef(null)
   const livelli = useRef(null)
   const gruppi = useRef(null)
+  const sfondo = useRef(null)
+  const { t } = useT()
+  const tRef = useRef(t)
+  tRef.current = t
   // I gestori stanno in un ref: la mappa si crea una volta sola ma usa sempre quelli aggiornati
   const gestori = useRef({})
   gestori.current = { onClickSegnaposto, onClickMappa, onErroreMappa }
@@ -110,12 +118,44 @@ export default function MappaLeaflet({
     if (pulsantiZoom && !statica) L.control.zoom({ position: 'topright' }).addTo(m)
 
     let errori = 0
-    L.tileLayer(URL_SFONDO, { maxZoom: 19, subdomains: SOTTODOMINI_SFONDO, attribution: ATTRIBUZIONE_SFONDO, className: 'sfondo-mappa' })
-      .on('tileerror', () => {
-        errori += 1
-        if (errori === 4) gestori.current.onErroreMappa?.()
+    const segnalaErrori = () => {
+      errori += 1
+      if (errori === 4) gestori.current.onErroreMappa?.()
+    }
+    const livelloMappa = L.tileLayer(URL_SFONDO, { maxZoom: 19, subdomains: SOTTODOMINI_SFONDO, attribution: ATTRIBUZIONE_SFONDO, className: 'sfondo-mappa' }).on('tileerror', segnalaErrori)
+    const livelloSatellite = L.tileLayer(URL_SATELLITE, { maxZoom: 19, attribution: ATTRIBUZIONE_SATELLITE }).on('tileerror', segnalaErrori)
+
+    // Pulsante per passare dalla mappa alla vista satellitare
+    let satellite = cambiaSfondo && !statica && leggi('sfondo', 'mappa') === 'satellite'
+    ;(satellite ? livelloSatellite : livelloMappa).addTo(m)
+    if (cambiaSfondo && !statica) {
+      const Controllo = L.Control.extend({
+        onAdd() {
+          const barra = L.DomUtil.create('div', 'leaflet-bar controllo-sfondo')
+          const pulsante = L.DomUtil.create('button', '', barra)
+          pulsante.type = 'button'
+          L.DomEvent.disableClickPropagation(barra)
+          const aggiorna = () => {
+            const tt = tRef.current
+            pulsante.textContent = satellite ? tt('mappa.sfondoNormale') : tt('mappa.sfondoSatellite')
+            pulsante.title = satellite ? tt('mappa.passaNormale') : tt('mappa.passaSatellite')
+            pulsante.setAttribute('aria-label', pulsante.title)
+            barra.classList.toggle('controllo-sfondo--satellite', satellite)
+          }
+          pulsante.addEventListener('click', () => {
+            satellite = !satellite
+            m.removeLayer(satellite ? livelloMappa : livelloSatellite)
+            ;(satellite ? livelloSatellite : livelloMappa).addTo(m)
+            scrivi('sfondo', satellite ? 'satellite' : 'mappa')
+            aggiorna()
+          })
+          sfondo.current = aggiorna
+          aggiorna()
+          return barra
+        },
       })
-      .addTo(m)
+      new Controllo({ position: 'bottomleft' }).addTo(m)
+    }
 
     m.on('click', (e) => gestori.current.onClickMappa?.([e.latlng.lat, e.latlng.lng]))
     livelli.current = L.layerGroup().addTo(m)
@@ -151,8 +191,12 @@ export default function MappaLeaflet({
       m.off()
       m.remove()
       mappa.current = null
+      sfondo.current = null
     }
   }, [])
+
+  // Il testo del pulsante segue la lingua
+  useEffect(() => sfondo.current?.(), [t])
 
   // Spostamento della vista (la prima vista è già quella di creazione)
   const vistaIniziale = useRef(vista)

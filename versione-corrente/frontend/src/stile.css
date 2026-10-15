@@ -4002,3 +4002,22 @@ body {
     overflow-y: auto;
   }
 }
+
+/* Pulsante per passare dalla mappa alla vista satellitare */
+.controllo-sfondo button {
+  display: block;
+  min-width: 44px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 0;
+  background: var(--superficie);
+  color: var(--testo);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.controllo-sfondo button:hover {
+  background: var(--superficie-2);
+}

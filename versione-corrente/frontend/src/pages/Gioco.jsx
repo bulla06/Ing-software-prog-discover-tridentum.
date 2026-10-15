@@ -260,6 +260,7 @@ function Livello({ stato, totale, errore, occupato, onIpotesi, onConferma, onAva
         <div className="dovera__mappa-area">
           <MappaLeaflet
             etichetta={t('gioco.mappaEtichetta')}
+            cambiaSfondo={false}
             vista={VISTA_GIOCO}
             segnaposti={segnaposti}
             percorso={risultato?.poi ? [ipotesi, risultato.poi.posizione] : null}
