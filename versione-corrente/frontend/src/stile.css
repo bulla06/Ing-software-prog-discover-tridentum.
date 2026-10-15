@@ -3,8 +3,8 @@
    Mobile first (RNF-U01): si parte dai 360 px; a 768 px si allargano i contenuti,
    a 1024 px la navigazione diventa una colonna e mappa ed elenco si affiancano.
 
-   Palette "pietra e affresco": neutri freddi come la pietra del centro storico e un
-   solo accento, il rosso terracotta degli affreschi (lo stesso dell'icona dell'app).
+   Palette "petrolio e oro" (i due colori dell'icona dell'app): neutri appena virati al
+   petrolio, il petrolio come colore principale e l'oro come secondo accento.
    I quattro colori di categoria codificano un dato (storia, arte, tradizioni,
    gastronomia) e si vedono solo su segnaposti e icone delle categorie.
 
@@ -12,23 +12,30 @@
    elementi piccoli dentro i riquadri a 10 px. */
 
 :root {
-  --sfondo: #f3f4f2;
-  --superficie: #fbfbfa;
-  --superficie-2: #e8eae6;
-  --testo: #16181b;
-  --tenue: #565c63;
-  --bordo: #d9dcd7;
-  --accento: #b4432b;
-  --accento-scuro: #933520;
-  --su-accento: #fdfcfb;
-  --accento-tenue: #f6e4de;
+  --sfondo: #f1f6f6;
+  --superficie: #fbfdfd;
+  --superficie-2: #e1ecec;
+  --testo: #10191b;
+  --tenue: #4a5b5f;
+  --bordo: #d1dfdf;
+  --accento: #1d5560;
+  --accento-scuro: #123f48;
+  --su-accento: #fbfdfd;
+  --accento-tenue: #d8eaec;
   --focus: #1d5fa0;
-  --bordo-forte: #b9beb7;
+  --bordo-forte: #a9bdc0;
   --errore: #b3261e;
   --errore-tenue: #fbe9e7;
   --ok-tenue: #e3efe7;
   --attesa: #8a5a00;
   --attesa-tenue: #f8edd6;
+
+  /* Colori del logo, uguali in chiaro e scuro: fasce, barra di navigazione, dettagli */
+  --petrolio: #1d5560;
+  --petrolio-chiaro: #2a7380;
+  --oro: #f4d58a;
+  --oro-scuro: #8a6a12;
+  --oro-tenue: #fbf2d6;
 
   --c-storia: #3a5f80;
   --c-arte: #b4432b;
@@ -36,8 +43,8 @@
   --c-gastronomia: #9c6312;
   --utente: #2563c4;
 
-  --ombra-1: 0 1px 2px rgb(22 24 27 / 0.06), 0 2px 8px rgb(22 24 27 / 0.05);
-  --ombra-2: 0 2px 4px rgb(22 24 27 / 0.06), 0 12px 32px rgb(22 24 27 / 0.12);
+  --ombra-1: 0 1px 2px rgb(16 40 46 / 0.07), 0 2px 8px rgb(16 40 46 / 0.06);
+  --ombra-2: 0 2px 4px rgb(16 40 46 / 0.07), 0 12px 32px rgb(16 40 46 / 0.14);
 
   --raggio: 16px;
   --raggio-piccolo: 10px;
@@ -60,23 +67,26 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --sfondo: #141618;
-    --superficie: #1c1f22;
-    --superficie-2: #262a2e;
-    --testo: #eceef0;
-    --tenue: #a5abb2;
-    --bordo: #33383d;
-    --accento: #e57a5e;
-    --accento-scuro: #f0947b;
-    --su-accento: #1b0f0b;
-    --accento-tenue: #3a231c;
+    --sfondo: #0d1517;
+    --superficie: #142023;
+    --superficie-2: #1c2c30;
+    --testo: #e8f0f1;
+    --tenue: #9fb3b7;
+    --bordo: #27383c;
+    --accento: #f4d58a;
+    --accento-scuro: #ffe7ad;
+    --su-accento: #0c262c;
+    --accento-tenue: #33301d;
     --focus: #7fb4ea;
-    --bordo-forte: #4a5056;
+    --bordo-forte: #3b5156;
     --errore: #f2938a;
     --errore-tenue: #3d1f1c;
     --ok-tenue: #1f3326;
     --attesa: #e8b85c;
     --attesa-tenue: #3a2d14;
+
+    --oro-scuro: #f4d58a;
+    --oro-tenue: #2c2a1a;
 
     --c-storia: #78a6cc;
     --c-arte: #e57a5e;
@@ -396,7 +406,7 @@ ol {
 /* ---------- Chip e filtri ---------- */
 
 .chip {
-  --tinta: var(--testo);
+  --tinta: var(--accento);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -4020,4 +4030,112 @@ body {
 
 .controllo-sfondo button:hover {
   background: var(--superficie-2);
+}
+
+/* ---------- Colori del logo: petrolio e oro ---------- */
+
+:root {
+  --nav-sfondo: var(--petrolio);
+  --su-nav: #fbfdfd;
+  --su-nav-tenue: rgb(251 253 253 / 0.72);
+  --nav-evidenza: rgb(244 213 138 / 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nav-sfondo: #12303a;
+  }
+}
+
+/* Un velo di petrolio in cima alle pagine: il bianco (o il nero) resta lo sfondo */
+body {
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--petrolio) 10%, transparent), transparent 320px);
+  background-repeat: no-repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image: linear-gradient(180deg, color-mix(in srgb, var(--petrolio) 38%, transparent), transparent 360px);
+  }
+}
+
+/* Navigazione: fascia petrolio, voce attiva in oro */
+.barra-nav {
+  background: var(--nav-sfondo);
+  border-color: transparent;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .barra-nav {
+    background: var(--nav-sfondo);
+  }
+}
+
+.barra-nav__voce {
+  color: var(--su-nav-tenue);
+}
+
+.barra-nav__voce.active {
+  color: var(--oro);
+}
+
+.barra-nav__marchio {
+  color: var(--su-nav);
+}
+
+@media (max-width: 1023px) {
+  .barra-nav__voce.active .icona {
+    background: var(--nav-evidenza);
+  }
+}
+
+@media (min-width: 768px) {
+  .barra-nav__voce:hover {
+    background: rgb(255 255 255 / 0.08);
+    color: var(--su-nav);
+  }
+
+  .barra-nav__voce.active,
+  .barra-nav__voce.active:hover {
+    background: var(--nav-evidenza);
+    color: var(--oro);
+  }
+}
+
+/* Titoli di pagina: petrolio (oro nel tema scuro) con un tratto d'oro sotto */
+.intestazione-pagina h1 {
+  color: var(--accento);
+}
+
+.intestazione-pagina h1::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 4px;
+  margin-top: 10px;
+  border-radius: var(--pillola);
+  background: var(--oro);
+}
+
+/* Benvenuto: fondo petrolio, testi chiari, pulsante d'oro */
+.benvenuto {
+  --sfondo: var(--petrolio);
+  --superficie: rgb(255 255 255 / 0.1);
+  --superficie-2: rgb(255 255 255 / 0.16);
+  --testo: #fbfdfd;
+  --tenue: rgb(251 253 253 / 0.78);
+  --bordo: rgb(255 255 255 / 0.24);
+  --bordo-forte: rgb(255 255 255 / 0.4);
+  --accento: var(--oro);
+  --accento-scuro: #ffe7ad;
+  --su-accento: #0c262c;
+  --accento-tenue: rgb(244 213 138 / 0.18);
+  --focus: var(--oro);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  .benvenuto {
+    --sfondo: #12303a;
+  }
 }

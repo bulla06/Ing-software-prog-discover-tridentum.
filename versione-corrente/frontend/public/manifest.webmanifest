@@ -6,8 +6,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f3f4f2",
-  "theme_color": "#b4432b",
+  "background_color": "#f1f6f6",
+  "theme_color": "#1d5560",
   "lang": "it",
   "categories": ["travel", "education"],
   "icons": [
