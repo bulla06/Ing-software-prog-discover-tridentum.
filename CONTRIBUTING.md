@@ -11,7 +11,7 @@ Regole condivise per mantenere il repository ordinato e i documenti coerenti tra
 | `presentazioni/` | Presentazioni: `presentazione-vN.pptx` |
 | `versione-corrente/frontend/` | Il sito (React + Vite) |
 | `versione-corrente/backend/` | L'API REST e il database (Node.js + Express, PostgreSQL + PostGIS) |
-| `versioni-precedenti/` | Copie delle versioni passate del sito (prototipo, frontend v1, frontend v2), da non modificare |
+| `versioni-precedenti/` | Copie delle versioni passate del sito (prototipo, frontend v1, frontend v2, frontend v3), da non modificare |
 | `tests/frontend/`, `tests/backend/` | I test automatici, separati dal codice |
 | `tests/prestazioni/` | Gli script per le misure di prestazioni, accessibilità e carico (non fanno parte di `npm test`) |
 | `infrastruttura/` | Configurazione del proxy HTTPS usato da `docker-compose.yml` |

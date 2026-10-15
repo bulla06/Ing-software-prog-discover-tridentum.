@@ -43,7 +43,7 @@ Una guida turistica da tasca, ma tutto tranne che convenzionale: dà ai turisti 
 
 ## Il sito
 
-La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v3: parte dal design della v2 e completa i punti rimasti aperti rispetto alla Fase 2 (elenco in [`docs/compiti.xlsx`](docs/compiti.xlsx)). Le versioni passate (il primo prototipo, il frontend v1 e il frontend v2) sono in [`versioni-precedenti/`](versioni-precedenti) e si possono aprire affiancate alla corrente per confrontarle.
+La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa il frontend v3: parte dal design della v2 e completa i punti rimasti aperti rispetto alla Fase 2 (elenco in [`docs/compiti.xlsx`](docs/compiti.xlsx)). Le versioni passate (il primo prototipo, il frontend v1, il frontend v2 e una copia del frontend v3) sono in [`versioni-precedenti/`](versioni-precedenti) e si possono aprire affiancate alla corrente per confrontarle.
 
 La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
@@ -144,6 +144,7 @@ Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito
 | Versione | Cartella | Novità principali |
 |---|---|---|
 | v3 (corrente) | [`versione-corrente/frontend/`](versione-corrente/frontend) | Completa i punti rimasti aperti rispetto alla Fase 2: itinerario su misura, fine dell'itinerario, avvisi di connessione, informativa privacy, contenuti in inglese, "Cosa sto guardando?", PWA, esportazione e importazione, JavaScript iniziale più leggero |
+| v3 (copia del 15/10/2026) | [`versioni-precedenti/frontend-v3/`](versioni-precedenti/frontend-v3) | Copia archiviata del frontend v3 con contenuti in tre lingue, mappa MapTiler e vista satellitare |
 | v2 | [`versioni-precedenti/frontend-v2/`](versioni-precedenti/frontend-v2) | Nuovo design: mappa con i luoghi raggruppati, colonna di navigazione su desktop, esperienza da smartphone, gioco in stile GeoGuessr, palette "pietra e affresco" |
 | v1 | [`versioni-precedenti/frontend-v1/`](versioni-precedenti/frontend-v1) | Primo design del sito completo |
 | Prototipo | [`versioni-precedenti/prototipo/`](versioni-precedenti/prototipo) | Solo frontend, dati in file JSON |
@@ -185,7 +186,8 @@ Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito
 ├── versioni-precedenti/                  # versioni passate del sito, conservate come riferimento
 │   ├── prototipo/                        # primo prototipo: solo frontend, dati in JSON
 │   ├── frontend-v1/                      # frontend v1, primo design (usa il backend corrente)
-│   └── frontend-v2/                      # frontend v2, nuovo design (usa il backend corrente)
+│   ├── frontend-v2/                      # frontend v2, nuovo design (usa il backend corrente)
+│   └── frontend-v3/                      # frontend v3, copia del 15/10/2026 (usa il backend corrente)
 ├── tests/
 │   ├── frontend/                         # test del frontend (Vitest)
 │   ├── backend/                          # test delle API e dei dati (Vitest + Supertest)
