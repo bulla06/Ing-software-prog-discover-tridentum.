@@ -27,7 +27,7 @@ services:
     build:
       context: .
       args:
-        VITE_MAPTILER_KEY: ${VITE_MAPTILER_KEY:-}
+        VITE_GOOGLE_MAPS_KEY: ${VITE_GOOGLE_MAPS_KEY:-}
     depends_on:
       db:
         condition: service_healthy

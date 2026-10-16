@@ -20,4 +20,4 @@ LIMITE_RICHIESTE=1000000 docker compose up --build -d   # il limite alto serve s
 | `node tempi.mjs http://localhost:3000` | RNF-P01, RNF-P02 | Tempo fino ai segnaposti dei luoghi sulla mappa e dal tocco alla scheda, su 4G lento e 4G (mediana di 5 prove) |
 | `node carico.mjs http://localhost:3000` | RNF-P04 | 100 connessioni contemporanee per 20 secondi su 7 indirizzi del sito e dell'API |
 
-Se il computer non raggiunge OpenStreetMap o MapTiler, con `TESSERE_FINTE=1` le tessere della mappa vengono servite da `tessera.png` (33 kB, peso realistico) con un ritardo che simula la rete. Con `CHROME_PATH` si sceglie un altro Chrome o Chromium per Lighthouse.
+Se il computer non raggiunge OpenStreetMap o Google Maps, con `TESSERE_FINTE=1` le tessere della mappa vengono servite da `tessera.png` (33 kB, peso realistico) con un ritardo che simula la rete. Con `CHROME_PATH` si sceglie un altro Chrome o Chromium per Lighthouse.

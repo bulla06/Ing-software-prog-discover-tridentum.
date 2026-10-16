@@ -7,7 +7,7 @@ import 'leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import { svgIcona } from './Icona.jsx'
 
-import { ATTRIBUZIONE_SATELLITE, ATTRIBUZIONE_SFONDO, SOTTODOMINI_SFONDO, URL_SATELLITE, URL_SFONDO } from '../lib/sfondo.js'
+import { sessioneGoogle, sfondiMappa } from '../lib/sfondo.js'
 
 // Un filtro CSS sui soli tile (classe "sfondo-mappa") li rende più sobri e nel tema scuro
 // li inverte, così i segnaposti colorati dell'app si leggono meglio.
@@ -105,7 +105,9 @@ export default function MappaLeaflet({
 
   // Creazione della mappa
   useEffect(() => {
+    // maxZoom qui, non solo sui livelli: lo sfondo arriva dopo la mappa e i gruppi di segnaposto lo chiedono subito
     const m = L.map(contenitore.current, {
+      maxZoom: 19,
       zoomControl: false,
       attributionControl: !statica,
       dragging: !statica,
@@ -122,41 +124,48 @@ export default function MappaLeaflet({
       errori += 1
       if (errori === 4) gestori.current.onErroreMappa?.()
     }
-    const livelloMappa = L.tileLayer(URL_SFONDO, { maxZoom: 19, subdomains: SOTTODOMINI_SFONDO, attribution: ATTRIBUZIONE_SFONDO, className: 'sfondo-mappa' }).on('tileerror', segnalaErrori)
-    const livelloSatellite = L.tileLayer(URL_SATELLITE, { maxZoom: 19, attribution: ATTRIBUZIONE_SATELLITE }).on('tileerror', segnalaErrori)
+    let vivo = true
+    // Lo sfondo si aggiunge appena Google ha dato le sessioni per le tessere (o ha risposto di no: allora si usano quelle di ripiego)
+    const montaSfondi = ({ mappa: sfMappa, satellite: sfSatellite }) => {
+      const livelloMappa = L.tileLayer(sfMappa.url, { maxZoom: 19, subdomains: sfMappa.sottodomini, attribution: sfMappa.attribuzione, className: 'sfondo-mappa' }).on('tileerror', segnalaErrori)
+      const livelloSatellite = L.tileLayer(sfSatellite.url, { maxZoom: 19, subdomains: sfSatellite.sottodomini, attribution: sfSatellite.attribuzione }).on('tileerror', segnalaErrori)
 
-    // Pulsante per passare dalla mappa alla vista satellitare
-    let satellite = cambiaSfondo && !statica && leggi('sfondo', 'mappa') === 'satellite'
-    ;(satellite ? livelloSatellite : livelloMappa).addTo(m)
-    if (cambiaSfondo && !statica) {
-      const Controllo = L.Control.extend({
-        onAdd() {
-          const barra = L.DomUtil.create('div', 'leaflet-control controllo-sfondo')
-          const pulsante = L.DomUtil.create('button', '', barra)
-          pulsante.type = 'button'
-          L.DomEvent.disableClickPropagation(barra)
-          const aggiorna = () => {
-            const tt = tRef.current
-            // L'icona mostra dove si va: dalla mappa il globo del satellite, dal satellite la mappa
-            pulsante.innerHTML = svgIcona(satellite ? 'mappa' : 'satellite', { size: 26, peso: 'bold' })
-            pulsante.title = satellite ? tt('mappa.passaNormale') : tt('mappa.passaSatellite')
-            pulsante.setAttribute('aria-label', pulsante.title)
-            barra.classList.toggle('controllo-sfondo--satellite', satellite)
-          }
-          pulsante.addEventListener('click', () => {
-            satellite = !satellite
-            m.removeLayer(satellite ? livelloMappa : livelloSatellite)
-            ;(satellite ? livelloSatellite : livelloMappa).addTo(m)
-            scrivi('sfondo', satellite ? 'satellite' : 'mappa')
+      // Pulsante per passare dalla mappa alla vista satellitare
+      let satellite = cambiaSfondo && !statica && leggi('sfondo', 'mappa') === 'satellite'
+      ;(satellite ? livelloSatellite : livelloMappa).addTo(m)
+      if (cambiaSfondo && !statica) {
+        const Controllo = L.Control.extend({
+          onAdd() {
+            const barra = L.DomUtil.create('div', 'leaflet-control controllo-sfondo')
+            const pulsante = L.DomUtil.create('button', '', barra)
+            pulsante.type = 'button'
+            L.DomEvent.disableClickPropagation(barra)
+            const aggiorna = () => {
+              const tt = tRef.current
+              // L'icona mostra dove si va: dalla mappa il globo del satellite, dal satellite la mappa
+              pulsante.innerHTML = svgIcona(satellite ? 'mappa' : 'satellite', { size: 26, peso: 'bold' })
+              pulsante.title = satellite ? tt('mappa.passaNormale') : tt('mappa.passaSatellite')
+              pulsante.setAttribute('aria-label', pulsante.title)
+              barra.classList.toggle('controllo-sfondo--satellite', satellite)
+            }
+            pulsante.addEventListener('click', () => {
+              satellite = !satellite
+              m.removeLayer(satellite ? livelloMappa : livelloSatellite)
+              ;(satellite ? livelloSatellite : livelloMappa).addTo(m)
+              scrivi('sfondo', satellite ? 'satellite' : 'mappa')
+              aggiorna()
+            })
+            sfondo.current = aggiorna
             aggiorna()
-          })
-          sfondo.current = aggiorna
-          aggiorna()
-          return barra
-        },
-      })
-      new Controllo({ position: 'topright' }).addTo(m)
-    }
+            return barra
+          },
+        })
+        new Controllo({ position: 'topright' }).addTo(m)
+      }
+      }
+    Promise.all([sessioneGoogle('roadmap'), sessioneGoogle('satellite')]).then(([strade, satellite]) => {
+      if (vivo) montaSfondi(sfondiMappa(strade, satellite))
+    })
 
     m.on('click', (e) => gestori.current.onClickMappa?.([e.latlng.lat, e.latlng.lng]))
     livelli.current = L.layerGroup().addTo(m)
@@ -185,6 +194,7 @@ export default function MappaLeaflet({
     osservatore.observe(contenitore.current)
 
     return () => {
+      vivo = false
       osservatore.disconnect()
       // Le animazioni (flyTo, fitBounds) vanno fermate prima: chiudere la mappa a metà
       // di un'animazione fa scattare un errore interno di Leaflet

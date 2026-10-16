@@ -42,7 +42,7 @@ export default {
         titolo: 'Chi riceve i dati',
         elenco: [
           'Non vendiamo né cediamo i tuoi dati. Sono conservati sul server che ospita il sito; le e-mail partono dal servizio di posta configurato per il sito.',
-          'Le immagini della mappa arrivano da MapTiler (api.maptiler.com), basate sui dati di OpenStreetMap; la vista satellitare, solo se la attivi, da Esri (server.arcgisonline.com). Come per ogni sito, il tuo browser comunica a questi servizi il proprio indirizzo IP.',
+          'Le immagini della mappa e della vista satellitare arrivano da Google Maps (tile.googleapis.com); le anteprime dei luoghi da OpenStreetMap (tile.openstreetmap.org). Come per ogni sito, il tuo browser comunica a questi servizi il proprio indirizzo IP.',
           '“Come arrivare” apre Google Maps, e solo quando lo tocchi.',
         ],
       },
@@ -110,7 +110,7 @@ export default {
         titolo: 'Who receives the data',
         elenco: [
           'We do not sell or share your data. It is stored on the server hosting the site; e-mails are sent through the mail service configured for the site.',
-          'Map images come from MapTiler (api.maptiler.com), based on OpenStreetMap data; the satellite view, only if you turn it on, comes from Esri (server.arcgisonline.com). As with any website, your browser shares its IP address with these services.',
+          'Map images and the satellite view come from Google Maps (tile.googleapis.com); the place previews come from OpenStreetMap (tile.openstreetmap.org). As with any website, your browser shares its IP address with these services.',
           '“Directions” opens Google Maps, and only when you tap it.',
         ],
       },
@@ -178,7 +178,7 @@ export default {
         titolo: 'Wer die Daten erhält',
         elenco: [
           'Wir verkaufen oder übermitteln deine Daten nicht. Sie werden auf dem Server gespeichert, der die Website hostet; E-Mails werden über den für die Website eingerichteten Maildienst versendet.',
-          'Die Kartenbilder stammen von MapTiler (api.maptiler.com) auf Basis von OpenStreetMap-Daten; die Satellitenansicht, nur wenn du sie einschaltest, von Esri (server.arcgisonline.com). Wie bei jeder Website teilt dein Browser diesen Diensten seine IP-Adresse mit.',
+          'Die Kartenbilder und die Satellitenansicht stammen von Google Maps (tile.googleapis.com); die Vorschaubilder der Orte von OpenStreetMap (tile.openstreetmap.org). Wie bei jeder Website teilt dein Browser diesen Diensten seine IP-Adresse mit.',
           '„Anreise“ öffnet Google Maps, und zwar nur, wenn du es antippst.',
         ],
       },

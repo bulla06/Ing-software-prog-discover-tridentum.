@@ -30,8 +30,10 @@ export function creaApp({ db, config, posta, archivio, registro = config.svilupp
     helmet({
       contentSecurityPolicy: {
         directives: {
-          // Tessere della mappa: MapTiler (con chiave) oppure OpenStreetMap (senza chiave, di ripiego); Esri per il satellite
-          'img-src': ["'self'", 'data:', 'blob:', 'https://api.maptiler.com', 'https://server.arcgisonline.com', 'https://*.tile.openstreetmap.org'],
+          // Tessere della mappa: Google Maps; OpenStreetMap per le anteprime dei luoghi e come ripiego; Esri per il satellite di ripiego
+          'img-src': ["'self'", 'data:', 'blob:', 'https://tile.googleapis.com', 'https://server.arcgisonline.com', 'https://*.tile.openstreetmap.org'],
+          // Il browser chiede a Google la sessione per le tessere
+          'connect-src': ["'self'", 'https://tile.googleapis.com'],
           // Leaflet posiziona mappa e segnaposti con attributi style
           'style-src': ["'self'", "'unsafe-inline'"],
           // Solo se il sito è davvero in HTTPS: su http://localhost bloccherebbe le risorse

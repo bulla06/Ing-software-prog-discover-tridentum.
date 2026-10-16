@@ -47,7 +47,7 @@ La **versione corrente** è in [`versione-corrente/`](versione-corrente) e usa i
 
 La web app segue l'architettura della [Fase 3](docs/fase-3-architettura-user-flow.md#4-architettura-ad-alto-livello):
 
-- **Frontend** in [`versione-corrente/frontend/`](versione-corrente/frontend): React + Vite, mappa Leaflet su MapTiler/OpenStreetMap con i luoghi raggruppati, italiano, inglese e tedesco (interfaccia e contenuti), tema chiaro e scuro, installabile come app;
+- **Frontend** in [`versione-corrente/frontend/`](versione-corrente/frontend): React + Vite, mappa Leaflet su Google Maps (con OpenStreetMap di ripiego) con i luoghi raggruppati, italiano, inglese e tedesco (interfaccia e contenuti), tema chiaro e scuro, installabile come app;
 - **Backend** in [`versione-corrente/backend/`](versione-corrente/backend): Node.js + Express, API REST con il gateway (token JWT, ruoli, limiti alle richieste) davanti ai quattro moduli *Utenti e accessi*, *POI, itinerari e tradizioni*, *Contenuti e moderazione*, *Gioco*;
 - **Database PostgreSQL + PostGIS**: in sviluppo con [PGlite](https://pglite.dev), lo stesso PostgreSQL eseguito dentro Node, quindi **non serve installare niente**; con Docker Compose un server PostgreSQL vero.
 

@@ -36,7 +36,7 @@ for (const [nome, rete] of Object.entries(RETI)) {
     const page = await ctx.newPage()
     if (process.env.TESSERE_FINTE) {
       let inCoda = 0
-      await page.route(/(tile\.openstreetmap\.org|api\.maptiler\.com)/, async (r) => {
+      await page.route(/(tile\.openstreetmap\.org|tile\.googleapis\.com)/, async (r) => {
         // Ogni tessera aspetta quelle prima di lei: la banda è una sola
         inCoda++
         await new Promise((ok) => setTimeout(ok, rete.latency + (inCoda * TESSERA.length * 1000) / rete.download))

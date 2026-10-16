@@ -13,9 +13,9 @@ RUN npm ci
 
 COPY versione-corrente/frontend versione-corrente/frontend
 COPY versione-corrente/backend versione-corrente/backend
-# Chiave MapTiler per lo sfondo della mappa: entra nel frontend in fase di build (facoltativa)
-ARG VITE_MAPTILER_KEY
-ENV VITE_MAPTILER_KEY=$VITE_MAPTILER_KEY
+# Chiave di Google Maps (Map Tiles API) per lo sfondo della mappa: entra nel frontend in fase di build (facoltativa)
+ARG VITE_GOOGLE_MAPS_KEY
+ENV VITE_GOOGLE_MAPS_KEY=$VITE_GOOGLE_MAPS_KEY
 RUN npm run build && npm prune --omit=dev
 
 ENV NODE_ENV=production \

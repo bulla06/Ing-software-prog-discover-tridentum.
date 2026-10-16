@@ -1,9 +1,7 @@
 import { useMemo } from 'react'
 import Icona from './Icona.jsx'
 import { urlFoto } from '../lib/http.js'
-import { SFONDO_CON_CHIAVE, urlTessera } from '../lib/sfondo.js'
-
-const ATTRIBUZIONE_BREVE = SFONDO_CON_CHIAVE ? '© MapTiler © OpenStreetMap' : '© OpenStreetMap'
+import { ATTRIBUZIONE_COPERTINA, urlTessera } from '../lib/sfondo.js'
 
 // Testata di un luogo. Se la community ha pubblicato una foto (Fase 3 §5.6) si usa la prima;
 // altrimenti un ritaglio della mappa centrato sul POI con il segnaposto della sua categoria:
@@ -95,7 +93,7 @@ function CopertinaMappa({ poi, compatta, prioritaria, stile }) {
       <span className="copertina__pin" aria-hidden="true">
         <Icona nome={poi.categoria} size={compatta ? 16 : 20} peso="bold" />
       </span>
-      {!compatta && <span className="copertina__attribuzione">{ATTRIBUZIONE_BREVE}</span>}
+      {!compatta && <span className="copertina__attribuzione">{ATTRIBUZIONE_COPERTINA}</span>}
     </div>
   )
 }
