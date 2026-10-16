@@ -84,7 +84,7 @@ npm test           # test del frontend e del backend
 
 I test del backend percorrono i casi d'uso (registrazione, ricordi, moderazione, amministrazione, gioco), il controllo dei ruoli su tutte le rotte riservate, la privacy e la coerenza dei pacchetti di dati, su un database in memoria. Con `TEST_DATABASE_URL=postgres://utente:password@localhost:5432/postgres` girano invece su un server PostgreSQL + PostGIS vero, creando e cancellando un database per ogni file.
 
-Le misure di prestazioni, accessibilità e carico non fanno parte di `npm test`: gli script e le istruzioni sono in [`tests/prestazioni/`](tests/prestazioni), i risultati in [Verifica dei requisiti non funzionali](docs/verifica-requisiti-non-funzionali.md).
+Le misure di prestazioni, accessibilità e carico non fanno parte di `npm test`: gli script e le istruzioni sono in [`tests/prestazioni/`](tests/prestazioni).
 
 ### Avvio con Docker (produzione)
 
@@ -160,7 +160,6 @@ Senza connessione ogni pagina lo dice e propone di riprovare (UC-01 E2); il sito
 │   ├── fase-3-architettura-user-flow.md  # Fase 3: casi d'uso, user flow, architettura
 │   ├── fase-4-pianificazione.md          # Fase 4: WBS, sprint e roadmap MVP, rischi
 │   ├── compiti.xlsx                      # compiti ancora da fare, con assegnatario e stato (rosso/giallo/verde)
-│   ├── verifica-requisiti-non-funzionali.md  # misure e prove dei requisiti non funzionali
 │   └── libretti/                         # libretti delle attività con il conta ore (Excel), uno per membro
 ├── presentazioni/
 │   ├── presentazione-v1.pptx             # prima versione

@@ -1,6 +1,6 @@
 # Misure di prestazioni, accessibilità e carico
 
-Script per ripetere le misure dei requisiti non funzionali descritte in [Verifica dei requisiti non funzionali](../../docs/verifica-requisiti-non-funzionali.md). Non fanno parte di `npm test`: servono un server avviato e un browser.
+Script per ripetere le misure dei requisiti non funzionali (l’elenco di quelle ancora da fare è in [`docs/compiti.xlsx`](../../docs/compiti.xlsx)). Non fanno parte di `npm test`: servono un server avviato e un browser.
 
 ```bash
 cd tests/prestazioni
