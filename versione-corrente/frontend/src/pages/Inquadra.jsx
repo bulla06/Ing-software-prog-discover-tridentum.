@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ErroreCaricamento from '../components/ErroreCaricamento.jsx'
 import EsitoFoto from '../components/EsitoFoto.jsx'
 import Icona from '../components/Icona.jsx'
+import MappaLeaflet from '../components/MappaLeaflet.jsx'
 import { getPoi } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
-import { formattaDistanza, luoghiInVista } from '../lib/geo.js'
+import { CENTRO_TRENTO, formattaDistanza, luoghiInVista } from '../lib/geo.js'
 import { leggiDatiFoto, valutaProvenienza } from '../lib/provenienza.js'
 
 const ALTRI_IN_VISTA = 3
@@ -22,15 +23,15 @@ function direzioneDaEvento(e) {
   return null
 }
 
-// RF-06 "Cosa sto guardando?": inquadri un edificio o un affresco con la fotocamera e il sito
-// riconosce il luogo dalla tua posizione e dalla direzione in cui punta il telefono (bussola).
-// Il calcolo si fa tutto nel browser: né le immagini della fotocamera né la posizione lasciano il dispositivo.
+// RF-06 "Cosa sto guardando?": il sito riconosce il luogo che hai davanti dalla tua posizione e dalla direzione
+// in cui punta il telefono (bussola), e lo mostra sulla mappa con i luoghi della guida.
+// Il calcolo si fa tutto nel browser: né le immagini né la posizione lasciano il dispositivo.
 // Il riconoscimento dall'immagine (AI Service, Fase 3 §5.4) potrà aggiungersi senza cambiare questa pagina.
 // Si può anche scattare una foto o sceglierla dalla galleria: si controlla da dove viene (scattata ora o dalla
 // galleria, e dove: lib/provenienza.js) e si mostrano i luoghi vicini al punto in cui è stata scattata.
 export default function Inquadra() {
   const { t, lingua } = useT()
-  const video = useRef(null)
+  const navigate = useNavigate()
   const [luoghi, setLuoghi] = useState(null)
   const [errore, setErrore] = useState(null)
   const [tentativo, setTentativo] = useState(0)
@@ -38,7 +39,6 @@ export default function Inquadra() {
   const [statoPosizione, setStatoPosizione] = useState('attesa') // attesa | ok | negata
   const [direzione, setDirezione] = useState(null)
   const [bussola, setBussola] = useState('attesa') // attesa | ok | permesso | assente
-  const [fotocamera, setFotocamera] = useState('attesa') // attesa | ok | assente
   const [foto, setFoto] = useState(null) // { anteprima, provenienza, vicini }
   const [erroreFoto, setErroreFoto] = useState(false)
   const inputLibreria = useRef(null)
@@ -60,29 +60,6 @@ export default function Inquadra() {
       { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 },
     )
     return () => navigator.geolocation.clearWatch(id)
-  }, [])
-
-  // Fotocamera posteriore; se non c'è (computer) la pagina funziona lo stesso
-  useEffect(() => {
-    let flusso = null
-    let attivo = true
-    if (!navigator.mediaDevices?.getUserMedia) {
-      setFotocamera('assente')
-      return
-    }
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false }).then(
-      (s) => {
-        if (!attivo) return s.getTracks().forEach((traccia) => traccia.stop())
-        flusso = s
-        if (video.current) video.current.srcObject = s
-        setFotocamera('ok')
-      },
-      () => attivo && setFotocamera('assente'),
-    )
-    return () => {
-      attivo = false
-      flusso?.getTracks().forEach((traccia) => traccia.stop())
-    }
   }, [])
 
   // Bussola: su iOS serve il permesso, chiesto con un tocco (vedi attivaBussola)
@@ -135,7 +112,7 @@ export default function Inquadra() {
 
   const analizza = async (blob, origine) => {
     // Una foto appena scattata, senza posizione nel file, vale come scattata dove si è ora
-    const dati = origine === 'fotocamera' ? { gps: posizione } : await leggiDatiFoto(blob)
+    const dati = await leggiDatiFoto(blob)
     const gps = dati.gps ?? (origine === 'telefono' ? posizione : null)
     const origineFoto = origine === 'libreria' ? 'libreria' : 'fotocamera'
     setFoto({
@@ -152,35 +129,39 @@ export default function Inquadra() {
     if (file) analizza(file, origine)
   }
 
-  // Scatto dall'inquadratura che si vede: il fotogramma del video diventa la foto
-  const scatta = () => {
-    const v = video.current
-    if (fotocamera !== 'ok' || !v?.videoWidth) return inputTelefono.current?.click()
-    const tela = document.createElement('canvas')
-    tela.width = v.videoWidth
-    tela.height = v.videoHeight
-    tela.getContext('2d').drawImage(v, 0, 0)
-    setErroreFoto(false)
-    tela.toBlob((blob) => blob && analizza(blob, 'fotocamera'), 'image/jpeg', 0.92)
-  }
-
   const inVista = useMemo(
     () => (posizione && luoghi ? luoghiInVista(posizione, bussola === 'ok' ? direzione : null, luoghi) : []),
     [posizione, luoghi, direzione, bussola],
   )
   const [primo, ...altri] = inVista
 
+  // La mappa vola sulla tua posizione quando arriva la prima, poi non si sposta più da sola
+  const haPosizione = Boolean(posizione)
+  const vista = useMemo(() => ({ centro: posizione ?? CENTRO_TRENTO, zoom: 16 }), [haPosizione]) // eslint-disable-line react-hooks/exhaustive-deps
+  const segnaposti = useMemo(
+    () =>
+      (luoghi ?? []).map((p) => ({
+        id: p.id,
+        posizione: p.posizione,
+        titolo: p.nome,
+        colore: `var(--c-${p.categoria})`,
+        icona: p.categoria,
+        attivo: p.id === primo?.poi.id,
+      })),
+    [luoghi, primo?.poi.id],
+  )
+
   return (
     <div className="inquadra">
-      <div className="inquadra__mirino">
-        <video ref={video} autoPlay playsInline muted aria-label={t('inquadra.video')} hidden={fotocamera !== 'ok'} />
-        {fotocamera !== 'ok' && (
-          <p className="inquadra__senza-fotocamera">
-            <Icona nome="inquadra" size={36} />
-            {fotocamera === 'attesa' ? t('inquadra.attesaFotocamera') : t('inquadra.senzaFotocamera')}
-          </p>
-        )}
-        {fotocamera === 'ok' && <span className="inquadra__croce" aria-hidden="true" />}
+      <div className="inquadra__mappa">
+        <MappaLeaflet
+          etichetta={t('inquadra.mappa')}
+          vista={vista}
+          segnaposti={segnaposti}
+          posizioneUtente={posizione}
+          pulsantiZoom={false}
+          onClickSegnaposto={(id) => navigate(`/poi/${id}`)}
+        />
         {bussola === 'ok' && direzione != null && (
           <span className="inquadra__bussola numero" aria-hidden="true">
             <Icona nome="direzione" size={14} />
@@ -196,7 +177,7 @@ export default function Inquadra() {
         <h1>{t('inquadra.titolo')}</h1>
 
         <div className="inquadra__azioni">
-          <button type="button" className="pulsante pulsante--primario" onClick={scatta}>
+          <button type="button" className="pulsante pulsante--primario" onClick={() => inputTelefono.current?.click()}>
             <Icona nome="ricordo" size={18} />
             {t('inquadra.scatta')}
           </button>
