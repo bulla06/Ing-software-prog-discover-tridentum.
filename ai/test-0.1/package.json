@@ -1,0 +1,19 @@
+{
+  "name": "tridentum-ai-test-0-1",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Test 0.1: DINOv2 small distingue due affreschi a partire da poche foto (riconoscimento dei luoghi, RF-06)",
+  "scripts": {
+    "indice": "node costruisci-indice.mjs",
+    "valuta": "node valuta.mjs",
+    "prova": "node prova.mjs"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.1",
+    "sharp": "0.35.5"
+  }
+}

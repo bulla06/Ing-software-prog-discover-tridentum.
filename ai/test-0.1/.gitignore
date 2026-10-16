@@ -1,0 +1,18 @@
+# Le foto sono di Marco (cartella Drive "FOTO LUOGHI TN") e dentro hanno posizione GPS e data:
+# non vanno su GitHub (RNF-S05 chiede di togliere i metadati prima di pubblicare una foto).
+foto/
+
+# Foto nuove da provare (hanno dentro posizione e data); la cartella resta, vuota
+nuove/*
+!nuove/.gitkeep
+
+# Librerie e modello: si riscaricano con npm install e al primo avvio
+node_modules/
+modelli/
+
+# Calcoli intermedi e indice costruito dalle foto
+cache/
+indice.json
+
+# Report con le anteprime delle foto dentro
+risultati/*.html

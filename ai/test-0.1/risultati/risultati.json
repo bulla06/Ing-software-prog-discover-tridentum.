@@ -1,0 +1,5876 @@
+{
+ "creato_il": "2026-10-16T13:02:11.936Z",
+ "modello": "onnx-community/dinov2-small",
+ "foto": {
+  "casa-balduini": 23,
+  "palazzo-geremia": 49
+ },
+ "prova_a_blocchi": {
+  "blocchi": 5,
+  "foto_vicine_escluse_per_lato": 2
+ },
+ "dtype": {
+  "fp32": {
+   "ms_per_foto_mediana": 285.5,
+   "varianti": {
+    "cls": {
+     "una_alla_volta": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.3955614862285001,
+       "margine_minimo": 0.1516369086289996,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.37144885184809495,
+       "margine_minimo": 0.08552818387503769,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "a_blocchi": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.32369947813649935,
+       "margine_minimo": 0.08864478434899992,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.3497529068761154,
+       "margine_minimo": 0.08901231076153815,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "poche_foto": [
+      {
+       "k": 1,
+       "riferimenti": 2,
+       "vicino": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.31362606659799985,
+        "margine_minimo": 0.0014936956449996819,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       },
+       "prototipo": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.31362606235562906,
+        "margine_minimo": 0.0014935519402620168,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       }
+      },
+      {
+       "k": 2,
+       "riferimenti": 4,
+       "vicino": {
+        "n": 52,
+        "giuste": 52,
+        "accuratezza": 100,
+        "margine_mediano": 0.3565886712194999,
+        "margine_minimo": 0.01234707757300002,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 39
+         }
+        }
+       },
+       "prototipo": {
+        "n": 52,
+        "giuste": 51,
+        "accuratezza": 98.1,
+        "margine_mediano": 0.3521104846735048,
+        "margine_minimo": 0.0016277881982267317,
+        "errori": [
+         "palazzo-geremia/IMG_0465.JPEG"
+        ],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 38
+         }
+        }
+       }
+      },
+      {
+       "k": 3,
+       "riferimenti": 6,
+       "vicino": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.29074613634750035,
+        "margine_minimo": 0.17018482758000075,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       },
+       "prototipo": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.3371556919882477,
+        "margine_minimo": 0.15763556858116035,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       }
+      },
+      {
+       "k": 5,
+       "riferimenti": 10,
+       "vicino": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.30137308570149973,
+        "margine_minimo": 0.15245080602799943,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       },
+       "prototipo": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.33249793964298013,
+        "margine_minimo": 0.1503576276780626,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       }
+      },
+      {
+       "k": 8,
+       "riferimenti": 16,
+       "vicino": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.35592715766799976,
+        "margine_minimo": 0.24937716794200038,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       },
+       "prototipo": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.3821019795560827,
+        "margine_minimo": 0.2937317635439648,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       }
+      }
+     ],
+     "somiglianza_media": {
+      "stesso_luogo": {
+       "casa-balduini": 0.7308677360777901,
+       "palazzo-geremia": 0.7448172299064313
+      },
+      "luoghi_diversi": {
+       "casa-balduini / palazzo-geremia": 0.42702323409249093
+      }
+     },
+     "soglie": {
+      "nota": "Provvisorie: calibrate solo sulle foto di riferimento (prova a blocchi), senza foto di altri luoghi.",
+      "somiglianza_giuste": {
+       "minimo": 0.5906767614709997,
+       "p5": 0.7754132077579999,
+       "mediana": 0.8548639663629998
+      },
+      "riconosciuto_da": 0.77,
+      "nessuno_sotto": 0.47,
+      "margine_minimo": 0.05
+     },
+     "dettagli_blocchi": [
+      {
+       "file": "casa-balduini/IMG_0297.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8350738351539998,
+        "margine": 0.20967782274099922,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.796860564935651,
+        "margine": 0.354994955502161,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8350738351539998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6253960124130006
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "casa-balduini/IMG_0298.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.831599103646,
+        "margine": 0.21152802063100007,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7964214011838444,
+        "margine": 0.35750576682610996,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.831599103646
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6200710830149999
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "casa-balduini/IMG_0299.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8212361453529997,
+        "margine": 0.21856957746099992,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7660562251940161,
+        "margine": 0.33037419856345374,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8212361453529997
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6026665678919998
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "casa-balduini/IMG_0300.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8333464108960005,
+        "margine": 0.21477420912800005,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7877134260847406,
+        "margine": 0.33090954636402986,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8333464108960005
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6185722017680004
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0421.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8861734647809996,
+        "margine": 0.3320977970519996,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8489213393031695,
+        "margine": 0.3418336886272202,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.554075667729
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8861734647809996
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0422.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8623284302539999,
+        "margine": 0.3019076485969995,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8626777884311894,
+        "margine": 0.3497183857639422,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5604207816570004
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8623284302539999
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0423.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8569405422179996,
+        "margine": 0.2802566673719997,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8675998494631708,
+        "margine": 0.3274593008853163,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5766838748459999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8569405422179996
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0424.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8533709043030001,
+        "margine": 0.2913214838699999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8696113241647885,
+        "margine": 0.3230120723715505,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5620494204330002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8533709043030001
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0425.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8467297243479996,
+        "margine": 0.31330026240199993,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8413923811008185,
+        "margine": 0.32984699390159866,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5334294619459997
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8467297243479996
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0426.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8519255832029996,
+        "margine": 0.3035104475679994,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8519233080285644,
+        "margine": 0.31410218840237025,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5484151356350002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8519255832029996
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0427.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8450589635199994,
+        "margine": 0.29863758216999914,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.825391872573899,
+        "margine": 0.2835976370781552,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5464213813500003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8450589635199994
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0428.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8872932077629999,
+        "margine": 0.2994023212669996,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7913959830907207,
+        "margine": 0.19421830901982617,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5878908864960003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8872932077629999
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0429.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8807828565760001,
+        "margine": 0.310956095507,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8160041191713001,
+        "margine": 0.23702994344961215,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5698267610690001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8807828565760001
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "casa-balduini/IMG_0301.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.9534912434130006,
+        "margine": 0.3508176703160004,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8321600268784779,
+        "margine": 0.36323886177742293,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.9534912434130006
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6026735730970002
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0302.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.9274603025489997,
+        "margine": 0.3108582428649993,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8191329882126587,
+        "margine": 0.34225178417770513,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.9274603025489997
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6166020596840004
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0303.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.78133206522,
+        "margine": 0.2911144119229999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7763090333285264,
+        "margine": 0.32395339384422966,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.78133206522
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.49021765329700007
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0304.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8290397075680004,
+        "margine": 0.31985440458300074,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8177876530587964,
+        "margine": 0.35928672295114106,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8290397075680004
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5091853029849996
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0305.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8432855302919994,
+        "margine": 0.27836886093099933,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8433834606801544,
+        "margine": 0.3318780960248119,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8432855302919994
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.564916669361
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0430.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9546480230169989,
+        "margine": 0.3263527965929993,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8743201885475687,
+        "margine": 0.2752733156495101,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.6282952264239996
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9546480230169989
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0431.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9752222164010002,
+        "margine": 0.404539243431,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8940689617401715,
+        "margine": 0.3298700172120115,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5706829729700001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9752222164010002
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0432.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8787853336249999,
+        "margine": 0.415821014607,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8400155038878425,
+        "margine": 0.4566731415308829,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4629643190179999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8787853336249999
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0433.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8517189978800003,
+        "margine": 0.4381617043200002,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8419569537012865,
+        "margine": 0.48832347691329087,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4135572935600001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8517189978800003
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0434.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8411379116899999,
+        "margine": 0.3920495973219993,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8497621674290581,
+        "margine": 0.44431591601823994,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.44908831436800056
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8411379116899999
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0435.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8268767192190002,
+        "margine": 0.4119388498260001,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8385203543695849,
+        "margine": 0.4649640079671081,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4149378693930001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8268767192190002
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0436.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8417689386639993,
+        "margine": 0.3181591816059992,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9006339399610114,
+        "margine": 0.40399371353386565,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5236097570580001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8417689386639993
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0437.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.916008984978,
+        "margine": 0.4291363708369999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8882084612907032,
+        "margine": 0.4277989173826604,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4868726141410001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.916008984978
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0438.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9233975339059998,
+        "margine": 0.4327583170809998,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9011683617166674,
+        "margine": 0.4253302593592195,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.49063921682499995
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9233975339059998
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0439.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9302317322309998,
+        "margine": 0.4599431800139995,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8764057217963748,
+        "margine": 0.4083818858341598,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4702885522170003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9302317322309998
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0306.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8263977140439995,
+        "margine": 0.3454606819989991,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8119500444035871,
+        "margine": 0.3560087514175387,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8263977140439995
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.48093703204500043
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "casa-balduini/IMG_0307.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8176095333599999,
+        "margine": 0.24569800090100014,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8533087219569349,
+        "margine": 0.34978742798828855,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8176095333599999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5719115324589997
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "casa-balduini/IMG_0308.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7754132077579999,
+        "margine": 0.2226848117509993,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8217608043719268,
+        "margine": 0.34391254324743437,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.7754132077579999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5527283960070006
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "casa-balduini/IMG_0309.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8899409210030008,
+        "margine": 0.3329343596130012,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.797420154491775,
+        "margine": 0.3186023900370526,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8899409210030008
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5570065613899996
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0440.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8545333409809996,
+        "margine": 0.31790421908199973,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8651729542994803,
+        "margine": 0.30950327000797384,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5366291218989999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8545333409809996
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0441.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8792384201089999,
+        "margine": 0.2561508490700005,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8646188743815403,
+        "margine": 0.21529497375772266,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.6230875710389994
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8792384201089999
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0442.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8872932077629999,
+        "margine": 0.26189719534999933,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8681888164120173,
+        "margine": 0.210625064806781,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.6253960124130006
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8872932077629999
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0443.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8659971505050006,
+        "margine": 0.3777553602230003,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8543410160332164,
+        "margine": 0.36232332718427257,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.48824179028200027
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8659971505050006
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0444.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9051369634919998,
+        "margine": 0.4192577867069996,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.86833920574998,
+        "margine": 0.40645161726403567,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4858791767850002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9051369634919998
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0445.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8787853336249999,
+        "margine": 0.45543332592100033,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8026787697835301,
+        "margine": 0.453537420430326,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.42335200770399956
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8787853336249999
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0446.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8773142480019995,
+        "margine": 0.43366428723099976,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7891801692080569,
+        "margine": 0.4141792239094823,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4436499607709998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8773142480019995
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0447.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.871522113921,
+        "margine": 0.4152598038589998,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8379540967455463,
+        "margine": 0.41294425354978953,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4562623100620002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.871522113921
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0448.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8400038745559997,
+        "margine": 0.4469428366519999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7766268444297667,
+        "margine": 0.39501243827313814,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.39306103790399977
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8400038745559997
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0449.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.862654821575,
+        "margine": 0.46491092595500005,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8014061915772739,
+        "margine": 0.4195053978019057,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.3977438956199999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.862654821575
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "casa-balduini/IMG_0310.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.830399217428,
+        "margine": 0.288057026775,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7979379952536803,
+        "margine": 0.37569120585923793,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.830399217428
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.542342190653
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0311.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8255754506990003,
+        "margine": 0.24724709845900006,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.807902941370533,
+        "margine": 0.3378396566638756,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8255754506990003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5783283522400002
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0312.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8350738351539998,
+        "margine": 0.2471829486579995,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.816741826602748,
+        "margine": 0.36531471996242987,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8350738351539998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5878908864960003
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0313.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8551945917449999,
+        "margine": 0.3479398841499999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.789084160858022,
+        "margine": 0.294693018216918,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8551945917449999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.507254707595
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0314.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.791513825968,
+        "margine": 0.2529137697379996,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7841477953186872,
+        "margine": 0.2876230008459656,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.791513825968
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5386000562300004
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0450.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.916008984978,
+        "margine": 0.4547263290719997,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8860944108367174,
+        "margine": 0.4462476151773977,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.46128265590600026
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.916008984978
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0451.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8796053339590002,
+        "margine": 0.3628208801480002,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8562317289850152,
+        "margine": 0.37166292643153503,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.516784453811
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8796053339590002
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0452.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8770181638209998,
+        "margine": 0.31685981332099966,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8759919632839553,
+        "margine": 0.32887894598446754,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5601583505000002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8770181638209998
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0453.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8446929312750004,
+        "margine": 0.33078499872900036,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.880148988642831,
+        "margine": 0.43267278105637885,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5139079325460001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8446929312750004
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0454.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8861734647809996,
+        "margine": 0.3210461596799994,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8489846076900125,
+        "margine": 0.3358116316644577,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5651273051010002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8861734647809996
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0455.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8729143988109999,
+        "margine": 0.34978903185999966,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8117395321649603,
+        "margine": 0.34728480308495274,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5231253669510002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8729143988109999
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0456.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8232874833799999,
+        "margine": 0.33735965799400014,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8616836219839499,
+        "margine": 0.43699822148122736,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.48592782538599977
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8232874833799999
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0457.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.871522113921,
+        "margine": 0.40099957101500017,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8712214809088465,
+        "margine": 0.4572026445632193,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4705225429059998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.871522113921
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0458.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9286446287639997,
+        "margine": 0.3879674442659997,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9244123647804233,
+        "margine": 0.4073098799975955,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.540677184498
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9286446287639997
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0459.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.959851379284,
+        "margine": 0.4427741872469997,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9241644848407542,
+        "margine": 0.4103646125896916,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5170771920370003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.959851379284
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0315.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.828003392895,
+        "margine": 0.2901368752510004,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7537996530522805,
+        "margine": 0.24061911990935148,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.828003392895
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5378665176439996
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "casa-balduini/IMG_0316.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8217609317990001,
+        "margine": 0.2831515914280005,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7469447694392284,
+        "margine": 0.22799571925732087,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8217609317990001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5386093403709996
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "casa-balduini/IMG_0317.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8339151591940002,
+        "margine": 0.2416966013940004,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7906541331313182,
+        "margine": 0.24275580689140352,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8339151591940002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5922185577999998
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "casa-balduini/IMG_0318.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8272326977859998,
+        "margine": 0.20414512674700047,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8134776028895971,
+        "margine": 0.23844727489630546,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8272326977859998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6230875710389994
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "casa-balduini/IMG_0319.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8265833373949993,
+        "margine": 0.2356342458529993,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7753950898495668,
+        "margine": 0.2275317049840344,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8265833373949993
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.590949091542
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0460.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8792384201089999,
+        "margine": 0.3288958450710001,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8534290549891119,
+        "margine": 0.29329639114866135,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5503425750379998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8792384201089999
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0461.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8660156546320007,
+        "margine": 0.2907452168320005,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8243133421589061,
+        "margine": 0.220575548308662,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5752704378000002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8660156546320007
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0462.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8601538287250002,
+        "margine": 0.3996725450650001,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9032900076060866,
+        "margine": 0.41323695836838514,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.46048128366000013
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8601538287250002
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0463.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8591207699379994,
+        "margine": 0.4095784937789991,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8819994336424798,
+        "margine": 0.403244452611929,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4495422761590003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8591207699379994
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0464.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8796053339590002,
+        "margine": 0.37758788752999994,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8908894451674302,
+        "margine": 0.3612755581808734,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5020174464290003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8796053339590002
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0465.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.5906767614709997,
+        "margine": 0.08864478434899992,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.5678555961359272,
+        "margine": 0.08901231076153815,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5020319771219998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5906767614709997
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0466.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.627136826886,
+        "margine": 0.10435045770100049,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.6082408640657793,
+        "margine": 0.11136340654962756,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5227863691849995
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.627136826886
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0467.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8032711052440001,
+        "margine": 0.4180496673669999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8002732527469858,
+        "margine": 0.4762751723864928,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.38522143787700025
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8032711052440001
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0468.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8005292514140003,
+        "margine": 0.42359663482900006,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7816588456842959,
+        "margine": 0.4612920409910584,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.37693261658500027
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8005292514140003
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0469.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.765984260497,
+        "margine": 0.3470948120819999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7583211490233724,
+        "margine": 0.40925724966099997,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4188894484150001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.765984260497
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      }
+     ]
+    },
+    "media": {
+     "una_alla_volta": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.206390416094,
+       "margine_minimo": 0.10540498516499941,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.1888956699238567,
+       "margine_minimo": 0.07007164085243334,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "a_blocchi": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.1655288071649998,
+       "margine_minimo": 0.07378323790699937,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.18927834330018545,
+       "margine_minimo": 0.06149493441143106,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "poche_foto": [
+      {
+       "k": 1,
+       "riferimenti": 2,
+       "vicino": {
+        "n": 62,
+        "giuste": 60,
+        "accuratezza": 96.8,
+        "margine_mediano": 0.15163839099700088,
+        "margine_minimo": 0.0005525813000000213,
+        "errori": [
+         "palazzo-geremia/IMG_0441.JPEG",
+         "palazzo-geremia/IMG_0442.JPEG"
+        ],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 42
+         }
+        }
+       },
+       "prototipo": {
+        "n": 62,
+        "giuste": 60,
+        "accuratezza": 96.8,
+        "margine_mediano": 0.15163837638494515,
+        "margine_minimo": 0.0005529491821043564,
+        "errori": [
+         "palazzo-geremia/IMG_0441.JPEG",
+         "palazzo-geremia/IMG_0442.JPEG"
+        ],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 42
+         }
+        }
+       }
+      },
+      {
+       "k": 2,
+       "riferimenti": 4,
+       "vicino": {
+        "n": 52,
+        "giuste": 52,
+        "accuratezza": 100,
+        "margine_mediano": 0.1833534263745003,
+        "margine_minimo": 0.03566096158499987,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 39
+         }
+        }
+       },
+       "prototipo": {
+        "n": 52,
+        "giuste": 51,
+        "accuratezza": 98.1,
+        "margine_mediano": 0.17222809212462964,
+        "margine_minimo": 0.004974166946022596,
+        "errori": [
+         "palazzo-geremia/IMG_0441.JPEG"
+        ],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 38
+         }
+        }
+       }
+      },
+      {
+       "k": 3,
+       "riferimenti": 6,
+       "vicino": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.17319367443749978,
+        "margine_minimo": 0.10437220316999984,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       },
+       "prototipo": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.1755180840404557,
+        "margine_minimo": 0.08912165209419043,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       }
+      },
+      {
+       "k": 5,
+       "riferimenti": 10,
+       "vicino": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.16712606084349996,
+        "margine_minimo": 0.08824052539000093,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       },
+       "prototipo": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.16140151853358153,
+        "margine_minimo": 0.02636244852740155,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       }
+      },
+      {
+       "k": 8,
+       "riferimenti": 16,
+       "vicino": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.18477467655300073,
+        "margine_minimo": 0.13144618486099968,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       },
+       "prototipo": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.19482189012040896,
+        "margine_minimo": 0.14324430680714928,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       }
+      }
+     ],
+     "somiglianza_media": {
+      "stesso_luogo": {
+       "casa-balduini": 0.8568094270486163,
+       "palazzo-geremia": 0.8764367562203684
+      },
+      "luoghi_diversi": {
+       "casa-balduini / palazzo-geremia": 0.6954835508910341
+      }
+     },
+     "soglie": {
+      "nota": "Provvisorie: calibrate solo sulle foto di riferimento (prova a blocchi), senza foto di altri luoghi.",
+      "somiglianza_giuste": {
+       "minimo": 0.7868104432090002,
+       "p5": 0.8900144747540003,
+       "mediana": 0.9381141194245
+      },
+      "riconosciuto_da": 0.89,
+      "nessuno_sotto": 0.62,
+      "margine_minimo": 0.05
+     }
+    },
+    "cls_media": {
+     "una_alla_volta": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.31164219029799994,
+       "margine_minimo": 0.12208328329600127,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.27304894680252667,
+       "margine_minimo": 0.09125768964082093,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "a_blocchi": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.25403286269199954,
+       "margine_minimo": 0.0781923184520007,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.2641974386561027,
+       "margine_minimo": 0.09253118427380491,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "poche_foto": [
+      {
+       "k": 1,
+       "riferimenti": 2,
+       "vicino": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.23197376070799947,
+        "margine_minimo": 0.005360782335000147,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       },
+       "prototipo": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.23197331457778747,
+        "margine_minimo": 0.005360354222581409,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       }
+      },
+      {
+       "k": 2,
+       "riferimenti": 4,
+       "vicino": {
+        "n": 52,
+        "giuste": 52,
+        "accuratezza": 100,
+        "margine_mediano": 0.2641344721120001,
+        "margine_minimo": 0.03837299915399883,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 39
+         }
+        }
+       },
+       "prototipo": {
+        "n": 52,
+        "giuste": 52,
+        "accuratezza": 100,
+        "margine_mediano": 0.2701019686208307,
+        "margine_minimo": 0.0056429950109294635,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 39
+         }
+        }
+       }
+      },
+      {
+       "k": 3,
+       "riferimenti": 6,
+       "vicino": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.22875944704300055,
+        "margine_minimo": 0.1499366607870003,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       },
+       "prototipo": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.2547737140250114,
+        "margine_minimo": 0.13042862857712656,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       }
+      },
+      {
+       "k": 5,
+       "riferimenti": 10,
+       "vicino": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.2345165625229994,
+        "margine_minimo": 0.14154615633300083,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       },
+       "prototipo": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.24313608649391488,
+        "margine_minimo": 0.09587835424207813,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       }
+      },
+      {
+       "k": 8,
+       "riferimenti": 16,
+       "vicino": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.27469592267499987,
+        "margine_minimo": 0.1907244518390001,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       },
+       "prototipo": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.28520738126141454,
+        "margine_minimo": 0.21589340059822493,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       }
+      }
+     ],
+     "somiglianza_media": {
+      "stesso_luogo": {
+       "casa-balduini": 0.7938385027019288,
+       "palazzo-geremia": 0.8106271068440732
+      },
+      "luoghi_diversi": {
+       "casa-balduini / palazzo-geremia": 0.5612534411702806
+      }
+     },
+     "soglie": {
+      "nota": "Provvisorie: calibrate solo sulle foto di riferimento (prova a blocchi), senza foto di altri luoghi.",
+      "somiglianza_giuste": {
+       "minimo": 0.6795001181140007,
+       "p5": 0.8279996436910007,
+       "mediana": 0.8952057632489997
+      },
+      "riconosciuto_da": 0.82,
+      "nessuno_sotto": 0.54,
+      "margine_minimo": 0.05
+     }
+    }
+   }
+  },
+  "int8": {
+   "ms_per_foto_mediana": 235.5,
+   "varianti": {
+    "cls": {
+     "una_alla_volta": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.40577221300099975,
+       "margine_minimo": 0.19012775117100034,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.375985627317244,
+       "margine_minimo": 0.07330592768949296,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "a_blocchi": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.33172791463400014,
+       "margine_minimo": 0.10315502194199988,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.3586182684290017,
+       "margine_minimo": 0.07527301505270306,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "poche_foto": [
+      {
+       "k": 1,
+       "riferimenti": 2,
+       "vicino": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.3225848044215,
+        "margine_minimo": 0.011834208956999603,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       },
+       "prototipo": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.3225848204820233,
+        "margine_minimo": 0.011834171176880348,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       }
+      },
+      {
+       "k": 2,
+       "riferimenti": 4,
+       "vicino": {
+        "n": 52,
+        "giuste": 51,
+        "accuratezza": 98.1,
+        "margine_mediano": 0.3750612964500002,
+        "margine_minimo": 0.007809363280999293,
+        "errori": [
+         "palazzo-geremia/IMG_0465.JPEG"
+        ],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 38
+         }
+        }
+       },
+       "prototipo": {
+        "n": 52,
+        "giuste": 51,
+        "accuratezza": 98.1,
+        "margine_mediano": 0.3532157401140555,
+        "margine_minimo": 0.03008437758964,
+        "errori": [
+         "palazzo-geremia/IMG_0465.JPEG"
+        ],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 38
+         }
+        }
+       }
+      },
+      {
+       "k": 3,
+       "riferimenti": 6,
+       "vicino": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.2908709985824999,
+        "margine_minimo": 0.14193254897999996,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       },
+       "prototipo": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.3279276646993802,
+        "margine_minimo": 0.14063476554719323,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       }
+      },
+      {
+       "k": 5,
+       "riferimenti": 10,
+       "vicino": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.30323309980949953,
+        "margine_minimo": 0.15849760356299936,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       },
+       "prototipo": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.3266997399151103,
+        "margine_minimo": 0.1625970466447071,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       }
+      },
+      {
+       "k": 8,
+       "riferimenti": 16,
+       "vicino": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.3591526922939994,
+        "margine_minimo": 0.24525615571400006,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       },
+       "prototipo": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.39003657171521927,
+        "margine_minimo": 0.30201005020047444,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       }
+      }
+     ],
+     "somiglianza_media": {
+      "stesso_luogo": {
+       "casa-balduini": 0.7172023522959369,
+       "palazzo-geremia": 0.7395850790239313
+      },
+      "luoghi_diversi": {
+       "casa-balduini / palazzo-geremia": 0.41509441940688224
+      }
+     },
+     "soglie": {
+      "nota": "Provvisorie: calibrate solo sulle foto di riferimento (prova a blocchi), senza foto di altri luoghi.",
+      "somiglianza_giuste": {
+       "minimo": 0.5891039465419998,
+       "p5": 0.7727791271170008,
+       "mediana": 0.852893636266
+      },
+      "riconosciuto_da": 0.77,
+      "nessuno_sotto": 0.47,
+      "margine_minimo": 0.05
+     },
+     "dettagli_blocchi": [
+      {
+       "file": "casa-balduini/IMG_0297.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8418588797979998,
+        "margine": 0.22400200900499978,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.783991912620763,
+        "margine": 0.3584704228437959,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8418588797979998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.617856870793
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "casa-balduini/IMG_0298.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8306431066299996,
+        "margine": 0.20820567604200002,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7795889281326228,
+        "margine": 0.35370191359728353,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8306431066299996
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6224374305879996
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "casa-balduini/IMG_0299.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8313314155799998,
+        "margine": 0.21225041421300006,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7628853838263975,
+        "margine": 0.32649819365663685,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8313314155799998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6190810013669997
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "casa-balduini/IMG_0300.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8316897196120002,
+        "margine": 0.20666294349000058,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7725777011034448,
+        "margine": 0.3195346105904494,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8316897196120002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6250267761219996
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0421.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8849349462009999,
+        "margine": 0.33643196443,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8424921498364325,
+        "margine": 0.3319018931304345,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5485029817709999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8849349462009999
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0422.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8628823602219999,
+        "margine": 0.32800713440300033,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8626843211746851,
+        "margine": 0.3675701986309064,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5348752258189996
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8628823602219999
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0423.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8585921976099999,
+        "margine": 0.3071476956650001,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8637334312815871,
+        "margine": 0.34236779968606257,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5514445019449998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8585921976099999
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0424.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8525531523970001,
+        "margine": 0.3177158045180004,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8665942331388937,
+        "margine": 0.34045857869856877,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5348373478789997
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8525531523970001
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0425.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.840294714602,
+        "margine": 0.3240387620370001,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8355339812091341,
+        "margine": 0.339646454404763,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5162559525649999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.840294714602
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0426.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8569663800850005,
+        "margine": 0.32013101274500033,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8487632566989176,
+        "margine": 0.32513779435559576,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5368353673400001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8569663800850005
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0427.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8305735794240001,
+        "margine": 0.2963671918990003,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8172690182056377,
+        "margine": 0.292160780149453,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5342063875249998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8305735794240001
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0428.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8702266873430007,
+        "margine": 0.2890520481060005,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7853868188128882,
+        "margine": 0.2135240108166715,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5811746392370002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8702266873430007
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "palazzo-geremia/IMG_0429.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8660678125460008,
+        "margine": 0.3065841311560006,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.80769573919075,
+        "margine": 0.2524763263912154,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5594836813900003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8660678125460008
+        }
+       ],
+       "blocco": 1,
+       "riferimenti": 55
+      },
+      {
+       "file": "casa-balduini/IMG_0301.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.946197154582,
+        "margine": 0.34279935083400026,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8223455175670782,
+        "margine": 0.365585775496651,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.946197154582
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6033978037479998
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0302.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.9199104581110003,
+        "margine": 0.3174337524500005,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8169735772643211,
+        "margine": 0.3540706434834849,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.9199104581110003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6024767056609998
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0303.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.783246971445,
+        "margine": 0.28729178472100014,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7626185828259812,
+        "margine": 0.32135203681165536,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.783246971445
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.49595518672399985
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0304.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8304422950229999,
+        "margine": 0.34708980522499977,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.809192943241901,
+        "margine": 0.362577442578115,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8304422950229999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.48335248979800016
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0305.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8613793722990006,
+        "margine": 0.30524388457900076,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.841850043120904,
+        "margine": 0.32698090084588327,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8613793722990006
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5561354877199999
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0430.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9478748195629999,
+        "margine": 0.3319277572630003,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8691334248393132,
+        "margine": 0.28343024967296593,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.6159470622999996
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9478748195629999
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0431.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9720427063389995,
+        "margine": 0.41260549392599966,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8917222869668746,
+        "margine": 0.3324001398376969,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5594372124129998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9720427063389995
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0432.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8721124012289999,
+        "margine": 0.41836906661599965,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8477667257121881,
+        "margine": 0.4641838772551566,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.45374333461300026
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8721124012289999
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0433.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.853234120135,
+        "margine": 0.4427836701559999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.841043524665029,
+        "margine": 0.4868327839379684,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4104504499790001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.853234120135
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0434.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8368549850219991,
+        "margine": 0.4180990127479988,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8292902704648827,
+        "margine": 0.45146558488316896,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.41875597227400024
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8368549850219991
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0435.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8213346489050001,
+        "margine": 0.40958495332599987,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8264296841848587,
+        "margine": 0.46280925208114937,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4117496955790002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8213346489050001
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0436.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8331187492819992,
+        "margine": 0.31677311335899894,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8950612800323351,
+        "margine": 0.3994576471068583,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5163456359230003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8331187492819992
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0437.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9063467862540006,
+        "margine": 0.4288037328910004,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8883455595964126,
+        "margine": 0.445516257541896,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4775430533630002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9063467862540006
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0438.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9206430428799999,
+        "margine": 0.45789333046599995,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.891448073389121,
+        "margine": 0.43510507234894474,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4627497124139999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9206430428799999
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0439.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9237220585620004,
+        "margine": 0.4589509517870003,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8766943762260276,
+        "margine": 0.40492232338643813,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4647711067750001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9237220585620004
+        }
+       ],
+       "blocco": 2,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0306.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.805982960955,
+        "margine": 0.3351232458819999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.79672083953417,
+        "margine": 0.3584942666803295,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.805982960955
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.4708597150730001
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "casa-balduini/IMG_0307.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7979492212259998,
+        "margine": 0.282350467824,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8336493643962768,
+        "margine": 0.3718766388960498,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.7979492212259998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5155987534019998
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "casa-balduini/IMG_0308.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7727791271170008,
+        "margine": 0.22879776716700095,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8080883341907286,
+        "margine": 0.33670495774579506,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.7727791271170008
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5439813599499999
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "casa-balduini/IMG_0309.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8778529414120001,
+        "margine": 0.33267408956900046,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7889234703182635,
+        "margine": 0.3174732133544978,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8778529414120001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5451788518429996
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0440.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.843419373404,
+        "margine": 0.3305640753659995,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8553356151920573,
+        "margine": 0.330059479937415,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5128552980380005
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.843419373404
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0441.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8620262805160002,
+        "margine": 0.2704907700350003,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.857051968916687,
+        "margine": 0.22488461996278486,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5915355104809998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8620262805160002
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0442.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8702266873430007,
+        "margine": 0.24519991122100104,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8553755341108579,
+        "margine": 0.20028552020220602,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.6250267761219996
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8702266873430007
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0443.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8619232985619996,
+        "margine": 0.4002725836239996,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8566204932942888,
+        "margine": 0.37980429815175437,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.461650714938
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8619232985619996
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0444.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8895020936059997,
+        "margine": 0.40109774675300014,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8650211441328345,
+        "margine": 0.3886269112087046,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4884043468529996
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8895020936059997
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0445.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8647818893489996,
+        "margine": 0.45297953582599954,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.809348449324092,
+        "margine": 0.4604357707500037,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.41180235352300004
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8647818893489996
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0446.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8721124012289999,
+        "margine": 0.40970204143800015,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7905088660314671,
+        "margine": 0.3953106089564428,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.46241035979099976
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8721124012289999
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0447.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8565002166199999,
+        "margine": 0.40994428447899994,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8382073779512229,
+        "margine": 0.4204883130997096,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4465559321409999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8565002166199999
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0448.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8322110173749999,
+        "margine": 0.4619045729759998,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7785237454605007,
+        "margine": 0.41849247733644307,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.3703064443990001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8322110173749999
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "palazzo-geremia/IMG_0449.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8485097428280002,
+        "margine": 0.45695889259500067,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7959531690289937,
+        "margine": 0.4144972658643846,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.3915508502329995
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8485097428280002
+        }
+       ],
+       "blocco": 3,
+       "riferimenti": 50
+      },
+      {
+       "file": "casa-balduini/IMG_0310.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8244369296449997,
+        "margine": 0.3023595032609995,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7877944476449764,
+        "margine": 0.3820332697641168,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8244369296449997
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5220774263840002
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0311.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8418588797979998,
+        "margine": 0.2606842405609996,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8065641412129209,
+        "margine": 0.3377422706685147,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8418588797979998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5811746392370002
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0312.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8356315426530003,
+        "margine": 0.2562185816250002,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8109015863085137,
+        "margine": 0.3587422701776738,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8356315426530003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5794129610280001
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0313.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8613793722990006,
+        "margine": 0.3729549524030007,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7902182378157638,
+        "margine": 0.3031052059451873,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8613793722990006
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.48842441989599994
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0314.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7866905524450001,
+        "margine": 0.2794121069109995,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7780452897324391,
+        "margine": 0.3048047150912889,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.7866905524450001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5072784455340006
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0450.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9132542841049999,
+        "margine": 0.47028339090799987,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8817834522909808,
+        "margine": 0.45749722994221903,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.442970893197
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9132542841049999
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0451.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8705873672549991,
+        "margine": 0.3714548476899991,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8489578300794773,
+        "margine": 0.3856212410681452,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.499132519565
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8705873672549991
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0452.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8790245555539997,
+        "margine": 0.354229647303,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8835131280835049,
+        "margine": 0.3653597322497538,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5247949082509997
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8790245555539997
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0453.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8316184513560007,
+        "margine": 0.32842741525600083,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8751228072741463,
+        "margine": 0.42647252654729934,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5031910360999998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8316184513560007
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0454.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8849349462009999,
+        "margine": 0.331528072005,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8489053834875743,
+        "margine": 0.3368784505714566,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5534068741959999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8849349462009999
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0455.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8723046939130005,
+        "margine": 0.3838468733490003,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8091750516155071,
+        "margine": 0.36747214966280145,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.48845782056400017
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8723046939130005
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0456.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8167610717709995,
+        "margine": 0.35553783426899965,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8558363159827558,
+        "margine": 0.4475983852767299,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4612232375019999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8167610717709995
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0457.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8565002166199999,
+        "margine": 0.3899658380239999,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.869528878530492,
+        "margine": 0.4506291113446454,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.46653437859599994
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8565002166199999
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0458.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9172527428720003,
+        "margine": 0.39030220647200053,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9219398117590357,
+        "margine": 0.39945125448946117,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5269505363999998
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9172527428720003
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "palazzo-geremia/IMG_0459.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9458451683460003,
+        "margine": 0.4642759763800004,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.9152561279184718,
+        "margine": 0.436283593043698,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4815691919659999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.9458451683460003
+        }
+       ],
+       "blocco": 4,
+       "riferimenti": 49
+      },
+      {
+       "file": "casa-balduini/IMG_0315.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8220422531729996,
+        "margine": 0.3028504380359994,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7447912170660489,
+        "margine": 0.24254348139212423,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8220422531729996
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5191918151370002
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "casa-balduini/IMG_0316.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8201875229020003,
+        "margine": 0.28218210558900036,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.745647263744433,
+        "margine": 0.22537891011851297,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8201875229020003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5380054173129999
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "casa-balduini/IMG_0317.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8295325750179995,
+        "margine": 0.27069025306699945,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7809700572686077,
+        "margine": 0.2555577195833303,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8295325750179995
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.558842321951
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "casa-balduini/IMG_0318.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8181678201660005,
+        "margine": 0.21554421118900025,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8083682122090288,
+        "margine": 0.2528977750722905,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8181678201660005
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6026236089770003
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "casa-balduini/IMG_0319.JPEG",
+       "vera": "casa-balduini",
+       "vicino": {
+        "classe": "casa-balduini",
+        "punteggio": 0.8192689545060001,
+        "margine": 0.2568181473609996,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "casa-balduini",
+        "punteggio": 0.7682600711192803,
+        "margine": 0.23471257035531867,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.8192689545060001
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5624508071450005
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0460.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.865960473121,
+        "margine": 0.34175266980899965,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8564290332480418,
+        "margine": 0.32860660645122863,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5242078033120003
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.865960473121
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0461.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8638875741000009,
+        "margine": 0.3028062430480014,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8157856875757395,
+        "margine": 0.23053808558642086,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5610813310519995
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8638875741000009
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0462.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8472908164900006,
+        "margine": 0.3748163903400004,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8922321414557532,
+        "margine": 0.4008464098112135,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4724744261500002
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8472908164900006
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0463.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8498319807530009,
+        "margine": 0.3928392891780009,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8774139181344565,
+        "margine": 0.40449682190167024,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.456992691575
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8498319807530009
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0464.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8790245555539997,
+        "margine": 0.37127297203999976,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8909617989047814,
+        "margine": 0.3625817641922654,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.507751583514
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.8790245555539997
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0465.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.5891039465419998,
+        "margine": 0.10456618694199998,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.5561144516638014,
+        "margine": 0.07527301505270306,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.48453775959999984
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.5891039465419998
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0466.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.6471363818919997,
+        "margine": 0.10315502194199988,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.6207009694343123,
+        "margine": 0.12000262658715233,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.5439813599499999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.6471363818919997
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0467.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.794703162101,
+        "margine": 0.38750467663500027,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.8036135007442303,
+        "margine": 0.46464627514801954,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.40719848546599974
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.794703162101
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0468.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7904208564529995,
+        "margine": 0.41081638086999955,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7745717465874093,
+        "margine": 0.4701521663221787,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.379604475583
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.7904208564529995
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      },
+      {
+       "file": "palazzo-geremia/IMG_0469.JPEG",
+       "vera": "palazzo-geremia",
+       "vicino": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7640348347809996,
+        "margine": 0.32416852644599975,
+        "giusta": true
+       },
+       "prototipo": {
+        "classe": "palazzo-geremia",
+        "punteggio": 0.7664643608644415,
+        "margine": 0.41419796110054297,
+        "giusta": true
+       },
+       "classi": [
+        {
+         "classe": "casa-balduini",
+         "vicino": 0.4398663083349999
+        },
+        {
+         "classe": "palazzo-geremia",
+         "vicino": 0.7640348347809996
+        }
+       ],
+       "blocco": 5,
+       "riferimenti": 53
+      }
+     ]
+    },
+    "media": {
+     "una_alla_volta": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.20968639891850033,
+       "margine_minimo": 0.1025863660640004,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.18869420486201277,
+       "margine_minimo": 0.06816526638940257,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "a_blocchi": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.1673918891300002,
+       "margine_minimo": 0.07210709530200021,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.19264583055342088,
+       "margine_minimo": 0.06187040304399838,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "poche_foto": [
+      {
+       "k": 1,
+       "riferimenti": 2,
+       "vicino": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.15637794051149995,
+        "margine_minimo": 0.0030853264599994823,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       },
+       "prototipo": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.1563771398315169,
+        "margine_minimo": 0.0030861538104399733,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       }
+      },
+      {
+       "k": 2,
+       "riferimenti": 4,
+       "vicino": {
+        "n": 52,
+        "giuste": 52,
+        "accuratezza": 100,
+        "margine_mediano": 0.19115477189950075,
+        "margine_minimo": 0.04080894296799975,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 39
+         }
+        }
+       },
+       "prototipo": {
+        "n": 52,
+        "giuste": 52,
+        "accuratezza": 100,
+        "margine_mediano": 0.17796839813882098,
+        "margine_minimo": 0.004589839216145863,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 39
+         }
+        }
+       }
+      },
+      {
+       "k": 3,
+       "riferimenti": 6,
+       "vicino": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.17226737602349979,
+        "margine_minimo": 0.0949253694219987,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       },
+       "prototipo": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.1742424714450877,
+        "margine_minimo": 0.08348527198339162,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       }
+      },
+      {
+       "k": 5,
+       "riferimenti": 10,
+       "vicino": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.16492186494249939,
+        "margine_minimo": 0.07867755157699996,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       },
+       "prototipo": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.15864976211074405,
+        "margine_minimo": 0.02971129567801778,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       }
+      },
+      {
+       "k": 8,
+       "riferimenti": 16,
+       "vicino": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.18510835250899949,
+        "margine_minimo": 0.12578423858499976,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       },
+       "prototipo": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.19967041426644871,
+        "margine_minimo": 0.14647055244120288,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       }
+      }
+     ],
+     "somiglianza_media": {
+      "stesso_luogo": {
+       "casa-balduini": 0.8516869576584861,
+       "palazzo-geremia": 0.8737871628953797
+      },
+      "luoghi_diversi": {
+       "casa-balduini / palazzo-geremia": 0.6895049815354737
+      }
+     },
+     "soglie": {
+      "nota": "Provvisorie: calibrate solo sulle foto di riferimento (prova a blocchi), senza foto di altri luoghi.",
+      "somiglianza_giuste": {
+       "minimo": 0.7842982873759994,
+       "p5": 0.8875647128660004,
+       "mediana": 0.9339656272510001
+      },
+      "riconosciuto_da": 0.88,
+      "nessuno_sotto": 0.62,
+      "margine_minimo": 0.05
+     }
+    },
+    "cls_media": {
+     "una_alla_volta": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.3190674204484994,
+       "margine_minimo": 0.14893319273700079,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.2770501106672089,
+       "margine_minimo": 0.08267240044709001,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "a_blocchi": {
+      "vicino": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.25853883553849966,
+       "margine_minimo": 0.08756980406300074,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      },
+      "prototipo": {
+       "n": 72,
+       "giuste": 72,
+       "accuratezza": 100,
+       "margine_mediano": 0.27119856891593486,
+       "margine_minimo": 0.083932495511716,
+       "errori": [],
+       "per_luogo": {
+        "casa-balduini": {
+         "n": 23,
+         "giuste": 23
+        },
+        "palazzo-geremia": {
+         "n": 49,
+         "giuste": 49
+        }
+       }
+      }
+     },
+     "poche_foto": [
+      {
+       "k": 1,
+       "riferimenti": 2,
+       "vicino": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.24219361465800043,
+        "margine_minimo": 0.02483592888200059,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       },
+       "prototipo": {
+        "n": 62,
+        "giuste": 62,
+        "accuratezza": 100,
+        "margine_mediano": 0.2421937052298997,
+        "margine_minimo": 0.024836243503605804,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 18,
+          "giuste": 18
+         },
+         "palazzo-geremia": {
+          "n": 44,
+          "giuste": 44
+         }
+        }
+       }
+      },
+      {
+       "k": 2,
+       "riferimenti": 4,
+       "vicino": {
+        "n": 52,
+        "giuste": 52,
+        "accuratezza": 100,
+        "margine_mediano": 0.27484877294050036,
+        "margine_minimo": 0.021707414346999965,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 39
+         }
+        }
+       },
+       "prototipo": {
+        "n": 52,
+        "giuste": 51,
+        "accuratezza": 98.1,
+        "margine_mediano": 0.2677258399460533,
+        "margine_minimo": 0.008620015092718702,
+        "errori": [
+         "palazzo-geremia/IMG_0465.JPEG"
+        ],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 13,
+          "giuste": 13
+         },
+         "palazzo-geremia": {
+          "n": 39,
+          "giuste": 38
+         }
+        }
+       }
+      },
+      {
+       "k": 3,
+       "riferimenti": 6,
+       "vicino": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.22591997112749923,
+        "margine_minimo": 0.1330590665789999,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       },
+       "prototipo": {
+        "n": 42,
+        "giuste": 42,
+        "accuratezza": 100,
+        "margine_mediano": 0.24924073926216417,
+        "margine_minimo": 0.12501602001117074,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 8,
+          "giuste": 8
+         },
+         "palazzo-geremia": {
+          "n": 34,
+          "giuste": 34
+         }
+        }
+       }
+      },
+      {
+       "k": 5,
+       "riferimenti": 10,
+       "vicino": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.23493913305549974,
+        "margine_minimo": 0.11858747921800095,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       },
+       "prototipo": {
+        "n": 24,
+        "giuste": 24,
+        "accuratezza": 100,
+        "margine_mediano": 0.23875632519523488,
+        "margine_minimo": 0.09355998439493518,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 24,
+          "giuste": 24
+         }
+        }
+       }
+      },
+      {
+       "k": 8,
+       "riferimenti": 16,
+       "vicino": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.28492351946500005,
+        "margine_minimo": 0.18413004457700088,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       },
+       "prototipo": {
+        "n": 9,
+        "giuste": 9,
+        "accuratezza": 100,
+        "margine_mediano": 0.2911660528820794,
+        "margine_minimo": 0.22124971170585417,
+        "errori": [],
+        "per_luogo": {
+         "casa-balduini": {
+          "n": 0,
+          "giuste": 0
+         },
+         "palazzo-geremia": {
+          "n": 9,
+          "giuste": 9
+         }
+        }
+       }
+      }
+     ],
+     "somiglianza_media": {
+      "stesso_luogo": {
+       "casa-balduini": 0.7844447011176323,
+       "palazzo-geremia": 0.8066860370445283
+      },
+      "luoghi_diversi": {
+       "casa-balduini / palazzo-geremia": 0.5522996788624631
+      }
+     },
+     "soglie": {
+      "nota": "Provvisorie: calibrate solo sulle foto di riferimento (prova a blocchi), senza foto di altri luoghi.",
+      "somiglianza_giuste": {
+       "minimo": 0.6783708082980006,
+       "p5": 0.8258000976850001,
+       "mediana": 0.8918712569840012
+      },
+      "riconosciuto_da": 0.82,
+      "nessuno_sotto": 0.54,
+      "margine_minimo": 0.05
+     }
+    }
+   }
+  }
+ }
+}
