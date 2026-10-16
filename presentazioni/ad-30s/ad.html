@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Discover Tridentum · spot da 30 secondi</title>
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style>
+</head>
+<body>
+<canvas id="c" width="1280" height="720"></canvas>
+<script type="module">
+// Spot da 30 secondi di Discover Tridentum: animazione su canvas, 1280 x 720.
+// Aperta con ?registra=1 si registra da sola in un file WebM (vedi registra.mjs);
+// con ?t=12.5 disegna un solo fotogramma (per controllare l'aspetto); senza parametri gira in ciclo.
+
+const L = 1280, A = 720, DURATA = 30
+const c = document.getElementById('c')
+const x = c.getContext('2d')
+const PET = '#1d5560', PET_CH = '#2a7380', PET_SC = '#0b1a1d', ORO = '#f4d58a', CH = '#f1f6f6'
+const parametri = new URLSearchParams(location.search)
+
+// ---------- Risorse ----------
+const immagine = (src) => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => no(new Error('manca ' + src)); i.src = src })
+const font = new FontFace('Geist', 'url(/font.woff2)', { weight: '100 900' })
+document.fonts.add(await font.load())
+const R = {}
+for (const [nome, src] of Object.entries({
+  duomo: '/storica-duomo.webp', geremia: '/geremia-1.jpg', icona: '/icon.svg',
+  mappa: '/catture/mappa-chiaro.png', scheda: '/catture/scheda-geremia.png', itinerario: '/catture/itinerario.png', gioco: '/catture/gioco.png',
+})) R[nome] = await immagine(src)
+
+// ---------- Utilità ----------
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v))
+const passo = (T, a, b) => clamp((T - a) / (b - a))
+const dolce = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2)
+const uscita = (t) => 1 - Math.pow(1 - t, 3)
+const mix = (a, b, t) => a + (b - a) * t
+
+/** Disegna un'immagine a tutto schermo, con zoom e punto di interesse (cx, cy in 0..1) */
+function copri(img, { zoom = 1, cx = 0.5, cy = 0.5 } = {}) {
+  const s = Math.max(L / img.width, A / img.height) * zoom
+  const w = img.width * s, h = img.height * s
+  const x0 = clamp(L / 2 - cx * w, L - w, 0), y0 = clamp(A / 2 - cy * h, A - h, 0)
+  x.drawImage(img, x0, y0, w, h)
+}
+
+function scritta(s, px, py, { size = 64, peso = 700, col = CH, align = 'left', a = 1, sp = 0, larghezza = 0 } = {}) {
+  if (a <= 0) return
+  let corpo = size
+  x.font = `${peso} ${corpo}px Geist`
+  x.letterSpacing = `${sp}px`
+  while (larghezza && x.measureText(s).width > larghezza && corpo > 16) { corpo -= 2; x.font = `${peso} ${corpo}px Geist` }
+  x.globalAlpha = clamp(a)
+  x.fillStyle = col
+  x.textAlign = align
+  x.textBaseline = 'alphabetic'
+  x.fillText(s, px, py)
+  x.letterSpacing = '0px'
+  x.globalAlpha = 1
+}
+
+/** Riga che compare salendo di qualche pixel, a partire dal momento t0 */
+const comparsa = (T, t0, durata = 0.7) => { const p = uscita(passo(T, t0, t0 + durata)); return { a: p, dy: (1 - p) * 26 } }
+
+function sfondoPetrolio(T, alpha) {
+  if (alpha <= 0) return
+  x.globalAlpha = alpha
+  const g = x.createLinearGradient(0, A, L, 0)
+  g.addColorStop(0, PET_SC); g.addColorStop(1, PET)
+  x.fillStyle = g; x.fillRect(0, 0, L, A)
+  // luci morbide che si muovono piano
+  for (const [bx, by, r, ph, col] of [[240, 140, 340, 0, 'rgba(244,213,138,0.10)'], [1040, 600, 420, 2, 'rgba(42,115,128,0.35)'], [700, 80, 260, 4, 'rgba(244,213,138,0.06)']]) {
+    const ox = Math.sin(T * 0.35 + ph) * 60, oy = Math.cos(T * 0.28 + ph) * 40
+    const rg = x.createRadialGradient(bx + ox, by + oy, 0, bx + ox, by + oy, r)
+    rg.addColorStop(0, col); rg.addColorStop(1, 'rgba(0,0,0,0)')
+    x.fillStyle = rg; x.fillRect(0, 0, L, A)
+  }
+  x.globalAlpha = 1
+}
+
+function ombraBasso(forza = 0.75, altezza = 420) {
+  const g = x.createLinearGradient(0, A - altezza, 0, A)
+  g.addColorStop(0, 'rgba(6,14,16,0)'); g.addColorStop(1, `rgba(6,14,16,${forza})`)
+  x.fillStyle = g; x.fillRect(0, A - altezza, L, altezza)
+}
+
+/** Telefono con la schermata del sito dentro. cx = centro orizzontale, alto = altezza dello schermo */
+function telefono(img, cx, { a = 1, dx = 0, zoom = 1, alto = 620, fuoco = 0 } = {}) {
+  if (a <= 0) return
+  const w = (alto * 390) / 844, b = 11
+  const px = cx - w / 2 + dx, py = (A - alto) / 2
+  x.save()
+  x.globalAlpha = clamp(a)
+  x.shadowColor = 'rgba(0,0,0,0.5)'; x.shadowBlur = 60; x.shadowOffsetY = 26
+  x.fillStyle = '#0a0f10'
+  x.beginPath(); x.roundRect(px - b, py - b, w + 2 * b, alto + 2 * b, 46); x.fill()
+  x.shadowColor = 'transparent'
+  x.strokeStyle = 'rgba(255,255,255,0.14)'; x.lineWidth = 2
+  x.beginPath(); x.roundRect(px - b + 1, py - b + 1, w + 2 * b - 2, alto + 2 * b - 2, 45); x.stroke()
+  x.beginPath(); x.roundRect(px, py, w, alto, 36); x.clip()
+  const sw = img.width / zoom, sh = img.height / zoom
+  x.drawImage(img, (img.width - sw) / 2, clamp(fuoco * (img.height - sh), 0, img.height - sh), sw, sh, px, py, w, alto)
+  x.restore()
+}
+
+// ---------- Scene ----------
+function scenaStorica(T) {
+  // 0 - 4,6 s: foto storica del Duomo che si avvicina
+  const a = 1 - passo(T, 4.0, 4.6)
+  if (a <= 0) return
+  x.globalAlpha = a
+  copri(R.duomo, { zoom: mix(1.04, 1.22, passo(T, 0, 4.6)), cx: 0.45, cy: 0.5 })
+  x.fillStyle = 'rgba(6,14,16,0.38)'; x.fillRect(0, 0, L, A)
+  ombraBasso(0.6, 520)
+  x.globalAlpha = 1
+  const u1 = comparsa(T, 0.5), u2 = comparsa(T, 1.4)
+  scritta('Trento ha una storia', 90, 470 + u1.dy, { size: 78, a: u1.a * a, larghezza: 1100 })
+  scritta('che non trovi su Google.', 90, 560 + u2.dy, { size: 78, a: u2.a * a, col: ORO, larghezza: 1100 })
+  scritta('Cattedrale di San Vigilio, 1944–1946', 90, 668, { size: 20, peso: 500, a: passo(T, 2.4, 3.0) * a * 0.8, sp: 1 })
+}
+
+function scenaAffresco(T) {
+  // 4 - 9 s: Palazzo Geremia, scorrimento verso il basso
+  const a = passo(T, 4.0, 4.6) * (1 - passo(T, 8.4, 9.0))
+  if (a <= 0) return
+  x.globalAlpha = a
+  copri(R.geremia, { zoom: mix(1.0, 1.1, passo(T, 4, 9)), cx: 0.5, cy: mix(0.28, 0.6, dolce(passo(T, 4.2, 8.8))) })
+  ombraBasso(0.7, 430)
+  x.globalAlpha = 1
+  const u = comparsa(T, 5.0, 0.8)
+  scritta('Basta alzare gli occhi.', 90, 640 + u.dy, { size: 80, a: u.a * a, larghezza: 1100 })
+}
+
+/** Sezione con il telefono: un blocco di testo da una parte, il telefono dall'altra */
+function scenaTelefono(T, s, e, { img, lato, kicker, righe, sub, zoom = 1, fuoco = 0 }) {
+  if (T < s || T > e) return
+  const entra = uscita(passo(T, s, s + 0.8)), esce = dolce(passo(T, e - 0.55, e))
+  const a = entra * (1 - esce)
+  const verso = lato === 'dx' ? 1 : -1
+  const cx = lato === 'dx' ? 960 : 330
+  const dx = (1 - entra) * 160 * verso + esce * -90 * verso
+  telefono(img, cx, { a, dx, zoom: mix(zoom, zoom * 1.05, passo(T, s, e)), fuoco })
+  const tx = lato === 'dx' ? 90 : 600, larghezza = lato === 'dx' ? 700 : 620
+  const dxt = (1 - entra) * -50 * verso + esce * 50 * verso
+  const k = comparsa(T, s + 0.25)
+  scritta(kicker, tx + dxt, 250 + k.dy, { size: 22, peso: 700, col: ORO, sp: 5, a: k.a * (1 - esce) })
+  righe.forEach((r, i) => {
+    const u = comparsa(T, s + 0.45 + i * 0.18)
+    scritta(r, tx + dxt, 332 + i * 76 + u.dy, { size: 64, a: u.a * (1 - esce), larghezza })
+  })
+  const u = comparsa(T, s + 0.45 + righe.length * 0.18 + 0.15)
+  scritta(sub, tx + dxt, 332 + righe.length * 76 + 26 + u.dy, { size: 26, peso: 400, col: 'rgba(241,246,246,0.82)', a: u.a * (1 - esce), larghezza })
+}
+
+function scenaFinale(T) {
+  const s = 27.0
+  if (T < s) return
+  const f = passo(T, s, s + 0.9)
+  const i = uscita(passo(T, s + 0.1, s + 0.9))
+  const lato = mix(80, 132, dolce(i))
+  x.globalAlpha = i
+  x.drawImage(R.icona, L / 2 - lato / 2, 150 - (1 - i) * -30 - lato / 2 + 60, lato, lato)
+  x.globalAlpha = 1
+  const t1 = comparsa(T, s + 0.5, 0.8), t2 = comparsa(T, s + 0.9, 0.8), t3 = comparsa(T, s + 1.3, 0.8), t4 = comparsa(T, s + 1.6, 0.8)
+  scritta('Discover Tridentum', L / 2, 360 + t1.dy, { size: 88, align: 'center', a: t1.a })
+  scritta('La Trento che non trovi su Google.', L / 2, 424 + t2.dy, { size: 36, peso: 500, col: ORO, align: 'center', a: t2.a })
+  scritta('Italiano  ·  English  ·  Deutsch', L / 2, 478 + t3.dy, { size: 22, peso: 500, col: 'rgba(241,246,246,0.75)', align: 'center', a: t3.a, sp: 1.5 })
+  // indirizzo del sito
+  x.globalAlpha = t4.a
+  const testo = 'discover-tridentum.duckdns.org'
+  x.font = '600 30px Geist'
+  const w = x.measureText(testo).width + 64
+  x.strokeStyle = ORO; x.lineWidth = 2
+  x.beginPath(); x.roundRect(L / 2 - w / 2, 524 + t4.dy, w, 64, 32); x.stroke()
+  x.globalAlpha = 1
+  scritta(testo, L / 2, 566 + t4.dy, { size: 30, peso: 600, align: 'center', a: t4.a })
+  scritta('Mappe © Google · Foto storiche di pubblico dominio', L / 2, 690, { size: 16, peso: 400, col: 'rgba(241,246,246,0.55)', align: 'center', a: passo(T, s + 1.8, s + 2.4) })
+  void f
+}
+
+function disegna(T) {
+  x.fillStyle = '#000'; x.fillRect(0, 0, L, A)
+  // le foto stanno sotto, lo sfondo petrolio entra mentre la foto di Palazzo Geremia esce
+  scenaStorica(T)
+  scenaAffresco(T)
+  sfondoPetrolio(T, passo(T, 8.2, 9.0) * (T >= 8.2 ? 1 : 0))
+  // l'ordine conta: sotto lo sfondo c'è la foto che sta uscendo, quindi la ridisegno prima dello sfondo pieno
+  scenaTelefono(T, 8.6, 13.4, { img: R.mappa, lato: 'dx', kicker: 'LA MAPPA', righe: ['Tutti i luoghi,', 'sulla mappa.'], sub: 'Affreschi, palazzi, tradizioni e sapori del centro.' })
+  scenaTelefono(T, 13.2, 18.0, { img: R.scheda, lato: 'sx', kicker: 'LE SCHEDE', righe: ['Ogni luogo racconta', 'la sua storia.'], sub: 'Con epoca, fonti e come arrivarci.' })
+  scenaTelefono(T, 17.8, 22.6, { img: R.itinerario, lato: 'dx', kicker: 'GLI ITINERARI', righe: ['Percorsi su misura', 'per il tempo che hai.'], sub: 'Da mezz’ora a mezza giornata, a piedi.' })
+  scenaTelefono(T, 22.4, 27.2, { img: R.gioco, lato: 'sx', kicker: 'DOV’ERA?', righe: ['Una foto storica.', 'Dove è stata scattata?'], sub: 'Trova il punto sulla mappa e sfida chi conosce la città.', fuoco: 0.0 })
+  scenaFinale(T)
+}
+
+// ---------- Colonna sonora ----------
+// Musica originale generata qui, senza campioni né brani di altri: pad, basso, arpeggio, un battito leggero,
+// effetti di passaggio e una campana sul finale. Segue le scene: 104 battiti al minuto, una battuta ogni 2,3 s,
+// e il cambio di accordo cade sull'inizio di ogni scena (4,0 · 8,6 · 13,2 · 17,8 · 22,4 · 27,0 s).
+async function costruisciAudio() {
+  const SR = 44100
+  const oc = new OfflineAudioContext(2, SR * DURATA, SR)
+  const seme = (s) => () => { s |= 0; s = (s + 0x6d2b79f5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296 }
+  const caso = seme(7)
+  const mf = (m) => 440 * Math.pow(2, (m - 69) / 12)
+  const BEAT = 0.575, BATTUTA = BEAT * 4, T0 = 8.6
+
+  const master = oc.createGain()
+  master.gain.setValueAtTime(0, 0); master.gain.linearRampToValueAtTime(0.9, 0.6)
+  master.gain.setValueAtTime(0.9, DURATA - 0.9); master.gain.linearRampToValueAtTime(0, DURATA - 0.05)
+  const comp = oc.createDynamicsCompressor()
+  comp.threshold.value = -16; comp.knee.value = 12; comp.ratio.value = 3; comp.attack.value = 0.01; comp.release.value = 0.25
+  master.connect(comp); comp.connect(oc.destination)
+
+  // riverbero (risposta all'impulso sintetica) e eco
+  const ir = oc.createBuffer(2, SR * 2.8, SR)
+  for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); let lp = 0; for (let i = 0; i < d.length; i++) { lp += ((caso() * 2 - 1) * Math.pow(1 - i / d.length, 3.2) - lp) * 0.35; d[i] = lp * 0.9 } }
+  const riverbero = oc.createConvolver(); riverbero.buffer = ir
+  const sendRiv = oc.createGain(); sendRiv.connect(riverbero)
+  const retRiv = oc.createGain(); retRiv.gain.value = 0.42; riverbero.connect(retRiv); retRiv.connect(master)
+  const eco = oc.createDelay(1); eco.delayTime.value = BEAT * 0.75
+  const ecoFb = oc.createGain(); ecoFb.gain.value = 0.36
+  const ecoLp = oc.createBiquadFilter(); ecoLp.type = 'lowpass'; ecoLp.frequency.value = 2800
+  const sendEco = oc.createGain(); sendEco.connect(eco); eco.connect(ecoLp); ecoLp.connect(ecoFb); ecoFb.connect(eco)
+  const ecoOut = oc.createGain(); ecoOut.gain.value = 0.55; ecoLp.connect(ecoOut); ecoOut.connect(master); ecoOut.connect(sendRiv)
+
+  const rumore = oc.createBuffer(1, SR * 2, SR)
+  { const d = rumore.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = caso() * 2 - 1 }
+  const uscita = (nodo, { pan = 0, riv = 0, eco: e = 0 } = {}) => {
+    const p = oc.createStereoPanner(); p.pan.value = pan
+    nodo.connect(p); p.connect(master)
+    if (riv) { const g = oc.createGain(); g.gain.value = riv; p.connect(g); g.connect(sendRiv) }
+    if (e) { const g = oc.createGain(); g.gain.value = e; p.connect(g); g.connect(sendEco) }
+  }
+
+  const pad = (m, t, dur, gain, pan) => {
+    const f = mf(m)
+    const filtro = oc.createBiquadFilter(); filtro.type = 'lowpass'; filtro.Q.value = 0.8
+    filtro.frequency.setValueAtTime(520, t); filtro.frequency.linearRampToValueAtTime(1500, t + dur * 0.7)
+    for (const det of [-7, 0, 7]) {
+      const o = oc.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = det
+      const og = oc.createGain(); og.gain.value = 0.3; o.connect(og); og.connect(filtro); o.start(t); o.stop(t + dur + 1.2)
+    }
+    const g = oc.createGain()
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(gain, t + 0.7); g.gain.setValueAtTime(gain, t + dur); g.gain.linearRampToValueAtTime(0, t + dur + 1)
+    filtro.connect(g); uscita(g, { pan, riv: 0.55 })
+  }
+  const pizzica = (m, t, gain, pan, lungo = 0.55) => {
+    const f = mf(m)
+    const lp = oc.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3800
+    const o1 = oc.createOscillator(); o1.type = 'triangle'; o1.frequency.value = f
+    const o2 = oc.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 2
+    const g2 = oc.createGain(); g2.gain.value = 0.35
+    o1.connect(lp); o2.connect(g2); g2.connect(lp)
+    const g = oc.createGain()
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(gain, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + lungo)
+    lp.connect(g); uscita(g, { pan, riv: 0.35, eco: 0.5 })
+    o1.start(t); o2.start(t); o1.stop(t + lungo + 0.1); o2.stop(t + lungo + 0.1)
+  }
+  const basso = (m, t, dur, gain) => {
+    const f = mf(m)
+    const lp = oc.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 420
+    const o1 = oc.createOscillator(); o1.type = 'sine'; o1.frequency.value = f
+    const o2 = oc.createOscillator(); o2.type = 'triangle'; o2.frequency.value = f
+    const g2 = oc.createGain(); g2.gain.value = 0.3
+    o1.connect(lp); o2.connect(g2); g2.connect(lp)
+    const g = oc.createGain()
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(gain, t + 0.025); g.gain.setValueAtTime(gain, t + dur * 0.6); g.gain.linearRampToValueAtTime(0, t + dur)
+    lp.connect(g); uscita(g)
+    o1.start(t); o2.start(t); o1.stop(t + dur + 0.05); o2.stop(t + dur + 0.05)
+  }
+  const cassa = (t, gain) => {
+    const o = oc.createOscillator(); o.type = 'sine'
+    o.frequency.setValueAtTime(135, t); o.frequency.exponentialRampToValueAtTime(46, t + 0.11)
+    const g = oc.createGain(); g.gain.setValueAtTime(gain, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.26)
+    o.connect(g); uscita(g); o.start(t); o.stop(t + 0.3)
+  }
+  const colpo = (t, gain, lunghezza = 0.035, alto = 7000) => {
+    const s = oc.createBufferSource(); s.buffer = rumore; s.loopStart = 0
+    const hp = oc.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = alto
+    const g = oc.createGain(); g.gain.setValueAtTime(gain, t); g.gain.exponentialRampToValueAtTime(0.0001, t + lunghezza)
+    s.connect(hp); hp.connect(g); uscita(g, { pan: (caso() - 0.5) * 0.6 }); s.start(t, caso() * 1.5); s.stop(t + lunghezza + 0.02)
+  }
+  const sfuma = (t0, t1, gain) => {
+    const s = oc.createBufferSource(); s.buffer = rumore; s.loop = true
+    const bp = oc.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.4
+    bp.frequency.setValueAtTime(300, t0); bp.frequency.exponentialRampToValueAtTime(5200, t1)
+    const g = oc.createGain(); g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(gain, t1 - 0.04); g.gain.linearRampToValueAtTime(0, t1 + 0.12)
+    s.connect(bp); bp.connect(g); uscita(g, { riv: 0.5 }); s.start(t0); s.stop(t1 + 0.2)
+  }
+  const boom = (t, gain) => {
+    const o = oc.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(70, t); o.frequency.exponentialRampToValueAtTime(40, t + 1)
+    const g = oc.createGain(); g.gain.setValueAtTime(gain, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6)
+    o.connect(g); uscita(g, { riv: 0.3 }); o.start(t); o.stop(t + 1.7)
+  }
+  const campana = (m, t, gain, pan = 0) => {
+    const f = mf(m)
+    const g = oc.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(gain, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 3.2)
+    const mod = oc.createOscillator(); mod.frequency.value = f * 3.01
+    const mg = oc.createGain(); mg.gain.setValueAtTime(f * 2.2, t); mg.gain.exponentialRampToValueAtTime(1, t + 1.6)
+    const o = oc.createOscillator(); o.frequency.value = f
+    const o2 = oc.createOscillator(); o2.frequency.value = f * 2; const g2 = oc.createGain(); g2.gain.value = 0.25
+    mod.connect(mg); mg.connect(o.frequency); o.connect(g); o2.connect(g2); g2.connect(g)
+    uscita(g, { pan, riv: 0.8, eco: 0.3 })
+    for (const n of [mod, o, o2]) { n.start(t); n.stop(t + 3.3) }
+  }
+
+  // accordi (note MIDI): pad, arpeggio, basso
+  const D = { pad: [50, 57, 62, 66], arp: [62, 66, 69, 74, 69, 66], basso: 38 }
+  const Am = { pad: [52, 57, 61, 64], arp: [61, 64, 69, 73, 69, 64], basso: 45 }
+  const Bm = { pad: [54, 59, 62, 66], arp: [59, 62, 66, 71, 66, 62], basso: 47 }
+  const G = { pad: [50, 55, 59, 62], arp: [59, 62, 67, 71, 67, 62], basso: 43 }
+  const battute = [[T0 - 4 * BATTUTA, Bm], [T0 - 3 * BATTUTA, G], [T0 - 2 * BATTUTA, D], [T0 - BATTUTA, Am], [T0, D], [T0 + BATTUTA, Am], [T0 + 2 * BATTUTA, Bm], [T0 + 3 * BATTUTA, G], [T0 + 4 * BATTUTA, D], [T0 + 5 * BATTUTA, Am], [T0 + 6 * BATTUTA, Bm], [T0 + 7 * BATTUTA, G], [T0 + 8 * BATTUTA, D]]
+  const FINALE = T0 + 8 * BATTUTA // 27,0 s
+  battute.forEach(([t, acc], i) => {
+    const inizio = Math.max(0, t), fine = i === battute.length - 1 ? DURATA : t + BATTUTA + 0.3
+    const livello = t < 4 ? 0.07 : t < T0 ? 0.085 : t < FINALE ? 0.1 : 0.115
+    acc.pad.forEach((m, k) => pad(m, inizio, fine - inizio, livello, (k - 1.5) * 0.25))
+    basso(acc.basso, inizio, fine - inizio - 0.2, t < 4 ? 0.1 : 0.17)
+  })
+
+  // 0 - 4,6 s: foto d'epoca, con il fruscio di una vecchia pellicola
+  for (let i = 0; i < 150; i++) { const t = caso() * 4.6; colpo(t, (0.012 + caso() * 0.03) * (1 - t / 4.6), 0.006 + caso() * 0.01, 2500 + caso() * 3000) }
+  // arpeggio: da 4,0 s a note intere, poi a ottavi
+  const passiArp = [0, 1, 2, 3, 4, 3, 2, 1]
+  for (const [t, acc] of battute) {
+    if (t < 4 || t >= FINALE) continue
+    const ottavi = t >= T0
+    const n = ottavi ? 8 : 4
+    for (let j = 0; j < n; j++) {
+      const tt = t + j * (ottavi ? BEAT / 2 : BEAT)
+      if (tt > FINALE - 0.6) break
+      pizzica(acc.arp[passiArp[ottavi ? j : j * 2] % acc.arp.length], tt, ottavi ? 0.1 : 0.085, j % 2 ? 0.35 : -0.35)
+    }
+  }
+  // battito leggero e basso a pulsazioni nella parte con il telefono
+  for (let b = 0; T0 + b * BEAT < FINALE - 0.55; b++) {
+    const t = T0 + b * BEAT
+    cassa(t, b % 4 === 0 ? 0.3 : b % 2 === 0 ? 0.2 : 0.14)
+    colpo(t + BEAT / 2, 0.035, 0.03)
+    if (b % 4 === 2) colpo(t, 0.05, 0.12, 4500)
+    const acc = battute.filter(([tb]) => tb <= t + 0.001).pop()[1]
+    if (b % 2 === 1) basso(acc.basso + 12, t + BEAT / 2, 0.3, 0.07)
+  }
+  // passaggi tra le scene
+  sfuma(3.0, 4.0, 0.16); boom(4.0, 0.18)
+  sfuma(7.3, T0, 0.22); boom(T0, 0.3); colpo(T0, 0.12, 0.4, 3000)
+  for (const t of [T0 + BATTUTA * 2, T0 + BATTUTA * 4, T0 + BATTUTA * 6]) { sfuma(t - 0.45, t, 0.1) }
+  sfuma(FINALE - 0.8, FINALE, 0.2)
+  // finale: campana, boom e arpeggio lento sull'accordo di re
+  boom(FINALE, 0.32)
+  campana(74, FINALE, 0.2, -0.1); campana(81, FINALE + BEAT * 2, 0.12, 0.2); campana(78, FINALE + BEAT * 3, 0.09, -0.2)
+  ;[62, 66, 69, 74].forEach((m, j) => pizzica(m, FINALE + 0.1 + j * BEAT, 0.09, j % 2 ? 0.3 : -0.3, 1.1))
+
+  const buffer = await oc.startRendering()
+  // livello: picco a -4,4 dB, per lasciare spazio al parlato o a un altro mix
+  let picco = 0
+  for (let ch = 0; ch < 2; ch++) { const d = buffer.getChannelData(ch); for (let i = 0; i < d.length; i++) picco = Math.max(picco, Math.abs(d[i])) }
+  const k = 0.6 / picco
+  for (let ch = 0; ch < 2; ch++) { const d = buffer.getChannelData(ch); for (let i = 0; i < d.length; i++) d[i] *= k }
+  const rms = []
+  for (let s = 0; s < DURATA; s++) {
+    let somma = 0
+    for (let ch = 0; ch < 2; ch++) { const d = buffer.getChannelData(ch); for (let i = s * SR; i < (s + 1) * SR; i++) somma += d[i] * d[i] }
+    rms.push(Math.round(20 * Math.log10(Math.sqrt(somma / (2 * SR)) + 1e-9) * 10) / 10)
+  }
+  window.__audioInfo = { picco_dB: Math.round(20 * Math.log10(0.6) * 10) / 10, guadagno_applicato: Math.round(k * 100) / 100, rms_per_secondo_dB: rms }
+  return buffer
+}
+
+function wavDa(buffer) {
+  const n = buffer.length, ch = buffer.numberOfChannels, dati = new DataView(new ArrayBuffer(44 + n * ch * 2))
+  const testo = (o, s) => [...s].forEach((c, i) => dati.setUint8(o + i, c.charCodeAt(0)))
+  testo(0, 'RIFF'); dati.setUint32(4, 36 + n * ch * 2, true); testo(8, 'WAVEfmt '); dati.setUint32(16, 16, true); dati.setUint16(20, 1, true); dati.setUint16(22, ch, true)
+  dati.setUint32(24, buffer.sampleRate, true); dati.setUint32(28, buffer.sampleRate * ch * 2, true); dati.setUint16(32, ch * 2, true); dati.setUint16(34, 16, true); testo(36, 'data'); dati.setUint32(40, n * ch * 2, true)
+  const canali = Array.from({ length: ch }, (_, i) => buffer.getChannelData(i))
+  let p = 44
+  for (let i = 0; i < n; i++) for (let k = 0; k < ch; k++) { dati.setInt16(p, Math.max(-1, Math.min(1, canali[k][i])) * 32767, true); p += 2 }
+  return new Uint8Array(dati.buffer)
+}
+const inBase64 = (byte) => { let s = ''; for (let i = 0; i < byte.length; i += 0x8000) s += String.fromCharCode(...byte.subarray(i, i + 0x8000)); return btoa(s) }
+
+// ---------- Esecuzione ----------
+if (parametri.has('t')) {
+  disegna(Number(parametri.get('t')))
+  window.__pronto = true
+} else if (parametri.has('registra')) {
+  const buffer = await costruisciAudio()
+  window.__wav = inBase64(wavDa(buffer))
+  const ac = new AudioContext({ sampleRate: 44100 })
+  await ac.resume()
+  const destinazione = ac.createMediaStreamDestination()
+  const sorgente = ac.createBufferSource()
+  sorgente.buffer = buffer
+  sorgente.connect(destinazione)
+  const flusso = c.captureStream(30)
+  flusso.addTrack(destinazione.stream.getAudioTracks()[0])
+  const tipo = ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'].find((t) => MediaRecorder.isTypeSupported(t))
+  const registratore = new MediaRecorder(flusso, { mimeType: tipo, videoBitsPerSecond: 3_500_000, audioBitsPerSecond: 160_000 })
+  const pezzi = []
+  registratore.ondataavailable = (e) => e.data.size && pezzi.push(e.data)
+  registratore.onstop = async () => {
+    const blob = new Blob(pezzi, { type: tipo })
+    const byte = new Uint8Array(await blob.arrayBuffer())
+    window.__dati = inBase64(byte)
+    window.__fine = { tipo, byte: byte.length }
+  }
+  disegna(0)
+  registratore.start(1000)
+  sorgente.start()
+  const inizio = performance.now()
+  window.__inizio = inizio
+  const giro = () => {
+    const T = (performance.now() - inizio) / 1000
+    if (T >= DURATA) { disegna(DURATA - 0.001); registratore.stop(); return }
+    disegna(T)
+    requestAnimationFrame(giro)
+  }
+  requestAnimationFrame(giro)
+} else {
+  const inizio = performance.now()
+  const giro = () => { disegna(((performance.now() - inizio) / 1000) % DURATA); requestAnimationFrame(giro) }
+  requestAnimationFrame(giro)
+}
+</script>
+</body>
+</html>
