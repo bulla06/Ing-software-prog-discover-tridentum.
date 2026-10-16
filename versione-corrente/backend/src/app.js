@@ -28,6 +28,8 @@ export function creaApp({ db, config, posta, archivio, registro = config.svilupp
 
   app.use(
     helmet({
+      // Solo il dominio, mai il percorso: serve a Google Maps, che riconosce il sito dal referrer (la chiave è limitata al dominio)
+      referrerPolicy: { policy: 'strict-origin' },
       contentSecurityPolicy: {
         directives: {
           // Tessere della mappa: Google Maps; OpenStreetMap per le anteprime dei luoghi e come ripiego; Esri per il satellite di ripiego
