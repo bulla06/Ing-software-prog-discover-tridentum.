@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ErroreCaricamento from '../components/ErroreCaricamento.jsx'
+import EsitoFoto from '../components/EsitoFoto.jsx'
 import Icona from '../components/Icona.jsx'
 import { getPoi } from '../data/api.js'
 import { useT } from '../i18n/index.jsx'
 import { formattaDistanza, luoghiInVista } from '../lib/geo.js'
+import { leggiDatiFoto, valutaProvenienza } from '../lib/provenienza.js'
 
 const ALTRI_IN_VISTA = 3
 
@@ -24,6 +26,8 @@ function direzioneDaEvento(e) {
 // riconosce il luogo dalla tua posizione e dalla direzione in cui punta il telefono (bussola).
 // Il calcolo si fa tutto nel browser: né le immagini della fotocamera né la posizione lasciano il dispositivo.
 // Il riconoscimento dall'immagine (AI Service, Fase 3 §5.4) potrà aggiungersi senza cambiare questa pagina.
+// Si può anche scattare una foto o sceglierla dalla galleria: si controlla da dove viene (scattata ora o dalla
+// galleria, e dove: lib/provenienza.js) e si mostrano i luoghi vicini al punto in cui è stata scattata.
 export default function Inquadra() {
   const { t, lingua } = useT()
   const video = useRef(null)
@@ -35,6 +39,10 @@ export default function Inquadra() {
   const [direzione, setDirezione] = useState(null)
   const [bussola, setBussola] = useState('attesa') // attesa | ok | permesso | assente
   const [fotocamera, setFotocamera] = useState('attesa') // attesa | ok | assente
+  const [foto, setFoto] = useState(null) // { anteprima, provenienza, vicini }
+  const [erroreFoto, setErroreFoto] = useState(false)
+  const inputLibreria = useRef(null)
+  const inputTelefono = useRef(null)
 
   useEffect(() => {
     getPoi().then(setLuoghi, setErrore)
@@ -122,6 +130,40 @@ export default function Inquadra() {
     }
   }
 
+  // Le anteprime sono indirizzi temporanei: si liberano quando cambia la foto o si lascia la pagina
+  useEffect(() => () => foto?.anteprima && URL.revokeObjectURL(foto.anteprima), [foto?.anteprima])
+
+  const analizza = async (blob, origine) => {
+    // Una foto appena scattata, senza posizione nel file, vale come scattata dove si è ora
+    const dati = origine === 'fotocamera' ? { gps: posizione } : await leggiDatiFoto(blob)
+    const gps = dati.gps ?? (origine === 'telefono' ? posizione : null)
+    const origineFoto = origine === 'libreria' ? 'libreria' : 'fotocamera'
+    setFoto({
+      anteprima: URL.createObjectURL(blob),
+      provenienza: valutaProvenienza({ origine: origineFoto, gps, posizioneAttuale: posizione }),
+      vicini: gps && luoghi ? luoghiInVista(gps, null, luoghi).slice(0, ALTRI_IN_VISTA) : null,
+    })
+  }
+
+  const scegli = (origine) => (e) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    setErroreFoto(false)
+    if (file) analizza(file, origine)
+  }
+
+  // Scatto dall'inquadratura che si vede: il fotogramma del video diventa la foto
+  const scatta = () => {
+    const v = video.current
+    if (fotocamera !== 'ok' || !v?.videoWidth) return inputTelefono.current?.click()
+    const tela = document.createElement('canvas')
+    tela.width = v.videoWidth
+    tela.height = v.videoHeight
+    tela.getContext('2d').drawImage(v, 0, 0)
+    setErroreFoto(false)
+    tela.toBlob((blob) => blob && analizza(blob, 'fotocamera'), 'image/jpeg', 0.92)
+  }
+
   const inVista = useMemo(
     () => (posizione && luoghi ? luoghiInVista(posizione, bussola === 'ok' ? direzione : null, luoghi) : []),
     [posizione, luoghi, direzione, bussola],
@@ -152,6 +194,35 @@ export default function Inquadra() {
 
       <section className="inquadra__pannello" aria-live="polite">
         <h1>{t('inquadra.titolo')}</h1>
+
+        <div className="inquadra__azioni">
+          <button type="button" className="pulsante pulsante--primario" onClick={scatta}>
+            <Icona nome="ricordo" size={18} />
+            {t('inquadra.scatta')}
+          </button>
+          <button type="button" className="pulsante" onClick={() => inputLibreria.current?.click()}>
+            <Icona nome="foto" size={18} />
+            {t('inquadra.libreria')}
+          </button>
+          <input ref={inputLibreria} type="file" accept="image/*" hidden onChange={scegli('libreria')} />
+          <input ref={inputTelefono} type="file" accept="image/*" capture="environment" hidden onChange={scegli('telefono')} />
+        </div>
+        {erroreFoto && (
+          <p className="messaggio messaggio--attenzione">
+            <Icona nome="attenzione" size={18} />
+            <span>{t('inquadra.erroreFoto')}</span>
+          </p>
+        )}
+        {foto && (
+          <EsitoFoto
+            foto={foto}
+            onChiudi={() => setFoto(null)}
+            onErrore={() => {
+              setFoto(null)
+              setErroreFoto(true)
+            }}
+          />
+        )}
 
         {errore ? (
           <ErroreCaricamento errore={errore} onRiprova={() => setTentativo((n) => n + 1)} />

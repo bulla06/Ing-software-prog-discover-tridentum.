@@ -4259,3 +4259,82 @@ body {
   border-radius: 9px;
   box-shadow: 0 0 0 1.5px rgb(244 213 138 / 0.7);
 }
+
+/* ---------- "Cosa sto guardando?": scatto, libreria e risultato della foto ---------- */
+
+.inquadra__azioni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.inquadra__azioni .pulsante {
+  flex: 1 1 140px;
+}
+
+.esito-foto {
+  position: relative;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 14px;
+  padding: 12px 40px 12px 12px;
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  background: var(--superficie);
+  box-shadow: var(--ombra-1);
+}
+
+.esito-foto__anteprima {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: var(--raggio-piccolo);
+  background: var(--superficie-2);
+}
+
+.esito-foto__corpo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.esito-foto__provenienza {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--tenue);
+}
+
+.esito-foto__provenienza .icona {
+  flex: none;
+  margin-top: 2px;
+}
+
+.esito-foto__provenienza--adesso,
+.esito-foto__provenienza--qui {
+  color: var(--c-tradizioni);
+}
+
+.esito-foto__provenienza--altrove {
+  color: var(--attesa);
+}
+
+.esito-foto__chiudi {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pillola);
+  background: var(--superficie-2);
+  color: var(--testo);
+  cursor: pointer;
+}
